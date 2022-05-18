@@ -1,5 +1,5 @@
 {
-  "name": "rest-api-tools",
+  "name": "@simula-labs/rest-api-tools",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -7,6 +7,9 @@
     "bin",
     "dist"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "bin": {
     "rest-api-tools": "bin/rest-api-tools.js"
   },
@@ -14,7 +17,8 @@
     "example": "examples"
   },
   "scripts": {
-    "build": "tsc -w",
+    "build": "tsc",
+    "build:watch": "tsc -w",
     "generate": "rm -rf examples/__generated__/admin && rest-api-tools --config rest-api-tools.config.js"
   },
   "repository": {
