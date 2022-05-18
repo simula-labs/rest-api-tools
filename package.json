@@ -1,10 +1,58 @@
 {
-  "dependencies": {
-    "axios": "^0.27.2",
-    "humps": "^2.0.1"
+  "name": "rest-api-tools",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "bin": {
+    "rest-api-tools": "bin/rest-api-tools.js"
   },
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "build": "tsc -w",
+    "generate": "rm -rf examples/__generated__/admin && rest-api-tools --config rest-api-tools.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simula-labs/rest-api-tools.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/simula-labs/rest-api-tools/issues"
+  },
+  "homepage": "https://github.com/simula-labs/rest-api-tools#readme",
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/fs-extra": "^9.0.13",
     "@types/humps": "^2.0.1",
-    "@types/node": "^17.0.34"
+    "@types/minimist": "^1.2.2",
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "minimist": "^1.2.6",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "@apidevtools/swagger-parser": "^10.1.0",
+    "@types/node": "^17.0.34",
+    "axios": "^0.27.2",
+    "fs-extra": "^10.1.0",
+    "humps": "^2.0.1",
+    "openapi-types": "^11.0.1"
   }
 }

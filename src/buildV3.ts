@@ -1,0 +1,294 @@
+import { OpenAPIV3 } from "openapi-types";
+import humps from "humps";
+import {
+  $ref2Type,
+  BINARY_TYPE,
+  getPropertyName,
+  isRefObject,
+  schema2value,
+} from "./builderUtils/converters";
+import schemas2Props from "./builderUtils/schemas2Props";
+import {
+  description2Doc,
+  Prop,
+  props2StringForParams,
+  PropValue,
+  value2String,
+} from "./builderUtils/props2String";
+import { resolveParamsRef, resolveReqRef, resolveResRef } from "./builderUtils/resolvers";
+import { Config } from "./types";
+
+export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
+  const files: { file: string[]; methods: string[] }[] = [];
+  const schemas = schemas2Props(openapi.components?.schemas, openapi) || [];
+
+  Object.entries(openapi.paths).forEach(([path, targetUrl]) => {
+    const urlParams: Prop[] = [];
+
+    if (!targetUrl) return;
+
+    // targetUrl.parametersはurlParamsのこと
+    if (targetUrl.parameters) {
+      targetUrl.parameters.forEach((p) => {
+        if (isRefObject(p)) {
+          // refは今存在しないので後回し
+        } else {
+          const value = schema2value(p.schema, true);
+          if (!value) return;
+          const prop: Prop = {
+            name: humps.camelize(getPropertyName(p.name)),
+            required: p.required ?? false,
+            description: p.description ?? null,
+            values: [value],
+          };
+          urlParams.push(prop);
+        }
+      });
+    }
+    // 前で処理を終えているため
+    // eslint-disable-next-line no-param-reassign
+    delete targetUrl.parameters;
+    Object.entries(targetUrl).forEach(([method, target]) => {
+      const file = [
+        ...path
+          .replace(/\/$/, "")
+          .split("/")
+          .slice(1)
+          .map((p) => p.replace("{", "[").replace("}", "]")),
+        method,
+      ];
+      const params: Prop[] = urlParams.length
+        ? [
+            {
+              name: "urlParams",
+              required: false,
+              description: null,
+              values: [
+                {
+                  isArray: false,
+                  isEnum: false,
+                  nullable: false,
+                  description: null,
+                  value: urlParams,
+                },
+              ],
+            },
+          ]
+        : [];
+
+      // 前で処理を終えているため(ここでparametersの処理をしてもよいか、型がやや面倒くさそうだった
+      if (Array.isArray(target) || typeof target === "string") return;
+      if (!target.operationId) {
+        console.log(`${path} ${method}のoperationId存在しません`);
+        return;
+      }
+      const pascalizedTargetOperationId = humps.pascalize(target.operationId);
+      if (target.responses) {
+        const code = Object.keys(target.responses).find((res) => res.match(/^(20\d|30\d)$/));
+        if (code) {
+          const res = target.responses[code];
+          const ref = isRefObject(res) ? resolveResRef(openapi, res.$ref) : res;
+          const content =
+            (ref.content &&
+              Object.entries(ref.content).find(([key]) => key.startsWith("application/"))?.[1]) ??
+            ref.content?.[Object.keys(ref.content)[0]];
+          if (content?.schema) {
+            const val = schema2value(content.schema, true, true);
+            if (val) {
+              const resProp: Prop = {
+                name: "response",
+                required: true,
+                // example response消すため
+                description: "",
+                values: [val],
+              };
+              params.push(resProp);
+            }
+          }
+        }
+      }
+      if (target.requestBody) {
+        // TODO: reqFormatは一旦無視
+        let reqFormat = "";
+        let reqBody: PropValue | null = null;
+        let required;
+        let description: string | null;
+        if (isRefObject(target.requestBody)) {
+          const ref = resolveReqRef(openapi, target.requestBody.$ref);
+          if (ref.content["multipart/form-data"]?.schema) {
+            reqFormat = "FormData";
+          }
+
+          reqBody = {
+            isArray: false,
+            isEnum: false,
+            nullable: false,
+            description: null,
+            value: $ref2Type(target.requestBody.$ref),
+          };
+          required = ref.required ?? true;
+          description = ref.description ?? null;
+        } else {
+          required = target.requestBody.required ?? true;
+          description = target.requestBody.description ?? null;
+
+          if (target.requestBody.content["multipart/form-data"]?.schema) {
+            reqFormat = "FormData";
+            reqBody = schema2value(target.requestBody.content["multipart/form-data"].schema, true);
+          } else {
+            const content =
+              target.requestBody.content &&
+              Object.entries(target.requestBody.content).find(([key]) =>
+                key.startsWith("application/")
+              )?.[1];
+
+            if (content?.schema) reqBody = schema2value(content.schema, true);
+          }
+        }
+        if (reqBody) {
+          const requestBody: Prop = {
+            name: "requestBody",
+            required,
+            description,
+            values: [reqBody],
+          };
+          params.push(requestBody);
+        }
+      }
+      if (target.parameters) {
+        const queryParams: Prop[] = [];
+        target.parameters.forEach((p) => {
+          if (isRefObject(p)) {
+            // refは今存在しないので後回し
+          } else {
+            const value = schema2value(p.schema, true);
+            if (!value) return;
+            const prop = {
+              name: getPropertyName(p.name),
+              required: p.required ?? false,
+              description: p.description ?? null,
+              values: [value],
+            };
+            switch (p.in) {
+              case "query":
+                queryParams.push(prop);
+                break;
+              default:
+            }
+          }
+        });
+        params.push({
+          name: "queryParams",
+          required: false,
+          description: null,
+          values: [
+            {
+              isArray: false,
+              isEnum: false,
+              nullable: false,
+              description: null,
+              value: queryParams,
+            },
+          ],
+        });
+      }
+      const methods: string[] = [];
+      let responseType = "";
+      methods.push(
+        'import BaseRequest from "../../baseRequest";\n' +
+          "import type * as Types from './@types';\n"
+      );
+      params.forEach((param) => {
+        switch (param.name) {
+          case "urlParams":
+            methods.push(
+              `export type ${pascalizedTargetOperationId}UrlParams = ${props2StringForParams(
+                [param],
+                ""
+              )}`
+            );
+            break;
+          case "queryParams":
+            methods.push(
+              `export type ${pascalizedTargetOperationId}QueryParams = ${props2StringForParams(
+                [param],
+                ""
+              )}`
+            );
+            return;
+          case "requestBody":
+            methods.push(
+              `export type ${pascalizedTargetOperationId}RequestBody = ${props2StringForParams(
+                [param],
+                ""
+              )}`
+            );
+            break;
+          case "response":
+            methods.push(
+              `export type ${pascalizedTargetOperationId}Response = ${props2StringForParams(
+                [param],
+                ""
+              )}`
+            );
+            responseType = `${pascalizedTargetOperationId}Response`;
+            break;
+          default:
+        }
+      });
+      if (methods.find((el) => el.includes(BINARY_TYPE))) {
+        methods.unshift("import type { ReadStream } from 'fs'\n");
+      }
+      const requestPath = path
+        .replace(/\/$/, "")
+        .split("/")
+        .map((p) => {
+          // Refactor
+          if (p.match(/\{(.+)\}/)?.[1]) {
+            return `:${p.match(/\{(.+)\}/)?.[1]}`;
+          }
+          return p;
+        })
+        .join("/");
+      // TODO: importパスの調整, baseRequestの型矯正
+      const baseRequest =
+        `export const ${humps.pascalize(method)}${humps.pascalize(
+          file[0]
+        )} = new BaseRequest<>({\n` +
+        `  requiredAuth: true,\n` +
+        `  method: "${method}",\n` +
+        `  baseURL: "${config.baseURL}",\n` +
+        `  path: "${requestPath}",\n` +
+        "});";
+      methods.push(baseRequest);
+      files.push({
+        file,
+        methods,
+      });
+    });
+  });
+
+  // TODO: snake_case to camelCase
+  const typesText = schemas.length
+    ? [
+        ...schemas.map((s) => ({
+          name: s.name,
+          description: s.value.description,
+          text: value2String(s.value, "").replace(/\n {2}/g, "\n"),
+        })),
+      ]
+        .map((p) => `\n${description2Doc(p.description, "")}export type ${p.name} = ${p.text}\n`)
+        .join("")
+        .replace(/(\W)Types\./g, "$1")
+        .replace(/\]\?:/g, "]:")
+    : null;
+
+  return {
+    types:
+      typesText &&
+      `/* eslint-disable */${
+        typesText.includes(BINARY_TYPE) ? "\nimport type { ReadStream } from 'fs'\n" : ""
+      }${typesText}`,
+    files,
+  };
+};
