@@ -14,6 +14,11 @@ export const build = (configs: Config[]) => {
     const contents = await buildTemplate(config);
     if (!contents) return;
 
-    writeRouteFile({ types: contents.types, outputDir: config.connect, files: contents.files });
+    writeRouteFile({
+      types: contents.types,
+      outputDir: config.connect,
+      files: contents.files,
+      tokenKey: config.tokenKey,
+    });
   });
 };
