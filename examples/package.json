@@ -1,0 +1,15 @@
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate": "rm -rf ./__generated__/admin && rest-api-tools --config rest-api-tools.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@simula-labs/rest-api-tools": "file:.."
+  }
+}

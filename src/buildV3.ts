@@ -255,6 +255,7 @@ export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
       const hasRequestBody = methods.join("").includes("RequestBody");
       const hasUrlParams = methods.join("").includes("UrlParams");
 
+      // TODO: multiple/form-dataの対応
       const baseRequest =
         `export const ${pascalizedTargetOperationId} = new BaseRequest<\n` +
         `  ${hasRequestBody ? `${pascalizedTargetOperationId}RequestBody` : undefined},\n` +
@@ -275,7 +276,6 @@ export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
     });
   });
 
-  // TODO: snake_case to camelCase
   const typesText = schemas.length
     ? [
         ...schemas.map((s) => ({

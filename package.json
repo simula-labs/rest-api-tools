@@ -1,11 +1,12 @@
 {
   "name": "@simula-labs/rest-api-tools",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "files": [
     "bin",
-    "dist"
+    "dist",
+    "lib"
   ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -18,8 +19,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "build:watch": "tsc -w",
-    "generate": "rm -rf examples/__generated__/admin && rest-api-tools --config rest-api-tools.config.js"
+    "build:watch": "tsc -w"
   },
   "repository": {
     "type": "git",

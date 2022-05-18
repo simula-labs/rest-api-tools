@@ -3,4 +3,5 @@ export type Config = {
   openapi: string;
   baseURL: string;
   requiredAuth: boolean;
+  tokenKey: string;
 };

@@ -7,10 +7,11 @@ type WriteRouteFileProps = {
     file: string[];
     methods: string[];
   }[];
-  outputDir?: string;
+  outputDir: string;
+  tokenKey: string;
 };
 
-export const writeRouteFile = ({ types, files, outputDir }: WriteRouteFileProps) => {
+export const writeRouteFile = ({ types, files, outputDir, tokenKey }: WriteRouteFileProps) => {
   if (types) {
     fs.mkdirSync(`${outputDir}/@types`);
     fs.writeFileSync(`${outputDir}/@types/index.ts`, types, "utf8");
@@ -24,16 +25,16 @@ export const writeRouteFile = ({ types, files, outputDir }: WriteRouteFileProps)
         fs.mkdirSync(dirPath);
       }
     });
-
-    fs.copyFileSync(
-      path.join(process.cwd(), "/src/lib/baseRequest.ts"),
-      `${outputDir}/baseRequest.ts`
-    );
-    fs.copyFileSync(path.join(process.cwd(), "/src/lib/error.ts"), `${outputDir}/error.ts`);
     fs.writeFileSync(
       `${outputDir}/${p.file.join("/")}/${fileName}.ts`,
       p.methods.join("\n"),
       "utf8"
     );
   });
+  const baseRequestFile = fs
+    .readFileSync(path.join(path.dirname(__filename), "../lib/baseRequest.ts"), "utf8")
+    .replace("AUTH_TOKEN", tokenKey);
+
+  fs.writeFileSync(`${outputDir}/baseRequest.ts`, baseRequestFile, "utf-8");
+  fs.copyFileSync(path.join(path.dirname(__filename), "../lib/error.ts"), `${outputDir}/error.ts`);
 };
