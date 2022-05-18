@@ -1,8 +1,10 @@
 import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import type * as Types from "../../@types";
+
 export type PatchCompaniesIdUrlParams = {
   id: string
 } | undefined
+
 export type PatchCompaniesIdResponse = Types.Company & {
     owner: Types.Account & {
       profile: Types.Profile
@@ -18,9 +20,16 @@ export type PatchCompaniesIdResponse = Types.Company & {
   } & {
     features: Types.Feature[]
   }
+
 export type PatchCompaniesIdRequestBody = {
 }
-export const PatchCompanies = new BaseRequest<>({
+
+export const PatchCompaniesId = new BaseRequest<
+  PatchCompaniesIdRequestBody,
+  PatchCompaniesIdResponse,
+  PatchCompaniesIdUrlParams,
+  undefined
+>({
   requiredAuth: true,
   method: "patch",
   baseURL: "https://api.example.com/admin",

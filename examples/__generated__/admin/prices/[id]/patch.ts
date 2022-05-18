@@ -1,15 +1,24 @@
 import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import type * as Types from "../../@types";
+
 export type PatchPricesIdUrlParams = {
   id: string
 } | undefined
+
 export type PatchPricesIdResponse = Types.Price
+
 export type PatchPricesIdRequestBody = {
   price: {
     active: boolean
   }
 }
-export const PatchPrices = new BaseRequest<>({
+
+export const PatchPricesId = new BaseRequest<
+  PatchPricesIdRequestBody,
+  PatchPricesIdResponse,
+  PatchPricesIdUrlParams,
+  undefined
+>({
   requiredAuth: true,
   method: "patch",
   baseURL: "https://api.example.com/admin",

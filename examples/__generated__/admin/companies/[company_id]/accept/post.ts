@@ -1,8 +1,10 @@
-import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import BaseRequest from "../../../baseRequest";
+import type * as Types from "../../../@types";
+
 export type PostCompaniesCompanyIdAcceptUrlParams = {
   companyId: string
 } | undefined
+
 export type PostCompaniesCompanyIdAcceptResponse = Types.Company & {
     owner: Types.Account & {
       profile: Types.Profile
@@ -18,7 +20,13 @@ export type PostCompaniesCompanyIdAcceptResponse = Types.Company & {
   } & {
     features: Types.Feature[]
   }
-export const PostCompanies = new BaseRequest<>({
+
+export const PostCompaniesCompanyIdAccept = new BaseRequest<
+  undefined,
+  PostCompaniesCompanyIdAcceptResponse,
+  PostCompaniesCompanyIdAcceptUrlParams,
+  undefined
+>({
   requiredAuth: true,
   method: "post",
   baseURL: "https://api.example.com/admin",

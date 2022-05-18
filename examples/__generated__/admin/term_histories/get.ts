@@ -1,12 +1,20 @@
-import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import BaseRequest from "../baseRequest";
+import type * as Types from "../@types";
+
 export type GetTermHistoriesResponse = {
-  term_histories: Types.TermHistory[]
+  termHistories: Types.TermHistory[]
 }
+
 export type GetTermHistoriesQueryParams = {
   type?: 'common' | 'plan' | undefined
 } | undefined
-export const GetTermHistories = new BaseRequest<>({
+
+export const GetTermHistories = new BaseRequest<
+  undefined,
+  GetTermHistoriesResponse,
+  undefined,
+  GetTermHistoriesQueryParams
+>({
   requiredAuth: true,
   method: "get",
   baseURL: "https://api.example.com/admin",

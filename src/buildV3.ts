@@ -195,8 +195,8 @@ export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
       const methods: string[] = [];
       let responseType = "";
       methods.push(
-        'import BaseRequest from "../../baseRequest";\n' +
-          "import type * as Types from './@types';\n"
+        `import BaseRequest from "${file.map(() => "").join("../")}baseRequest";\n` +
+          `import type * as Types from "${file.map(() => "").join("../")}@types";\n`
       );
       params.forEach((param) => {
         switch (param.name) {
@@ -250,16 +250,23 @@ export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
           return p;
         })
         .join("/");
-      // TODO: importパスの調整, baseRequestの型矯正
+      const hasResponse = methods.join("").includes("Response");
+      const hasQueryParams = methods.join("").includes("QueryParams");
+      const hasRequestBody = methods.join("").includes("RequestBody");
+      const hasUrlParams = methods.join("").includes("UrlParams");
+
       const baseRequest =
-        `export const ${humps.pascalize(method)}${humps.pascalize(
-          file[0]
-        )} = new BaseRequest<>({\n` +
+        `export const ${pascalizedTargetOperationId} = new BaseRequest<\n` +
+        `  ${hasRequestBody ? `${pascalizedTargetOperationId}RequestBody` : undefined},\n` +
+        `  ${hasResponse ? `${pascalizedTargetOperationId}Response` : undefined},\n` +
+        `  ${hasUrlParams ? `${pascalizedTargetOperationId}UrlParams` : undefined},\n` +
+        `  ${hasQueryParams ? `${pascalizedTargetOperationId}QueryParams` : undefined}\n` +
+        ">({\n" +
         `  requiredAuth: true,\n` +
         `  method: "${method}",\n` +
         `  baseURL: "${config.baseURL}",\n` +
         `  path: "${requestPath}",\n` +
-        "});";
+        "});\n";
       methods.push(baseRequest);
       files.push({
         file,

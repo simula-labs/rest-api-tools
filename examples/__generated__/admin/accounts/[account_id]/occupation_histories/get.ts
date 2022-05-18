@@ -1,12 +1,20 @@
-import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import BaseRequest from "../../../baseRequest";
+import type * as Types from "../../../@types";
+
 export type GetAccountsAccountIdOccupationHistoriesUrlParams = {
   accountId: string
 } | undefined
+
 export type GetAccountsAccountIdOccupationHistoriesResponse = {
-  occupation_histories: Types.OccupationHistory[]
+  occupationHistories: Types.OccupationHistory[]
 }
-export const GetAccounts = new BaseRequest<>({
+
+export const GetAccountsAccountIdOccupationHistories = new BaseRequest<
+  undefined,
+  GetAccountsAccountIdOccupationHistoriesResponse,
+  GetAccountsAccountIdOccupationHistoriesUrlParams,
+  undefined
+>({
   requiredAuth: true,
   method: "get",
   baseURL: "https://api.example.com/admin",

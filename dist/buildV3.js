@@ -218,8 +218,8 @@ var buildV3 = function (openapi, config) {
             }
             var methods = [];
             var responseType = "";
-            methods.push('import BaseRequest from "../../baseRequest";\n' +
-                "import type * as Types from './@types';\n");
+            methods.push("import BaseRequest from \"".concat(file.map(function () { return ""; }).join("../"), "baseRequest\";\n") +
+                "import type * as Types from \"".concat(file.map(function () { return ""; }).join("../"), "@types\";\n"));
             params.forEach(function (param) {
                 switch (param.name) {
                     case "urlParams":
@@ -253,13 +253,21 @@ var buildV3 = function (openapi, config) {
                 return p;
             })
                 .join("/");
-            // TODO: importパスの調整, baseRequestの型矯正
-            var baseRequest = "export const ".concat(humps_1.default.pascalize(method)).concat(humps_1.default.pascalize(file[0]), " = new BaseRequest<>({\n") +
+            var hasResponse = methods.join("").includes("Response");
+            var hasQueryParams = methods.join("").includes("QueryParams");
+            var hasRequestBody = methods.join("").includes("RequestBody");
+            var hasUrlParams = methods.join("").includes("UrlParams");
+            var baseRequest = "export const ".concat(pascalizedTargetOperationId, " = new BaseRequest<\n") +
+                "  ".concat(hasRequestBody ? "".concat(pascalizedTargetOperationId, "RequestBody") : undefined, ",\n") +
+                "  ".concat(hasResponse ? "".concat(pascalizedTargetOperationId, "Response") : undefined, ",\n") +
+                "  ".concat(hasUrlParams ? "".concat(pascalizedTargetOperationId, "UrlParams") : undefined, ",\n") +
+                "  ".concat(hasQueryParams ? "".concat(pascalizedTargetOperationId, "QueryParams") : undefined, "\n") +
+                ">({\n" +
                 "  requiredAuth: true,\n" +
                 "  method: \"".concat(method, "\",\n") +
                 "  baseURL: \"".concat(config.baseURL, "\",\n") +
                 "  path: \"".concat(requestPath, "\",\n") +
-                "});";
+                "});\n";
             methods.push(baseRequest);
             files.push({
                 file: file,

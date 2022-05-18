@@ -1,9 +1,16 @@
 import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import type * as Types from "../../@types";
+
 export type DeleteCompaniesIdUrlParams = {
   id: string
 } | undefined
-export const DeleteCompanies = new BaseRequest<>({
+
+export const DeleteCompaniesId = new BaseRequest<
+  undefined,
+  undefined,
+  DeleteCompaniesIdUrlParams,
+  undefined
+>({
   requiredAuth: true,
   method: "delete",
   baseURL: "https://api.example.com/admin",

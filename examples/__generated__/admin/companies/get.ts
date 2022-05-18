@@ -1,5 +1,6 @@
-import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import BaseRequest from "../baseRequest";
+import type * as Types from "../@types";
+
 export type GetCompaniesResponse = {
   companies: (Types.Company & {
     owner: Types.Account & {
@@ -16,23 +17,30 @@ export type GetCompaniesResponse = {
   } & {
     features: Types.Feature[]
   })[]
-  total_data_nums: number
+  totalDataNums: number
 }
+
 export type GetCompaniesQueryParams = {
   /** 企業名 */
   keyword?: string | undefined
   /** 担当者名 */
-  owner_keyword?: string | undefined
+  ownerKeyword?: string | undefined
   /** 通常orスタブ */
   type?: 'account' | 'stub' | undefined
   /** admin審査状態 */
-  admin_verification_status?: 'unspecified' | 'request' | 'verified' | 'rejected' | undefined
+  adminVerificationStatus?: 'unspecified' | 'request' | 'verified' | 'rejected' | undefined
   /** trueなら昇順、falseなら降順 */
-  sort_asc_updated_at?: boolean | undefined
+  sortAscUpdatedAt?: boolean | undefined
   /** trueなら昇順、falseなら降順 */
-  sort_asc_subscribed_at?: boolean | undefined
+  sortAscSubscribedAt?: boolean | undefined
 } | undefined
-export const GetCompanies = new BaseRequest<>({
+
+export const GetCompanies = new BaseRequest<
+  undefined,
+  GetCompaniesResponse,
+  undefined,
+  GetCompaniesQueryParams
+>({
   requiredAuth: true,
   method: "get",
   baseURL: "https://api.example.com/admin",

@@ -1,12 +1,20 @@
-import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import BaseRequest from "../../../baseRequest";
+import type * as Types from "../../../@types";
+
 export type GetAccountsAccountIdAchievementsUrlParams = {
   accountId: string
 } | undefined
+
 export type GetAccountsAccountIdAchievementsResponse = {
   achievements: Types.Achievement[]
 }
-export const GetAccounts = new BaseRequest<>({
+
+export const GetAccountsAccountIdAchievements = new BaseRequest<
+  undefined,
+  GetAccountsAccountIdAchievementsResponse,
+  GetAccountsAccountIdAchievementsUrlParams,
+  undefined
+>({
   requiredAuth: true,
   method: "get",
   baseURL: "https://api.example.com/admin",

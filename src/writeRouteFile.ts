@@ -30,6 +30,10 @@ export const writeRouteFile = ({ types, files, outputDir }: WriteRouteFileProps)
       `${outputDir}/baseRequest.ts`
     );
     fs.copyFileSync(path.join(process.cwd(), "/src/lib/error.ts"), `${outputDir}/error.ts`);
-    fs.writeFileSync(`${outputDir}/${p.file.join("/")}/${fileName}.ts`, p.methods.join(""), "utf8");
+    fs.writeFileSync(
+      `${outputDir}/${p.file.join("/")}/${fileName}.ts`,
+      p.methods.join("\n"),
+      "utf8"
+    );
   });
 };

@@ -1,18 +1,27 @@
 import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import type * as Types from "../../@types";
+
 export type PatchOfficialInformationsIdUrlParams = {
   id: string
 } | undefined
+
 export type PatchOfficialInformationsIdResponse = Types.OfficialInformation
+
 export type PatchOfficialInformationsIdRequestBody = {
-  official_information: {
+  officialInformation: {
     title: string
     content: string
-    html_content: string
-    is_released: boolean
+    htmlContent: string
+    isReleased: boolean
   }
 }
-export const PatchOfficialInformations = new BaseRequest<>({
+
+export const PatchOfficialInformationsId = new BaseRequest<
+  PatchOfficialInformationsIdRequestBody,
+  PatchOfficialInformationsIdResponse,
+  PatchOfficialInformationsIdUrlParams,
+  undefined
+>({
   requiredAuth: true,
   method: "patch",
   baseURL: "https://api.example.com/admin",

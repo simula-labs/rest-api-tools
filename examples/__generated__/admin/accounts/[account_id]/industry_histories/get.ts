@@ -1,12 +1,20 @@
-import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import BaseRequest from "../../../baseRequest";
+import type * as Types from "../../../@types";
+
 export type GetAccountsAccountIdIndustryHistoriesUrlParams = {
   accountId: string
 } | undefined
+
 export type GetAccountsAccountIdIndustryHistoriesResponse = {
-  industry_histories: Types.IndustryHistory[]
+  industryHistories: Types.IndustryHistory[]
 }
-export const GetAccounts = new BaseRequest<>({
+
+export const GetAccountsAccountIdIndustryHistories = new BaseRequest<
+  undefined,
+  GetAccountsAccountIdIndustryHistoriesResponse,
+  GetAccountsAccountIdIndustryHistoriesUrlParams,
+  undefined
+>({
   requiredAuth: true,
   method: "get",
   baseURL: "https://api.example.com/admin",

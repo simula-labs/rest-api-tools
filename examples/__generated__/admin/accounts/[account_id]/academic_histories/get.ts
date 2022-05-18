@@ -1,14 +1,23 @@
-import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import BaseRequest from "../../../baseRequest";
+import type * as Types from "../../../@types";
+
 export type GetAccountsAccountIdAcademicHistoriesUrlParams = {
   accountId: string
 } | undefined
+
 export type GetAccountsAccountIdAcademicHistoriesResponse = {
-  academic_histories: Types.AcademicHistory[]
+  academicHistories: Types.AcademicHistory[]
 }
+
 export type GetAccountsAccountIdAcademicHistoriesQueryParams = {
 } | undefined
-export const GetAccounts = new BaseRequest<>({
+
+export const GetAccountsAccountIdAcademicHistories = new BaseRequest<
+  undefined,
+  GetAccountsAccountIdAcademicHistoriesResponse,
+  GetAccountsAccountIdAcademicHistoriesUrlParams,
+  GetAccountsAccountIdAcademicHistoriesQueryParams
+>({
   requiredAuth: true,
   method: "get",
   baseURL: "https://api.example.com/admin",

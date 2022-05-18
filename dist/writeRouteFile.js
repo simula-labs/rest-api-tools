@@ -22,7 +22,7 @@ var writeRouteFile = function (_a) {
         });
         fs_1.default.copyFileSync(path_1.default.join(process.cwd(), "/src/lib/baseRequest.ts"), "".concat(outputDir, "/baseRequest.ts"));
         fs_1.default.copyFileSync(path_1.default.join(process.cwd(), "/src/lib/error.ts"), "".concat(outputDir, "/error.ts"));
-        fs_1.default.writeFileSync("".concat(outputDir, "/").concat(p.file.join("/"), "/").concat(fileName, ".ts"), p.methods.join(""), "utf8");
+        fs_1.default.writeFileSync("".concat(outputDir, "/").concat(p.file.join("/"), "/").concat(fileName, ".ts"), p.methods.join("\n"), "utf8");
     });
 };
 exports.writeRouteFile = writeRouteFile;

@@ -1,9 +1,16 @@
-import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import BaseRequest from "../baseRequest";
+import type * as Types from "../@types";
+
 export type GetPrivacyPolicyHistoriesResponse = {
-  privacy_policy_histories: Types.PrivacyPolicyHistory[]
+  privacyPolicyHistories: Types.PrivacyPolicyHistory[]
 }
-export const GetPrivacyPolicyHistories = new BaseRequest<>({
+
+export const GetPrivacyPolicyHistories = new BaseRequest<
+  undefined,
+  GetPrivacyPolicyHistoriesResponse,
+  undefined,
+  undefined
+>({
   requiredAuth: true,
   method: "get",
   baseURL: "https://api.example.com/admin",

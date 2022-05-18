@@ -1,16 +1,23 @@
-import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import BaseRequest from "../baseRequest";
+import type * as Types from "../@types";
+
 export type GetWithdrawalsResponse = {
   withdrawals: {
     amount: number
-    withdrawal_method: 'manual' | 'automatic'
-    created_at: string
+    withdrawalMethod: 'manual' | 'automatic'
+    createdAt: string
     account?: Types.Account | undefined
     company?: Types.Company | undefined
   }[]
-  total_data_nums: number
+  totalDataNums: number
 }
-export const GetWithdrawals = new BaseRequest<>({
+
+export const GetWithdrawals = new BaseRequest<
+  undefined,
+  GetWithdrawalsResponse,
+  undefined,
+  undefined
+>({
   requiredAuth: true,
   method: "get",
   baseURL: "https://api.example.com/admin",

@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.props2StringForParams = exports.value2StringForParams = exports.props2String = exports.description2Doc = exports.value2String = void 0;
+var humps_1 = __importDefault(require("humps"));
 var array2String = function (val, indent) {
     var hasMulti = ((val.isEnum || val.hasOf) && Array.isArray(val.value) && val.value.length) || val.nullable;
     return "".concat(hasMulti ? "(" : "").concat((0, exports.value2String)(val, indent)).concat(hasMulti ? ")" : "", "[]");
@@ -39,7 +43,7 @@ var props2String = function (props, indent) {
     return "{\n".concat(props
         .map(function (p, i) {
         return (function (opt) {
-            return "".concat((0, exports.description2Doc)(p.description, "  ".concat(indent)), "  ").concat(indent).concat(p.name).concat(opt ? "?" : "", ": ").concat(values2String(p.values, undefined, indent)).concat(opt ? " | undefined" : "").concat(props.length - 1 === i || isMultiLine(p.values) || isMultiLine(props[i + 1].values)
+            return "".concat((0, exports.description2Doc)(p.description, "  ".concat(indent)), "  ").concat(indent).concat(humps_1.default.camelize(p.name)).concat(opt ? "?" : "", ": ").concat(values2String(p.values, undefined, indent)).concat(opt ? " | undefined" : "").concat(props.length - 1 === i || isMultiLine(p.values) || isMultiLine(props[i + 1].values)
                 ? "\n"
                 : "");
         })(!p.required);

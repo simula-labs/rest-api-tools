@@ -1,16 +1,25 @@
 import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import type * as Types from "../../@types";
+
 export type PatchStatesIdUrlParams = {
   id: string
 } | undefined
+
 export type PatchStatesIdResponse = Types.State
+
 export type PatchStatesIdRequestBody = {
   state: {
     name: string
-    country_code: string
+    countryCode: string
   }
 }
-export const PatchStates = new BaseRequest<>({
+
+export const PatchStatesId = new BaseRequest<
+  PatchStatesIdRequestBody,
+  PatchStatesIdResponse,
+  PatchStatesIdUrlParams,
+  undefined
+>({
   requiredAuth: true,
   method: "patch",
   baseURL: "https://api.example.com/admin",

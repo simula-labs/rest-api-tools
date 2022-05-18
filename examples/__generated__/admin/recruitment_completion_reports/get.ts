@@ -1,9 +1,16 @@
-import BaseRequest from "../../baseRequest";
-import type * as Types from './@types';
+import BaseRequest from "../baseRequest";
+import type * as Types from "../@types";
+
 export type GetRecruitmentCompletionReportsResponse = {
-  recruitment_completion_reports: Types.RecruitmentCompletionReport[]
+  recruitmentCompletionReports: Types.RecruitmentCompletionReport[]
 }
-export const GetRecruitmentCompletionReports = new BaseRequest<>({
+
+export const GetRecruitmentCompletionReports = new BaseRequest<
+  undefined,
+  GetRecruitmentCompletionReportsResponse,
+  undefined,
+  undefined
+>({
   requiredAuth: true,
   method: "get",
   baseURL: "https://api.example.com/admin",
