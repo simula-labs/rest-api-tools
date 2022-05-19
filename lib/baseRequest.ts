@@ -5,13 +5,37 @@ import axios, {
   AxiosResponseTransformer,
 } from "axios";
 import humps from "humps";
-import { NetworkError } from "./error";
+import { NetworkError, ClientError } from "./error";
+import { QueryFunctionContext } from "react-query";
 
 const TOKEN_KEY = "AUTH_TOKEN";
 
 export type HTTPMethod = "get" | "post" | "patch" | "put" | "delete";
 
 export type ContentType = "json" | "formData";
+
+export type RequestVariables<
+  TInput,
+  TPayload,
+  TUrlParams extends Record<string, unknown> | undefined,
+  TQParams extends Record<string, unknown> | undefined
+  > = {
+  id?: string;
+  params?: TInput;
+  urlParams?: TUrlParams;
+  qParams?: TQParams;
+};
+
+export type ApiOption<
+  TInput,
+  TPayload,
+  TUrlParams extends Record<string, unknown> | undefined,
+  TQParams extends Record<string, unknown> | undefined
+  > = {
+  variables?: RequestVariables<TInput, TPayload, TUrlParams, TQParams>;
+  onSuccess?: (data: TPayload) => void;
+  onFailure?: (e: NetworkError | ClientError) => void;
+};
 
 export type RequestOption = {
   requiredAuth: boolean;
@@ -20,12 +44,47 @@ export type RequestOption = {
   path: string;
 };
 
+export function mergeRequestVariables<
+  TInput,
+  TPayload extends Record<string, unknown>,
+  TUrlParams extends Record<string, unknown> | undefined,
+  TQParams extends Record<string, unknown> | undefined
+  >(
+  oldVars: RequestVariables<TInput, TPayload, TUrlParams, TQParams>,
+  newVars: RequestVariables<TInput, TPayload, TUrlParams, TQParams>
+): RequestVariables<TInput, TPayload, TUrlParams, TQParams> {
+  return {
+    params:
+      oldVars?.params || newVars?.params
+        ? ({
+          ...(oldVars?.params ?? {}),
+          ...(newVars?.params ?? {}),
+        } as TInput)
+        : undefined,
+    urlParams:
+      oldVars?.urlParams || newVars?.urlParams
+        ? ({
+          ...(oldVars?.urlParams ?? {}),
+          ...(newVars?.urlParams ?? {}),
+        } as TUrlParams)
+        : undefined,
+    qParams:
+      oldVars?.qParams || newVars?.qParams
+        ? ({
+          ...(oldVars?.qParams ?? {}),
+          ...(newVars?.qParams ?? {}),
+        } as TQParams)
+        : undefined,
+    id: oldVars?.id ?? newVars?.id,
+  };
+}
+
 class BaseRequest<
   TInput,
   TPayload,
   TUrlParams extends Record<string, unknown> | undefined,
   TQParams extends Record<string, unknown> | undefined
-> {
+  > {
   // Require Override
   /// そのリクエストが認証必要かどうか
   requireAuth: boolean;
@@ -49,14 +108,39 @@ class BaseRequest<
     this.path = path;
   }
 
-  // primary function
-  // throw: ServerError
-  async call(variables?: {
-    id?: string;
-    params?: TInput;
-    urlParams?: TUrlParams;
-    qParams?: TQParams;
-  }): Promise<TPayload> {
+  uniqueKey(variables: RequestVariables<TInput, TPayload, TUrlParams, TQParams>): string {
+    const { urlParams, qParams } = variables;
+    return `${this.baseURL}${this.configurePath(urlParams, qParams)}##${this.method}`;
+  }
+
+  buildReactQueryFetcher(option?: ApiOption<TInput, TPayload, TUrlParams, TQParams>) {
+    return async (context: QueryFunctionContext<string, number>) => {
+      // queryKey, signal, pageParam, meta
+      const { pageParam } = context;
+      return await this.call(
+        pageParam
+          ? {
+            ...(option?.variables ?? {}),
+            qParams: {
+              ...(option?.variables?.qParams ?? {}),
+              page: pageParam,
+            } as unknown as TQParams, // FIXME
+          }
+          : option?.variables
+      );
+    };
+  }
+
+  buildReactQueryMutater(option?: ApiOption<TInput, TPayload, TUrlParams, TQParams>) {
+    return async (newParams: TInput) => {
+      // queryKey, signal, pageParam, meta
+      return await this.call(mergeRequestVariables(option?.variables ?? {}, { params: newParams }));
+    };
+  }
+
+  async call(
+    variables?: RequestVariables<TInput, TPayload, TUrlParams, TQParams>
+  ): Promise<TPayload> {
     const { params, urlParams, qParams } = variables || {};
     const pParams = ((): Record<string, unknown> | FormData | undefined => {
       if (params === undefined) return undefined;
@@ -107,7 +191,7 @@ class BaseRequest<
             (humps.decamelizeKeys(params as unknown as Record<string, unknown>) as Record<
               string,
               unknown
-            >)
+              >)
           );
       }
     })();
