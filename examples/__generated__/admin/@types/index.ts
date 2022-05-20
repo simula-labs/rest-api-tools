@@ -145,7 +145,21 @@ export type Recruitment = {
   position?: string | undefined
   jobDescription?: string | undefined
   workConditions?: string | undefined
+  /** 「屋内禁煙」「喫煙室設置」「対策なし」「その他」 */
+  smokingRegulation?: 'no_smoking_indoors' | 'exist_smoking_room' | 'none' | 'other' | undefined
+  /** 「未選択」「不可・時折（0-10%）」「可（10-90%）」「フルリモート（90%以上）」 */
+  remoteWorkStatus?: 'unselected' | 'rarely' | 'normally' | 'full_remote' | undefined
+  /** 求人管理ID */
+  recruitmentManageId?: string | undefined
+  /** 勤務地詳細 */
+  workplaceDescription?: string | undefined
+  /** 年収・報酬の詳細 */
+  salaryRemarks?: string | undefined
   qualificationRequirement?: string | undefined
+  /** 採用人数 */
+  maxNumberOfHiring?: string | undefined
+  /** 選考プロセス */
+  selectionProcess?: string | undefined
   /** 「下書き」「公開」「休止」「終了」「強制停止」 */
   publishmentStatus?: 'draft' | 'published' | 'suspending' | 'terminated' | 'rejected' | undefined
   /** サンプルか */
@@ -168,6 +182,8 @@ export type Recruitment = {
   targetCompanyStatus?: 'none' | 'private' | 'certained' | 'specified' | undefined
   /** target_company_statusがcertainedの時、表示名を指定 */
   targetCompanyCertainName?: string | undefined
+  /** 推薦ポイント */
+  recommendedPoint?: string | undefined
   nearestStation?: string | undefined
   projectNumber?: string | undefined
   /** 掲載期間（開始） */
@@ -338,12 +354,10 @@ export type Hope = {
   amount?: number | undefined
   /** 「時給」「日給」「月給」「年収」「1案件」 */
   billingMethod?: 'hourly' | 'daily' | 'monthly' | 'yearly' | 'with_project' | undefined
-  /** 転職希望時期(Nヶ月以内) */
+  /** 転職希望時期・案件開始時期 */
   timeToChangeJob?: number | undefined
   /** 特筆事項 */
   specialNote?: string | undefined
-  /** 案件開始時期 */
-  beginningPeriod?: string | undefined
 }
 
 export type Job = {

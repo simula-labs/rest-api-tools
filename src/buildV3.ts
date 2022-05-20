@@ -14,6 +14,7 @@ import {
   props2StringForParams,
   PropValue,
   value2String,
+  value2StringForMock,
 } from "./builderUtils/props2String";
 import { resolveParamsRef, resolveReqRef, resolveResRef } from "./builderUtils/resolvers";
 import { Config } from "./types";
@@ -290,12 +291,37 @@ export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
         .replace(/\]\?:/g, "]:")
     : null;
 
+  const mockText = schemas.length
+    ? [
+        ...schemas.map((s) => ({
+          name: s.name,
+          description: s.value.description,
+          text: value2StringForMock(s.value, "", true, s.name).replace(/\n {2}/g, "\n"),
+        })),
+      ]
+        .map(
+          (p) =>
+            `\n${description2Doc(p.description, "")}export const mock${
+              p.name
+            } = (modification?: Partial< Types.${p.name}>): Types.${p.name} => {\n  return ${
+              p.text
+            }\n}\n`
+        )
+        .join("")
+        .replace(/\]\?:/g, "]:")
+    : null;
+
   return {
-    types:
-      typesText &&
-      `/* eslint-disable */${
-        typesText.includes(BINARY_TYPE) ? "\nimport type { ReadStream } from 'fs'\n" : ""
-      }${typesText}`,
+    types: {
+      type:
+        typesText &&
+        // @ts-nocheck
+        `/* eslint-disable */${
+          typesText.includes(BINARY_TYPE) ? "\nimport type { ReadStream } from 'fs'\n" : ""
+        }${typesText}`,
+      mock:
+        mockText && `/* eslint-disable */\n import type * as Types from "../@types";\n ${mockText}`,
+    },
     files,
   };
 };

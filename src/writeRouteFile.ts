@@ -2,7 +2,10 @@ import fs from "fs";
 import path from "path";
 
 type WriteRouteFileProps = {
-  types: string | null;
+  types: {
+    type: string | null;
+    mock: string | null;
+  };
   files: {
     file: string[];
     methods: string[];
@@ -12,9 +15,10 @@ type WriteRouteFileProps = {
 };
 
 export const writeRouteFile = ({ types, files, outputDir, tokenKey }: WriteRouteFileProps) => {
-  if (types) {
+  if (types.type && types.mock) {
     fs.mkdirSync(`${outputDir}/@types`);
-    fs.writeFileSync(`${outputDir}/@types/index.ts`, types, "utf8");
+    fs.writeFileSync(`${outputDir}/@types/index.ts`, types.type, "utf8");
+    fs.writeFileSync(`${outputDir}/@types/mock.ts`, types.mock, "utf8");
   }
 
   files.forEach((p) => {
