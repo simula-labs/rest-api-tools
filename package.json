@@ -1,6 +1,6 @@
 {
   "name": "@simula-labs/rest-api-tools",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "index.js",
   "files": [
@@ -57,6 +57,7 @@
     "axios": "^0.27.2",
     "fs-extra": "^10.1.0",
     "humps": "^2.0.1",
-    "openapi-types": "^11.0.1"
+    "openapi-types": "^11.0.1",
+    "react-query": "^3.39.0"
   }
 }
