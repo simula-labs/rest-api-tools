@@ -1,16 +1,15 @@
-import BaseRequest from "../../../../baseRequest";
-import type * as Types from "../../../../@types";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
+import type * as Types from "../../../@types";
 
 export type GetAccountsAccountIdWorkHistoriesUrlParams = {
   accountId: string
-  workHistoriesId: string
 } | undefined
 
 export type GetAccountsAccountIdWorkHistoriesResponse = {
   workHistories: Types.WorkHistory[]
 }
 
-export const GetAccountsAccountIdWorkHistories = new BaseRequest<
+export const getAccountsAccountIdWorkHistories = new BaseRequest<
   undefined,
   GetAccountsAccountIdWorkHistoriesResponse,
   GetAccountsAccountIdWorkHistoriesUrlParams,
@@ -19,5 +18,6 @@ export const GetAccountsAccountIdWorkHistories = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://api.example.com/admin",
-  path: "/accounts/:account_id/work_histories/:work_histories_id",
+  path: "/accounts/:account_id/work_histories",
+  tokenKey: "AUTH_TOKEN",
 });

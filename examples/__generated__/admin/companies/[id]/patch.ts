@@ -1,4 +1,4 @@
-import BaseRequest from "../../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../@types";
 
 export type PatchCompaniesIdUrlParams = {
@@ -24,7 +24,7 @@ export type PatchCompaniesIdResponse = Types.Company & {
 export type PatchCompaniesIdRequestBody = {
 }
 
-export const PatchCompaniesId = new BaseRequest<
+export const patchCompaniesId = new BaseRequest<
   PatchCompaniesIdRequestBody,
   PatchCompaniesIdResponse,
   PatchCompaniesIdUrlParams,
@@ -34,4 +34,5 @@ export const PatchCompaniesId = new BaseRequest<
   method: "patch",
   baseURL: "https://api.example.com/admin",
   path: "/companies/:id",
+  tokenKey: "AUTH_TOKEN",
 });

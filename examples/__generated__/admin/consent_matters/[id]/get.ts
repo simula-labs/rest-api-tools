@@ -1,4 +1,4 @@
-import BaseRequest from "../../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../@types";
 
 export type GetConsentMattersIdUrlParams = {
@@ -7,7 +7,7 @@ export type GetConsentMattersIdUrlParams = {
 
 export type GetConsentMattersIdResponse = Types.ConsentMatter
 
-export const GetConsentMattersId = new BaseRequest<
+export const getConsentMattersId = new BaseRequest<
   undefined,
   GetConsentMattersIdResponse,
   GetConsentMattersIdUrlParams,
@@ -17,4 +17,5 @@ export const GetConsentMattersId = new BaseRequest<
   method: "get",
   baseURL: "https://api.example.com/admin",
   path: "/consent_matters/:id",
+  tokenKey: "AUTH_TOKEN",
 });

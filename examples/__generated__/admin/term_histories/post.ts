@@ -1,4 +1,4 @@
-import BaseRequest from "../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../@types";
 
 export type PostTermHistoriesResponse = Types.TermHistory
@@ -10,7 +10,7 @@ export type PostTermHistoriesRequestBody = {
   }
 }
 
-export const PostTermHistories = new BaseRequest<
+export const postTermHistories = new BaseRequest<
   PostTermHistoriesRequestBody,
   PostTermHistoriesResponse,
   undefined,
@@ -20,4 +20,5 @@ export const PostTermHistories = new BaseRequest<
   method: "post",
   baseURL: "https://api.example.com/admin",
   path: "/term_histories",
+  tokenKey: "AUTH_TOKEN",
 });

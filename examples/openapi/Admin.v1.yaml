@@ -1147,16 +1147,11 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/AcademicHistories'
-  /accounts/{account_id}/work_histories/${work_histories_id}:
+  /accounts/{account_id}/work_histories:
     parameters:
       - schema:
           type: string
         name: account_id
-        in: path
-        required: true
-      - schema:
-          type: string
-        name: work_histories_id
         in: path
         required: true
     get:
@@ -1833,9 +1828,45 @@ components:
         work_conditions:
           type: string
           example: 保険・交通費とか諸々
+        smoking_regulation:
+          type: string
+          enum:
+            - no_smoking_indoors
+            - exist_smoking_room
+            - none
+            - other
+          description: 「屋内禁煙」「喫煙室設置」「対策なし」「その他」
+        remote_work_status:
+          type: string
+          enum:
+            - unselected
+            - rarely
+            - normally
+            - full_remote
+          description: 「未選択」「不可・時折（0-10%）」「可（10-90%）」「フルリモート（90%以上）」
+        recruitment_manage_id:
+          type: string
+          description: 求人管理ID
+        workplace_description:
+          type: string
+          description: 勤務地詳細
+        salary_remarks:
+          type: string
+          description: 年収・報酬の詳細
+          example: >-
+            月給\416,667～（基本給\307,719～ 固定残業代\108,948～等を含む/月） ※経験とスキルに応じて決定します。
+            給与改定：年1回 試用期間：3ヶ月/給与・待遇に変動なし
         qualification_requirement:
           type: string
           example: ・大卒以上　・40歳未満
+        max_number_of_hiring:
+          type: string
+          description: 採用人数
+          example: 4名
+        selection_process:
+          type: string
+          description: 選考プロセス
+          example: 面接2回、最終面接1回
         publishment_status:
           type: string
           enum:
@@ -1899,6 +1930,9 @@ components:
         target_company_certain_name:
           type: string
           description: target_company_statusがcertainedの時、表示名を指定
+        recommended_point:
+          type: string
+          description: 推薦ポイント
         nearest_station:
           type: string
         project_number:
@@ -2350,14 +2384,10 @@ components:
           description: 「時給」「日給」「月給」「年収」「1案件」
         time_to_change_job:
           type: integer
-          description: 転職希望時期(Nヶ月以内)
+          description: 転職希望時期・案件開始時期
         special_note:
           type: string
           description: 特筆事項
-        beginning_period:
-          type: string
-          description: 案件開始時期
-          format: date
       description: ''
     Job:
       title: Job
@@ -2510,6 +2540,16 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/EmploymentStatus'
+          examples:
+            example-1:
+              value:
+                id: string
+                created_at: '2019-08-24T14:15:22Z'
+                updated_at: '2019-08-24T14:15:22Z'
+                name: 正社員
+                type: CAREER
+                project_classification: contract
+                is_selectable: true
     EmploymentStatuses:
       description: ''
       content:
@@ -2521,6 +2561,17 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/EmploymentStatus'
+          examples:
+            example-1:
+              value:
+                employment_statuses:
+                  - id: string
+                    created_at: '2019-08-24T14:15:22Z'
+                    updated_at: '2019-08-24T14:15:22Z'
+                    name: 正社員
+                    type: CAREER
+                    project_classification: contract
+                    is_selectable: true
     States:
       description: ''
       content:
@@ -2532,6 +2583,15 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/State'
+          examples:
+            example-1:
+              value:
+                states:
+                  - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                    created_at: '2019-08-24T14:15:22Z'
+                    updated_at: '2019-08-24T14:15:22Z'
+                    country_code: string
+                    name: string
     State:
       description: ''
       content:
@@ -2728,6 +2788,19 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/Product'
+          examples:
+            example-1:
+              value:
+                products:
+                  - id: string
+                    created_at: '2019-08-24T14:15:22Z'
+                    updated_at: '2019-08-24T14:15:22Z'
+                    name: string
+                    description: string
+                    active: true
+                    type: good
+                    plan_type: standard
+                    number: 0
     Product:
       description: Example response
       content:
@@ -2860,12 +2933,28 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/PrivacyPolicyHistory'
+          examples:
+            example-1:
+              value:
+                privacy_policy_histories:
+                  - id: string
+                    created_at: '2019-08-24T14:15:22Z'
+                    updated_at: '2019-08-24T14:15:22Z'
+                    content: string
+                    version: string
     ConsentMatter:
       description: ''
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ConsentMatter'
+          examples:
+            example-1:
+              value:
+                id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                created_at: '2019-08-24T14:15:22Z'
+                updated_at: '2019-08-24T14:15:22Z'
+                content: 追加項目の内容
     ConsentMatters:
       description: Example response
       content:

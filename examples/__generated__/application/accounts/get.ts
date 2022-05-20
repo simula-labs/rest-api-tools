@@ -5,6 +5,15 @@ export type GetAccountsUrlParams = {
   id: string;
 };
 
+const mockGetAccountUrlParams = (
+  modification: Partial<GetAccountsUrlParams> = {}
+): GetAccountsUrlParams => {
+  return {
+    id: "string",
+    ...modification,
+  };
+};
+
 export type GetAccountsPayload = Account;
 
 export const GetAccounts = new BaseRequest<

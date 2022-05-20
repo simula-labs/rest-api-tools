@@ -1,4 +1,4 @@
-import BaseRequest from "../../../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../@types";
 
 export type GetAccountsAccountIdAcademicHistoriesUrlParams = {
@@ -12,7 +12,7 @@ export type GetAccountsAccountIdAcademicHistoriesResponse = {
 export type GetAccountsAccountIdAcademicHistoriesQueryParams = {
 } | undefined
 
-export const GetAccountsAccountIdAcademicHistories = new BaseRequest<
+export const getAccountsAccountIdAcademicHistories = new BaseRequest<
   undefined,
   GetAccountsAccountIdAcademicHistoriesResponse,
   GetAccountsAccountIdAcademicHistoriesUrlParams,
@@ -22,4 +22,5 @@ export const GetAccountsAccountIdAcademicHistories = new BaseRequest<
   method: "get",
   baseURL: "https://api.example.com/admin",
   path: "/accounts/:account_id/academic_histories",
+  tokenKey: "AUTH_TOKEN",
 });

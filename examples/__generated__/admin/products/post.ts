@@ -1,4 +1,4 @@
-import BaseRequest from "../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../@types";
 
 export type PostProductResponse = Types.Product
@@ -14,7 +14,7 @@ export type PostProductRequestBody = {
   }
 }
 
-export const PostProduct = new BaseRequest<
+export const postProduct = new BaseRequest<
   PostProductRequestBody,
   PostProductResponse,
   undefined,
@@ -24,4 +24,5 @@ export const PostProduct = new BaseRequest<
   method: "post",
   baseURL: "https://api.example.com/admin",
   path: "/products",
+  tokenKey: "AUTH_TOKEN",
 });

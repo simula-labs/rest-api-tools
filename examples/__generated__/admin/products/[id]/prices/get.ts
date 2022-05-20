@@ -1,4 +1,4 @@
-import BaseRequest from "../../../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../@types";
 
 export type GetProductsIdPricesUrlParams = {
@@ -9,7 +9,7 @@ export type GetProductsIdPricesResponse = {
   prices: Types.Price[]
 }
 
-export const GetProductsIdPrices = new BaseRequest<
+export const getProductsIdPrices = new BaseRequest<
   undefined,
   GetProductsIdPricesResponse,
   GetProductsIdPricesUrlParams,
@@ -19,4 +19,5 @@ export const GetProductsIdPrices = new BaseRequest<
   method: "get",
   baseURL: "https://api.example.com/admin",
   path: "/products/:id/prices",
+  tokenKey: "AUTH_TOKEN",
 });

@@ -5,10 +5,8 @@ import axios, {
   AxiosResponseTransformer,
 } from "axios";
 import humps from "humps";
-import { NetworkError, ClientError } from "./error";
 import { QueryFunctionContext } from "react-query";
-
-const TOKEN_KEY = "AUTH_TOKEN";
+import { NetworkError, ClientError } from "./error";
 
 export type HTTPMethod = "get" | "post" | "patch" | "put" | "delete";
 
@@ -19,7 +17,7 @@ export type RequestVariables<
   TPayload,
   TUrlParams extends Record<string, unknown> | undefined,
   TQParams extends Record<string, unknown> | undefined
-  > = {
+> = {
   id?: string;
   params?: TInput;
   urlParams?: TUrlParams;
@@ -31,7 +29,7 @@ export type ApiOption<
   TPayload,
   TUrlParams extends Record<string, unknown> | undefined,
   TQParams extends Record<string, unknown> | undefined
-  > = {
+> = {
   variables?: RequestVariables<TInput, TPayload, TUrlParams, TQParams>;
   onSuccess?: (data: TPayload) => void;
   onFailure?: (e: NetworkError | ClientError) => void;
@@ -42,6 +40,7 @@ export type RequestOption = {
   baseURL: string;
   method: HTTPMethod;
   path: string;
+  tokenKey: string;
 };
 
 export function mergeRequestVariables<
@@ -49,7 +48,7 @@ export function mergeRequestVariables<
   TPayload extends Record<string, unknown>,
   TUrlParams extends Record<string, unknown> | undefined,
   TQParams extends Record<string, unknown> | undefined
-  >(
+>(
   oldVars: RequestVariables<TInput, TPayload, TUrlParams, TQParams>,
   newVars: RequestVariables<TInput, TPayload, TUrlParams, TQParams>
 ): RequestVariables<TInput, TPayload, TUrlParams, TQParams> {
@@ -57,34 +56,34 @@ export function mergeRequestVariables<
     params:
       oldVars?.params || newVars?.params
         ? ({
-          ...(oldVars?.params ?? {}),
-          ...(newVars?.params ?? {}),
-        } as TInput)
+            ...(oldVars?.params ?? {}),
+            ...(newVars?.params ?? {}),
+          } as TInput)
         : undefined,
     urlParams:
       oldVars?.urlParams || newVars?.urlParams
         ? ({
-          ...(oldVars?.urlParams ?? {}),
-          ...(newVars?.urlParams ?? {}),
-        } as TUrlParams)
+            ...(oldVars?.urlParams ?? {}),
+            ...(newVars?.urlParams ?? {}),
+          } as TUrlParams)
         : undefined,
     qParams:
       oldVars?.qParams || newVars?.qParams
         ? ({
-          ...(oldVars?.qParams ?? {}),
-          ...(newVars?.qParams ?? {}),
-        } as TQParams)
+            ...(oldVars?.qParams ?? {}),
+            ...(newVars?.qParams ?? {}),
+          } as TQParams)
         : undefined,
     id: oldVars?.id ?? newVars?.id,
   };
 }
 
-class BaseRequest<
+export class BaseRequest<
   TInput,
   TPayload,
   TUrlParams extends Record<string, unknown> | undefined,
   TQParams extends Record<string, unknown> | undefined
-  > {
+> {
   // Require Override
   /// そのリクエストが認証必要かどうか
   requireAuth: boolean;
@@ -98,14 +97,17 @@ class BaseRequest<
   /// そのAPIのHOSTを除いたエンドポイント
   path: string;
 
+  tokenKey: string;
+
   /// content type
   readonly contentType: ContentType = "json";
 
-  constructor({ requiredAuth, method, baseURL, path }: RequestOption) {
+  constructor({ requiredAuth, method, baseURL, path, tokenKey }: RequestOption) {
     this.requireAuth = requiredAuth;
     this.method = method;
     this.baseURL = baseURL;
     this.path = path;
+    this.tokenKey = tokenKey;
   }
 
   uniqueKey(variables: RequestVariables<TInput, TPayload, TUrlParams, TQParams>): string {
@@ -117,25 +119,24 @@ class BaseRequest<
     return async (context: QueryFunctionContext<string, number>) => {
       // queryKey, signal, pageParam, meta
       const { pageParam } = context;
-      return await this.call(
+      return this.call(
         pageParam
           ? {
-            ...(option?.variables ?? {}),
-            qParams: {
-              ...(option?.variables?.qParams ?? {}),
-              page: pageParam,
-            } as unknown as TQParams, // FIXME
-          }
+              ...(option?.variables ?? {}),
+              qParams: {
+                ...(option?.variables?.qParams ?? {}),
+                page: pageParam,
+              } as unknown as TQParams, // FIXME
+            }
           : option?.variables
       );
     };
   }
 
   buildReactQueryMutater(option?: ApiOption<TInput, TPayload, TUrlParams, TQParams>) {
-    return async (newParams: TInput) => {
+    return async (newParams: TInput) =>
       // queryKey, signal, pageParam, meta
-      return await this.call(mergeRequestVariables(option?.variables ?? {}, { params: newParams }));
-    };
+      this.call(mergeRequestVariables(option?.variables ?? {}, { params: newParams }));
   }
 
   async call(
@@ -191,7 +192,7 @@ class BaseRequest<
             (humps.decamelizeKeys(params as unknown as Record<string, unknown>) as Record<
               string,
               unknown
-              >)
+            >)
           );
       }
     })();
@@ -223,7 +224,7 @@ class BaseRequest<
     };
 
     if (this.requireAuth) {
-      const token = localStorage.getItem(TOKEN_KEY);
+      const token = localStorage.getItem(this.tokenKey);
       if (!token) {
         throw new Error("token not found");
       } else {
@@ -295,5 +296,3 @@ class BaseRequest<
     }
   }
 }
-
-export default BaseRequest;

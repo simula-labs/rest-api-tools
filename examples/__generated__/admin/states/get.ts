@@ -1,11 +1,11 @@
-import BaseRequest from "../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../@types";
 
 export type GetStatesResponse = {
   states: Types.State[]
 }
 
-export const GetStates = new BaseRequest<
+export const getStates = new BaseRequest<
   undefined,
   GetStatesResponse,
   undefined,
@@ -15,4 +15,5 @@ export const GetStates = new BaseRequest<
   method: "get",
   baseURL: "https://api.example.com/admin",
   path: "/states",
+  tokenKey: "AUTH_TOKEN",
 });

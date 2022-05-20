@@ -1,4 +1,4 @@
-import BaseRequest from "../../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../@types";
 
 export type GetPrivacyPolicyHistoriesIdUrlParams = {
@@ -7,7 +7,7 @@ export type GetPrivacyPolicyHistoriesIdUrlParams = {
 
 export type GetPrivacyPolicyHistoriesIdResponse = Types.PrivacyPolicyHistory
 
-export const GetPrivacyPolicyHistoriesId = new BaseRequest<
+export const getPrivacyPolicyHistoriesId = new BaseRequest<
   undefined,
   GetPrivacyPolicyHistoriesIdResponse,
   GetPrivacyPolicyHistoriesIdUrlParams,
@@ -17,4 +17,5 @@ export const GetPrivacyPolicyHistoriesId = new BaseRequest<
   method: "get",
   baseURL: "https://api.example.com/admin",
   path: "/privacy_policy_histories/:id",
+  tokenKey: "AUTH_TOKEN",
 });

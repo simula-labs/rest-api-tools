@@ -1,11 +1,11 @@
-import BaseRequest from "../../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../@types";
 
 export type DeleteProductsIdUrlParams = {
   id: string
 } | undefined
 
-export const DeleteProductsId = new BaseRequest<
+export const deleteProductsId = new BaseRequest<
   undefined,
   undefined,
   DeleteProductsIdUrlParams,
@@ -15,4 +15,5 @@ export const DeleteProductsId = new BaseRequest<
   method: "delete",
   baseURL: "https://api.example.com/admin",
   path: "/products/:id",
+  tokenKey: "AUTH_TOKEN",
 });

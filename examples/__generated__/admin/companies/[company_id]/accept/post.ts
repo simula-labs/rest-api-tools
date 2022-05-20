@@ -1,4 +1,4 @@
-import BaseRequest from "../../../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../@types";
 
 export type PostCompaniesCompanyIdAcceptUrlParams = {
@@ -21,7 +21,7 @@ export type PostCompaniesCompanyIdAcceptResponse = Types.Company & {
     features: Types.Feature[]
   }
 
-export const PostCompaniesCompanyIdAccept = new BaseRequest<
+export const postCompaniesCompanyIdAccept = new BaseRequest<
   undefined,
   PostCompaniesCompanyIdAcceptResponse,
   PostCompaniesCompanyIdAcceptUrlParams,
@@ -31,4 +31,5 @@ export const PostCompaniesCompanyIdAccept = new BaseRequest<
   method: "post",
   baseURL: "https://api.example.com/admin",
   path: "/companies/:company_id/accept",
+  tokenKey: "AUTH_TOKEN",
 });

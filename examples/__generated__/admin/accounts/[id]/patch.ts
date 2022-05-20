@@ -1,6 +1,6 @@
 import type { ReadStream } from 'fs'
 
-import BaseRequest from "../../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../@types";
 
 export type PatchAccountsIdUrlParams = {
@@ -19,7 +19,7 @@ export type PatchAccountsIdRequestBody = {
   }
 }
 
-export const PatchAccountsId = new BaseRequest<
+export const patchAccountsId = new BaseRequest<
   PatchAccountsIdRequestBody,
   PatchAccountsIdResponse,
   PatchAccountsIdUrlParams,
@@ -29,4 +29,5 @@ export const PatchAccountsId = new BaseRequest<
   method: "patch",
   baseURL: "https://api.example.com/admin",
   path: "/accounts/:id",
+  tokenKey: "AUTH_TOKEN",
 });

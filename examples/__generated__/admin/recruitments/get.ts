@@ -1,4 +1,4 @@
-import BaseRequest from "../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../@types";
 
 export type GetRecruitmentsResponse = {
@@ -22,7 +22,7 @@ export type GetRecruitmentsQueryParams = {
   sortAscUpdatedAt?: boolean | undefined
 } | undefined
 
-export const GetRecruitments = new BaseRequest<
+export const getRecruitments = new BaseRequest<
   undefined,
   GetRecruitmentsResponse,
   undefined,
@@ -32,4 +32,5 @@ export const GetRecruitments = new BaseRequest<
   method: "get",
   baseURL: "https://api.example.com/admin",
   path: "/recruitments",
+  tokenKey: "AUTH_TOKEN",
 });

@@ -1,11 +1,11 @@
-import BaseRequest from "../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../@types";
 
 export type GetRecruitmentCompletionReportsResponse = {
   recruitmentCompletionReports: Types.RecruitmentCompletionReport[]
 }
 
-export const GetRecruitmentCompletionReports = new BaseRequest<
+export const getRecruitmentCompletionReports = new BaseRequest<
   undefined,
   GetRecruitmentCompletionReportsResponse,
   undefined,
@@ -15,4 +15,5 @@ export const GetRecruitmentCompletionReports = new BaseRequest<
   method: "get",
   baseURL: "https://api.example.com/admin",
   path: "/recruitment_completion_reports",
+  tokenKey: "AUTH_TOKEN",
 });

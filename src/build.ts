@@ -18,7 +18,7 @@ export const build = (configs: Config[]) => {
       types: contents.types,
       outputDir: config.connect,
       files: contents.files,
-      tokenKey: config.tokenKey,
+      apiMethods: contents.apiMethods,
     });
   });
 };

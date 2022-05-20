@@ -11,5 +11,10 @@
   "license": "ISC",
   "devDependencies": {
     "@simula-labs/rest-api-tools": "file:.."
+  },
+  "dependencies": {
+    "install": "^0.13.0",
+    "semantic-release": "^19.0.2",
+    "yarn": "^1.22.18"
   }
 }
