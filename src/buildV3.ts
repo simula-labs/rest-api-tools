@@ -22,6 +22,10 @@ import { Config } from "./types";
 export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
   const files: { file: string[]; methods: string[] }[] = [];
   const schemas = schemas2Props(openapi.components?.schemas, openapi) || [];
+  const apiMethods: {
+    operationIdImport: string;
+    operationId: string;
+  }[] = [];
 
   Object.entries(openapi.paths).forEach(([path, targetUrl]) => {
     const urlParams: Prop[] = [];
@@ -84,6 +88,12 @@ export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
         return;
       }
       const pascalizedTargetOperationId = humps.pascalize(target.operationId);
+      apiMethods.push({
+        operationIdImport: `import { ${humps.camelize(target.operationId)} } from "./${file.join(
+          "/"
+        )}"`,
+        operationId: humps.camelize(target.operationId),
+      });
       if (target.responses) {
         const code = Object.keys(target.responses).find((res) => res.match(/^(20\d|30\d)$/));
         if (code) {
@@ -258,7 +268,7 @@ export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
 
       // TODO: multiple/form-dataの対応
       const baseRequest =
-        `export const ${pascalizedTargetOperationId} = new BaseRequest<\n` +
+        `export const ${humps.camelize(target.operationId)} = new BaseRequest<\n` +
         `  ${hasRequestBody ? `${pascalizedTargetOperationId}RequestBody` : undefined},\n` +
         `  ${hasResponse ? `${pascalizedTargetOperationId}Response` : undefined},\n` +
         `  ${hasUrlParams ? `${pascalizedTargetOperationId}UrlParams` : undefined},\n` +
@@ -324,5 +334,6 @@ export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
         mockText && `/* eslint-disable */\n import type * as Types from "../@types";\n ${mockText}`,
     },
     files,
+    apiMethods,
   };
 };

@@ -1,6 +1,6 @@
 {
   "name": "@simula-labs/rest-api-tools",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "dist/index.js",
   "files": [
@@ -33,7 +33,6 @@
   },
   "homepage": "https://github.com/simula-labs/rest-api-tools#readme",
   "devDependencies": {
-    "@semantic-release/github": "^8.0.4",
     "@types/axios": "^0.14.0",
     "@types/fs-extra": "^9.0.13",
     "@types/humps": "^2.0.1",

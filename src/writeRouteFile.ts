@@ -1,5 +1,4 @@
 import fs from "fs";
-import path from "path";
 
 type WriteRouteFileProps = {
   types: {
@@ -11,10 +10,13 @@ type WriteRouteFileProps = {
     methods: string[];
   }[];
   outputDir: string;
-  tokenKey: string;
+  apiMethods: {
+    operationIdImport: string;
+    operationId: string;
+  }[];
 };
 
-export const writeRouteFile = ({ types, files, outputDir, tokenKey }: WriteRouteFileProps) => {
+export const writeRouteFile = ({ types, files, outputDir, apiMethods }: WriteRouteFileProps) => {
   if (types.type && types.mock) {
     fs.mkdirSync(`${outputDir}/@types`);
     fs.writeFileSync(`${outputDir}/@types/index.ts`, types.type, "utf8");
@@ -32,7 +34,14 @@ export const writeRouteFile = ({ types, files, outputDir, tokenKey }: WriteRoute
     fs.writeFileSync(
       `${outputDir}/${p.file.join("/")}/${fileName}.ts`,
       p.methods.join("\n"),
-      "utf8"
+      "utf-8"
     );
   });
+  const apiFunctionName = outputDir.split("/").pop();
+  const apiTest =
+    `${apiMethods.map((apiMethod) => apiMethod.operationIdImport).join(";\n")}\n\n` +
+    `export const ${apiFunctionName}Api = () => {\n` +
+    ` return {\n` +
+    `${apiMethods.map((apiMethod) => `    ${apiMethod.operationId}`).join(",\n")}\n  }\n};`;
+  fs.writeFileSync(`${outputDir}/$api.ts`, apiTest, "utf-8");
 };
