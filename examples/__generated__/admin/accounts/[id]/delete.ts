@@ -1,4 +1,4 @@
-import BaseRequest from "../../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../@types";
 
 export type DeleteAccountsIdUrlParams = {
@@ -15,4 +15,5 @@ export const DeleteAccountsId = new BaseRequest<
   method: "delete",
   baseURL: "https://api.example.com/admin",
   path: "/accounts/:id",
+  tokenKey: "AUTH_TOKEN",
 });

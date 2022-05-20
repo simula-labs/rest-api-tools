@@ -1,4 +1,4 @@
-import BaseRequest from "../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../@types";
 
 export type GetEmploymentStatusesResponse = {
@@ -15,4 +15,5 @@ export const GetEmploymentStatuses = new BaseRequest<
   method: "get",
   baseURL: "https://api.example.com/admin",
   path: "/employment_statuses",
+  tokenKey: "AUTH_TOKEN",
 });

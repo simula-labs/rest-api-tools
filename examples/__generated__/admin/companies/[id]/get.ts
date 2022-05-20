@@ -1,4 +1,4 @@
-import BaseRequest from "../../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../@types";
 
 export type GetCompaniesIdUrlParams = {
@@ -31,4 +31,5 @@ export const GetCompaniesId = new BaseRequest<
   method: "get",
   baseURL: "https://api.example.com/admin",
   path: "/companies/:id",
+  tokenKey: "AUTH_TOKEN",
 });

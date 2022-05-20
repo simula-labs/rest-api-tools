@@ -196,7 +196,7 @@ export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
       const methods: string[] = [];
       let responseType = "";
       methods.push(
-        `import BaseRequest from "${file.map(() => "").join("../")}baseRequest";\n` +
+        `import { BaseRequest } from "@simula-labs/rest-api-tools";\n` +
           `import type * as Types from "${file.map(() => "").join("../")}@types";\n`
       );
       params.forEach((param) => {
@@ -268,6 +268,7 @@ export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
         `  method: "${method}",\n` +
         `  baseURL: "${config.baseURL}",\n` +
         `  path: "${requestPath}",\n` +
+        `  tokenKey: "${config.tokenKey}",\n` +
         "});\n";
       methods.push(baseRequest);
       files.push({

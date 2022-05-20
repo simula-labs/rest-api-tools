@@ -35,10 +35,4 @@ export const writeRouteFile = ({ types, files, outputDir, tokenKey }: WriteRoute
       "utf8"
     );
   });
-  const baseRequestFile = fs
-    .readFileSync(path.join(path.dirname(__filename), "../lib/baseRequest.ts"), "utf8")
-    .replace("AUTH_TOKEN", tokenKey);
-
-  fs.writeFileSync(`${outputDir}/baseRequest.ts`, baseRequestFile, "utf-8");
-  fs.copyFileSync(path.join(path.dirname(__filename), "../lib/error.ts"), `${outputDir}/error.ts`);
 };
