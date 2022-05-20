@@ -12,7 +12,7 @@ export type GetWithdrawalsResponse = {
   totalDataNums: number
 }
 
-export const GetWithdrawals = new BaseRequest<
+export const getWithdrawals = new BaseRequest<
   undefined,
   GetWithdrawalsResponse,
   undefined,

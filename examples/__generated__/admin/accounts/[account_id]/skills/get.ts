@@ -9,7 +9,7 @@ export type GetAccountsAccountIdSkillsResponse = {
   skills: Types.Skill[]
 }
 
-export const GetAccountsAccountIdSkills = new BaseRequest<
+export const getAccountsAccountIdSkills = new BaseRequest<
   undefined,
   GetAccountsAccountIdSkillsResponse,
   GetAccountsAccountIdSkillsUrlParams,

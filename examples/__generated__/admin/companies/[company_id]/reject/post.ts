@@ -21,7 +21,7 @@ export type PostCompaniesCompanyIdRejectResponse = Types.Company & {
     features: Types.Feature[]
   }
 
-export const PostCompaniesCompanyIdReject = new BaseRequest<
+export const postCompaniesCompanyIdReject = new BaseRequest<
   undefined,
   PostCompaniesCompanyIdRejectResponse,
   PostCompaniesCompanyIdRejectUrlParams,

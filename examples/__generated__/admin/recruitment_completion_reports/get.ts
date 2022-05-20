@@ -5,7 +5,7 @@ export type GetRecruitmentCompletionReportsResponse = {
   recruitmentCompletionReports: Types.RecruitmentCompletionReport[]
 }
 
-export const GetRecruitmentCompletionReports = new BaseRequest<
+export const getRecruitmentCompletionReports = new BaseRequest<
   undefined,
   GetRecruitmentCompletionReportsResponse,
   undefined,

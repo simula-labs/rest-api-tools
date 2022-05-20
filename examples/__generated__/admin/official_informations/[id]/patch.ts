@@ -16,7 +16,7 @@ export type PatchOfficialInformationsIdRequestBody = {
   }
 }
 
-export const PatchOfficialInformationsId = new BaseRequest<
+export const patchOfficialInformationsId = new BaseRequest<
   PatchOfficialInformationsIdRequestBody,
   PatchOfficialInformationsIdResponse,
   PatchOfficialInformationsIdUrlParams,

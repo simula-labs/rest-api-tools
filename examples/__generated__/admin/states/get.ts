@@ -5,7 +5,7 @@ export type GetStatesResponse = {
   states: Types.State[]
 }
 
-export const GetStates = new BaseRequest<
+export const getStates = new BaseRequest<
   undefined,
   GetStatesResponse,
   undefined,

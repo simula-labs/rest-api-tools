@@ -13,7 +13,7 @@ export type PatchPricesIdRequestBody = {
   }
 }
 
-export const PatchPricesId = new BaseRequest<
+export const patchPricesId = new BaseRequest<
   PatchPricesIdRequestBody,
   PatchPricesIdResponse,
   PatchPricesIdUrlParams,

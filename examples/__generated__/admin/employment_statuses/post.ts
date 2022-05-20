@@ -10,7 +10,7 @@ export type PostEmploymentStatusesRequestBody = {
   }
 }
 
-export const PostEmploymentStatuses = new BaseRequest<
+export const postEmploymentStatuses = new BaseRequest<
   PostEmploymentStatusesRequestBody,
   PostEmploymentStatusesResponse,
   undefined,

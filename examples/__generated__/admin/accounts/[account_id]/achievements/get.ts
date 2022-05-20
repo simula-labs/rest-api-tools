@@ -9,7 +9,7 @@ export type GetAccountsAccountIdAchievementsResponse = {
   achievements: Types.Achievement[]
 }
 
-export const GetAccountsAccountIdAchievements = new BaseRequest<
+export const getAccountsAccountIdAchievements = new BaseRequest<
   undefined,
   GetAccountsAccountIdAchievementsResponse,
   GetAccountsAccountIdAchievementsUrlParams,

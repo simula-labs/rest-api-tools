@@ -9,7 +9,7 @@ export type GetTermHistoriesQueryParams = {
   type?: 'common' | 'plan' | undefined
 } | undefined
 
-export const GetTermHistories = new BaseRequest<
+export const getTermHistories = new BaseRequest<
   undefined,
   GetTermHistoriesResponse,
   undefined,

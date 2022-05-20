@@ -10,7 +10,7 @@ export type PostFeaturesRequestBody = {
   }
 }
 
-export const PostFeatures = new BaseRequest<
+export const postFeatures = new BaseRequest<
   PostFeaturesRequestBody,
   PostFeaturesResponse,
   undefined,

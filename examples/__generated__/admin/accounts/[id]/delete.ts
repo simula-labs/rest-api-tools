@@ -5,7 +5,7 @@ export type DeleteAccountsIdUrlParams = {
   id: string
 } | undefined
 
-export const DeleteAccountsId = new BaseRequest<
+export const deleteAccountsId = new BaseRequest<
   undefined,
   undefined,
   DeleteAccountsIdUrlParams,

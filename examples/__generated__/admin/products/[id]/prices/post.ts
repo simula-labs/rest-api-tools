@@ -22,7 +22,7 @@ export type PostProductsIdPricesRequestBody = {
   }
 }
 
-export const PostProductsIdPrices = new BaseRequest<
+export const postProductsIdPrices = new BaseRequest<
   PostProductsIdPricesRequestBody,
   PostProductsIdPricesResponse,
   PostProductsIdPricesUrlParams,

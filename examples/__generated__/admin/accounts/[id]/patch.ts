@@ -19,7 +19,7 @@ export type PatchAccountsIdRequestBody = {
   }
 }
 
-export const PatchAccountsId = new BaseRequest<
+export const patchAccountsId = new BaseRequest<
   PatchAccountsIdRequestBody,
   PatchAccountsIdResponse,
   PatchAccountsIdUrlParams,

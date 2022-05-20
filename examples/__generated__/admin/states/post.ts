@@ -10,7 +10,7 @@ export type PostStatesRequestBody = {
   }
 }
 
-export const PostStates = new BaseRequest<
+export const postStates = new BaseRequest<
   PostStatesRequestBody,
   PostStatesResponse,
   undefined,

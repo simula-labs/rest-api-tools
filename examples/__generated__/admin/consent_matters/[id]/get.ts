@@ -7,7 +7,7 @@ export type GetConsentMattersIdUrlParams = {
 
 export type GetConsentMattersIdResponse = Types.ConsentMatter
 
-export const GetConsentMattersId = new BaseRequest<
+export const getConsentMattersId = new BaseRequest<
   undefined,
   GetConsentMattersIdResponse,
   GetConsentMattersIdUrlParams,

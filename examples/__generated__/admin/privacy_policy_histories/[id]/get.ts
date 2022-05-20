@@ -7,7 +7,7 @@ export type GetPrivacyPolicyHistoriesIdUrlParams = {
 
 export type GetPrivacyPolicyHistoriesIdResponse = Types.PrivacyPolicyHistory
 
-export const GetPrivacyPolicyHistoriesId = new BaseRequest<
+export const getPrivacyPolicyHistoriesId = new BaseRequest<
   undefined,
   GetPrivacyPolicyHistoriesIdResponse,
   GetPrivacyPolicyHistoriesIdUrlParams,

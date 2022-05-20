@@ -7,7 +7,7 @@ export type GetPricesIdUrlParams = {
 
 export type GetPricesIdResponse = Types.Price
 
-export const GetPricesId = new BaseRequest<
+export const getPricesId = new BaseRequest<
   undefined,
   GetPricesIdResponse,
   GetPricesIdUrlParams,

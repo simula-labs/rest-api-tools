@@ -14,7 +14,7 @@ export type GetFeaturesQueryParams = {
   sourceType?: 'company' | 'recruitment' | undefined
 } | undefined
 
-export const GetFeatures = new BaseRequest<
+export const getFeatures = new BaseRequest<
   undefined,
   GetFeaturesResponse,
   undefined,

@@ -7,7 +7,7 @@ export type GetAccountsAccountIdProjectResultUrlParams = {
 
 export type GetAccountsAccountIdProjectResultResponse = Types.ProjectResult
 
-export const GetAccountsAccountIdProjectResult = new BaseRequest<
+export const getAccountsAccountIdProjectResult = new BaseRequest<
   undefined,
   GetAccountsAccountIdProjectResultResponse,
   GetAccountsAccountIdProjectResultUrlParams,

@@ -10,7 +10,7 @@ export type GetOfficialInformationsQueryParams = {
   isReleased?: boolean | undefined
 } | undefined
 
-export const GetOfficialInformations = new BaseRequest<
+export const getOfficialInformations = new BaseRequest<
   undefined,
   GetOfficialInformationsResponse,
   undefined,

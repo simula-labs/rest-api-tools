@@ -5,7 +5,7 @@ export type GetJobChangeCompletionReportsResponse = {
   jobChangeCompletionReports: Types.JobChangeCompletionReport[]
 }
 
-export const GetJobChangeCompletionReports = new BaseRequest<
+export const getJobChangeCompletionReports = new BaseRequest<
   undefined,
   GetJobChangeCompletionReportsResponse,
   undefined,

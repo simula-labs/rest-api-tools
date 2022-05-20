@@ -9,7 +9,7 @@ export type GetAccountsAccountIdHopesResponse = {
   hopes: Types.Hope[]
 }
 
-export const GetAccountsAccountIdHopes = new BaseRequest<
+export const getAccountsAccountIdHopes = new BaseRequest<
   undefined,
   GetAccountsAccountIdHopesResponse,
   GetAccountsAccountIdHopesUrlParams,

@@ -5,7 +5,7 @@ export type GetConsentMattersResponse = {
   consentMatters: Types.ConsentMatter[]
 }
 
-export const GetConsentMatters = new BaseRequest<
+export const getConsentMatters = new BaseRequest<
   undefined,
   GetConsentMattersResponse,
   undefined,

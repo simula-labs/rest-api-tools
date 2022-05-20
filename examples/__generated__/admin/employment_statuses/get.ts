@@ -5,7 +5,7 @@ export type GetEmploymentStatusesResponse = {
   employmentStatuses: Types.EmploymentStatus[]
 }
 
-export const GetEmploymentStatuses = new BaseRequest<
+export const getEmploymentStatuses = new BaseRequest<
   undefined,
   GetEmploymentStatusesResponse,
   undefined,

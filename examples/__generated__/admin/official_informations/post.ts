@@ -12,7 +12,7 @@ export type PostOfficialInformationsRequestBody = {
   }
 }
 
-export const PostOfficialInformations = new BaseRequest<
+export const postOfficialInformations = new BaseRequest<
   PostOfficialInformationsRequestBody,
   PostOfficialInformationsResponse,
   undefined,

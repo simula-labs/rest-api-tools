@@ -5,7 +5,7 @@ export type DeleteCompaniesIdUrlParams = {
   id: string
 } | undefined
 
-export const DeleteCompaniesId = new BaseRequest<
+export const deleteCompaniesId = new BaseRequest<
   undefined,
   undefined,
   DeleteCompaniesIdUrlParams,

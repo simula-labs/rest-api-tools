@@ -9,7 +9,7 @@ export type GetAccountsAccountIdWorkHistoriesResponse = {
   workHistories: Types.WorkHistory[]
 }
 
-export const GetAccountsAccountIdWorkHistories = new BaseRequest<
+export const getAccountsAccountIdWorkHistories = new BaseRequest<
   undefined,
   GetAccountsAccountIdWorkHistoriesResponse,
   GetAccountsAccountIdWorkHistoriesUrlParams,

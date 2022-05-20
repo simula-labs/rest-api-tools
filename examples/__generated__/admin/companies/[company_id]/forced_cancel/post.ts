@@ -21,7 +21,7 @@ export type PostCompaniesCompanyIdForcedCancelResponse = Types.Company & {
     features: Types.Feature[]
   }
 
-export const PostCompaniesCompanyIdForcedCancel = new BaseRequest<
+export const postCompaniesCompanyIdForcedCancel = new BaseRequest<
   undefined,
   PostCompaniesCompanyIdForcedCancelResponse,
   PostCompaniesCompanyIdForcedCancelUrlParams,

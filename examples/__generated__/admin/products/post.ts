@@ -14,7 +14,7 @@ export type PostProductRequestBody = {
   }
 }
 
-export const PostProduct = new BaseRequest<
+export const postProduct = new BaseRequest<
   PostProductRequestBody,
   PostProductResponse,
   undefined,

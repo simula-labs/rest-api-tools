@@ -5,7 +5,7 @@ export type GetPayoutsResponse = {
   payouts: Types.Payout
 }
 
-export const GetPayouts = new BaseRequest<
+export const getPayouts = new BaseRequest<
   undefined,
   GetPayoutsResponse,
   undefined,

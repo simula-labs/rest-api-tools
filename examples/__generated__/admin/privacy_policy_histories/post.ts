@@ -10,7 +10,7 @@ export type PostPrivacyPolicyHistoriesRequestBody = {
   }
 }
 
-export const PostPrivacyPolicyHistories = new BaseRequest<
+export const postPrivacyPolicyHistories = new BaseRequest<
   PostPrivacyPolicyHistoriesRequestBody,
   PostPrivacyPolicyHistoriesResponse,
   undefined,

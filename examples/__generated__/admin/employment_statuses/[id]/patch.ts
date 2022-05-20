@@ -14,7 +14,7 @@ export type PatchEmploymentStatusesIdRequestBody = {
   }
 }
 
-export const PatchEmploymentStatusesId = new BaseRequest<
+export const patchEmploymentStatusesId = new BaseRequest<
   PatchEmploymentStatusesIdRequestBody,
   PatchEmploymentStatusesIdResponse,
   PatchEmploymentStatusesIdUrlParams,

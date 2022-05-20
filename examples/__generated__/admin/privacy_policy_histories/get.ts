@@ -5,7 +5,7 @@ export type GetPrivacyPolicyHistoriesResponse = {
   privacyPolicyHistories: Types.PrivacyPolicyHistory[]
 }
 
-export const GetPrivacyPolicyHistories = new BaseRequest<
+export const getPrivacyPolicyHistories = new BaseRequest<
   undefined,
   GetPrivacyPolicyHistoriesResponse,
   undefined,

@@ -21,7 +21,7 @@ export type GetCompaniesIdResponse = Types.Company & {
     features: Types.Feature[]
   }
 
-export const GetCompaniesId = new BaseRequest<
+export const getCompaniesId = new BaseRequest<
   undefined,
   GetCompaniesIdResponse,
   GetCompaniesIdUrlParams,

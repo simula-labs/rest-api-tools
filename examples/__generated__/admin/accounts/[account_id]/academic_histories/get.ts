@@ -12,7 +12,7 @@ export type GetAccountsAccountIdAcademicHistoriesResponse = {
 export type GetAccountsAccountIdAcademicHistoriesQueryParams = {
 } | undefined
 
-export const GetAccountsAccountIdAcademicHistories = new BaseRequest<
+export const getAccountsAccountIdAcademicHistories = new BaseRequest<
   undefined,
   GetAccountsAccountIdAcademicHistoriesResponse,
   GetAccountsAccountIdAcademicHistoriesUrlParams,

@@ -13,7 +13,7 @@ export type GetAccountsQueryParams = {
   keyword?: string | undefined
 } | undefined
 
-export const GetAccounts = new BaseRequest<
+export const getAccounts = new BaseRequest<
   undefined,
   GetAccountsResponse,
   undefined,

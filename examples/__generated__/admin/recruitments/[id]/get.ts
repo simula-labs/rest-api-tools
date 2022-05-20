@@ -7,7 +7,7 @@ export type GetRecruitmentsIdUrlParams = {
 
 export type GetRecruitmentsIdResponse = Types.Recruitment
 
-export const GetRecruitmentsId = new BaseRequest<
+export const getRecruitmentsId = new BaseRequest<
   undefined,
   GetRecruitmentsIdResponse,
   GetRecruitmentsIdUrlParams,

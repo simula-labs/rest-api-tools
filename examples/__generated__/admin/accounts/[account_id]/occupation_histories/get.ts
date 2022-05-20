@@ -9,7 +9,7 @@ export type GetAccountsAccountIdOccupationHistoriesResponse = {
   occupationHistories: Types.OccupationHistory[]
 }
 
-export const GetAccountsAccountIdOccupationHistories = new BaseRequest<
+export const getAccountsAccountIdOccupationHistories = new BaseRequest<
   undefined,
   GetAccountsAccountIdOccupationHistoriesResponse,
   GetAccountsAccountIdOccupationHistoriesUrlParams,

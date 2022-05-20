@@ -7,7 +7,7 @@ export type GetEmploymentStatusesIdUrlParams = {
 
 export type GetEmploymentStatusesIdResponse = Types.EmploymentStatus
 
-export const GetEmploymentStatusesId = new BaseRequest<
+export const getEmploymentStatusesId = new BaseRequest<
   undefined,
   GetEmploymentStatusesIdResponse,
   GetEmploymentStatusesIdUrlParams,

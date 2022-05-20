@@ -43,7 +43,7 @@ export type PatchRecruitmentsIdRequestBody = {
   }
 }
 
-export const PatchRecruitmentsId = new BaseRequest<
+export const patchRecruitmentsId = new BaseRequest<
   PatchRecruitmentsIdRequestBody,
   PatchRecruitmentsIdResponse,
   PatchRecruitmentsIdUrlParams,

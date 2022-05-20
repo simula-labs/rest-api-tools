@@ -35,7 +35,7 @@ export type GetCompaniesQueryParams = {
   sortAscSubscribedAt?: boolean | undefined
 } | undefined
 
-export const GetCompanies = new BaseRequest<
+export const getCompanies = new BaseRequest<
   undefined,
   GetCompaniesResponse,
   undefined,

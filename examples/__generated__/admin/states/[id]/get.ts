@@ -7,7 +7,7 @@ export type GetStatesIdUrlParams = {
 
 export type GetStatesIdResponse = Types.State
 
-export const GetStatesId = new BaseRequest<
+export const getStatesId = new BaseRequest<
   undefined,
   GetStatesIdResponse,
   GetStatesIdUrlParams,

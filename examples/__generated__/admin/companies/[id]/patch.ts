@@ -24,7 +24,7 @@ export type PatchCompaniesIdResponse = Types.Company & {
 export type PatchCompaniesIdRequestBody = {
 }
 
-export const PatchCompaniesId = new BaseRequest<
+export const patchCompaniesId = new BaseRequest<
   PatchCompaniesIdRequestBody,
   PatchCompaniesIdResponse,
   PatchCompaniesIdUrlParams,

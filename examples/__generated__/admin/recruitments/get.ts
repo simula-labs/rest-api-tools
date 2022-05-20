@@ -22,7 +22,7 @@ export type GetRecruitmentsQueryParams = {
   sortAscUpdatedAt?: boolean | undefined
 } | undefined
 
-export const GetRecruitments = new BaseRequest<
+export const getRecruitments = new BaseRequest<
   undefined,
   GetRecruitmentsResponse,
   undefined,

@@ -10,7 +10,7 @@ export type PostTermHistoriesRequestBody = {
   }
 }
 
-export const PostTermHistories = new BaseRequest<
+export const postTermHistories = new BaseRequest<
   PostTermHistoriesRequestBody,
   PostTermHistoriesResponse,
   undefined,

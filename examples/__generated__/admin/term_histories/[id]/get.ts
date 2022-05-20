@@ -7,7 +7,7 @@ export type GetTermHistoriesIdUrlParams = {
 
 export type GetTermHistoriesIdResponse = Types.TermHistory
 
-export const GetTermHistoriesId = new BaseRequest<
+export const getTermHistoriesId = new BaseRequest<
   undefined,
   GetTermHistoriesIdResponse,
   GetTermHistoriesIdUrlParams,

@@ -9,7 +9,7 @@ export type GetProductsIdPricesResponse = {
   prices: Types.Price[]
 }
 
-export const GetProductsIdPrices = new BaseRequest<
+export const getProductsIdPrices = new BaseRequest<
   undefined,
   GetProductsIdPricesResponse,
   GetProductsIdPricesUrlParams,

@@ -7,7 +7,7 @@ export type GetOfficialInformationsIdUrlParams = {
 
 export type GetOfficialInformationsIdResponse = Types.OfficialInformation
 
-export const GetOfficialInformationsId = new BaseRequest<
+export const getOfficialInformationsId = new BaseRequest<
   undefined,
   GetOfficialInformationsIdResponse,
   GetOfficialInformationsIdUrlParams,

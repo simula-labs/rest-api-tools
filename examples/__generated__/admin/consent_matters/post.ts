@@ -9,7 +9,7 @@ export type PostConsentMattersRequestBody = {
   }
 }
 
-export const PostConsentMatters = new BaseRequest<
+export const postConsentMatters = new BaseRequest<
   PostConsentMattersRequestBody,
   PostConsentMattersResponse,
   undefined,

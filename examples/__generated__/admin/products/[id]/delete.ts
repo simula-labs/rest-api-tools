@@ -5,7 +5,7 @@ export type DeleteProductsIdUrlParams = {
   id: string
 } | undefined
 
-export const DeleteProductsId = new BaseRequest<
+export const deleteProductsId = new BaseRequest<
   undefined,
   undefined,
   DeleteProductsIdUrlParams,

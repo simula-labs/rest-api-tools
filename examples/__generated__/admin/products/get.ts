@@ -5,7 +5,7 @@ export type GetProductResponse = {
   products: Types.Product[]
 }
 
-export const GetProduct = new BaseRequest<
+export const getProduct = new BaseRequest<
   undefined,
   GetProductResponse,
   undefined,
