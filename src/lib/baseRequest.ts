@@ -110,8 +110,8 @@ export class BaseRequest<
     this.tokenKey = tokenKey;
   }
 
-  uniqueKey(variables: RequestVariables<TInput, TPayload, TUrlParams, TQParams>): string {
-    const { urlParams, qParams } = variables;
+  uniqueKey(variables?: RequestVariables<TInput, TPayload, TUrlParams, TQParams>): string {
+    const { urlParams, qParams } = variables ?? {};
     return `${this.baseURL}${this.configurePath(urlParams, qParams)}##${this.method}`;
   }
 
