@@ -6,6 +6,8 @@ export const run = (args: string[]) => {
   const argv = minimist(args, {
     string: ["config"],
   });
-  const configs = require(path.join(process.cwd(), argv.config));
+  const configs = argv.config
+    ? require(path.join(process.cwd(), argv.config))
+    : require(path.join(process.cwd(), "rest-api-tools.config.js"));
   build(configs);
 };

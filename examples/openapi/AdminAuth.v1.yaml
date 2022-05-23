@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  title: AdminAuth
+  version: '1.0'
+servers:
+  - url: http://localhost:3000/auth/admin/v1
+    description: Local
+  - url: https://api-dev.prob-works.com/auth/admin/v1
+    description: Dev
+  - url: https://api-stg.prob-works.com/auth/admin/v1
+    description: Stg
+  - url: https://api.prob-works.com/auth/admin/v1
+    description: Prd
+paths:
+  /sign_in:
+    post:
+      summary: Sign In
+      operationId: post-sign_in
+      responses:
+        '200':
+          $ref: '#/components/responses/SignIn'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                admin_account:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: test@example.com
+                      format: email
+                    password:
+                      type: string
+                      format: password
+                  required:
+                    - email
+                    - password
+components:
+  schemas:
+    AdminAccount:
+      title: AdminAccount
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+  responses:
+    SignIn:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              account:
+                $ref: '#/components/schemas/AdminAccount'
+              token:
+                type: string

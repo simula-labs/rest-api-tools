@@ -1,15 +1,39 @@
-import { Account } from "../../@types";
-import BaseRequest from "../../../baseRequest";
+import { BaseRequest } from "@simula-labs/rest-api-tools";
+import type * as Types from "../../@types";
 
-export type GetAccounts_id_UrlParams = {
-  id: string;
-};
+export type GetAccountsIdUrlParams = {
+  id: string
+} | undefined
 
-export type GetAccounts_id_Payload = Account;
+export type GetAccountsIdResponse = Types.Account & {
+    profile: Types.Profile & {
+      specialtyCompanyTypes: Types.SpecialtyCompanyType[]
+    } & {
+      specialtyPositions: Types.SpecialtyPosition[]
+    } & {
+      occupationMainCategories: Types.OccupationMainCategory[]
+    } & {
+      industryCategories: Types.IndustryCategory[]
+    }
+  } & {
+    employments: (Types.Employment & {
+      company: Types.Company
+    } & {
+      roles: Types.Role[]
+    })[]
+  } & {
+    blockedCompanies: Types.Company[]
+  }
 
-export const GetAccounts_id = new BaseRequest<undefined, GetAccounts_id_Payload, GetAccounts_id_UrlParams, undefined>({
+export const getAccountsId = new BaseRequest<
+  undefined,
+  GetAccountsIdResponse,
+  GetAccountsIdUrlParams,
+  undefined
+>({
   requiredAuth: true,
   method: "get",
   baseURL: "https://api.example.com/application",
   path: "/accounts/:id",
+  tokenKey: "AUTH_TOKEN",
 });

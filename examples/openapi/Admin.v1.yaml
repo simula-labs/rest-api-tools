@@ -2540,16 +2540,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/EmploymentStatus'
-          examples:
-            example-1:
-              value:
-                id: string
-                created_at: '2019-08-24T14:15:22Z'
-                updated_at: '2019-08-24T14:15:22Z'
-                name: 正社員
-                type: CAREER
-                project_classification: contract
-                is_selectable: true
     EmploymentStatuses:
       description: ''
       content:
@@ -2561,17 +2551,6 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/EmploymentStatus'
-          examples:
-            example-1:
-              value:
-                employment_statuses:
-                  - id: string
-                    created_at: '2019-08-24T14:15:22Z'
-                    updated_at: '2019-08-24T14:15:22Z'
-                    name: 正社員
-                    type: CAREER
-                    project_classification: contract
-                    is_selectable: true
     States:
       description: ''
       content:
@@ -2583,15 +2562,6 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/State'
-          examples:
-            example-1:
-              value:
-                states:
-                  - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-                    created_at: '2019-08-24T14:15:22Z'
-                    updated_at: '2019-08-24T14:15:22Z'
-                    country_code: string
-                    name: string
     State:
       description: ''
       content:
