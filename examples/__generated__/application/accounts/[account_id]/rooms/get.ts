@@ -1,11 +1,11 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../../@types";
+import type * as Types from "../../../../@types";
 
-export type GetAccountsAccountIdMessagesUrlParams = {
+export type GetAccountsAccountIdRoomsUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdMessagesResponse = {
+export type GetAccountsAccountIdRoomsResponse = {
   rooms: Types.Room & {
     account: Types.Account & {
       profile: Types.Profile & {
@@ -23,15 +23,15 @@ export type GetAccountsAccountIdMessagesResponse = {
   totalDataNums: number
 }
 
-export const getAccountsAccountIdMessages = new BaseRequest<
+export const getAccountsAccountIdRooms = new BaseRequest<
   undefined,
-  GetAccountsAccountIdMessagesResponse,
-  GetAccountsAccountIdMessagesUrlParams,
+  GetAccountsAccountIdRoomsResponse,
+  GetAccountsAccountIdRoomsUrlParams,
   undefined
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:account_id/rooms",
   tokenKey: "AUTH_TOKEN",
 });

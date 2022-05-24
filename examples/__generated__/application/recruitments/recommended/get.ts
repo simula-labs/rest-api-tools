@@ -1,5 +1,5 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../@types";
+import type * as Types from "../../../@types";
 
 export type GetRecruitmentsRecommendedResponse = {
   recruitments: (Types.Recruitment & {
@@ -42,7 +42,7 @@ export const getRecruitmentsRecommended = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/recruitments/recommended",
   tokenKey: "AUTH_TOKEN",
 });

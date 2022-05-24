@@ -16,10 +16,14 @@ import {
   value2String,
   value2StringForMock,
 } from "./builderUtils/props2String";
-import { resolveParamsRef, resolveReqRef, resolveResRef } from "./builderUtils/resolvers";
-import { Config } from "./types";
+import { resolveReqRef, resolveResRef } from "./builderUtils/resolvers";
+import { BaseConfig, CodeGenConfig } from "./types";
 
-export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
+export const buildV3 = (
+  openapi: OpenAPIV3.Document,
+  config: CodeGenConfig,
+  baseConfig: BaseConfig
+) => {
   const files: { file: string[]; methods: string[] }[] = [];
   const schemas = schemas2Props(openapi.components?.schemas, openapi) || [];
   const apiMethods: {
@@ -207,7 +211,7 @@ export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
       let responseType = "";
       methods.push(
         `import { BaseRequest } from "@simula-labs/rest-api-tools";\n` +
-          `import type * as Types from "${file.map(() => "").join("../")}@types";\n`
+          `import type * as Types from "../${file.map(() => "").join("../")}@types";\n`
       );
       params.forEach((param) => {
         switch (param.name) {
@@ -276,9 +280,9 @@ export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
         ">({\n" +
         `  requiredAuth: true,\n` +
         `  method: "${method}",\n` +
-        `  baseURL: "${config.baseURL}",\n` +
+        `  baseURL: "${baseConfig.baseURL}",\n` +
         `  path: "${requestPath}",\n` +
-        `  tokenKey: "${config.tokenKey}",\n` +
+        `  tokenKey: "${baseConfig.tokenKey}",\n` +
         "});\n";
       methods.push(baseRequest);
       files.push({
@@ -323,16 +327,7 @@ export const buildV3 = (openapi: OpenAPIV3.Document, config: Config) => {
     : null;
 
   return {
-    types: {
-      type:
-        typesText &&
-        // @ts-nocheck
-        `/* eslint-disable */${
-          typesText.includes(BINARY_TYPE) ? "\nimport type { ReadStream } from 'fs'\n" : ""
-        }${typesText}`,
-      mock:
-        mockText && `/* eslint-disable */\n import type * as Types from "../@types";\n ${mockText}`,
-    },
+    schemas,
     files,
     apiMethods,
   };

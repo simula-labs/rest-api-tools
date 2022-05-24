@@ -1,5 +1,5 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../../@types";
+import type * as Types from "../../../../@types";
 
 export type PostRoomsRoomIdMarkAsReadUrlParams = {
   roomId: string
@@ -13,7 +13,7 @@ export const postRoomsRoomIdMarkAsRead = new BaseRequest<
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/rooms/:room_id/mark_as_read",
   tokenKey: "AUTH_TOKEN",
 });

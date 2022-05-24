@@ -1,5 +1,5 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../../@types";
+import type * as Types from "../../../../@types";
 
 export type GetaccountsAccountIdAgreeConsentMattersUrlParams = {
   accountId: string
@@ -17,7 +17,7 @@ export const getaccountsAccountIdAgreeConsentMatters = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:account_id/not_agreed_consent_matters",
   tokenKey: "AUTH_TOKEN",
 });

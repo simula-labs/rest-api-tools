@@ -43,12 +43,25 @@ components:
     AdminAccount:
       title: AdminAccount
       type: object
+      description: ''
       properties:
         id:
           type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
         email:
           type: string
           format: email
+      required:
+        - id
+        - created_at
+        - updated_at
+        - email
   responses:
     SignIn:
       content:

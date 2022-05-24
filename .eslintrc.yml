@@ -23,4 +23,5 @@ rules: {
   global-require: off,
   no-console: off,
   consistent-return: off,
+  '@typescript-eslint/no-shadow': off,
 }

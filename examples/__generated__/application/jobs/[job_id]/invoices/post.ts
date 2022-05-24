@@ -1,5 +1,5 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../../@types";
+import type * as Types from "../../../../@types";
 
 export type PostJobsJobIdInvoicesUrlParams = {
   jobId: string
@@ -51,7 +51,7 @@ export const postJobsJobIdInvoices = new BaseRequest<
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/jobs/:job_id/invoices",
   tokenKey: "AUTH_TOKEN",
 });

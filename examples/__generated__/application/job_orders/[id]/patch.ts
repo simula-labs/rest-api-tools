@@ -1,5 +1,5 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../@types";
+import type * as Types from "../../../@types";
 
 export type PatchJobOrdersIdUrlParams = {
   id: string
@@ -53,7 +53,7 @@ export const patchJobOrdersId = new BaseRequest<
 >({
   requiredAuth: true,
   method: "patch",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/job_orders/:id",
   tokenKey: "AUTH_TOKEN",
 });

@@ -1,5 +1,5 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../../../@types";
+import type * as Types from "../../../../../@types";
 
 export type PostAccountsAccountIdProfileSpecialtyCompanyTypesUrlParams = {
   accountId: string
@@ -15,7 +15,7 @@ export const postAccountsAccountIdProfileSpecialtyCompanyTypes = new BaseRequest
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:account_id/profile/specialty_company_types",
   tokenKey: "AUTH_TOKEN",
 });

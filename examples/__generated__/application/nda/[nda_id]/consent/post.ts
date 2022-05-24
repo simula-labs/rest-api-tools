@@ -1,5 +1,5 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../../@types";
+import type * as Types from "../../../../@types";
 
 export type PostNdaNdaIdConsentUrlParams = {
   ndaId: string
@@ -22,7 +22,7 @@ export const postNdaNdaIdConsent = new BaseRequest<
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/nda/:nda_id/consent",
   tokenKey: "AUTH_TOKEN",
 });
