@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/simula-labs/rest-api-tools/compare/v1.0.0...v1.0.1) (2022-05-24)
+
+
+### Bug Fixes
+
+* version表記の削除 ([df2bea4](https://github.com/simula-labs/rest-api-tools/commit/df2bea4ae0f62ef52f89f25725474af4a78f4153))
+
 # 1.0.0 (2022-05-24)
 
 
