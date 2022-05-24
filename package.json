@@ -1,6 +1,5 @@
 {
   "name": "@simula-labs/rest-api-tools",
-  "version": "0.2.3",
   "description": "",
   "main": "dist/index.js",
   "release": {
