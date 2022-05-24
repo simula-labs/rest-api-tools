@@ -59,6 +59,7 @@
     "fs-extra": "^10.1.0",
     "humps": "^2.0.1",
     "openapi-types": "^11.0.1",
-    "react-query": "^3.39.0"
+    "react-query": "^3.39.0",
+    "semantic-release": "^19.0.2"
   }
 }
