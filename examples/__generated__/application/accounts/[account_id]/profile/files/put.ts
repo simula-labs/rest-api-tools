@@ -1,5 +1,5 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../../../@types";
+import type * as Types from "../../../../../@types";
 
 export type PutAccountsAccountIdProfileFilesUrlParams = {
   accountId: string
@@ -29,7 +29,7 @@ export const putAccountsAccountIdProfileFiles = new BaseRequest<
 >({
   requiredAuth: true,
   method: "put",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:account_id/profile/files",
   tokenKey: "AUTH_TOKEN",
 });

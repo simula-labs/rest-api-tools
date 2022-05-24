@@ -1,5 +1,5 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../@types";
+import type * as Types from "../../../@types";
 
 export type DeleteHopesIdUrlParams = {
   id: string
@@ -13,7 +13,7 @@ export const deleteHopesId = new BaseRequest<
 >({
   requiredAuth: true,
   method: "delete",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/hopes/:id",
   tokenKey: "AUTH_TOKEN",
 });

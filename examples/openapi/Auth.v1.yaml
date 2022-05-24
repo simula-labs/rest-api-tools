@@ -163,6 +163,12 @@ components:
         id:
           type: string
           format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
         email:
           type: string
           format: email
@@ -194,6 +200,7 @@ components:
         is_public_with_work:
           type: boolean
           description: ProbWorksプロジェクト実績を公開するか
+          default: true
         identity_verification_status:
           type: string
           enum:
@@ -222,27 +229,42 @@ components:
           type: boolean
           default: false
           description: サンプルか
-        deleted_at:
-          type: string
-          description: 論理削除時刻
-          format: date-time
         register_as:
           type: string
           enum:
             - general
             - organizational
+          example: general
+        display_name:
+          type: string
+        deleted_at:
+          type: string
+          description: 論理削除時刻
+          format: date-time
         is_student:
           type: boolean
           default: false
-          description: 学生か
         is_concluded_nda:
           type: boolean
         is_supported:
           type: boolean
-          description: 非公開サポート申請をしているか
         profile_completeness:
           type: number
-          description: プロフィール完成度（%表記）
+        exists_applicant_resource_from_current_company:
+          type: boolean
+        already_keep_from_current_company:
+          type: boolean
+      required:
+        - id
+        - created_at
+        - updated_at
+        - email_verification_status
+        - is_career_scout_target
+        - is_project_scout_target
+        - is_public_with_work
+        - identity_verification_status
+        - is_sample
+        - is_student
     Employment:
       title: Employment
       type: object
@@ -250,28 +272,51 @@ components:
         id:
           type: string
           format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
         email:
           type: string
           format: email
           example: sample@example.com
-        is_valid:
-          type: boolean
-          default: 'false'
-          description: 有効かどうか（招待しただけの状態はfalse）
         department:
           type: string
           description: 所属部署
         position:
           type: string
           description: 役職
+        last_notification_read_at:
+          type: string
+          format: date-time
+        is_valid:
+          type: boolean
+          default: false
+          description: 有効かどうか（招待しただけの状態はfalse）
+      required:
+        - id
+        - created_at
+        - updated_at
+        - email
+        - is_valid
     Profile:
       title: Profile
       type: object
+      x-tags:
+        - Account
       description: ''
       properties:
         id:
           type: string
           format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
         first_name:
           type: string
           example: 太郎
@@ -293,13 +338,13 @@ components:
           example: MALE
         phone:
           type: string
-          example: 9012345678
+          example: 090-XXXX-XXXX
         nationality:
           type: string
-          example: 日本
+          example: JP
         postal_code:
           type: string
-          example: 1070051
+          example: 107-0051
         address:
           type: string
           example: 東京都港区元赤坂1-7-18
@@ -364,22 +409,31 @@ components:
         agent_achievement:
           type: string
           example: 経歴・実績
+        marital_status:
+          type: string
+          enum:
+            - single
+            - married
         files:
-          type: object
-          description: 履歴書等のPDFファイル
-          properties:
-            id:
-              type: string
-            name:
-              type: string
-            url:
-              type: string
-            content_type:
-              type: string
-              example: application/pdf
-            created_at:
-              type: string
-              format: date-time
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              content_type:
+                type: string
+              url:
+                type: string
+              created_at:
+                type: string
+                format: date-time
+      required:
+        - id
+        - created_at
+        - updated_at
   responses:
     SignIn:
       content:

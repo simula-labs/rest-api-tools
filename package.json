@@ -1,6 +1,6 @@
 {
   "name": "@simula-labs/rest-api-tools",
-  "version": "0.0.5",
+  "version": "0.2.2",
   "description": "",
   "main": "dist/index.js",
   "private": true,
@@ -50,7 +50,11 @@
   },
   "scripts": {
     "build": "tsc",
-    "build:watch": "tsc -w"
+    "build:watch": "tsc -w",
+    "release": "standard-version --skip.tag",
+    "release:major": "npm run release -- --release-as major",
+    "release:minor": "npm run release -- --release-as minor",
+    "release:patch": "npm run release -- --release-as patch"
   },
   "repository": {
     "type": "git",
@@ -83,6 +87,7 @@
     "minimist": "^1.2.6",
     "prettier": "^2.6.2",
     "semantic-release": "^19.0.2",
+    "standard-version": "^9.5.0",
     "typescript": "^4.6.4"
   },
   "dependencies": {

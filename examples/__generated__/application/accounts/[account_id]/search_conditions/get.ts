@@ -1,5 +1,5 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../../@types";
+import type * as Types from "../../../../@types";
 
 export type GetAccountsAccountIdSearchConditionsUrlParams = {
   accountId: string
@@ -29,7 +29,7 @@ export const getAccountsAccountIdSearchConditions = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:account_id/search_conditions",
   tokenKey: "AUTH_TOKEN",
 });

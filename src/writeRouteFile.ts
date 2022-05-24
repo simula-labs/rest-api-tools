@@ -1,10 +1,6 @@
 import fs from "fs";
 
 type WriteRouteFileProps = {
-  types: {
-    type: string | null;
-    mock: string | null;
-  };
   files: {
     file: string[];
     methods: string[];
@@ -16,13 +12,7 @@ type WriteRouteFileProps = {
   }[];
 };
 
-export const writeRouteFile = ({ types, files, outputDir, apiMethods }: WriteRouteFileProps) => {
-  if (types.type && types.mock) {
-    fs.mkdirSync(`${outputDir}/@types`);
-    fs.writeFileSync(`${outputDir}/@types/index.ts`, types.type, "utf8");
-    fs.writeFileSync(`${outputDir}/@types/mock.ts`, types.mock, "utf8");
-  }
-
+export const writeRouteFile = ({ files, outputDir, apiMethods }: WriteRouteFileProps) => {
   files.forEach((p) => {
     const fileName = p.file.pop();
     p.file.forEach((_d, i, dirList) => {

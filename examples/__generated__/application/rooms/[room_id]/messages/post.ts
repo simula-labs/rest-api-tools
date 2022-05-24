@@ -1,5 +1,5 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../../@types";
+import type * as Types from "../../../../@types";
 
 export type PostAccountsAccountIdRoomsRoomIdMessagesUrlParams = {
   roomId: string
@@ -55,7 +55,7 @@ export const postAccountsAccountIdRoomsRoomIdMessages = new BaseRequest<
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/rooms/:room_id/messages",
   tokenKey: "AUTH_TOKEN",
 });

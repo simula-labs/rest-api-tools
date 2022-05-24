@@ -10,13 +10,22 @@
 
 ## configファイルの設定例
 ````javascript
-module.exports = [
-  {
-    connect: "examples/__generated__/admin",
-    openapi: "examples/openapi/Admin.v1.yaml",
-    baseURL: "https://api.example.com/admin",
-    requiredAuth: true,
-    tokenKey: "AUTH_TOKEN"
-  },
-];
+module.exports = {
+  connectBasePath: "__generated__",
+  tokenKey: "AUTH_TOKEN",
+  baseURL: "https://api.example.com/public",
+  codeGenConfigs: [
+    {
+      connect: "public",
+      openapi: "openapi/Public.v1.yaml",
+      requiredAuth: false,
+    },
+    {
+      connect: "application",
+      openapi: "openapi/Application.v1.yaml",
+      requiredAuth: true,
+    },
+  ],
+};
+
 ````

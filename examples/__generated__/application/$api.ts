@@ -3,7 +3,7 @@ import { patchAccountsId } from "./accounts/[id]/patch";
 import { deleteAccountsId } from "./accounts/[id]/delete";
 import { getAccountsAccountIdFollowing } from "./accounts/[account_id]/followings/get";
 import { postAccountsAccountIdFollowing } from "./accounts/[account_id]/followings/post";
-import { getAccountsAccountIdMessages } from "./accounts/[account_id]/rooms/get";
+import { getAccountsAccountIdRooms } from "./accounts/[account_id]/rooms/get";
 import { getAccountsAccountIdNotifications } from "./accounts/[account_id]/notifications/get";
 import { getAccountsAccountIdSearchConditions } from "./accounts/[account_id]/search_conditions/get";
 import { postCompaniesCompanyIdSearchConditions } from "./accounts/[account_id]/search_conditions/post";
@@ -17,7 +17,7 @@ import { getAccountsAccountIdProfile } from "./accounts/[account_id]/profile/get
 import { postAccountsAccountIdProfile } from "./accounts/[account_id]/profile/post";
 import { patchAccountsAccountIdProfile } from "./accounts/[account_id]/profile/patch";
 import { putAccountsAccountIdProfileFiles } from "./accounts/[account_id]/profile/files/put";
-import { deleteAccountsAccountIdProfileFiles:fileId } from "./accounts/[account_id]/profile/files/[file_id]/delete";
+import { deleteAccountsAccountIdProfileFilesId } from "./accounts/[account_id]/profile/files/[file_id]/delete";
 import { getAccountsAccountIdProfileSpecialtyCompanyTypes } from "./accounts/[account_id]/profile/specialty_company_types/get";
 import { postAccountsAccountIdProfileSpecialtyCompanyTypes } from "./accounts/[account_id]/profile/specialty_company_types/post";
 import { getAccountsAccountIdProfileSpecialtyPositions } from "./accounts/[account_id]/profile/specialty_positions/get";
@@ -68,7 +68,7 @@ import { getAccountsAccountIdRoomsRoomIdMessagesId } from "./messages/[id]/get";
 import { getContentMatters } from "./content_matters/get";
 import { getContentMattersId } from "./consent_matters/[id]/get";
 import { getSearchConditionsId } from "./search_conditions/[id]/get";
-import { postCompaniesCompanyIdSearchConditions } from "./search_conditions/[id]/patch";
+import { patchCompaniesCompanyIdSearchConditions } from "./search_conditions/[id]/patch";
 import { deleteSearchConditionsId } from "./search_conditions/[id]/delete";
 import { getJobChangeCompletionReportsId } from "./job_change_completion_reports/[id]/get";
 import { getCities } from "./state_categories/get";
@@ -132,7 +132,7 @@ export const applicationApi = () => {
     deleteAccountsId,
     getAccountsAccountIdFollowing,
     postAccountsAccountIdFollowing,
-    getAccountsAccountIdMessages,
+    getAccountsAccountIdRooms,
     getAccountsAccountIdNotifications,
     getAccountsAccountIdSearchConditions,
     postCompaniesCompanyIdSearchConditions,
@@ -146,7 +146,7 @@ export const applicationApi = () => {
     postAccountsAccountIdProfile,
     patchAccountsAccountIdProfile,
     putAccountsAccountIdProfileFiles,
-    deleteAccountsAccountIdProfileFiles:fileId,
+    deleteAccountsAccountIdProfileFilesId,
     getAccountsAccountIdProfileSpecialtyCompanyTypes,
     postAccountsAccountIdProfileSpecialtyCompanyTypes,
     getAccountsAccountIdProfileSpecialtyPositions,
@@ -197,7 +197,7 @@ export const applicationApi = () => {
     getContentMatters,
     getContentMattersId,
     getSearchConditionsId,
-    postCompaniesCompanyIdSearchConditions,
+    patchCompaniesCompanyIdSearchConditions,
     deleteSearchConditionsId,
     getJobChangeCompletionReportsId,
     getCities,

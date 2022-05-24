@@ -1,5 +1,5 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../@types";
+import type * as Types from "../../@types";
 
 export type GetRecruitmentsResponse = {
   recruitments: (Types.Recruitment & {
@@ -42,7 +42,7 @@ export type GetRecruitmentsQueryParams = {
   /** 雇用形態 */
   employmentStatusIds?: string[] | undefined
   /** タイプ */
-  type?: string | undefined
+  type?: 'project' | 'career' | undefined
   /** 年収最高金額（キャリア） */
   maxYearlyAmount?: number | undefined
   /** 年収最低金額（キャリア） */
