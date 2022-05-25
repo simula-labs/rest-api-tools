@@ -292,40 +292,6 @@ export const buildV3 = (
     });
   });
 
-  const typesText = schemas.length
-    ? [
-        ...schemas.map((s) => ({
-          name: s.name,
-          description: s.value.description,
-          text: value2String(s.value, "").replace(/\n {2}/g, "\n"),
-        })),
-      ]
-        .map((p) => `\n${description2Doc(p.description, "")}export type ${p.name} = ${p.text}\n`)
-        .join("")
-        .replace(/(\W)Types\./g, "$1")
-        .replace(/\]\?:/g, "]:")
-    : null;
-
-  const mockText = schemas.length
-    ? [
-        ...schemas.map((s) => ({
-          name: s.name,
-          description: s.value.description,
-          text: value2StringForMock(s.value, "", true, s.name).replace(/\n {2}/g, "\n"),
-        })),
-      ]
-        .map(
-          (p) =>
-            `\n${description2Doc(p.description, "")}export const mock${
-              p.name
-            } = (modification?: Partial< Types.${p.name}>): Types.${p.name} => {\n  return ${
-              p.text
-            }\n}\n`
-        )
-        .join("")
-        .replace(/\]\?:/g, "]:")
-    : null;
-
   return {
     schemas,
     files,

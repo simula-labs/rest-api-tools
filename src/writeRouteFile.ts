@@ -30,8 +30,7 @@ export const writeRouteFile = ({ files, outputDir, apiMethods }: WriteRouteFileP
   const apiFunctionName = outputDir.split("/").pop();
   const apiTest =
     `${apiMethods.map((apiMethod) => apiMethod.operationIdImport).join(";\n")}\n\n` +
-    `export const ${apiFunctionName}Api = () => {\n` +
-    ` return {\n` +
-    `${apiMethods.map((apiMethod) => `    ${apiMethod.operationId}`).join(",\n")}\n  }\n};`;
+    `export const ${apiFunctionName}Api = {\n` +
+    `${apiMethods.map((apiMethod) => `  ${apiMethod.operationId}`).join(",\n")}\n};`;
   fs.writeFileSync(`${outputDir}/$api.ts`, apiTest, "utf-8");
 };

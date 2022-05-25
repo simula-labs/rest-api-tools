@@ -20,28 +20,26 @@ import { getEmploymentStatuses } from "./employment_statuses/get";
 import { getEmploymentStatusesId } from "./employment_statuses/[id]/get";
 import { getFeatures } from "./features/get"
 
-export const publicApi = () => {
- return {
-    getCompanies,
-    getCompaniesRecommended,
-    getCompaniesId,
-    getCompaniesCompanyIdRecruitments,
-    getRecruitments,
-    getRecruitmentsRecommended,
-    getRecruitmentsId,
-    getPrivacyPolicyHistoriesLatest,
-    getTermHistoriesLatest,
-    patchAccountsId,
-    postAccountsResetPassword,
-    getEmploymentsId,
-    deleteEmploymentsId,
-    getCities,
-    getOccupationMainCategories,
-    getIndustryCategories,
-    getPlans,
-    getPlansId,
-    getEmploymentStatuses,
-    getEmploymentStatusesId,
-    getFeatures
-  }
+export const publicApi = {
+  getCompanies,
+  getCompaniesRecommended,
+  getCompaniesId,
+  getCompaniesCompanyIdRecruitments,
+  getRecruitments,
+  getRecruitmentsRecommended,
+  getRecruitmentsId,
+  getPrivacyPolicyHistoriesLatest,
+  getTermHistoriesLatest,
+  patchAccountsId,
+  postAccountsResetPassword,
+  getEmploymentsId,
+  deleteEmploymentsId,
+  getCities,
+  getOccupationMainCategories,
+  getIndustryCategories,
+  getPlans,
+  getPlansId,
+  getEmploymentStatuses,
+  getEmploymentStatusesId,
+  getFeatures
 };
