@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/simula-labs/rest-api-tools/compare/v1.0.4...v1.0.5) (2022-05-25)
+
+
+### Bug Fixes
+
+* shared/type.d.ts => shared/types.d.tsに変更 ([1e78376](https://github.com/simula-labs/rest-api-tools/commit/1e78376afd89a0e1b16e9d5293e013a2d209dd18))
+
 ## [1.0.4](https://github.com/simula-labs/rest-api-tools/compare/v1.0.3...v1.0.4) (2022-05-25)
 
 
