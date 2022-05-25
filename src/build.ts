@@ -18,7 +18,6 @@ export const build = async (config: Config) => {
       fse.ensureDirSync(connectPath);
 
       const contents = await buildTemplate(codeGenConfig, {
-        baseURL: config.baseURL,
         tokenKey: config.tokenKey,
         connectBasePath: config.connectBasePath,
       });

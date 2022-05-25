@@ -280,7 +280,7 @@ export const buildV3 = (
         ">({\n" +
         `  requiredAuth: true,\n` +
         `  method: "${method}",\n` +
-        `  baseURL: "${baseConfig.baseURL}",\n` +
+        `  baseURL: "${config.baseURL}",\n` +
         `  path: "${requestPath}",\n` +
         `  tokenKey: "${baseConfig.tokenKey}",\n` +
         "});\n";
