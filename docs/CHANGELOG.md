@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/simula-labs/rest-api-tools/compare/v1.0.3...v1.0.4) (2022-05-25)
+
+
+### Bug Fixes
+
+* configのbaseUrlの場所を修正 ([1df00ce](https://github.com/simula-labs/rest-api-tools/commit/1df00ce5161752f4d4eab425f4567a48e06a464a))
+
 ## [1.0.3](https://github.com/simula-labs/rest-api-tools/compare/v1.0.2...v1.0.3) (2022-05-25)
 
 
