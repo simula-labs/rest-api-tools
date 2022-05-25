@@ -1,1 +1,1 @@
-export * from "./type.d.ts"
+export * from "./types"

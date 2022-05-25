@@ -72,7 +72,7 @@ export const build = async (config: Config) => {
   if (typesText && mockText) {
     fs.mkdirSync(`${config.connectBasePath}/shared`);
     fs.writeFileSync(
-      `${config.connectBasePath}/shared/type.d.ts`,
+      `${config.connectBasePath}/shared/types.d.ts`,
       `/* eslint-disable */${
         typesText.includes(BINARY_TYPE) ? "\nimport type { ReadStream } from 'fs'\n" : ""
       }${typesText}`,
@@ -85,7 +85,7 @@ export const build = async (config: Config) => {
     );
     fs.writeFileSync(
       `${config.connectBasePath}/shared/index.ts`,
-      `export * from "./type.d.ts"`,
+      `export * from "./types"`,
       "utf8"
     );
   }
