@@ -11,7 +11,7 @@ export const getPrivacyPolicyHistoriesLatest = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/privacy_policy_histories/latest",
   tokenKey: "AUTH_TOKEN",
 });

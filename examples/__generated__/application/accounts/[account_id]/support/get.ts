@@ -17,7 +17,7 @@ export const getAccountsAccountIdSupport = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/accounts/:account_id/support",
   tokenKey: "AUTH_TOKEN",
 });

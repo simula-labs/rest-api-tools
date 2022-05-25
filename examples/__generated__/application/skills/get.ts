@@ -18,7 +18,7 @@ export const getSkills = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/skills",
   tokenKey: "AUTH_TOKEN",
 });

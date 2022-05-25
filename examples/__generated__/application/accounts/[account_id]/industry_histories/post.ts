@@ -28,7 +28,7 @@ export const postAccountsAccountIdIndustryHistories = new BaseRequest<
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/accounts/:account_id/industry_histories",
   tokenKey: "AUTH_TOKEN",
 });

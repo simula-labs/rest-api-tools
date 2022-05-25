@@ -19,7 +19,7 @@ export const getOccupationHistoriesId = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/occupation_histories/:id",
   tokenKey: "AUTH_TOKEN",
 });

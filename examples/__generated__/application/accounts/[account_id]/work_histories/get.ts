@@ -22,7 +22,7 @@ export const getAccountsAccountIdWorkHistories = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/accounts/:account_id/work_histories",
   tokenKey: "AUTH_TOKEN",
 });

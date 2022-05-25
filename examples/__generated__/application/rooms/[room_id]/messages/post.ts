@@ -55,7 +55,7 @@ export const postAccountsAccountIdRoomsRoomIdMessages = new BaseRequest<
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/rooms/:room_id/messages",
   tokenKey: "AUTH_TOKEN",
 });

@@ -26,7 +26,7 @@ export const postAccountsAccountIdCompletionReports = new BaseRequest<
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/accounts/:account_id/job_change_completion_reports",
   tokenKey: "AUTH_TOKEN",
 });

@@ -21,7 +21,7 @@ export const postAccountsAccountIdFollowing = new BaseRequest<
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/accounts/:account_id/followings",
   tokenKey: "AUTH_TOKEN",
 });

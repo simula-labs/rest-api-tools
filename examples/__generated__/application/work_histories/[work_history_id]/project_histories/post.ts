@@ -29,7 +29,7 @@ export const postWorkHistoriesWorkHistoryIdProjectHistories = new BaseRequest<
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/work_histories/:work_history_id/project_histories",
   tokenKey: "AUTH_TOKEN",
 });

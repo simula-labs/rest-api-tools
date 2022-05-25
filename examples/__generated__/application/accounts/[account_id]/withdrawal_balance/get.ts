@@ -30,7 +30,7 @@ export const getAccountsAccountIdWithdrawalBalance = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/accounts/:account_id/withdrawal_balance",
   tokenKey: "AUTH_TOKEN",
 });

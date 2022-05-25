@@ -13,7 +13,7 @@ export const deleteHopesId = new BaseRequest<
 >({
   requiredAuth: true,
   method: "delete",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/hopes/:id",
   tokenKey: "AUTH_TOKEN",
 });

@@ -13,7 +13,7 @@ export const deleteOccupationHistoriesId = new BaseRequest<
 >({
   requiredAuth: true,
   method: "delete",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/occupation_histories/:id",
   tokenKey: "AUTH_TOKEN",
 });
