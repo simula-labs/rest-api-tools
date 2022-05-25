@@ -11,5 +11,5 @@ export type BaseConfig = {
 };
 
 export type Config = BaseConfig & {
-  codeGenConfigs: CodeGenConfig[];
+  openapiBindings: CodeGenConfig[];
 };

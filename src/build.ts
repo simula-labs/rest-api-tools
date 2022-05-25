@@ -10,7 +10,7 @@ import { BINARY_TYPE } from "./builderUtils/converters";
 export const build = async (config: Config) => {
   const schemas: Schema[] = [];
   await Promise.all(
-    config.codeGenConfigs.map(async (codeGenConfig) => {
+    config.openapiBindings.map(async (codeGenConfig) => {
       const connectPath = `${config.connectBasePath}/${codeGenConfig.connect}`;
       if (fs.existsSync(connectPath)) {
         return console.log(`${connectPath}は既に存在しています`);
@@ -71,17 +71,22 @@ export const build = async (config: Config) => {
         .replace(/\]\?:/g, "]:")
     : null;
   if (typesText && mockText) {
-    fs.mkdirSync(`${config.connectBasePath}/@types`);
+    fs.mkdirSync(`${config.connectBasePath}/shared`);
     fs.writeFileSync(
-      `${config.connectBasePath}/@types/index.ts`,
+      `${config.connectBasePath}/shared/type.d.ts`,
       `/* eslint-disable */${
         typesText.includes(BINARY_TYPE) ? "\nimport type { ReadStream } from 'fs'\n" : ""
       }${typesText}`,
       "utf8"
     );
     fs.writeFileSync(
-      `${config.connectBasePath}/@types/mock.ts`,
+      `${config.connectBasePath}/shared/mock.ts`,
       `/* eslint-disable */\n import type * as Types from "../@types";\n ${mockText}`,
+      "utf8"
+    );
+    fs.writeFileSync(
+      `${config.connectBasePath}/shared/index.ts`,
+      `export * from "./type.d.ts"`,
       "utf8"
     );
   }

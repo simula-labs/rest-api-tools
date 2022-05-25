@@ -14,7 +14,7 @@ module.exports = {
   connectBasePath: "__generated__",
   tokenKey: "AUTH_TOKEN",
   baseURL: "https://api.example.com/public",
-  codeGenConfigs: [
+  openapiBindings: [
     {
       connect: "public",
       openapi: "openapi/Public.v1.yaml",
