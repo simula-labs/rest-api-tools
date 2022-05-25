@@ -22,7 +22,7 @@ export const postNdaNdaIdConsent = new BaseRequest<
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/nda/:nda_id/consent",
   tokenKey: "AUTH_TOKEN",
 });

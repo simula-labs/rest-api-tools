@@ -17,7 +17,7 @@ export const getEmploymentStatuses = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/employment_statuses",
   tokenKey: "AUTH_TOKEN",
 });

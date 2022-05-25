@@ -13,7 +13,7 @@ export const deleteRecruitmentInterestsRecruitmentId = new BaseRequest<
 >({
   requiredAuth: true,
   method: "delete",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/recruitment_interests/:recruitment_id",
   tokenKey: "AUTH_TOKEN",
 });

@@ -13,7 +13,7 @@ export const deleteAchievementsId = new BaseRequest<
 >({
   requiredAuth: true,
   method: "delete",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/achievements/:id",
   tokenKey: "AUTH_TOKEN",
 });

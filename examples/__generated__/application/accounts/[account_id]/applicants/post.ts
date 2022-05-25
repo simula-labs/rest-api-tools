@@ -25,7 +25,7 @@ export const postAccountsAccountIdApplicants = new BaseRequest<
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/accounts/:account_id/applicants",
   tokenKey: "AUTH_TOKEN",
 });

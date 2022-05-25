@@ -22,7 +22,7 @@ export const getJobsJobIdJobReviews = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://api.example.com/public",
+  baseURL: "https://a pi.example.com/public",
   path: "/jobs/:job_id/job_reviews",
   tokenKey: "AUTH_TOKEN",
 });
