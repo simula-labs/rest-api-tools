@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/simula-labs/rest-api-tools/compare/v1.0.6...v1.0.7) (2022-05-26)
+
+
+### Bug Fixes
+
+* pathのバグを修正 ([da783b9](https://github.com/simula-labs/rest-api-tools/commit/da783b91ba1a7fd80fcaed5f66e42d74d96ef690))
+
 ## [1.0.6](https://github.com/simula-labs/rest-api-tools/compare/v1.0.5...v1.0.6) (2022-05-25)
 
 
