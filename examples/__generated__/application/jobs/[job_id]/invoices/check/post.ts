@@ -43,6 +43,6 @@ export const postJobsJobIdInvoicesCheck = new BaseRequest<
   requiredAuth: true,
   method: "post",
   baseURL: "https://a pi.example.com/public",
-  path: "/jobs/:job_id/invoices/check",
+  path: "/jobs/:jobId/invoices/check",
   tokenKey: "AUTH_TOKEN",
 });

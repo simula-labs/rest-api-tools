@@ -56,6 +56,6 @@ export const getAccountsAccountIdMessages = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/messages",
+  path: "/accounts/:accountId/messages",
   tokenKey: "AUTH_TOKEN",
 });

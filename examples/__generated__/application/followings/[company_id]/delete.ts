@@ -14,6 +14,6 @@ export const deleteAccountsAccountIdFollowingCompanyId = new BaseRequest<
   requiredAuth: true,
   method: "delete",
   baseURL: "https://a pi.example.com/public",
-  path: "/followings/:company_id",
+  path: "/followings/:companyId",
   tokenKey: "AUTH_TOKEN",
 });

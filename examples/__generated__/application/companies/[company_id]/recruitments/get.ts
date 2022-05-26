@@ -76,6 +76,6 @@ export const getCompaniesCompanyIdRecruitments = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/companies/:company_id/recruitments",
+  path: "/companies/:companyId/recruitments",
   tokenKey: "AUTH_TOKEN",
 });

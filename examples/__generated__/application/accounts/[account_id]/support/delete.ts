@@ -14,6 +14,6 @@ export const deleteAccountsAccountIdSupport = new BaseRequest<
   requiredAuth: true,
   method: "delete",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/support",
+  path: "/accounts/:accountId/support",
   tokenKey: "AUTH_TOKEN",
 });

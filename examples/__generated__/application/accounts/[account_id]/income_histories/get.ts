@@ -21,6 +21,6 @@ export const getAccountsAccountIdIncomeHistories = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/income_histories",
+  path: "/accounts/:accountId/income_histories",
   tokenKey: "AUTH_TOKEN",
 });

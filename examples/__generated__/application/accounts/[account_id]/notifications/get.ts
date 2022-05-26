@@ -28,6 +28,6 @@ export const getAccountsAccountIdNotifications = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/notifications",
+  path: "/accounts/:accountId/notifications",
   tokenKey: "AUTH_TOKEN",
 });

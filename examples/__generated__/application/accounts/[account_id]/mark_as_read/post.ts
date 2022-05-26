@@ -14,6 +14,6 @@ export const postAccountsAccountIdMarkAsRead = new BaseRequest<
   requiredAuth: true,
   method: "post",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/mark_as_read",
+  path: "/accounts/:accountId/mark_as_read",
   tokenKey: "AUTH_TOKEN",
 });

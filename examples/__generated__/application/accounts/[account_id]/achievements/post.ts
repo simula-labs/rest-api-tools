@@ -24,6 +24,6 @@ export const postAccountsAccountIdAchievements = new BaseRequest<
   requiredAuth: true,
   method: "post",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/achievements",
+  path: "/accounts/:accountId/achievements",
   tokenKey: "AUTH_TOKEN",
 });

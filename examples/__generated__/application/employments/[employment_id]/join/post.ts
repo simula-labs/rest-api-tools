@@ -18,6 +18,6 @@ export const postEmploymentsEmploymentIdJoin = new BaseRequest<
   requiredAuth: true,
   method: "post",
   baseURL: "https://a pi.example.com/public",
-  path: "/employments/:employment_id/join",
+  path: "/employments/:employmentId/join",
   tokenKey: "AUTH_TOKEN",
 });

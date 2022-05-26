@@ -20,6 +20,6 @@ export const getAccountsAccountIdWithdrawals = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/withdrawals",
+  path: "/accounts/:accountId/withdrawals",
   tokenKey: "AUTH_TOKEN",
 });

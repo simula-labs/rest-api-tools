@@ -19,6 +19,6 @@ export const getAccountsAccountIdFollowing = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/followings",
+  path: "/accounts/:accountId/followings",
   tokenKey: "AUTH_TOKEN",
 });

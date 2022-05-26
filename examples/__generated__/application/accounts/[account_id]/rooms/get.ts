@@ -32,6 +32,6 @@ export const getAccountsAccountIdRooms = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/rooms",
+  path: "/accounts/:accountId/rooms",
   tokenKey: "AUTH_TOKEN",
 });

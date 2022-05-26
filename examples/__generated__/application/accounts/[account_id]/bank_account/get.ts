@@ -18,6 +18,6 @@ export const getAccountsAccountIdBankAccount = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/bank_account",
+  path: "/accounts/:accountId/bank_account",
   tokenKey: "AUTH_TOKEN",
 });

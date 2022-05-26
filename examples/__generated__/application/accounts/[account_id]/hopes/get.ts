@@ -24,6 +24,6 @@ export const getAccountsAccountIdHope = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/hopes",
+  path: "/accounts/:accountId/hopes",
   tokenKey: "AUTH_TOKEN",
 });

@@ -32,6 +32,6 @@ export const getAccountsAccountIdProjectResults = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/project_result",
+  path: "/accounts/:accountId/project_result",
   tokenKey: "AUTH_TOKEN",
 });

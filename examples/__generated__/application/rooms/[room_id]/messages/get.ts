@@ -52,6 +52,6 @@ export const getAccountsAccountIdRoomsRoomIdMessages = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/rooms/:room_id/messages",
+  path: "/rooms/:roomId/messages",
   tokenKey: "AUTH_TOKEN",
 });

@@ -22,6 +22,6 @@ export const getJobsJobIdContracts = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/jobs/:job_id/invoices",
+  path: "/jobs/:jobId/invoices",
   tokenKey: "AUTH_TOKEN",
 });

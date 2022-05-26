@@ -23,6 +23,6 @@ export const getJobsJobIdJobReviews = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/jobs/:job_id/job_reviews",
+  path: "/jobs/:jobId/job_reviews",
   tokenKey: "AUTH_TOKEN",
 });

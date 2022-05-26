@@ -258,13 +258,15 @@ export const buildV3 = (
         .replace(/\/$/, "")
         .split("/")
         .map((p) => {
+          const modelId = p.match(/\{(.+)\}/)?.[1];
           // Refactor
           if (p.match(/\{(.+)\}/)?.[1]) {
-            return `:${p.match(/\{(.+)\}/)?.[1]}`;
+            return modelId ? `:${humps.camelize(modelId)}` : "";
           }
           return p;
         })
         .join("/");
+      console.log(requestPath);
       const hasResponse = methods.join("").includes("Response");
       const hasQueryParams = methods.join("").includes("QueryParams");
       const hasRequestBody = methods.join("").includes("RequestBody");

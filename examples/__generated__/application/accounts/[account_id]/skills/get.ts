@@ -18,6 +18,6 @@ export const getAccountsAccountIdSkills = new BaseRequest<
   requiredAuth: true,
   method: "get",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/skills",
+  path: "/accounts/:accountId/skills",
   tokenKey: "AUTH_TOKEN",
 });

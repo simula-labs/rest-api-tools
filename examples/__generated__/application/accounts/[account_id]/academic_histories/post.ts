@@ -27,6 +27,6 @@ export const postAccountsAccountIdAcademicHistories = new BaseRequest<
   requiredAuth: true,
   method: "post",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/academic_histories",
+  path: "/accounts/:accountId/academic_histories",
   tokenKey: "AUTH_TOKEN",
 });

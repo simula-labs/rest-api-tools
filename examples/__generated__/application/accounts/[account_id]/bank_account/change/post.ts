@@ -29,6 +29,6 @@ export const postAccountsAccountIdBankAccountChange = new BaseRequest<
   requiredAuth: true,
   method: "post",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/bank_account/change",
+  path: "/accounts/:accountId/bank_account/change",
   tokenKey: "AUTH_TOKEN",
 });

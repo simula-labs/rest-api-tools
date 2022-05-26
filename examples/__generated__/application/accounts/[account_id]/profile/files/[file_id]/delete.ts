@@ -27,6 +27,6 @@ export const deleteAccountsAccountIdProfileFilesId = new BaseRequest<
   requiredAuth: true,
   method: "delete",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/profile/files/:file_id",
+  path: "/accounts/:accountId/profile/files/:fileId",
   tokenKey: "AUTH_TOKEN",
 });

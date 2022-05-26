@@ -35,6 +35,6 @@ export const postCompaniesCompanyIdSearchConditions = new BaseRequest<
   requiredAuth: true,
   method: "post",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/search_conditions",
+  path: "/accounts/:accountId/search_conditions",
   tokenKey: "AUTH_TOKEN",
 });

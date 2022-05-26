@@ -24,6 +24,6 @@ export const patchAccountsAccountIdSkills = new BaseRequest<
   requiredAuth: true,
   method: "patch",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/skills",
+  path: "/accounts/:accountId/skills",
   tokenKey: "AUTH_TOKEN",
 });

@@ -70,6 +70,6 @@ export const patchAccountsAccountIdProfile = new BaseRequest<
   requiredAuth: true,
   method: "patch",
   baseURL: "https://a pi.example.com/public",
-  path: "/accounts/:account_id/profile",
+  path: "/accounts/:accountId/profile",
   tokenKey: "AUTH_TOKEN",
 });
