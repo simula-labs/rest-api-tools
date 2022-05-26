@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { getCompanies } from "./companies/get";
 import { getCompaniesRecommended } from "./companies/recommended/get";
 import { getCompaniesId } from "./companies/[id]/get";

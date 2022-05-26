@@ -210,7 +210,8 @@ export const buildV3 = (
       const methods: string[] = [];
       let responseType = "";
       methods.push(
-        `import { BaseRequest } from "@simula-labs/rest-api-tools";\n` +
+        `/* eslint-disable */\n` +
+          `import { BaseRequest } from "@simula-labs/rest-api-tools";\n` +
           `import type * as Types from "../${file.map(() => "").join("../")}shared/index";\n`
       );
       params.forEach((param) => {

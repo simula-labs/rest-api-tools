@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { getAccountsId } from "./accounts/[id]/get";
 import { patchAccountsId } from "./accounts/[id]/patch";
 import { deleteAccountsId } from "./accounts/[id]/delete";

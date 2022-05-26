@@ -29,6 +29,7 @@ export const writeRouteFile = ({ files, outputDir, apiMethods }: WriteRouteFileP
   });
   const apiFunctionName = outputDir.split("/").pop();
   const apiTest =
+    `/* eslint-disable */\n` +
     `${apiMethods.map((apiMethod) => apiMethod.operationIdImport).join(";\n")}\n\n` +
     `export const ${apiFunctionName}Api = {\n` +
     `${apiMethods.map((apiMethod) => `  ${apiMethod.operationId}`).join(",\n")}\n};`;
