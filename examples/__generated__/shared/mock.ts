@@ -1,5 +1,5 @@
 /* eslint-disable */
- import type * as Types from "../@types";
+ import type * as Types from ".";
  
 export const mockCompany = (modification?: Partial< Types.Company>): Types.Company => {
   return {

@@ -123,7 +123,7 @@ import { postJobsJobIdInvoices } from "./jobs/[job_id]/invoices/post";
 import { postJobsJobIdInvoicesCheck } from "./jobs/[job_id]/invoices/check/post";
 import { getInvoicesId } from "./invoices/[id]/get";
 import { getJobsJobIdJobReviews } from "./jobs/[job_id]/job_reviews/get";
-import { getJobReviewsId } from "./job_reviews/[id]/get";
+import { getJobReviewsId } from "./job_reviews/[id]/get"
 
 export const applicationApi = {
   getAccountsId,
@@ -251,5 +251,5 @@ export const applicationApi = {
   postJobsJobIdInvoicesCheck,
   getInvoicesId,
   getJobsJobIdJobReviews,
-  getJobReviewsId,
+  getJobReviewsId
 };

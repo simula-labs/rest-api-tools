@@ -211,7 +211,7 @@ export const buildV3 = (
       let responseType = "";
       methods.push(
         `import { BaseRequest } from "@simula-labs/rest-api-tools";\n` +
-          `import type * as Types from "../${file.map(() => "").join("../")}@types";\n`
+          `import type * as Types from "../${file.map(() => "").join("../")}shared/index";\n`
       );
       params.forEach((param) => {
         switch (param.name) {

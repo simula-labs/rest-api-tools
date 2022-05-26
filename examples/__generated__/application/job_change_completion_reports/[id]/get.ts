@@ -1,5 +1,5 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../../@types";
+import type * as Types from "../../../shared/index";
 
 export type GetJobChangeCompletionReportsIdUrlParams = {
   id: string

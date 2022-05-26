@@ -80,7 +80,7 @@ export const build = async (config: Config) => {
     );
     fs.writeFileSync(
       `${config.connectBasePath}/shared/mock.ts`,
-      `/* eslint-disable */\n import type * as Types from "../@types";\n ${mockText}`,
+      `/* eslint-disable */\n import type * as Types from ".";\n ${mockText}`,
       "utf8"
     );
     fs.writeFileSync(
