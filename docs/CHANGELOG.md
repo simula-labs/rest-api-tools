@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/simula-labs/rest-api-tools/compare/v1.0.5...v1.0.6) (2022-05-25)
+
+
+### Bug Fixes
+
+* apiは関数ではなくオブジェクトに ([308f0ae](https://github.com/simula-labs/rest-api-tools/commit/308f0ae7272d315ee455c0ddfae47638a0204366))
+
 ## [1.0.5](https://github.com/simula-labs/rest-api-tools/compare/v1.0.4...v1.0.5) (2022-05-25)
 
 
