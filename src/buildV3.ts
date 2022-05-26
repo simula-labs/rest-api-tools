@@ -266,7 +266,6 @@ export const buildV3 = (
           return p;
         })
         .join("/");
-      console.log(requestPath);
       const hasResponse = methods.join("").includes("Response");
       const hasQueryParams = methods.join("").includes("QueryParams");
       const hasRequestBody = methods.join("").includes("RequestBody");
