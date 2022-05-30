@@ -15,7 +15,7 @@ export const getTermHistoriesLatest = new BaseRequest<
   undefined,
   GetTermHistoriesLatestQueryParams
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
   baseURL: "https://a pi.example.com/public",
   path: "/term_histories/latest",

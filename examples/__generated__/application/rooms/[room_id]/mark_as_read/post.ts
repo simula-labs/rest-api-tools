@@ -14,7 +14,7 @@ export const postRoomsRoomIdMarkAsRead = new BaseRequest<
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/rooms/:roomId/mark_as_read",
   tokenKey: "AUTH_TOKEN",
 });

@@ -73,7 +73,7 @@ export const getRecruitments = new BaseRequest<
   undefined,
   GetRecruitmentsQueryParams
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
   baseURL: "https://a pi.example.com/public",
   path: "/recruitments",

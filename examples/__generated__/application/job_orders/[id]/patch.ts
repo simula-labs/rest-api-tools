@@ -54,7 +54,7 @@ export const patchJobOrdersId = new BaseRequest<
 >({
   requiredAuth: true,
   method: "patch",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/job_orders/:id",
   tokenKey: "AUTH_TOKEN",
 });

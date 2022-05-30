@@ -21,7 +21,7 @@ export const getFeatures = new BaseRequest<
   undefined,
   GetFeaturesQueryParams
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
   baseURL: "https://a pi.example.com/public",
   path: "/features",

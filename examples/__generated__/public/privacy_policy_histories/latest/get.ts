@@ -10,7 +10,7 @@ export const getPrivacyPolicyHistoriesLatest = new BaseRequest<
   undefined,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
   baseURL: "https://a pi.example.com/public",
   path: "/privacy_policy_histories/latest",

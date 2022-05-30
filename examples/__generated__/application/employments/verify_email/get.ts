@@ -14,7 +14,7 @@ export const getEmploymentsVerifyEmail = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/employments/verify_email",
   tokenKey: "AUTH_TOKEN",
 });

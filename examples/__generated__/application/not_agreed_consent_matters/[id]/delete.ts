@@ -14,7 +14,7 @@ export const deleteNotAgreedConsentMattersId = new BaseRequest<
 >({
   requiredAuth: true,
   method: "delete",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/not_agreed_consent_matters/:id",
   tokenKey: "AUTH_TOKEN",
 });

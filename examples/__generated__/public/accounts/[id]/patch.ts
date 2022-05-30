@@ -24,7 +24,7 @@ export const patchAccountsId = new BaseRequest<
   PatchAccountsIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "patch",
   baseURL: "https://a pi.example.com/public",
   path: "/accounts/:id",

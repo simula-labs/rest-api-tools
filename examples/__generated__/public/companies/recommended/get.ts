@@ -19,7 +19,7 @@ export const getCompaniesRecommended = new BaseRequest<
   undefined,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
   baseURL: "https://a pi.example.com/public",
   path: "/companies/recommended",

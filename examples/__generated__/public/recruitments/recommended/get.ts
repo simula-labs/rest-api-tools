@@ -41,7 +41,7 @@ export const getRecruitmentsRecommended = new BaseRequest<
   undefined,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
   baseURL: "https://a pi.example.com/public",
   path: "/recruitments/recommended",

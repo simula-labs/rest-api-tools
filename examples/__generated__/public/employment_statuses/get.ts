@@ -16,7 +16,7 @@ export const getEmploymentStatuses = new BaseRequest<
   undefined,
   GetEmploymentStatusesQueryParams
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
   baseURL: "https://a pi.example.com/public",
   path: "/employment_statuses",

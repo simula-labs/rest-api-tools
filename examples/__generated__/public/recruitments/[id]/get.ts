@@ -42,7 +42,7 @@ export const getRecruitmentsId = new BaseRequest<
   GetRecruitmentsIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
   baseURL: "https://a pi.example.com/public",
   path: "/recruitments/:id",

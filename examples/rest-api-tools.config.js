@@ -12,7 +12,7 @@ module.exports = {
       connect: "application",
       openapi: "openapi/Application.v1.yaml",
       requiredAuth: true,
-      baseURL: "https://a pi.example.com/public",
+      baseURL: "https://api.example.com/public",
     },
   ],
 };

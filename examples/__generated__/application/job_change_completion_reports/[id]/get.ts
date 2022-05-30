@@ -20,7 +20,7 @@ export const getJobChangeCompletionReportsId = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/job_change_completion_reports/:id",
   tokenKey: "AUTH_TOKEN",
 });

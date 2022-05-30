@@ -22,7 +22,7 @@ export const patchSpecialtyPositionsId = new BaseRequest<
 >({
   requiredAuth: true,
   method: "patch",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/specialty_positions/:id",
   tokenKey: "AUTH_TOKEN",
 });

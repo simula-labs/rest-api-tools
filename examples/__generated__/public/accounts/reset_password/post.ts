@@ -14,7 +14,7 @@ export const postAccountsResetPassword = new BaseRequest<
   undefined,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
   baseURL: "https://a pi.example.com/public",
   path: "/accounts/reset_password",

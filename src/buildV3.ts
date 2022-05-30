@@ -280,7 +280,7 @@ export const buildV3 = (
         `  ${hasUrlParams ? `${pascalizedTargetOperationId}UrlParams` : undefined},\n` +
         `  ${hasQueryParams ? `${pascalizedTargetOperationId}QueryParams` : undefined}\n` +
         ">({\n" +
-        `  requiredAuth: true,\n` +
+        `  requiredAuth: ${config.requiredAuth},\n` +
         `  method: "${method}",\n` +
         `  baseURL: "${config.baseURL}",\n` +
         `  path: "${requestPath}",\n` +

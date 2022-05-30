@@ -14,7 +14,7 @@ export const getEmploymentStatusesId = new BaseRequest<
   GetEmploymentStatusesIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
   baseURL: "https://a pi.example.com/public",
   path: "/employment_statuses/:id",

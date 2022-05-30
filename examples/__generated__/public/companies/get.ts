@@ -24,7 +24,7 @@ export const getCompanies = new BaseRequest<
   undefined,
   GetCompaniesQueryParams
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
   baseURL: "https://a pi.example.com/public",
   path: "/companies",

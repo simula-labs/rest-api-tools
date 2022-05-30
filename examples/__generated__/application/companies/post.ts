@@ -62,7 +62,7 @@ export const postCompanies = new BaseRequest<
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/companies",
   tokenKey: "AUTH_TOKEN",
 });

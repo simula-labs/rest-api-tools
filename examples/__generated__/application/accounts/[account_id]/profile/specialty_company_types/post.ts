@@ -16,7 +16,7 @@ export const postAccountsAccountIdProfileSpecialtyCompanyTypes = new BaseRequest
 >({
   requiredAuth: true,
   method: "post",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/profile/specialty_company_types",
   tokenKey: "AUTH_TOKEN",
 });

@@ -74,7 +74,7 @@ export const getCompaniesCompanyIdRecruitments = new BaseRequest<
   GetCompaniesCompanyIdRecruitmentsUrlParams,
   GetCompaniesCompanyIdRecruitmentsQueryParams
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
   baseURL: "https://a pi.example.com/public",
   path: "/companies/:companyId/recruitments",

@@ -30,7 +30,7 @@ export const putAccountsAccountIdProfileFiles = new BaseRequest<
 >({
   requiredAuth: true,
   method: "put",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/profile/files",
   tokenKey: "AUTH_TOKEN",
 });

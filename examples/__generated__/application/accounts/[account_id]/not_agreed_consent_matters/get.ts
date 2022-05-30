@@ -18,7 +18,7 @@ export const getaccountsAccountIdAgreeConsentMatters = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/not_agreed_consent_matters",
   tokenKey: "AUTH_TOKEN",
 });

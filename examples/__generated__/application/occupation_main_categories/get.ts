@@ -18,7 +18,7 @@ export const getOccupationMainCategories = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/occupation_main_categories",
   tokenKey: "AUTH_TOKEN",
 });

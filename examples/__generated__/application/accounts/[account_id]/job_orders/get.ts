@@ -60,7 +60,7 @@ export const getAccountsAccountIdContracts = new BaseRequest<
 >({
   requiredAuth: true,
   method: "get",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/job_orders",
   tokenKey: "AUTH_TOKEN",
 });

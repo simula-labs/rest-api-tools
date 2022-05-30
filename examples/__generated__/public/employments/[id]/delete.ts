@@ -16,7 +16,7 @@ export const deleteEmploymentsId = new BaseRequest<
   DeleteEmploymentsIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "delete",
   baseURL: "https://a pi.example.com/public",
   path: "/employments/:id",

@@ -52,7 +52,7 @@ export const patchAccountsId = new BaseRequest<
 >({
   requiredAuth: true,
   method: "patch",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:id",
   tokenKey: "AUTH_TOKEN",
 });

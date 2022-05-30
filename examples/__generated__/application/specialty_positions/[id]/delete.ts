@@ -14,7 +14,7 @@ export const deleteSpecialtyPositionsId = new BaseRequest<
 >({
   requiredAuth: true,
   method: "delete",
-  baseURL: "https://a pi.example.com/public",
+  baseURL: "https://api.example.com/public",
   path: "/specialty_positions/:id",
   tokenKey: "AUTH_TOKEN",
 });

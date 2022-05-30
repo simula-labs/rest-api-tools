@@ -20,7 +20,7 @@ export const getCompaniesId = new BaseRequest<
   GetCompaniesIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
   baseURL: "https://a pi.example.com/public",
   path: "/companies/:id",
