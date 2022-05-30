@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/simula-labs/rest-api-tools/compare/v1.0.9...v1.0.10) (2022-05-30)
+
+
+### Bug Fixes
+
+* requiredAuthを動的に変更できるように ([1f550e7](https://github.com/simula-labs/rest-api-tools/commit/1f550e762f7ece688cefb8c478da52a0b1c5e2b3))
+
 ## [1.0.9](https://github.com/simula-labs/rest-api-tools/compare/v1.0.8...v1.0.9) (2022-05-26)
 
 
