@@ -134,9 +134,9 @@ export class BaseRequest<
   }
 
   buildReactQueryMutater(option?: ApiOption<TInput, TPayload, TUrlParams, TQParams>) {
-    return async (newParams: TInput) =>
+    return async (variables: RequestVariables<TInput, TPayload, TUrlParams, TQParams>) =>
       // queryKey, signal, pageParam, meta
-      this.call(mergeRequestVariables(option?.variables ?? {}, { params: newParams }));
+      this.call(mergeRequestVariables(option?.variables ?? {}, variables));
   }
 
   async call(
@@ -208,6 +208,8 @@ export class BaseRequest<
           return this.apiClient.patch<TPayload>(this.configurePath(urlParams, qParams), pParams);
         case "delete":
           return this.apiClient.delete<TPayload>(this.configurePath(urlParams, qParams));
+        default:
+          throw new Error(`${this.method} is not supported.`);
       }
     })();
 
