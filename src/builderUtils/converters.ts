@@ -56,12 +56,12 @@ const object2value = (obj: OpenAPIV3.NonArraySchemaObject, required: boolean): P
       return isRefObject(target) || !target.deprecated;
     })
     .map<Prop | null>((name) => {
-      const val = schema2value(properties[name], required);
+      const val = schema2value(properties[name], false);
       if (!val) return null;
 
       return {
         name: getPropertyName(name),
-        required: obj.required?.includes(name) ?? false,
+        required: obj.required?.includes(name) ?? required,
         description: val.description,
         values: [val],
       };
