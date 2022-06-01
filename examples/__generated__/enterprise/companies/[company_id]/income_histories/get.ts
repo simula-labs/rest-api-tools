@@ -7,10 +7,10 @@ export type GetCompaniesCompanyIdIncomeHistoriesUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdIncomeHistoriesResponse = {
-  incomeHistories?: (Types.IncomeHistory & {
+  incomeHistories: (Types.IncomeHistory & {
     account?: Types.Account | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export const getCompaniesCompanyIdIncomeHistories = new BaseRequest<

@@ -3,14 +3,14 @@ import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../shared/index";
 
 export type GetCompaniesResponse = {
-  companies?: (Types.Company & {
+  companies: (Types.Company & {
     recruitments?: Types.Recruitment[] | undefined
   } & {
     industries?: Types.Industry[] | undefined
   } & {
     features?: Types.Feature[] | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export const getCompanies = new BaseRequest<

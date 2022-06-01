@@ -8,7 +8,7 @@ export type GetCompaniesCompanyIdApplicantStatusesIdUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdApplicantStatusesIdResponse = Types.ApplicantResource & {
-    account?: Types.Account & {
+    account: Types.Account & {
       jobs?: (Types.Job & {
         jobReviews?: (Types.JobReview & {
           skills?: Types.Skill[] | undefined
@@ -46,13 +46,13 @@ export type GetCompaniesCompanyIdApplicantStatusesIdResponse = Types.ApplicantRe
       } & {
         workplaces?: Types.State[] | undefined
       })[] | undefined
-    } | undefined
+    }
   } & {
-    room?: Types.Room & {
+    room: Types.Room & {
       account?: Types.Account | undefined
     } & {
       company?: Types.Company | undefined
-    } | undefined
+    }
   }
 
 export const getCompaniesCompanyIdApplicantStatusesId = new BaseRequest<

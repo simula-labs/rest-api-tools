@@ -7,7 +7,7 @@ export type GetCompaniesCompanyIdEmploymentsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdEmploymentsResponse = {
-  employments?: (Types.Employment & {
+  employments: (Types.Employment & {
     account?: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
@@ -37,7 +37,7 @@ export type GetCompaniesCompanyIdEmploymentsResponse = {
         permissions?: Types.Permission[] | undefined
       })[] | undefined
     })[] | undefined
-  })[] | undefined
+  })[]
 }
 
 export const getCompaniesCompanyIdEmployments = new BaseRequest<

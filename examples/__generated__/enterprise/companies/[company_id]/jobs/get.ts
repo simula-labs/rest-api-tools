@@ -7,7 +7,7 @@ export type GetCompaniesCompanyIdWorksUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdWorksResponse = {
-  jobs?: Types.Job & {
+  jobs: Types.Job & {
     account?: Types.Account | undefined
   } & {
     company?: Types.Company & {
@@ -41,9 +41,9 @@ export type GetCompaniesCompanyIdWorksResponse = {
     jobReviews?: string | undefined
   } & {
     invoices?: string | undefined
-  } | undefined
+  }
 
-  totalDataNums?: number | undefined
+  totalDataNums: number
 }
 
 export type GetCompaniesCompanyIdWorksQueryParams = {

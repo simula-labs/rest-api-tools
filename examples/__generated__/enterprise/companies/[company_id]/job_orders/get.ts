@@ -7,7 +7,7 @@ export type GetCompaniesCompanyIdWorksWorkIdContractsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdWorksWorkIdContractsResponse = {
-  jobOrders?: (Types.JobOrder & {
+  jobOrders: (Types.JobOrder & {
     account?: Types.Account | undefined
   } & {
     company?: Types.Company & {
@@ -37,8 +37,8 @@ export type GetCompaniesCompanyIdWorksWorkIdContractsResponse = {
     } | undefined
   } & {
     jobServiceItems?: Types.JobServiceItem[] | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export type GetCompaniesCompanyIdWorksWorkIdContractsQueryParams = {

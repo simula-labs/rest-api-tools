@@ -3,32 +3,32 @@ import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../shared/index";
 
 export type PostCompaniesResponse = Types.Company & {
-    owner?: Types.Account & {
+    owner: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
       } | undefined
-    } | undefined
+    }
   } & {
-    subscription?: Types.Subscription & {
+    subscription: Types.Subscription & {
       price?: Types.Price & {
         product?: Types.Product | undefined
       } | undefined
-    } | undefined
+    }
   } & {
-    recruitments?: Types.Recruitment[] | undefined
+    recruitments: Types.Recruitment[]
   } & {
-    industries?: Types.Industry[] | undefined
+    industries: Types.Industry[]
   } & {
-    features?: Types.Feature[] | undefined
+    features: Types.Feature[]
   } & {
-    paymentMethods?: Types.PaymentMethod[] | undefined
+    paymentMethods: Types.PaymentMethod[]
   }
 
 export type PostCompaniesRequestBody = {
-  company?: {
+  company: {
     name: string
     nameKana: string
-  } | undefined
+  }
 }
 
 export const postCompanies = new BaseRequest<

@@ -8,9 +8,9 @@ export type GetCompaniesCompanyIdIntroductionCompletionReportsIdUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdIntroductionCompletionReportsIdResponse = Types.IntroductionCompletionReport & {
-    account?: Types.Account | undefined
+    account: Types.Account
   } & {
-    company?: Types.Company | undefined
+    company: Types.Company
   }
 
 export const getCompaniesCompanyIdIntroductionCompletionReportsId = new BaseRequest<

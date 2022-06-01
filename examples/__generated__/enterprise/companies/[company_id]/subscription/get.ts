@@ -7,9 +7,9 @@ export type GetCompaniesCompanyIdPlanSubscriptionsIdUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdPlanSubscriptionsIdResponse = Types.Subscription & {
-    company?: Types.Company | undefined
+    company: Types.Company
   } & {
-    price?: Types.Price | undefined
+    price: Types.Price
   }
 
 export const getCompaniesCompanyIdPlanSubscriptionsId = new BaseRequest<

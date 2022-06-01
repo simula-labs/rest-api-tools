@@ -8,7 +8,7 @@ export type GetCompaniesCompanyIdRoomsRoomIdMessagesUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdRoomsRoomIdMessagesResponse = {
-  messages?: Types.Message & {
+  messages: Types.Message & {
     sender?: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State[] | undefined
@@ -40,9 +40,9 @@ export type GetCompaniesCompanyIdRoomsRoomIdMessagesResponse = {
     } | undefined
   } & {
     room?: Types.Room | undefined
-  } | undefined
+  }
 
-  totalDataNums?: number | undefined
+  totalDataNums: number
 }
 
 export const getCompaniesCompanyIdRoomsRoomIdMessages = new BaseRequest<

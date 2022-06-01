@@ -8,17 +8,17 @@ export type GetCompaniesCompanyIdRoomsIdUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdRoomsIdResponse = Types.Room & {
-    account?: Types.Account & {
+    account: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
       } | undefined
-    } | undefined
+    }
   } & {
-    company?: Types.Company & {
+    company: Types.Company & {
       industries?: Types.Industry[] | undefined
     } & {
       features?: Types.Feature[] | undefined
-    } | undefined
+    }
   }
 
 export const getCompaniesCompanyIdRoomsId = new BaseRequest<

@@ -7,14 +7,14 @@ export type GetCompaniesCompanyIdPaymentHistoriesUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdPaymentHistoriesResponse = {
-  paymentHistories?: (Types.PaymentHistory & {
+  paymentHistories: (Types.PaymentHistory & {
     company?: Types.Company | undefined
   } & {
     paymentMethod?: Types.PaymentMethod | undefined
   } & {
     price?: Types.Price | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export const getCompaniesCompanyIdPaymentHistories = new BaseRequest<

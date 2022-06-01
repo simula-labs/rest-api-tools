@@ -8,13 +8,13 @@ export type PostCompaniesCompanyIdJobsJobIdJobReviewsUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdJobsJobIdJobReviewsResponse = Types.JobReview & {
-    skills?: Types.Skill[] | undefined
+    skills: Types.Skill[]
   } & {
-    job?: Types.Job | undefined
+    job: Types.Job
   }
 
 export type PostCompaniesCompanyIdJobsJobIdJobReviewsRequestBody = {
-  jobReview?: {
+  jobReview: {
     starRating: number
     /** 文字列で渡して、Skill側でfind_or_create_byする */
     skills: string[]
@@ -22,7 +22,7 @@ export type PostCompaniesCompanyIdJobsJobIdJobReviewsRequestBody = {
     skillDescription: string
     /** もっとこうして欲しかった点 */
     improvementPoint: string
-  } | undefined
+  }
 }
 
 export const postCompaniesCompanyIdJobsJobIdJobReviews = new BaseRequest<

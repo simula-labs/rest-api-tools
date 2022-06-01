@@ -7,9 +7,9 @@ export type GetCompaniesCompanyIdPaymentMethodsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdPaymentMethodsResponse = {
-  paymentMethods?: (Types.PaymentMethod & {
+  paymentMethods: (Types.PaymentMethod & {
     company?: Types.Company | undefined
-  })[] | undefined
+  })[]
 }
 
 export const getCompaniesCompanyIdPaymentMethods = new BaseRequest<

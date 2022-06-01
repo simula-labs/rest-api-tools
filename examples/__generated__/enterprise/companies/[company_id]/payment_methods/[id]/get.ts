@@ -8,7 +8,7 @@ export type GetCompaniesCompanyIdPaymentMethodsIdUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdPaymentMethodsIdResponse = Types.PaymentMethod & {
-    company?: Types.Company | undefined
+    company: Types.Company
   }
 
 export const getCompaniesCompanyIdPaymentMethodsId = new BaseRequest<

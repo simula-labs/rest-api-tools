@@ -5,7 +5,7 @@ import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../../shared/index";
 
 export type PostCompaniesCompanyIdRecruitments.csvImportResponse = {
-  recruitments?: (Types.Recruitment & {
+  recruitments: (Types.Recruitment & {
     company?: Types.Company | undefined
   } & {
     workplace?: Types.State | undefined
@@ -33,12 +33,12 @@ export type PostCompaniesCompanyIdRecruitments.csvImportResponse = {
     industries?: Types.Industry[] | undefined
   } & {
     features?: Types.Feature[] | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export type PostCompaniesCompanyIdRecruitments.csvImportRequestBody = {
-  file?: (File | ReadStream) | undefined
+  file: (File | ReadStream)
 }
 
 export const postCompaniesCompanyIdRecruitments.csvImport = new BaseRequest<

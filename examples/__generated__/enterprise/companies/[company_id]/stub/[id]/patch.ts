@@ -8,32 +8,32 @@ export type PatchCompaniesCompanyIdStubIdUrlParams = {
 } | undefined
 
 export type PatchCompaniesCompanyIdStubIdResponse = Types.Company & {
-    owner?: Types.Account & {
+    owner: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
       } | undefined
-    } | undefined
+    }
   } & {
-    subscription?: Types.Subscription & {
+    subscription: Types.Subscription & {
       price?: Types.Price & {
         product?: Types.Product | undefined
       } | undefined
-    } | undefined
+    }
   } & {
-    recruitments?: Types.Recruitment[] | undefined
+    recruitments: Types.Recruitment[]
   } & {
-    industries?: Types.Industry[] | undefined
+    industries: Types.Industry[]
   } & {
-    features?: Types.Feature[] | undefined
+    features: Types.Feature[]
   } & {
-    paymentMethods?: Types.PaymentMethod[] | undefined
+    paymentMethods: Types.PaymentMethod[]
   }
 
 export type PatchCompaniesCompanyIdStubIdRequestBody = {
-  company?: {
+  company: {
     name?: string | undefined
     nameKana?: string | undefined
-  } | undefined
+  }
 }
 
 export const patchCompaniesCompanyIdStubId = new BaseRequest<

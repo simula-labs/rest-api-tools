@@ -7,12 +7,12 @@ export type GetCompaniesCompanyIdScoutTemplatesUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdScoutTemplatesResponse = {
-  scoutTemplates?: (Types.ScoutTemplate & {
+  scoutTemplates: (Types.ScoutTemplate & {
     company?: Types.Company | undefined
   } & {
     account?: Types.Account | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export type GetCompaniesCompanyIdScoutTemplatesQueryParams = {

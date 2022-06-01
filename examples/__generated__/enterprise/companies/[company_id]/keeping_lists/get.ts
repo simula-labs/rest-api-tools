@@ -7,7 +7,7 @@ export type GetCompaniesCompanyIdKeepingListsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdKeepingListsResponse = {
-  keepingLists?: Types.KeepingList & {
+  keepingLists: Types.KeepingList & {
     accounts?: (Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
@@ -19,9 +19,9 @@ export type GetCompaniesCompanyIdKeepingListsResponse = {
         employmentStatuses?: Types.EmploymentStatus[] | undefined
       })[] | undefined
     })[] | undefined
-  } | undefined
+  }
 
-  totalDataNums?: number | undefined
+  totalDataNums: number
 }
 
 export type GetCompaniesCompanyIdKeepingListsQueryParams = {

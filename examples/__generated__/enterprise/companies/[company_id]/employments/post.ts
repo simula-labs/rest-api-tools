@@ -7,13 +7,13 @@ export type PostCompaniesCompanyIdEmploymentsUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdEmploymentsResponse = Types.Employment & {
-    account?: Types.Account & {
+    account: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
       } | undefined
-    } | undefined
+    }
   } & {
-    company?: Types.Company & {
+    company: Types.Company & {
       owner?: Types.Account & {
         profile?: Types.Profile & {
           placeOfResidence?: Types.State | undefined
@@ -29,21 +29,21 @@ export type PostCompaniesCompanyIdEmploymentsResponse = Types.Employment & {
       features?: Types.Feature[] | undefined
     } & {
       industries?: Types.Industry[] | undefined
-    } | undefined
+    }
   } & {
-    roles?: (Types.Role & {
+    roles: (Types.Role & {
       policies?: (Types.Policy & {
         permissions?: Types.Permission[] | undefined
       })[] | undefined
-    })[] | undefined
+    })[]
   }
 
 export type PostCompaniesCompanyIdEmploymentsRequestBody = {
-  employment?: {
+  employment: {
     accountId: string
     email: string
     roleIds?: string[] | undefined
-  } | undefined
+  }
 }
 
 export const postCompaniesCompanyIdEmployments = new BaseRequest<

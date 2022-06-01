@@ -8,7 +8,7 @@ export type PatchCompaniesCompanyIdApplicantStatusesIdUrlParams = {
 } | undefined
 
 export type PatchCompaniesCompanyIdApplicantStatusesIdResponse = Types.ApplicantResource & {
-    account?: Types.Account & {
+    account: Types.Account & {
       jobs?: (Types.Job & {
         jobReviews?: (Types.JobReview & {
           skills?: Types.Skill[] | undefined
@@ -46,13 +46,13 @@ export type PatchCompaniesCompanyIdApplicantStatusesIdResponse = Types.Applicant
       } & {
         workplaces?: Types.State[] | undefined
       })[] | undefined
-    } | undefined
+    }
   } & {
-    room?: Types.Room & {
+    room: Types.Room & {
       account?: Types.Account | undefined
     } & {
       company?: Types.Company | undefined
-    } | undefined
+    }
   }
 
 export type PatchCompaniesCompanyIdApplicantStatusesIdRequestBody = {

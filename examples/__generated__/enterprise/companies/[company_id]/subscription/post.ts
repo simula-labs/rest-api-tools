@@ -7,15 +7,15 @@ export type PostCompaniesCompanyIdSubscriptionsIdUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdSubscriptionsIdResponse = Types.Subscription & {
-    company?: Types.Company | undefined
+    company: Types.Company
   } & {
-    price?: Types.Price | undefined
+    price: Types.Price
   }
 
 export type PostCompaniesCompanyIdSubscriptionsIdRequestBody = {
-  subscription?: {
+  subscription: {
     priceId: string
-  } | undefined
+  }
 }
 
 export const postCompaniesCompanyIdSubscriptionsId = new BaseRequest<

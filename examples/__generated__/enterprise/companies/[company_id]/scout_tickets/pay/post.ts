@@ -7,15 +7,15 @@ export type PostCompaniesCompanyIdScoutTicketsPayUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdScoutTicketsPayResponse = {
-  requiresAction?: boolean | undefined
+  requiresAction: boolean
   /** intentのclient_secret */
-  paymentIntentClientSecret?: string | undefined
+  paymentIntentClientSecret: string
 }
 
 export type PostCompaniesCompanyIdScoutTicketsPayRequestBody = {
-  scoutTicket?: {
+  scoutTicket: {
     count: number
-  } | undefined
+  }
 }
 
 export const postCompaniesCompanyIdScoutTicketsPay = new BaseRequest<

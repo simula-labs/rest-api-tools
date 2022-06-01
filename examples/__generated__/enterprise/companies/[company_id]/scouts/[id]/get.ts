@@ -8,11 +8,11 @@ export type GetCompaniesCompanyIdScoutsIdUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdScoutsIdResponse = Types.Scout & {
-    company?: Types.Company | undefined
+    company: Types.Company
   } & {
-    account?: Types.Account | undefined
+    account: Types.Account
   } & {
-    message?: Types.Message | undefined
+    message: Types.Message
   }
 
 export const getCompaniesCompanyIdScoutsId = new BaseRequest<

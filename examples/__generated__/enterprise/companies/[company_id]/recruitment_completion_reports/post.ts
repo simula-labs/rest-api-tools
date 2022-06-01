@@ -7,13 +7,13 @@ export type PostCompaniesCompanyIdRecruitmentCompletionReportsUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdRecruitmentCompletionReportsResponse = Types.RecruitmentCompletionReport & {
-    company?: Types.Company | undefined
+    company: Types.Company
   } & {
-    account?: Types.Account | undefined
+    account: Types.Account
   }
 
 export type PostCompaniesCompanyIdRecruitmentCompletionReportsRequestBody = {
-  recruitmentCompletionReport?: {
+  recruitmentCompletionReport: {
     amount: number
     systemFeeRatio: number
     /** 手数料（税抜） */
@@ -25,7 +25,7 @@ export type PostCompaniesCompanyIdRecruitmentCompletionReportsRequestBody = {
     accountId: string
     memo?: string | undefined
     joinedDate?: string | undefined
-  } | undefined
+  }
 }
 
 export const postCompaniesCompanyIdRecruitmentCompletionReports = new BaseRequest<

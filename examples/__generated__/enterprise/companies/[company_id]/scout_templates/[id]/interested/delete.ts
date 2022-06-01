@@ -8,9 +8,9 @@ export type DeleteCompaniesCompanyIdScoutTemplatesScoutTemplateIdInterestedUrlPa
 } | undefined
 
 export type DeleteCompaniesCompanyIdScoutTemplatesScoutTemplateIdInterestedResponse = Types.ScoutTemplate & {
-    company?: Types.Company | undefined
+    company: Types.Company
   } & {
-    account?: Types.Account | undefined
+    account: Types.Account
   }
 
 export const deleteCompaniesCompanyIdScoutTemplatesScoutTemplateIdInterested = new BaseRequest<

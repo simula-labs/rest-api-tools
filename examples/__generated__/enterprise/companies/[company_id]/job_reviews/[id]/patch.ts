@@ -8,13 +8,13 @@ export type PatchCompaniesCompanyIdWorkReviewsIdUrlParams = {
 } | undefined
 
 export type PatchCompaniesCompanyIdWorkReviewsIdResponse = Types.JobReview & {
-    skills?: Types.Skill[] | undefined
+    skills: Types.Skill[]
   } & {
-    job?: Types.Job | undefined
+    job: Types.Job
   }
 
 export type PatchCompaniesCompanyIdWorkReviewsIdRequestBody = {
-  jobReview?: {
+  jobReview: {
     starRating?: number | undefined
     /** 文字列で渡して、Skill側でfind_or_create_byする */
     skills?: string[] | undefined
@@ -22,7 +22,7 @@ export type PatchCompaniesCompanyIdWorkReviewsIdRequestBody = {
     skillDescription?: string | undefined
     /** もっとこうして欲しかった点 */
     improvementPoint?: string | undefined
-  } | undefined
+  }
 }
 
 export const patchCompaniesCompanyIdWorkReviewsId = new BaseRequest<

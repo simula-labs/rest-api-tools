@@ -7,7 +7,7 @@ export type GetCompaniesCompanyIdRoomsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdRoomsResponse = {
-  rooms?: Types.Room & {
+  rooms: Types.Room & {
     account?: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
@@ -19,9 +19,9 @@ export type GetCompaniesCompanyIdRoomsResponse = {
     } & {
       features?: Types.Feature[] | undefined
     } | undefined
-  } | undefined
+  }
 
-  totalDataNums?: number | undefined
+  totalDataNums: number
 }
 
 export const getCompaniesCompanyIdRooms = new BaseRequest<

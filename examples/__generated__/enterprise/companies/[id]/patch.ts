@@ -7,29 +7,29 @@ export type PatchCompaniesIdUrlParams = {
 } | undefined
 
 export type PatchCompaniesIdResponse = Types.Company & {
-    owner?: Types.Account & {
+    owner: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
       } | undefined
-    } | undefined
+    }
   } & {
-    subscription?: Types.Subscription & {
+    subscription: Types.Subscription & {
       price?: Types.Price & {
         product?: Types.Product | undefined
       } | undefined
-    } | undefined
+    }
   } & {
-    recruitments?: Types.Recruitment[] | undefined
+    recruitments: Types.Recruitment[]
   } & {
-    industries?: Types.Industry[] | undefined
+    industries: Types.Industry[]
   } & {
-    features?: Types.Feature[] | undefined
+    features: Types.Feature[]
   } & {
-    paymentMethods?: Types.PaymentMethod[] | undefined
+    paymentMethods: Types.PaymentMethod[]
   }
 
 export type PatchCompaniesIdRequestBody = {
-  company?: {
+  company: {
     name?: string | undefined
     nameKana?: string | undefined
     headOfficeLocation?: string | undefined
@@ -53,7 +53,7 @@ export type PatchCompaniesIdRequestBody = {
     ownerId?: string | undefined
     featureIds?: string[] | undefined
     industryIds?: string[] | undefined
-  } | undefined
+  }
 }
 
 export const patchCompaniesId = new BaseRequest<

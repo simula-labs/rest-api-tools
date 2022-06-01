@@ -8,7 +8,7 @@ export type PostCompaniesCompanyIdRoomsRoomIdMessagesUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdRoomsRoomIdMessagesResponse = Types.Message & {
-    sender?: Types.Account & {
+    sender: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State[] | undefined
       } & {
@@ -20,9 +20,9 @@ export type PostCompaniesCompanyIdRoomsRoomIdMessagesResponse = Types.Message & 
       } & {
         industryCategories?: Types.IndustryCategory[] | undefined
       } | undefined
-    } | undefined
+    }
   } & {
-    recruitment?: Types.Recruitment & {
+    recruitment: Types.Recruitment & {
       workplace?: Types.State | undefined
     } & {
       author?: Types.Account | undefined
@@ -36,18 +36,18 @@ export type PostCompaniesCompanyIdRoomsRoomIdMessagesResponse = Types.Message & 
       industries?: Types.Industry[] | undefined
     } & {
       company?: Types.Company | undefined
-    } | undefined
+    }
   } & {
-    room?: Types.Room | undefined
+    room: Types.Room
   }
 
 export type PostCompaniesCompanyIdRoomsRoomIdMessagesRequestBody = {
-  message?: {
+  message: {
     /** 発言するaccountのid */
     senderId: string
     content: string
     recruitmentId?: string | undefined
-  } | undefined
+  }
 }
 
 export const postCompaniesCompanyIdRoomsRoomIdMessages = new BaseRequest<

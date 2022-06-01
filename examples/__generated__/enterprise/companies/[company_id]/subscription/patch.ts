@@ -7,15 +7,15 @@ export type PatchCompaniesCompanyIdPlanSubscriptionsIdUrlParams = {
 } | undefined
 
 export type PatchCompaniesCompanyIdPlanSubscriptionsIdResponse = Types.Subscription & {
-    company?: Types.Company | undefined
+    company: Types.Company
   } & {
-    price?: Types.Price | undefined
+    price: Types.Price
   }
 
 export type PatchCompaniesCompanyIdPlanSubscriptionsIdRequestBody = {
-  subscription?: {
+  subscription: {
     priceId?: string | undefined
-  } | undefined
+  }
 }
 
 export const patchCompaniesCompanyIdPlanSubscriptionsId = new BaseRequest<

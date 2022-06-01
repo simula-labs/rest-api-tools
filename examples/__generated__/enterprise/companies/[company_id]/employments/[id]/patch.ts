@@ -8,13 +8,13 @@ export type PatchCompaniesCompanyIdEmploymentsIdUrlParams = {
 } | undefined
 
 export type PatchCompaniesCompanyIdEmploymentsIdResponse = Types.Employment & {
-    account?: Types.Account & {
+    account: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
       } | undefined
-    } | undefined
+    }
   } & {
-    company?: Types.Company & {
+    company: Types.Company & {
       owner?: Types.Account & {
         profile?: Types.Profile & {
           placeOfResidence?: Types.State | undefined
@@ -30,20 +30,20 @@ export type PatchCompaniesCompanyIdEmploymentsIdResponse = Types.Employment & {
       features?: Types.Feature[] | undefined
     } & {
       industries?: Types.Industry[] | undefined
-    } | undefined
+    }
   } & {
-    roles?: (Types.Role & {
+    roles: (Types.Role & {
       policies?: (Types.Policy & {
         permissions?: Types.Permission[] | undefined
       })[] | undefined
-    })[] | undefined
+    })[]
   }
 
 export type PatchCompaniesCompanyIdEmploymentsIdRequestBody = {
-  employment?: {
+  employment: {
     email?: string | undefined
     roleIds?: string[] | undefined
-  } | undefined
+  }
 }
 
 export const patchCompaniesCompanyIdEmploymentsId = new BaseRequest<

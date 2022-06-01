@@ -7,13 +7,13 @@ export type PostCompaniesCompanyIdWithdrawalsUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdWithdrawalsResponse = Types.Withdrawal & {
-    company?: Types.Company | undefined
+    company: Types.Company
   }
 
 export type PostCompaniesCompanyIdWithdrawalsRequestBody = {
-  withdrawal?: {
+  withdrawal: {
     amount: number
-  } | undefined
+  }
 }
 
 export const postCompaniesCompanyIdWithdrawals = new BaseRequest<

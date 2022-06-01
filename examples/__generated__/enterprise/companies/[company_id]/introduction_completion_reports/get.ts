@@ -7,11 +7,11 @@ export type GetCompaniesCompanyIdIntroductionCompletionReportsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdIntroductionCompletionReportsResponse = {
-  introductionCompletionReports?: (Types.IntroductionCompletionReport & {
+  introductionCompletionReports: (Types.IntroductionCompletionReport & {
     account?: Types.Account | undefined
   } & {
     company?: Types.Company | undefined
-  })[] | undefined
+  })[]
 }
 
 export const getCompaniesCompanyIdIntroductionCompletionReports = new BaseRequest<

@@ -7,14 +7,14 @@ export type GetCompaniesIdAccountsUrlParams = {
 } | undefined
 
 export type GetCompaniesIdAccountsResponse = {
-  accounts?: (Types.Account & {
+  accounts: (Types.Account & {
     profile?: Types.Profile | undefined
   } & {
     employments?: Types.Employment[] | undefined
   } & {
     blockedCompanies?: Types.Company[] | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export type GetCompaniesIdAccountsQueryParams = {

@@ -8,9 +8,9 @@ export type PostCompaniesCompanyIdInvoicesIdPayUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdInvoicesIdPayResponse = {
-  requiresAction?: boolean | undefined
+  requiresAction: boolean
   /** intentのclient_secret */
-  paymentIntentClientSecret?: string | undefined
+  paymentIntentClientSecret: string
 }
 
 export const postCompaniesCompanyIdInvoicesIdPay = new BaseRequest<

@@ -7,13 +7,13 @@ export type PostCompaniesCompanyIdIntroductionCompletionReportsUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdIntroductionCompletionReportsResponse = Types.IntroductionCompletionReport & {
-    account?: Types.Account | undefined
+    account: Types.Account
   } & {
-    company?: Types.Company | undefined
+    company: Types.Company
   }
 
 export type PostCompaniesCompanyIdIntroductionCompletionReportsRequestBody = {
-  introductionCompletionReport?: {
+  introductionCompletionReport: {
     /** 年収 */
     amount: number
     commissionFeeRatio?: number | undefined
@@ -33,7 +33,7 @@ export type PostCompaniesCompanyIdIntroductionCompletionReportsRequestBody = {
     accountId: string
     joinedDate?: string | undefined
     memo?: string | undefined
-  } | undefined
+  }
 }
 
 export const postCompaniesCompanyIdIntroductionCompletionReports = new BaseRequest<

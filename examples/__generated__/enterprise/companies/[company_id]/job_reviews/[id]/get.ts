@@ -8,9 +8,9 @@ export type GetCompaniesCompanyIdWorkReviewsIdUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdWorkReviewsIdResponse = Types.JobReview & {
-    skills?: Types.Skill[] | undefined
+    skills: Types.Skill[]
   } & {
-    job?: Types.Job | undefined
+    job: Types.Job
   }
 
 export const getCompaniesCompanyIdWorkReviewsId = new BaseRequest<

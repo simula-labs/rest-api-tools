@@ -8,16 +8,16 @@ export type PatchCompaniesCompanyIdIntroductionCompletionReportsIdUrlParams = {
 } | undefined
 
 export type PatchCompaniesCompanyIdIntroductionCompletionReportsIdResponse = Types.IntroductionCompletionReport & {
-    account?: Types.Account | undefined
+    account: Types.Account
   } & {
-    company?: Types.Company | undefined
+    company: Types.Company
   }
 
 export type PatchCompaniesCompanyIdIntroductionCompletionReportsIdRequestBody = {
-  joinedDate?: string | undefined
-  amount?: number | undefined
-  memo?: string | undefined
-  isEnable?: boolean | undefined
+  joinedDate: string
+  amount: number
+  memo: string
+  isEnable: boolean
 }
 
 export const patchCompaniesCompanyIdIntroductionCompletionReportsId = new BaseRequest<

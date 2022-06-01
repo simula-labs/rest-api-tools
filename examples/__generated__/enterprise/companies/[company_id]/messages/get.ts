@@ -7,7 +7,7 @@ export type GetCompaniesCompanyIdMessagesUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdMessagesResponse = {
-  messages?: Types.Message & {
+  messages: Types.Message & {
     sender?: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State[] | undefined
@@ -39,9 +39,9 @@ export type GetCompaniesCompanyIdMessagesResponse = {
     } | undefined
   } & {
     room?: Types.Room | undefined
-  } | undefined
+  }
 
-  totalDataNums?: number | undefined
+  totalDataNums: number
 }
 
 export type GetCompaniesCompanyIdMessagesQueryParams = {

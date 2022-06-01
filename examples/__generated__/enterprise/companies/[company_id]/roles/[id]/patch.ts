@@ -8,17 +8,17 @@ export type PatchCompaniesCompanyIdRolesIdUrlParams = {
 } | undefined
 
 export type PatchCompaniesCompanyIdRolesIdResponse = Types.Role & {
-    policies?: Types.Policy[] | undefined
+    policies: Types.Policy[]
   } & {
-    company?: Types.Company | undefined
+    company: Types.Company
   }
 
 export type PatchCompaniesCompanyIdRolesIdRequestBody = {
-  role?: {
+  role: {
     name?: string | undefined
     policyIds?: string[] | undefined
     description?: string | undefined
-  } | undefined
+  }
 }
 
 export const patchCompaniesCompanyIdRolesId = new BaseRequest<

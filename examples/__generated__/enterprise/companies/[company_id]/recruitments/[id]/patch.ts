@@ -8,11 +8,11 @@ export type PatchCompaniesCompanyIdRecruitmentsIdUrlParams = {
 } | undefined
 
 export type PatchCompaniesCompanyIdRecruitmentsIdResponse = Types.Recruitment & {
-    company?: Types.Company | undefined
+    company: Types.Company
   } & {
-    workplace?: Types.State | undefined
+    workplace: Types.State
   } & {
-    author?: Types.Account & {
+    author: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
       } & {
@@ -24,21 +24,21 @@ export type PatchCompaniesCompanyIdRecruitmentsIdResponse = Types.Recruitment & 
       } & {
         industryCategories?: Types.IndustryCategory[] | undefined
       } | undefined
-    } | undefined
+    }
   } & {
-    externalService?: Types.ExternalService | undefined
+    externalService: Types.ExternalService
   } & {
-    employmentStatuses?: Types.EmploymentStatus[] | undefined
+    employmentStatuses: Types.EmploymentStatus[]
   } & {
-    occupations?: Types.Occupation[] | undefined
+    occupations: Types.Occupation[]
   } & {
-    industries?: Types.Industry[] | undefined
+    industries: Types.Industry[]
   } & {
-    features?: Types.Feature[] | undefined
+    features: Types.Feature[]
   }
 
 export type PatchCompaniesCompanyIdRecruitmentsIdRequestBody = {
-  recruitment?: {
+  recruitment: {
     title?: string | undefined
     department?: string | undefined
     position?: string | undefined
@@ -83,7 +83,7 @@ export type PatchCompaniesCompanyIdRecruitmentsIdRequestBody = {
     occupationIds?: string[] | undefined
     industryIds?: string[] | undefined
     featureIds?: string[] | undefined
-  } | undefined
+  }
 }
 
 export const patchCompaniesCompanyIdRecruitmentsId = new BaseRequest<

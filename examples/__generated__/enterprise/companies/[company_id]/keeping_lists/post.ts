@@ -7,7 +7,7 @@ export type PostCompaniesCompanyIdKeepingListsUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdKeepingListsResponse = Types.KeepingList & {
-    accounts?: (Types.Account & {
+    accounts: (Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
       } | undefined
@@ -17,15 +17,15 @@ export type PostCompaniesCompanyIdKeepingListsResponse = Types.KeepingList & {
       } & {
         employmentStatuses?: Types.EmploymentStatus[] | undefined
       })[] | undefined
-    })[] | undefined
+    })[]
   }
 
 export type PostCompaniesCompanyIdKeepingListsRequestBody = {
-  keepingList?: {
+  keepingList: {
     name: string
     accountIds?: string[] | undefined
     accountId: string
-  } | undefined
+  }
 }
 
 export const postCompaniesCompanyIdKeepingLists = new BaseRequest<

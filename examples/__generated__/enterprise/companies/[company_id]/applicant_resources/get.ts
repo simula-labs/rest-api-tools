@@ -7,7 +7,7 @@ export type GetCompaniesCompanyIdApplicantsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdApplicantsResponse = {
-  applicantResources?: (Types.ApplicantResource & {
+  applicantResources: (Types.ApplicantResource & {
     account?: Types.Account & {
       jobs?: (Types.Job & {
         jobReviews?: (Types.JobReview & {
@@ -53,8 +53,8 @@ export type GetCompaniesCompanyIdApplicantsResponse = {
     } & {
       company?: Types.Company | undefined
     } | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export type GetCompaniesCompanyIdApplicantsQueryParams = {

@@ -7,11 +7,11 @@ export type GetCompaniesCompanyIdRolesUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdRolesResponse = {
-  roles?: (Types.Role & {
+  roles: (Types.Role & {
     policies?: Types.Policy[] | undefined
   } & {
     company?: Types.Company | undefined
-  })[] | undefined
+  })[]
 }
 
 export const getCompaniesCompanyIdRoles = new BaseRequest<

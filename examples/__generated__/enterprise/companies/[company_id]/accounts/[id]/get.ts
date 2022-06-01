@@ -8,7 +8,7 @@ export type GetCompaniesCompanyIdAccountsIdUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdAccountsIdResponse = Types.Account & {
-    profile?: Types.Profile & {
+    profile: Types.Profile & {
       specialtyCompanyTypes?: Types.SpecialtyCompanyType[] | undefined
     } & {
       specialtyPositions?: Types.SpecialtyPosition[] | undefined
@@ -16,15 +16,15 @@ export type GetCompaniesCompanyIdAccountsIdResponse = Types.Account & {
       occupationMainCategories?: Types.OccupationMainCategory[] | undefined
     } & {
       industryCategories?: Types.IndustryCategory[] | undefined
-    } | undefined
+    }
   } & {
-    employments?: (Types.Employment & {
+    employments: (Types.Employment & {
       company?: Types.Company | undefined
     } & {
       roles?: Types.Role[] | undefined
-    })[] | undefined
+    })[]
   } & {
-    blockedCompanies?: Types.Company[] | undefined
+    blockedCompanies: Types.Company[]
   }
 
 export const getCompaniesCompanyIdAccountsId = new BaseRequest<

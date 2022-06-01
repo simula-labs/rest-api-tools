@@ -7,9 +7,9 @@ export type GetCompaniesCompanyIdWithdrawalsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdWithdrawalsResponse = {
-  withdrawals?: Types.Withdrawal & {
+  withdrawals: Types.Withdrawal & {
     company?: Types.Company | undefined
-  } | undefined
+  }
 }
 
 export const getCompaniesCompanyIdWithdrawals = new BaseRequest<

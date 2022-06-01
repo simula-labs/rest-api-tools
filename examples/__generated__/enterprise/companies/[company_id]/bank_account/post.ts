@@ -7,18 +7,18 @@ export type PostCompaniesCompanyIdBankAccountUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdBankAccountResponse = Types.BankAccount & {
-    company?: Types.Company | undefined
+    company: Types.Company
   }
 
 export type PostCompaniesCompanyIdBankAccountRequestBody = {
-  bankAccount?: {
+  bankAccount: {
     bankName: string
     branchName: string
     accountNumber: string
     accountHolderName: string
     bankCode: string
     branchCode: string
-  } | undefined
+  }
 }
 
 export const postCompaniesCompanyIdBankAccount = new BaseRequest<

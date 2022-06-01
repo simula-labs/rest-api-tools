@@ -7,14 +7,14 @@ export type GetCompaniesCompanyIdNotificationsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdNotificationsResponse = {
-  notifications?: (Types.Notification & {
+  notifications: (Types.Notification & {
     company?: Types.Company | undefined
   } & {
     employment?: Types.Employment | undefined
   } & {
     room?: Types.Room | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export type GetCompaniesCompanyIdNotificationsRequestBody = {

@@ -8,9 +8,9 @@ export type GetCompaniesCompanyIdRolesIdUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdRolesIdResponse = Types.Role & {
-    policies?: Types.Policy[] | undefined
+    policies: Types.Policy[]
   } & {
-    company?: Types.Company | undefined
+    company: Types.Company
   }
 
 export const getCompaniesCompanyIdRolesId = new BaseRequest<

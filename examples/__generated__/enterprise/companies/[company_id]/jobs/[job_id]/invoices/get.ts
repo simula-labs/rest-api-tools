@@ -8,11 +8,11 @@ export type GetCompaniesCompanyIdWorksWorkIdInvoicesUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdWorksWorkIdInvoicesResponse = Types.Invoice & {
-    job?: Types.Job & {
+    job: Types.Job & {
       jobOrder?: Types.JobOrder | undefined
-    } | undefined
+    }
   } & {
-    iinvoiceDetailedItems?: Types.InvoiceDetailedItem[] | undefined
+    iinvoiceDetailedItems: Types.InvoiceDetailedItem[]
   }
 
 export const getCompaniesCompanyIdWorksWorkIdInvoices = new BaseRequest<

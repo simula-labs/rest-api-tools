@@ -8,15 +8,15 @@ export type PatchCompaniesCompanyIdContractsIdUrlParams = {
 } | undefined
 
 export type PatchCompaniesCompanyIdContractsIdResponse = Types.JobOrder & {
-    account?: Types.Account | undefined
+    account: Types.Account
   } & {
-    company?: Types.Company & {
+    company: Types.Company & {
       industries?: string | undefined
     } & {
       owner?: string | undefined
-    } | undefined
+    }
   } & {
-    recruitment?: Types.Recruitment & {
+    recruitment: Types.Recruitment & {
       workplace?: Types.State | undefined
     } & {
       author?: Types.Account | undefined
@@ -30,17 +30,17 @@ export type PatchCompaniesCompanyIdContractsIdResponse = Types.JobOrder & {
       industries?: Types.Industry[] | undefined
     } & {
       company?: Types.Company | undefined
-    } | undefined
+    }
   } & {
-    job?: Types.Job & {
+    job: Types.Job & {
       ''?: Types.Account | undefined
-    } | undefined
+    }
   } & {
-    jobServiceItems?: Types.JobServiceItem[] | undefined
+    jobServiceItems: Types.JobServiceItem[]
   }
 
 export type PatchCompaniesCompanyIdContractsIdRequestBody = {
-  jobOrder?: {
+  jobOrder: {
     recruitmentId?: string | undefined
     accountId?: string | undefined
     /** 「下書き」「先方確認中」「締結済み」「却下」 */
@@ -89,7 +89,7 @@ export type PatchCompaniesCompanyIdContractsIdRequestBody = {
     jobDescription?: string | undefined
     /** 諸条件 */
     otherConditions?: string | undefined
-  } | undefined
+  }
 }
 
 export const patchCompaniesCompanyIdContractsId = new BaseRequest<

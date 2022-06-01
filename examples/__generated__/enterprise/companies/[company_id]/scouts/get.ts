@@ -7,14 +7,14 @@ export type GetCompaniesCompanyIdScoutsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdScoutsResponse = {
-  scout?: (Types.Scout & {
+  scout: (Types.Scout & {
     company?: Types.Company | undefined
   } & {
     account?: Types.Account | undefined
   } & {
     message?: Types.Message | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export const getCompaniesCompanyIdScouts = new BaseRequest<

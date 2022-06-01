@@ -8,7 +8,7 @@ export type PatchCompaniesCompanyIdKeepingListsIdUrlParams = {
 } | undefined
 
 export type PatchCompaniesCompanyIdKeepingListsIdResponse = Types.KeepingList & {
-    accounts?: (Types.Account & {
+    accounts: (Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
       } | undefined
@@ -18,14 +18,14 @@ export type PatchCompaniesCompanyIdKeepingListsIdResponse = Types.KeepingList & 
       } & {
         employmentStatuses?: Types.EmploymentStatus[] | undefined
       })[] | undefined
-    })[] | undefined
+    })[]
   }
 
 export type PatchCompaniesCompanyIdKeepingListsIdRequestBody = {
-  keepingList?: {
+  keepingList: {
     name?: string | undefined
     accountIds?: string[] | undefined
-  } | undefined
+  }
 }
 
 export const patchCompaniesCompanyIdKeepingListsId = new BaseRequest<

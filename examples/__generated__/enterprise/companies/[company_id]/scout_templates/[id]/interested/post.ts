@@ -8,9 +8,9 @@ export type PostCompaniesCompanyIdScoutTemplatesScoutTemplateIdInterestedUrlPara
 } | undefined
 
 export type PostCompaniesCompanyIdScoutTemplatesScoutTemplateIdInterestedResponse = Types.ScoutTemplate & {
-    company?: Types.Company | undefined
+    company: Types.Company
   } & {
-    account?: Types.Account | undefined
+    account: Types.Account
   }
 
 export const postCompaniesCompanyIdScoutTemplatesScoutTemplateIdInterested = new BaseRequest<

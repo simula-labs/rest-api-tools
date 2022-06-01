@@ -7,7 +7,7 @@ export type GetCompaniesCompanyIdRecruitmentsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdRecruitmentsResponse = {
-  recruitments?: (Types.Recruitment & {
+  recruitments: (Types.Recruitment & {
     company?: Types.Company | undefined
   } & {
     workplace?: Types.State | undefined
@@ -35,8 +35,8 @@ export type GetCompaniesCompanyIdRecruitmentsResponse = {
     industries?: Types.Industry[] | undefined
   } & {
     features?: Types.Feature[] | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export type GetCompaniesCompanyIdRecruitmentsQueryParams = {

@@ -7,8 +7,8 @@ export type GetCompaniesCompanyIdScoutTicketsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdScoutTicketsResponse = {
-  scoutTickets?: Types.ScoutTicket[] | undefined
-  totalDataNums?: number | undefined
+  scoutTickets: Types.ScoutTicket[]
+  totalDataNums: number
 }
 
 export const getCompaniesCompanyIdScoutTickets = new BaseRequest<

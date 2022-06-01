@@ -7,15 +7,15 @@ export type PostCompaniesCompanyIdPaymentMethodsUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdPaymentMethodsResponse = Types.PaymentMethod & {
-    company?: Types.Company | undefined
+    company: Types.Company
   }
 
 export type PostCompaniesCompanyIdPaymentMethodsRequestBody = {
-  paymentMethod?: {
+  paymentMethod: {
     /** Stripeのpayment_method_id */
     stripePmId: string
     isDefault: boolean
-  } | undefined
+  }
 }
 
 export const postCompaniesCompanyIdPaymentMethods = new BaseRequest<

@@ -8,7 +8,7 @@ export type GetCompaniesCompanyIdRecruitmentsRecruitmentIdApplicantsUrlParams = 
 } | undefined
 
 export type GetCompaniesCompanyIdRecruitmentsRecruitmentIdApplicantsResponse = {
-  applicants?: (Types.Applicant & {
+  applicants: (Types.Applicant & {
     recruitment?: Types.Recruitment & {
       company?: Types.Company & {
         industries?: Types.Industry[] | undefined
@@ -22,8 +22,8 @@ export type GetCompaniesCompanyIdRecruitmentsRecruitmentIdApplicantsResponse = {
     } & {
       industries?: Types.Industry[] | undefined
     } | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export type GetCompaniesCompanyIdRecruitmentsRecruitmentIdApplicantsQueryParams = {

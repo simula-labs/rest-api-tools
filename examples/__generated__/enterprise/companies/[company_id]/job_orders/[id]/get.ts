@@ -8,15 +8,15 @@ export type GetCompaniesCompanyIdContractsIdUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdContractsIdResponse = Types.JobOrder & {
-    account?: Types.Account | undefined
+    account: Types.Account
   } & {
-    company?: Types.Company & {
+    company: Types.Company & {
       industries?: string | undefined
     } & {
       owner?: string | undefined
-    } | undefined
+    }
   } & {
-    recruitment?: Types.Recruitment & {
+    recruitment: Types.Recruitment & {
       workplace?: Types.State | undefined
     } & {
       author?: Types.Account | undefined
@@ -30,13 +30,13 @@ export type GetCompaniesCompanyIdContractsIdResponse = Types.JobOrder & {
       industries?: Types.Industry[] | undefined
     } & {
       company?: Types.Company | undefined
-    } | undefined
+    }
   } & {
-    job?: Types.Job & {
+    job: Types.Job & {
       ''?: Types.Account | undefined
-    } | undefined
+    }
   } & {
-    jobServiceItems?: Types.JobServiceItem[] | undefined
+    jobServiceItems: Types.JobServiceItem[]
   }
 
 export const getCompaniesCompanyIdContractsId = new BaseRequest<

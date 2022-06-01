@@ -7,7 +7,7 @@ export type GetCompaniesCompanyIdBankAccountUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdBankAccountResponse = Types.BankAccount & {
-    company?: Types.Company | undefined
+    company: Types.Company
   }
 
 export const getCompaniesCompanyIdBankAccount = new BaseRequest<

@@ -8,12 +8,12 @@ export type GetCompaniesCompanyIdWorksWorkIdContractReviewsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdWorksWorkIdContractReviewsResponse = {
-  jobReviews?: (Types.JobReview & {
+  jobReviews: (Types.JobReview & {
     skills?: Types.Skill[] | undefined
   } & {
     job?: Types.Job | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export const getCompaniesCompanyIdWorksWorkIdContractReviews = new BaseRequest<

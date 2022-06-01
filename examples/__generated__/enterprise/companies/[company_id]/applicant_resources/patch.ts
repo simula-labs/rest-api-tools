@@ -7,7 +7,7 @@ export type PatchCompaniesCompanyIdApplicantsUrlParams = {
 } | undefined
 
 export type PatchCompaniesCompanyIdApplicantsResponse = {
-  applicantResources?: (Types.ApplicantResource & {
+  applicantResources: (Types.ApplicantResource & {
     account?: Types.Account & {
       jobs?: (Types.Job & {
         jobReviews?: (Types.JobReview & {
@@ -53,8 +53,8 @@ export type PatchCompaniesCompanyIdApplicantsResponse = {
     } & {
       company?: Types.Company | undefined
     } | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export type PatchCompaniesCompanyIdApplicantsRequestBody = {

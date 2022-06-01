@@ -7,9 +7,9 @@ export type PostCompaniesCompanyIdScoutTemplatesUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdScoutTemplatesResponse = Types.ScoutTemplate & {
-    company?: Types.Company | undefined
+    company: Types.Company
   } & {
-    account?: Types.Account | undefined
+    account: Types.Account
   }
 
 export type PostCompaniesCompanyIdScoutTemplatesRequestBody = {

@@ -7,7 +7,7 @@ export type PostCompaniesCompanyIdEmploymentsInviteUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdEmploymentsInviteResponse = {
-  employments?: (Types.Employment & {
+  employments: (Types.Employment & {
     account?: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
@@ -37,7 +37,7 @@ export type PostCompaniesCompanyIdEmploymentsInviteResponse = {
         permissions?: Types.Permission[] | undefined
       })[] | undefined
     })[] | undefined
-  })[] | undefined
+  })[]
 }
 
 export type PostCompaniesCompanyIdEmploymentsInviteRequestBody = {

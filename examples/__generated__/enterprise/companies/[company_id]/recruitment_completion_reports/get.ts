@@ -7,12 +7,12 @@ export type GetCompaniesCompanyIdRecruitmentCompletionReportsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdRecruitmentCompletionReportsResponse = {
-  recruitmentCompletionReports?: (Types.RecruitmentCompletionReport & {
+  recruitmentCompletionReports: (Types.RecruitmentCompletionReport & {
     company?: Types.Company | undefined
   } & {
     account?: Types.Account | undefined
-  })[] | undefined
-  totalDataNums?: number | undefined
+  })[]
+  totalDataNums: number
 }
 
 export const getCompaniesCompanyIdRecruitmentCompletionReports = new BaseRequest<

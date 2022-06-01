@@ -8,7 +8,7 @@ export type GetCompaniesCompanyIdKeepingListsIdUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdKeepingListsIdResponse = Types.KeepingList & {
-    accounts?: (Types.Account & {
+    accounts: (Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
       } | undefined
@@ -18,7 +18,7 @@ export type GetCompaniesCompanyIdKeepingListsIdResponse = Types.KeepingList & {
       } & {
         employmentStatuses?: Types.EmploymentStatus[] | undefined
       })[] | undefined
-    })[] | undefined
+    })[]
   }
 
 export const getCompaniesCompanyIdKeepingListsId = new BaseRequest<

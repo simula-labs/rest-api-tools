@@ -7,17 +7,17 @@ export type PostCompaniesCompanyIdRolesUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdRolesResponse = Types.Role & {
-    policies?: Types.Policy[] | undefined
+    policies: Types.Policy[]
   } & {
-    company?: Types.Company | undefined
+    company: Types.Company
   }
 
 export type PostCompaniesCompanyIdRolesRequestBody = {
-  role?: {
+  role: {
     name: string
     policyIds?: string[] | undefined
     description?: string | undefined
-  } | undefined
+  }
 }
 
 export const postCompaniesCompanyIdRoles = new BaseRequest<

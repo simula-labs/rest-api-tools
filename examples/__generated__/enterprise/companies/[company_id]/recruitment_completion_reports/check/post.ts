@@ -7,16 +7,16 @@ export type PostCompaniesCompanyIdRecruitmentCompletionReportsCheckUrlParams = {
 } | undefined
 
 export type PostCompaniesCompanyIdRecruitmentCompletionReportsCheckResponse = Types.RecruitmentCompletionReport & {
-    company?: Types.Company | undefined
+    company: Types.Company
   } & {
-    account?: Types.Account | undefined
+    account: Types.Account
   }
 
 export type PostCompaniesCompanyIdRecruitmentCompletionReportsCheckRequestBody = {
-  recruitmentCompletionReport?: {
+  recruitmentCompletionReport: {
     amount: number
     accountId: string
-  } | undefined
+  }
 }
 
 export const postCompaniesCompanyIdRecruitmentCompletionReportsCheck = new BaseRequest<
