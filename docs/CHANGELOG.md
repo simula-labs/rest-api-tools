@@ -1,3 +1,10 @@
+## [1.0.13](https://github.com/simula-labs/rest-api-tools/compare/v1.0.12...v1.0.13) (2022-06-01)
+
+
+### Bug Fixes
+
+* requestBodyのrequiredの指定がなかった場合はnullableに ([6ecd253](https://github.com/simula-labs/rest-api-tools/commit/6ecd253040d1f6a3ce568df534fac7c14580797a))
+
 ## [1.0.12](https://github.com/simula-labs/rest-api-tools/compare/v1.0.11...v1.0.12) (2022-06-01)
 
 
