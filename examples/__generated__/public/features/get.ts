@@ -13,7 +13,7 @@ export type GetFeaturesQueryParams = {
   keyword?: string | undefined
   /** 「company」or「recruitment」 */
   sourceType?: 'company' | 'recruitment' | undefined
-} | undefined
+}
 
 export const getFeatures = new BaseRequest<
   undefined,

@@ -20,7 +20,7 @@ export type GetAccountsAccountIdSearchConditionsQueryParams = {
   companyId?: string | undefined
   /** ターゲット */
   target?: string | undefined
-} | undefined
+}
 
 export const getAccountsAccountIdSearchConditions = new BaseRequest<
   undefined,

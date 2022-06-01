@@ -50,7 +50,7 @@ export type GetAccountsAccountIdContractsQueryParams = {
   recruitmentId?: string | undefined
   /** 発注者 */
   companyId?: string | undefined
-} | undefined
+}
 
 export const getAccountsAccountIdContracts = new BaseRequest<
   undefined,

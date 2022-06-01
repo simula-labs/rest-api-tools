@@ -7,7 +7,7 @@ export type GetTermHistoriesLatestResponse = Types.TermHistory
 export type GetTermHistoriesLatestQueryParams = {
   /** "common" or "type" */
   type?: 'common' | 'plan' | undefined
-} | undefined
+}
 
 export const getTermHistoriesLatest = new BaseRequest<
   undefined,

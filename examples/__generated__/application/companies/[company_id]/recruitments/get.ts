@@ -66,7 +66,7 @@ export type GetCompaniesCompanyIdRecruitmentsQueryParams = {
   sortAscAmount?: boolean | undefined
   /** trueなら昇順、falseなら降順 */
   sortAscApplicant?: boolean | undefined
-} | undefined
+}
 
 export const getCompaniesCompanyIdRecruitments = new BaseRequest<
   undefined,

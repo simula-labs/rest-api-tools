@@ -22,7 +22,7 @@ export type GetCompaniesQueryParams = {
   isJobOrdered?: boolean | undefined
   /** 業務に紐付いた募集のみ（業務のフィルター用） */
   isJobed?: boolean | undefined
-} | undefined
+}
 
 export const getCompanies = new BaseRequest<
   undefined,

@@ -8,7 +8,7 @@ export type GetEmploymentStatusesResponse = {
 
 export type GetEmploymentStatusesQueryParams = {
   type?: 'project' | 'career' | undefined
-} | undefined
+}
 
 export const getEmploymentStatuses = new BaseRequest<
   undefined,

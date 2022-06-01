@@ -46,7 +46,7 @@ export type GetAccountsAccountIdMessagesResponse = {
 
 export type GetAccountsAccountIdMessagesQueryParams = {
   companyId: string
-} | undefined
+}
 
 export const getAccountsAccountIdMessages = new BaseRequest<
   undefined,

@@ -194,7 +194,7 @@ export const buildV3 = (
         });
         params.push({
           name: "queryParams",
-          required: false,
+          required: true,
           description: null,
           values: [
             {

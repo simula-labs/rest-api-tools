@@ -16,7 +16,7 @@ export type GetCompaniesResponse = {
 export type GetCompaniesQueryParams = {
   /** 検索キーワード */
   keyword?: string | undefined
-} | undefined
+}
 
 export const getCompanies = new BaseRequest<
   undefined,

@@ -9,7 +9,7 @@ export type GetSkillsResponse = {
 export type GetSkillsQueryParams = {
   /** 検索キーワード */
   keyword?: string | undefined
-} | undefined
+}
 
 export const getSkills = new BaseRequest<
   undefined,
