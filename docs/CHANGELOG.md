@@ -1,3 +1,10 @@
+## [1.0.11](https://github.com/simula-labs/rest-api-tools/compare/v1.0.10...v1.0.11) (2022-05-31)
+
+
+### Bug Fixes
+
+* baseRequestのbuildReactQueryMutaterの引数を修正 ([64cca9e](https://github.com/simula-labs/rest-api-tools/commit/64cca9ef787d17645fd0b791f12619774821dd24))
+
 ## [1.0.10](https://github.com/simula-labs/rest-api-tools/compare/v1.0.9...v1.0.10) (2022-05-30)
 
 
