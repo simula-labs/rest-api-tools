@@ -61,7 +61,7 @@ const object2value = (obj: OpenAPIV3.NonArraySchemaObject, required: boolean): P
 
       return {
         name: getPropertyName(name),
-        required: obj.required?.includes(name) ?? required,
+        required: obj.required?.includes(name) ?? false,
         description: val.description,
         values: [val],
       };

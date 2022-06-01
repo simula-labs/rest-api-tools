@@ -109,17 +109,6 @@ export const mockFeature = (modification?: Partial< Types.Feature>): Types.Featu
   }
 }
 
-export const mockState = (modification?: Partial< Types.State>): Types.State => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    countryCode: 0,
-    name: "string",
-    ...modification
-  }
-}
-
 export const mockAccount = (modification?: Partial< Types.Account>): Types.Account => {
   return {
     id: "string",
@@ -180,6 +169,71 @@ export const mockProfile = (modification?: Partial< Types.Profile>): Types.Profi
     agentAchievement: "string",
     maritalStatus: 'single',
     files: [],
+    ...modification
+  }
+}
+
+export const mockState = (modification?: Partial< Types.State>): Types.State => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    countryCode: 0,
+    name: "string",
+    ...modification
+  }
+}
+
+export const mockSubscription = (modification?: Partial< Types.Subscription>): Types.Subscription => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    status: 'active',
+    sinceDate: "string",
+    untilDate: "string",
+    ...modification
+  }
+}
+
+export const mockPrice = (modification?: Partial< Types.Price>): Types.Price => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    active: "string",
+    currency: "string",
+    unitAmountWithoutTax: 0,
+    taxForUnitAmount: 0,
+    unitAmount: 0,
+    ...modification
+  }
+}
+
+export const mockProduct = (modification?: Partial< Types.Product>): Types.Product => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    name: "string",
+    description: "string",
+    active: false,
+    type: 'good',
+    planType: 'standard',
+    ...modification
+  }
+}
+
+export const mockPaymentMethod = (modification?: Partial< Types.PaymentMethod>): Types.PaymentMethod => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    brand: 'visa',
+    expMonth: "string",
+    expYear: "string",
+    last4: "string",
+    isDefault: false,
     ...modification
   }
 }
@@ -262,25 +316,11 @@ export const mockOccupation = (modification?: Partial< Types.Occupation>): Types
   }
 }
 
-export const mockPrivacyPolicyHistory = (modification?: Partial< Types.PrivacyPolicyHistory>): Types.PrivacyPolicyHistory => {
+export const mockApplicant = (modification?: Partial< Types.Applicant>): Types.Applicant => {
   return {
     id: "string",
     createdAt: "string",
     updatedAt: "string",
-    content: "string",
-    version: "string",
-    ...modification
-  }
-}
-
-export const mockTermHistory = (modification?: Partial< Types.TermHistory>): Types.TermHistory => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    content: "string",
-    version: "string",
-    type: 'common',
     ...modification
   }
 }
@@ -299,31 +339,6 @@ export const mockEmployment = (modification?: Partial< Types.Employment>): Types
   }
 }
 
-export const mockStateCategory = (modification?: Partial< Types.StateCategory>): Types.StateCategory => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    name: "string",
-    countryType: 'JAPAN',
-    ...modification
-  }
-}
-
-export const mockProduct = (modification?: Partial< Types.Product>): Types.Product => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    name: "string",
-    description: "string",
-    active: false,
-    type: 'good',
-    planType: 'standard',
-    ...modification
-  }
-}
-
 export const mockRole = (modification?: Partial< Types.Role>): Types.Role => {
   return {
     id: "string",
@@ -332,125 +347,6 @@ export const mockRole = (modification?: Partial< Types.Role>): Types.Role => {
     name: "string",
     type: 'default',
     description: "string",
-    ...modification
-  }
-}
-
-export const mockRoom = (modification?: Partial< Types.Room>): Types.Room => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    isReadMessage: false,
-    existsNotReplied: false,
-    ...modification
-  }
-}
-
-/** STIを使って実装する */
-export const mockNotification = (modification?: Partial< Types.Notification>): Types.Notification => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    subject: "string",
-    content: "string",
-    url: "string",
-    isRead: false,
-    notificationType: 'general',
-    iconUrl: "string",
-    ...modification
-  }
-}
-
-export const mockSearchCondition = (modification?: Partial< Types.SearchCondition>): Types.SearchCondition => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    title: "string",
-    target: 'recruitment',
-    filters: [],
-    ...modification
-  }
-}
-
-export const mockApplicant = (modification?: Partial< Types.Applicant>): Types.Applicant => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    ...modification
-  }
-}
-
-export const mockWorkHistory = (modification?: Partial< Types.WorkHistory>): Types.WorkHistory => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    name: "string",
-    isEmployed: false,
-    position: "string",
-    sinceDate: "string",
-    untilDate: "string",
-    department: "string",
-    ...modification
-  }
-}
-
-/** 職歴に紐付くプロジェクト経歴（name・positionどちらかは必須） */
-export const mockProjectHistory = (modification?: Partial< Types.ProjectHistory>): Types.ProjectHistory => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    name: "string",
-    position: "string",
-    businessContent: "string",
-    sinceDate: "string",
-    untilDate: "string",
-    isEmployed: false,
-    ...modification
-  }
-}
-
-export const mockAcademicHistory = (modification?: Partial< Types.AcademicHistory>): Types.AcademicHistory => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    name: "string",
-    faculty: "string",
-    sinceDate: "string",
-    untilDate: "string",
-    type: 'graduate_school_doctor',
-    ...modification
-  }
-}
-
-export const mockSubscription = (modification?: Partial< Types.Subscription>): Types.Subscription => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    status: 'active',
-    sinceDate: "string",
-    untilDate: "string",
-    ...modification
-  }
-}
-
-export const mockPrice = (modification?: Partial< Types.Price>): Types.Price => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    active: "string",
-    currency: "string",
-    unitAmountWithoutTax: 0,
-    taxForUnitAmount: 0,
-    unitAmount: 0,
     ...modification
   }
 }
@@ -477,12 +373,39 @@ export const mockPermission = (modification?: Partial< Types.Permission>): Types
   }
 }
 
-export const mockSkill = (modification?: Partial< Types.Skill>): Types.Skill => {
+export const mockKeepingList = (modification?: Partial< Types.KeepingList>): Types.KeepingList => {
   return {
     id: "string",
     createdAt: "string",
     updatedAt: "string",
     name: "string",
+    targetAccountExist: false,
+    ...modification
+  }
+}
+
+export const mockHope = (modification?: Partial< Types.Hope>): Types.Hope => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    timeToChangeJobs: 0,
+    amount: 0,
+    billingMethod: 'hourly',
+    type: 'career',
+    specialNote: "string",
+    ratioOfOperation: 'once_a_week',
+    ...modification
+  }
+}
+
+export const mockRoom = (modification?: Partial< Types.Room>): Types.Room => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    isReadMessage: false,
+    existsNotReplied: false,
     ...modification
   }
 }
@@ -505,7 +428,7 @@ export const mockMessage = (modification?: Partial< Types.Message>): Types.Messa
   }
 }
 
-export const mockIncomeHistory = (modification?: Partial< Types.IncomeHistory>): Types.IncomeHistory => {
+export const mockPaymentHistory = (modification?: Partial< Types.PaymentHistory>): Types.PaymentHistory => {
   return {
     id: "string",
     createdAt: "string",
@@ -516,31 +439,46 @@ export const mockIncomeHistory = (modification?: Partial< Types.IncomeHistory>):
   }
 }
 
-/** STIを使って実装する */
-export const mockWithdrawal = (modification?: Partial< Types.Withdrawal>): Types.Withdrawal => {
+export const mockRecruitmentCompletionReport = (modification?: Partial< Types.RecruitmentCompletionReport>): Types.RecruitmentCompletionReport => {
   return {
     id: "string",
     createdAt: "string",
     updatedAt: "string",
     amount: 0,
-    feeAmount: 0,
-    totalAmount: 0,
+    systemFeeRatio: 0,
+    systemFeeWithoutTax: 0,
+    taxForSystemFee: 0,
+    systemFee: 0,
+    paymentStatus: 'unpaid',
+    joinedDate: "string",
+    memo: "string",
+    isEnable: false,
+    ...modification
+  }
+}
+
+export const mockScout = (modification?: Partial< Types.Scout>): Types.Scout => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    type: 'career',
     ...modification
   }
 }
 
 /** STIを使って実装する */
-export const mockBankAccount = (modification?: Partial< Types.BankAccount>): Types.BankAccount => {
+export const mockNotification = (modification?: Partial< Types.Notification>): Types.Notification => {
   return {
     id: "string",
     createdAt: "string",
     updatedAt: "string",
-    bankName: "string",
-    branchName: "string",
-    accountNumber: "string",
-    accountHolderName: "string",
-    bankCode: "string",
-    branchCode: "string",
+    subject: "string",
+    content: "string",
+    url: "string",
+    isRead: false,
+    notificationType: 'general',
+    iconUrl: "string",
     ...modification
   }
 }
@@ -602,34 +540,6 @@ export const mockJobServiceItem = (modification?: Partial< Types.JobServiceItem>
   }
 }
 
-export const mockRecruitmentInterest = (modification?: Partial< Types.RecruitmentInterest>): Types.RecruitmentInterest => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    ...modification
-  }
-}
-
-export const mockSupport = (modification?: Partial< Types.Support>): Types.Support => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    project: false,
-    career: false,
-    ...modification
-  }
-}
-
-export const mockProjectResult = (modification?: Partial< Types.ProjectResult>): Types.ProjectResult => {
-  return {
-    totalRate: 0,
-    totalJobsNum: 0,
-    ...modification
-  }
-}
-
 export const mockJobReview = (modification?: Partial< Types.JobReview>): Types.JobReview => {
   return {
     id: "string",
@@ -643,117 +553,12 @@ export const mockJobReview = (modification?: Partial< Types.JobReview>): Types.J
   }
 }
 
-export const mockAchievement = (modification?: Partial< Types.Achievement>): Types.Achievement => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    content: "string",
-    createdDate: "string",
-    description: "string",
-    ...modification
-  }
-}
-
-export const mockHope = (modification?: Partial< Types.Hope>): Types.Hope => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    timeToChangeJobs: 0,
-    amount: 0,
-    billingMethod: 'hourly',
-    type: 'career',
-    specialNote: "string",
-    ratioOfOperation: 'once_a_week',
-    ...modification
-  }
-}
-
-export const mockIndustryHistory = (modification?: Partial< Types.IndustryHistory>): Types.IndustryHistory => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    yearOfExperience: 0,
-    ...modification
-  }
-}
-
-export const mockOccupationHistory = (modification?: Partial< Types.OccupationHistory>): Types.OccupationHistory => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    yearOfExperience: 0,
-    ...modification
-  }
-}
-
-export const mockConsentMatter = (modification?: Partial< Types.ConsentMatter>): Types.ConsentMatter => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    content: "string",
-    ...modification
-  }
-}
-
-export const mockJobChangeCompletionReport = (modification?: Partial< Types.JobChangeCompletionReport>): Types.JobChangeCompletionReport => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    amount: 0,
-    ...modification
-  }
-}
-
-/** 職種「中項目」 */
-export const mockOccupationSubCategory = (modification?: Partial< Types.OccupationSubCategory>): Types.OccupationSubCategory => {
+export const mockSkill = (modification?: Partial< Types.Skill>): Types.Skill => {
   return {
     id: "string",
     createdAt: "string",
     updatedAt: "string",
     name: "string",
-    ...modification
-  }
-}
-
-export const mockPaymentMethod = (modification?: Partial< Types.PaymentMethod>): Types.PaymentMethod => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    brand: 'visa',
-    expMonth: "string",
-    expYear: "string",
-    last4: "string",
-    isDefault: false,
-    ...modification
-  }
-}
-
-export const mockNda = (modification?: Partial< Types.Nda>): Types.Nda => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    content: "string",
-    version: "string",
-    ...modification
-  }
-}
-
-export const mockConsentNda = (modification?: Partial< Types.ConsentNda>): Types.ConsentNda => {
-  return {
-    id: "string",
-    createdAt: "string",
-    updatedAt: "string",
-    name: "string",
-    address: "string",
-    ndaId: "string",
     ...modification
   }
 }
@@ -790,6 +595,247 @@ export const mockInvoiceDetailedItem = (modification?: Partial< Types.InvoiceDet
     unitPrice: 0,
     taxRatio: 0,
     amount: 0,
+    ...modification
+  }
+}
+
+export const mockIncomeHistory = (modification?: Partial< Types.IncomeHistory>): Types.IncomeHistory => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    name: "string",
+    amount: 0,
+    ...modification
+  }
+}
+
+/** STIを使って実装する */
+export const mockWithdrawal = (modification?: Partial< Types.Withdrawal>): Types.Withdrawal => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    amount: 0,
+    feeAmount: 0,
+    totalAmount: 0,
+    ...modification
+  }
+}
+
+/** STIを使って実装する */
+export const mockBankAccount = (modification?: Partial< Types.BankAccount>): Types.BankAccount => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    bankName: "string",
+    branchName: "string",
+    accountNumber: "string",
+    accountHolderName: "string",
+    bankCode: "string",
+    branchCode: "string",
+    ...modification
+  }
+}
+
+export const mockApplicantResource = (modification?: Partial< Types.ApplicantResource>): Types.ApplicantResource => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    careerStatus: 'backlog',
+    projectStatus: 'backlog',
+    isCheckedCareer: false,
+    isCheckedProject: false,
+    isWatchedCareer: false,
+    isWatchedProject: false,
+    isSample: false,
+    origin: 'applicant',
+    deletedAt: "string",
+    recruitmentSourceType: 'client',
+    ...modification
+  }
+}
+
+export const mockScoutTicket = (modification?: Partial< Types.ScoutTicket>): Types.ScoutTicket => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    type: 'free',
+    usedAt: "string",
+    ...modification
+  }
+}
+
+export const mockIntroductionCompletionReport = (modification?: Partial< Types.IntroductionCompletionReport>): Types.IntroductionCompletionReport => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    amount: 0,
+    systemFeeRatio: 0,
+    systemFeeWithoutTax: 0,
+    taxForSystemFee: 0,
+    systemFee: 0,
+    commissionFeeRatio: 0,
+    commissionFeeWithoutTax: 0,
+    taxForCommissionFee: 0,
+    commissionFee: 0,
+    paymentStatus: 'unpaid',
+    joinedDate: "string",
+    memo: "string",
+    isEnable: false,
+    ...modification
+  }
+}
+
+export const mockScoutTemplate = (modification?: Partial< Types.ScoutTemplate>): Types.ScoutTemplate => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    name: "string",
+    content: "string",
+    isInterested: false,
+    ...modification
+  }
+}
+
+export const mockAcademicHistory = (modification?: Partial< Types.AcademicHistory>): Types.AcademicHistory => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    name: "string",
+    faculty: "string",
+    sinceDate: "string",
+    untilDate: "string",
+    type: 'graduate_school_doctor',
+    ...modification
+  }
+}
+
+export const mockAchievement = (modification?: Partial< Types.Achievement>): Types.Achievement => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    content: "string",
+    createdDate: "string",
+    description: "string",
+    ...modification
+  }
+}
+
+export const mockIndustryHistory = (modification?: Partial< Types.IndustryHistory>): Types.IndustryHistory => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    yearOfExperience: 0,
+    ...modification
+  }
+}
+
+export const mockJobChangeCompletionReport = (modification?: Partial< Types.JobChangeCompletionReport>): Types.JobChangeCompletionReport => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    amount: 0,
+    ...modification
+  }
+}
+
+export const mockOccupationHistory = (modification?: Partial< Types.OccupationHistory>): Types.OccupationHistory => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    yearOfExperience: 0,
+    ...modification
+  }
+}
+
+/** 職種「中項目」 */
+export const mockOccupationSubCategory = (modification?: Partial< Types.OccupationSubCategory>): Types.OccupationSubCategory => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    name: "string",
+    ...modification
+  }
+}
+
+/** 職歴に紐付くプロジェクト経歴（name・positionどちらかは必須） */
+export const mockProjectHistory = (modification?: Partial< Types.ProjectHistory>): Types.ProjectHistory => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    name: "string",
+    position: "string",
+    businessContent: "string",
+    sinceDate: "string",
+    untilDate: "string",
+    isEmployed: false,
+    ...modification
+  }
+}
+
+export const mockWorkHistory = (modification?: Partial< Types.WorkHistory>): Types.WorkHistory => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    name: "string",
+    isEmployed: false,
+    position: "string",
+    sinceDate: "string",
+    untilDate: "string",
+    department: "string",
+    ...modification
+  }
+}
+
+export const mockProjectResult = (modification?: Partial< Types.ProjectResult>): Types.ProjectResult => {
+  return {
+    totalRate: 0,
+    totalJobsNum: 0,
+    ...modification
+  }
+}
+
+export const mockRecruitmentInterest = (modification?: Partial< Types.RecruitmentInterest>): Types.RecruitmentInterest => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    ...modification
+  }
+}
+
+export const mockStateCategory = (modification?: Partial< Types.StateCategory>): Types.StateCategory => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    name: "string",
+    countryType: 'JAPAN',
+    ...modification
+  }
+}
+
+export const mockSupport = (modification?: Partial< Types.Support>): Types.Support => {
+  return {
+    id: "string",
+    createdAt: "string",
+    updatedAt: "string",
+    project: false,
+    career: false,
     ...modification
   }
 }
