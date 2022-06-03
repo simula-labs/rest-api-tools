@@ -116,7 +116,7 @@ export class BaseRequest<
   }
 
   buildReactQueryFetcher(option?: ApiOption<TInput, TPayload, TUrlParams, TQParams>) {
-    return async (context: QueryFunctionContext<string, number>) => {
+    return async (context: QueryFunctionContext) => {
       // queryKey, signal, pageParam, meta
       const { pageParam } = context;
       return this.call(
@@ -163,6 +163,7 @@ export class BaseRequest<
               });
             } else {
               // 配列か判断
+              // eslint-disable-next-line no-lonely-if
               if (Array.isArray(value)) {
                 value.forEach((el) => {
                   // 配列の中身がオブジェクトだったらkeyを追加して再帰
