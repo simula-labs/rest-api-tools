@@ -1,3 +1,10 @@
+## [1.0.17](https://github.com/simula-labs/rest-api-tools/compare/v1.0.16...v1.0.17) (2022-06-07)
+
+
+### Bug Fixes
+
+* remove onsuccess and onFailure ([171bb63](https://github.com/simula-labs/rest-api-tools/commit/171bb63cc26817bcd1115af7b3934f3bc1b74519))
+
 ## [1.0.16](https://github.com/simula-labs/rest-api-tools/compare/v1.0.15...v1.0.16) (2022-06-03)
 
 
