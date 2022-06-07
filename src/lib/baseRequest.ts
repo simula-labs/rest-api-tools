@@ -31,8 +31,6 @@ export type ApiOption<
   TQParams extends Record<string, unknown> | undefined
 > = {
   variables?: RequestVariables<TInput, TPayload, TUrlParams, TQParams>;
-  onSuccess?: (data: TPayload) => void;
-  onFailure?: (e: NetworkError | ClientError) => void;
 };
 
 export type RequestOption = {
