@@ -13,8 +13,14 @@ export type PostCompaniesCompanyIdInvoicesIdPayResponse = {
   paymentIntentClientSecret: string
 }
 
+export type PostCompaniesCompanyIdInvoicesIdPayRequestBody = {
+  invoice: {
+    paymentMethod?: 'bank' | 'credit_card' | undefined
+  }
+}
+
 export const postCompaniesCompanyIdInvoicesIdPay = new BaseRequest<
-  undefined,
+  PostCompaniesCompanyIdInvoicesIdPayRequestBody,
   PostCompaniesCompanyIdInvoicesIdPayResponse,
   PostCompaniesCompanyIdInvoicesIdPayUrlParams,
   undefined

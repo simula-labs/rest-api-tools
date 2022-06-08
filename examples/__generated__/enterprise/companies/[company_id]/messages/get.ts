@@ -46,6 +46,7 @@ export type GetCompaniesCompanyIdMessagesResponse = {
 
 export type GetCompaniesCompanyIdMessagesQueryParams = {
   accountId: string
+  page?: number | undefined
 }
 
 export const getCompaniesCompanyIdMessages = new BaseRequest<

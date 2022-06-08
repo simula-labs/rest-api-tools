@@ -7,19 +7,26 @@ export type GetCompaniesCompanyIdWorksWorkIdInvoicesUrlParams = {
   jobId: string
 } | undefined
 
-export type GetCompaniesCompanyIdWorksWorkIdInvoicesResponse = Types.Invoice & {
-    job: Types.Job & {
+export type GetCompaniesCompanyIdWorksWorkIdInvoicesResponse = {
+  invoices: (Types.Invoice & {
+    job?: Types.Job & {
       jobOrder?: Types.JobOrder | undefined
-    }
+    } | undefined
   } & {
-    iinvoiceDetailedItems: Types.InvoiceDetailedItem[]
-  }
+    iinvoiceDetailedItems?: Types.InvoiceDetailedItem[] | undefined
+  })[]
+  totalDataNums: number
+}
+
+export type GetCompaniesCompanyIdWorksWorkIdInvoicesQueryParams = {
+  page?: number | undefined
+}
 
 export const getCompaniesCompanyIdWorksWorkIdInvoices = new BaseRequest<
   undefined,
   GetCompaniesCompanyIdWorksWorkIdInvoicesResponse,
   GetCompaniesCompanyIdWorksWorkIdInvoicesUrlParams,
-  undefined
+  GetCompaniesCompanyIdWorksWorkIdInvoicesQueryParams
 >({
   requiredAuth: true,
   method: "get",

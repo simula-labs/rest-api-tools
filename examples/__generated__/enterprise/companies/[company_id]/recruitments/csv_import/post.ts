@@ -4,7 +4,11 @@ import type { ReadStream } from 'fs'
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../../shared/index";
 
-export type PostCompaniesCompanyIdRecruitments.csvImportResponse = {
+export type PostCompaniesCompanyIdRecruitmentsCsvImportUrlParams = {
+  companyId: string
+} | undefined
+
+export type PostCompaniesCompanyIdRecruitmentsCsvImportResponse = {
   recruitments: (Types.Recruitment & {
     company?: Types.Company | undefined
   } & {
@@ -33,18 +37,22 @@ export type PostCompaniesCompanyIdRecruitments.csvImportResponse = {
     industries?: Types.Industry[] | undefined
   } & {
     features?: Types.Feature[] | undefined
+  } & {
+    techStacks?: Types.TechStack[] | undefined
+  } & {
+    employmentContractTerms?: Types.EmploymentContractTerm[] | undefined
   })[]
   totalDataNums: number
 }
 
-export type PostCompaniesCompanyIdRecruitments.csvImportRequestBody = {
+export type PostCompaniesCompanyIdRecruitmentsCsvImportRequestBody = {
   file: (File | ReadStream)
 }
 
-export const postCompaniesCompanyIdRecruitments.csvImport = new BaseRequest<
-  PostCompaniesCompanyIdRecruitments.csvImportRequestBody,
-  PostCompaniesCompanyIdRecruitments.csvImportResponse,
-  undefined,
+export const postCompaniesCompanyIdRecruitmentsCsvImport = new BaseRequest<
+  PostCompaniesCompanyIdRecruitmentsCsvImportRequestBody,
+  PostCompaniesCompanyIdRecruitmentsCsvImportResponse,
+  PostCompaniesCompanyIdRecruitmentsCsvImportUrlParams,
   undefined
 >({
   requiredAuth: true,

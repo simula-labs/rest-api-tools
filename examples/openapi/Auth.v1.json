@@ -1,0 +1,709 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Auth",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/auth/v1",
+      "description": "Local"
+    },
+    {
+      "url": "https://api-dev.prob-works.com/auth/v1",
+      "description": "Dev"
+    },
+    {
+      "url": "https://api-stg.prob-works.com/auth/v1",
+      "description": "Stg"
+    },
+    {
+      "url": "https://api.prob-works.com/auth/v1",
+      "description": "Prd"
+    }
+  ],
+  "paths": {
+    "/invite_sign_up": {
+      "post": {
+        "summary": "招待されたEmailでサインアップする",
+        "operationId": "post-invite_sign_up",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/InviteSignUp"
+          }
+        },
+        "description": "招待されたEmailでサインアップし、作成されたアカウントとEmploymentを紐付ける\nついでにProfileを作成し、Accountと紐付ける",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {
+                    "type": "object",
+                    "required": [
+                      "email",
+                      "password"
+                    ],
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "format": "email"
+                      },
+                      "password": {
+                        "type": "string",
+                        "format": "password"
+                      }
+                    }
+                  },
+                  "employment": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "invite_token"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "invite_token": {
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                    }
+                  },
+                  "profile": {
+                    "type": "object",
+                    "required": [
+                      "first_name",
+                      "last_name"
+                    ],
+                    "properties": {
+                      "first_name": {
+                        "type": "string"
+                      },
+                      "last_name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "account",
+                  "employment",
+                  "profile"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sign_in": {
+      "post": {
+        "summary": "Sign In",
+        "operationId": "post-sign_in",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SignIn"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {
+                    "type": "object",
+                    "required": [
+                      "email",
+                      "password"
+                    ],
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "example": "test@example.com",
+                        "format": "email"
+                      },
+                      "password": {
+                        "type": "string",
+                        "format": "password"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sign_up": {
+      "parameters": [],
+      "post": {
+        "summary": "Sign Up",
+        "operationId": "post-sign_up",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/SignUp"
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string",
+                        "example": "test@example.com",
+                        "format": "email"
+                      },
+                      "password": {
+                        "type": "string",
+                        "format": "password"
+                      }
+                    },
+                    "required": [
+                      "email",
+                      "password"
+                    ]
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "general",
+                      "organizational"
+                    ],
+                    "description": "「求職者」or「企業」"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/verify_email": {
+      "get": {
+        "summary": "アドレス確認する（新規登録時）",
+        "tags": [],
+        "operationId": "get-verify_email"
+      }
+    },
+    "/verify_new_email": {
+      "post": {
+        "summary": "アドレス確認（新しいアドレスに変更する場合）",
+        "operationId": "post-verify_new_email",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "token",
+                  "email"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/verify_new_employment_email": {
+      "post": {
+        "summary": "アドレス確認（employmentが新しいアドレスに変更する場合）",
+        "operationId": "post-verify_new_employment_email",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "token",
+                  "email"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Account": {
+        "description": "",
+        "title": "Account",
+        "type": "object",
+        "x-tags": [
+          "Account"
+        ],
+        "properties": {
+          "already_keep_from_current_company": {
+            "type": "boolean"
+          },
+          "avatar_url": {
+            "type": "string"
+          },
+          "consent_nda_version": {
+            "type": "string",
+            "description": "同意したNDAのバージョン"
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "deleted_at": {
+            "description": "論理削除時刻",
+            "format": "date-time",
+            "type": "string"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "email": {
+            "example": "test@example.com",
+            "format": "email",
+            "type": "string"
+          },
+          "email_verification_status": {
+            "default": "unspecified",
+            "enum": [
+              "unspecified",
+              "request",
+              "verified"
+            ],
+            "example": "verified",
+            "type": "string"
+          },
+          "exists_applicant_resource_from_current_company": {
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "identification_requirements": {
+            "description": "本人確認に足りない項目の配列（'external_account'は銀行口座、'individual.verification.document'は身分証明書）\n",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "identity_verification_status": {
+            "default": "unspecified",
+            "enum": [
+              "unspecified",
+              "verified",
+              "checking",
+              "failed"
+            ],
+            "type": "string"
+          },
+          "is_career_scout_target": {
+            "default": true,
+            "description": "キャリアスカウト受け入れるか",
+            "type": "boolean"
+          },
+          "is_concluded_nda": {
+            "type": "boolean"
+          },
+          "is_project_scout_target": {
+            "default": true,
+            "description": "プロジェクトスカウト受け入れるか",
+            "type": "boolean"
+          },
+          "is_public_with_work": {
+            "default": true,
+            "description": "ProbWorksプロジェクト実績を公開するか",
+            "type": "boolean"
+          },
+          "is_sample": {
+            "default": false,
+            "description": "サンプルか",
+            "type": "boolean"
+          },
+          "is_student": {
+            "default": false,
+            "type": "boolean"
+          },
+          "is_supported": {
+            "type": "boolean"
+          },
+          "last_notification_read_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "last_sign_in_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "missing_requirements_for_agent": {
+            "description": "エージェント必須項目の不足項目",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "missing_requirements_for_general": {
+            "description": "求職者必須項目の不足項目",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "profile_completeness": {
+            "type": "number"
+          },
+          "register_as": {
+            "enum": [
+              "general",
+              "organizational"
+            ],
+            "example": "general",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "created_at",
+          "email_verification_status",
+          "id",
+          "identity_verification_status",
+          "is_career_scout_target",
+          "is_project_scout_target",
+          "is_public_with_work",
+          "is_sample",
+          "is_student",
+          "updated_at"
+        ]
+      },
+      "Profile": {
+        "title": "Profile",
+        "type": "object",
+        "x-tags": [
+          "Account"
+        ],
+        "description": "",
+        "properties": {
+          "academic_background": {
+            "type": "string",
+            "example": "東京大学"
+          },
+          "address": {
+            "type": "string",
+            "example": "東京都港区元赤坂1-7-18"
+          },
+          "agent_achievement": {
+            "type": "string",
+            "example": "経歴・実績"
+          },
+          "agent_area_in_charge": {
+            "type": "string",
+            "example": "東京23区"
+          },
+          "agent_self_introduction": {
+            "type": "string",
+            "example": "自己PR"
+          },
+          "agent_self_message": {
+            "type": "string",
+            "example": "紹介メッセージ"
+          },
+          "biography": {
+            "type": "string",
+            "example": "自己PR/職務要約"
+          },
+          "birth_of_date": {
+            "type": "string",
+            "format": "date",
+            "description": ""
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "english_skill": {
+            "type": "string",
+            "description": "「日常会話レベル」「ビジネス会話レベル」「ネイティブレベル」「なし」",
+            "enum": [
+              "daily_conversation",
+              "business_conversation",
+              "native",
+              "nothing"
+            ],
+            "example": "daily_conversation"
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "content_type": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "content_type",
+                "url",
+                "created_at"
+              ]
+            }
+          },
+          "first_name": {
+            "type": "string",
+            "example": "太郎"
+          },
+          "first_name_kana": {
+            "type": "string",
+            "example": "タロウ"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "OTHER"
+            ],
+            "example": "MALE"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "japanese_skill": {
+            "type": "string",
+            "description": "「日常会話レベル」「ビジネス会話レベル」「ネイティブレベル」「なし」",
+            "enum": [
+              "daily_conversation",
+              "business_conversation",
+              "native",
+              "nothing"
+            ],
+            "example": "native"
+          },
+          "last_name": {
+            "type": "string",
+            "example": "山田"
+          },
+          "last_name_kana": {
+            "type": "string",
+            "example": "ヤマダ"
+          },
+          "management_experience": {
+            "type": "string",
+            "description": "マネジメント経験人数",
+            "enum": [
+              "nothing",
+              "less_than_5",
+              "from_6_to_10",
+              "from_11_to_20",
+              "from_21_to_50",
+              "from_51_to_100",
+              "from_101_to_500",
+              "more_than_501"
+            ]
+          },
+          "marital_status": {
+            "type": "string",
+            "enum": [
+              "single",
+              "married"
+            ]
+          },
+          "nationality": {
+            "type": "string",
+            "example": "JP"
+          },
+          "number_of_job_changes": {
+            "type": "integer",
+            "description": "転職回数"
+          },
+          "phone": {
+            "type": "string",
+            "example": "090-XXXX-XXXX"
+          },
+          "postal_code": {
+            "type": "string",
+            "example": "107-0051"
+          },
+          "recent_income_amount": {
+            "type": "integer",
+            "description": "直近の年収（税の概念なし）"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "year_of_agent_experience": {
+            "type": "integer",
+            "example": 10
+          }
+        },
+        "required": [
+          "created_at",
+          "id",
+          "updated_at"
+        ]
+      },
+      "Employment": {
+        "title": "Employment",
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "department": {
+            "type": "string",
+            "description": "所属部署"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "sample@example.com"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_valid": {
+            "type": "boolean",
+            "default": false,
+            "description": "有効かどうか（招待しただけの状態はfalse）"
+          },
+          "last_notification_read_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "position": {
+            "type": "string",
+            "description": "役職"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "email",
+          "is_valid"
+        ]
+      }
+    },
+    "responses": {
+      "SignIn": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Account"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "employments": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Employment"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "profile": {
+                  "$ref": "#/components/schemas/Profile"
+                },
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "SignUp": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Account"
+            }
+          }
+        }
+      },
+      "InviteSignUp": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account": {
+                  "$ref": "#/components/schemas/Account"
+                },
+                "profile": {
+                  "$ref": "#/components/schemas/Profile"
+                },
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

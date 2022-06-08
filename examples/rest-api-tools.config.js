@@ -10,7 +10,7 @@ module.exports = {
     // },
     {
       connect: "enterprise",
-      openapi: "openapi/Enterprise.v1.yaml",
+      openapi: "openapi/Enterprise.v1.json",
       requiredAuth: true,
       baseURL: "https://api.example.com/enterprise",
     },

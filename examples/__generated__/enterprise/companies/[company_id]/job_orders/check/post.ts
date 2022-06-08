@@ -8,33 +8,26 @@ export type PostCompaniesCompanyIdJobOrdersCheckUrlParams = {
 
 export type PostCompaniesCompanyIdJobOrdersCheckResponse = Types.JobOrder & {
     account: Types.Account
-  } & {
+
     company: Types.Company & {
       industries?: string | undefined
-    } & {
       owner?: string | undefined
     }
-  } & {
+
     recruitment: Types.Recruitment & {
       workplace?: Types.State | undefined
-    } & {
       author?: Types.Account | undefined
-    } & {
       externalService?: Types.ExternalService | undefined
-    } & {
       employmentStatuses?: Types.EmploymentStatus[] | undefined
-    } & {
       occupations?: Types.Occupation[] | undefined
-    } & {
       industries?: Types.Industry[] | undefined
-    } & {
       company?: Types.Company | undefined
     }
-  } & {
+
     job: Types.Job & {
-      ''?: Types.Account | undefined
+      account?: Types.Account | undefined
     }
-  } & {
+
     jobServiceItems: Types.JobServiceItem[]
   }
 

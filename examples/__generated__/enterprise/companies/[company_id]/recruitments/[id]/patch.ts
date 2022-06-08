@@ -9,32 +9,26 @@ export type PatchCompaniesCompanyIdRecruitmentsIdUrlParams = {
 
 export type PatchCompaniesCompanyIdRecruitmentsIdResponse = Types.Recruitment & {
     company: Types.Company
-  } & {
     workplace: Types.State
-  } & {
+
     author: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
-      } & {
         specialtyCompanyTypes?: Types.SpecialtyCompanyType[] | undefined
-      } & {
         specialtyPositions?: Types.SpecialtyPosition[] | undefined
-      } & {
         occupationMainCategories?: Types.OccupationMainCategory[] | undefined
-      } & {
         industryCategories?: Types.IndustryCategory[] | undefined
       } | undefined
     }
-  } & {
+
     externalService: Types.ExternalService
-  } & {
     employmentStatuses: Types.EmploymentStatus[]
-  } & {
     occupations: Types.Occupation[]
-  } & {
     industries: Types.Industry[]
-  } & {
     features: Types.Feature[]
+    techStacks: Types.TechStack[]
+    targetCompany: Types.Company
+    employmentContractTerms: Types.EmploymentContractTerm[]
   }
 
 export type PatchCompaniesCompanyIdRecruitmentsIdRequestBody = {
@@ -47,8 +41,8 @@ export type PatchCompaniesCompanyIdRecruitmentsIdRequestBody = {
     workConditions?: string | undefined
     /** 「屋内禁煙」「喫煙室設置」「対策なし」「その他」 */
     smokingRegulation?: 'no_smoking_indoors' | 'exist_smoking_room' | 'none' | 'other' | undefined
-    /** 「未選択」「不可・時折（0-10%）」「可（10-90%）」「フルリモート（90%以上）」 */
-    remoteWorkStatus?: 'unselected' | 'rarely' | 'normally' | 'full_remote' | undefined
+    /** 「不可・時折（0-10%）」「可（10-90%）」「フルリモート（90%以上）」 */
+    remoteWorkStatus?: 'rarely' | 'normally' | 'full_remote' | undefined
     /** 勤務地詳細 */
     workplaceDescription?: string | undefined
     /** 勤務地不問か */
@@ -76,6 +70,8 @@ export type PatchCompaniesCompanyIdRecruitmentsIdRequestBody = {
     targetCompanyCertainName?: string | undefined
     /** 推薦ポイント */
     recommendedPoint?: string | undefined
+    /** 技術スタックの備考 */
+    techStackRemarks?: string | undefined
     nearestStation?: string | undefined
     /** 企業内でのフラグ */
     isOrganizationalChecked?: boolean | undefined
@@ -83,6 +79,8 @@ export type PatchCompaniesCompanyIdRecruitmentsIdRequestBody = {
     occupationIds?: string[] | undefined
     industryIds?: string[] | undefined
     featureIds?: string[] | undefined
+    techStackIds?: string[] | undefined
+    employmentContractTermIds?: string[] | undefined
   }
 }
 

@@ -2,47 +2,40 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../../shared/index";
 
-export type GetCompaniesCompanyIdContractsIdUrlParams = {
+export type GetCompaniesCompanyIdJobOrdersJobOrderIdUrlParams = {
   companyId: string
   id: string
 } | undefined
 
-export type GetCompaniesCompanyIdContractsIdResponse = Types.JobOrder & {
+export type GetCompaniesCompanyIdJobOrdersJobOrderIdResponse = Types.JobOrder & {
     account: Types.Account
-  } & {
+
     company: Types.Company & {
       industries?: string | undefined
-    } & {
       owner?: string | undefined
     }
-  } & {
+
     recruitment: Types.Recruitment & {
       workplace?: Types.State | undefined
-    } & {
       author?: Types.Account | undefined
-    } & {
       externalService?: Types.ExternalService | undefined
-    } & {
       employmentStatuses?: Types.EmploymentStatus[] | undefined
-    } & {
       occupations?: Types.Occupation[] | undefined
-    } & {
       industries?: Types.Industry[] | undefined
-    } & {
       company?: Types.Company | undefined
     }
-  } & {
+
     job: Types.Job & {
-      ''?: Types.Account | undefined
+      account?: Types.Account | undefined
     }
-  } & {
+
     jobServiceItems: Types.JobServiceItem[]
   }
 
-export const getCompaniesCompanyIdContractsId = new BaseRequest<
+export const getCompaniesCompanyIdJobOrdersJobOrderId = new BaseRequest<
   undefined,
-  GetCompaniesCompanyIdContractsIdResponse,
-  GetCompaniesCompanyIdContractsIdUrlParams,
+  GetCompaniesCompanyIdJobOrdersJobOrderIdResponse,
+  GetCompaniesCompanyIdJobOrdersJobOrderIdUrlParams,
   undefined
 >({
   requiredAuth: true,

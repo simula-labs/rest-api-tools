@@ -1,0 +1,41 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Webhook",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/webhooks",
+      "description": "local"
+    },
+    {
+      "url": "https://api.prob-works.com/webhooks",
+      "description": "Prd"
+    },
+    {
+      "url": "https://api-stg.prob-works.com/webhooks",
+      "description": "Stg"
+    },
+    {
+      "url": "https://api-dev.prob-woks.com/webhooks",
+      "description": "Dev"
+    }
+  ],
+  "paths": {
+    "/stripe/receive": {
+      "post": {
+        "summary": "Webhook受け取る",
+        "operationId": "post-stripe-receive",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}

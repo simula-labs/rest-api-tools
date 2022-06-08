@@ -2,12 +2,12 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../../shared/index";
 
-export type GetCompaniesCompanyIdWorksIdUrlParams = {
+export type GetCompaniesCompanyIdJobsIdUrlParams = {
   companyId: string
   id: string
 } | undefined
 
-export type GetCompaniesCompanyIdWorksIdResponse = Types.Job & {
+export type GetCompaniesCompanyIdJobsIdResponse = Types.Job & {
     account: Types.Account
   } & {
     company: Types.Company & {
@@ -43,10 +43,10 @@ export type GetCompaniesCompanyIdWorksIdResponse = Types.Job & {
     invoices: string
   }
 
-export const getCompaniesCompanyIdWorksId = new BaseRequest<
+export const getCompaniesCompanyIdJobsId = new BaseRequest<
   undefined,
-  GetCompaniesCompanyIdWorksIdResponse,
-  GetCompaniesCompanyIdWorksIdUrlParams,
+  GetCompaniesCompanyIdJobsIdResponse,
+  GetCompaniesCompanyIdJobsIdUrlParams,
   undefined
 >({
   requiredAuth: true,

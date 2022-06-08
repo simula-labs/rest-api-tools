@@ -2,11 +2,11 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../shared/index";
 
-export type GetCompaniesCompanyIdWorksWorkIdContractsUrlParams = {
+export type GetCompaniesCompanyIdJobOrdersUrlParams = {
   companyId: string
 } | undefined
 
-export type GetCompaniesCompanyIdWorksWorkIdContractsResponse = {
+export type GetCompaniesCompanyIdJobOrdersResponse = {
   jobOrders: (Types.JobOrder & {
     account?: Types.Account | undefined
   } & {
@@ -41,7 +41,7 @@ export type GetCompaniesCompanyIdWorksWorkIdContractsResponse = {
   totalDataNums: number
 }
 
-export type GetCompaniesCompanyIdWorksWorkIdContractsQueryParams = {
+export type GetCompaniesCompanyIdJobOrdersQueryParams = {
   /** キーワード */
   keyword?: string | undefined
   /** 募集 */
@@ -52,11 +52,11 @@ export type GetCompaniesCompanyIdWorksWorkIdContractsQueryParams = {
   status?: 'draft' | 'applied' | 'certificated' | 'rejected' | undefined
 }
 
-export const getCompaniesCompanyIdWorksWorkIdContracts = new BaseRequest<
+export const getCompaniesCompanyIdJobOrders = new BaseRequest<
   undefined,
-  GetCompaniesCompanyIdWorksWorkIdContractsResponse,
-  GetCompaniesCompanyIdWorksWorkIdContractsUrlParams,
-  GetCompaniesCompanyIdWorksWorkIdContractsQueryParams
+  GetCompaniesCompanyIdJobOrdersResponse,
+  GetCompaniesCompanyIdJobOrdersUrlParams,
+  GetCompaniesCompanyIdJobOrdersQueryParams
 >({
   requiredAuth: true,
   method: "get",

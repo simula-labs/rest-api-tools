@@ -9,32 +9,26 @@ export type GetCompaniesCompanyIdRecruitmentsIdUrlParams = {
 
 export type GetCompaniesCompanyIdRecruitmentsIdResponse = Types.Recruitment & {
     company: Types.Company
-  } & {
     workplace: Types.State
-  } & {
+
     author: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
-      } & {
         specialtyCompanyTypes?: Types.SpecialtyCompanyType[] | undefined
-      } & {
         specialtyPositions?: Types.SpecialtyPosition[] | undefined
-      } & {
         occupationMainCategories?: Types.OccupationMainCategory[] | undefined
-      } & {
         industryCategories?: Types.IndustryCategory[] | undefined
       } | undefined
     }
-  } & {
+
     externalService: Types.ExternalService
-  } & {
     employmentStatuses: Types.EmploymentStatus[]
-  } & {
     occupations: Types.Occupation[]
-  } & {
     industries: Types.Industry[]
-  } & {
     features: Types.Feature[]
+    techStacks: Types.TechStack[]
+    targetCompany: Types.Company
+    employmentContractTerms: Types.EmploymentContractTerm[]
   }
 
 export const getCompaniesCompanyIdRecruitmentsId = new BaseRequest<

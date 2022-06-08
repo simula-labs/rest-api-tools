@@ -2,44 +2,37 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../../shared/index";
 
-export type PatchCompaniesCompanyIdContractsIdUrlParams = {
+export type PatchCompaniesCompanyIdJobOrdersJobOrderIdUrlParams = {
   companyId: string
   id: string
 } | undefined
 
-export type PatchCompaniesCompanyIdContractsIdResponse = Types.JobOrder & {
+export type PatchCompaniesCompanyIdJobOrdersJobOrderIdResponse = Types.JobOrder & {
     account: Types.Account
-  } & {
+
     company: Types.Company & {
       industries?: string | undefined
-    } & {
       owner?: string | undefined
     }
-  } & {
+
     recruitment: Types.Recruitment & {
       workplace?: Types.State | undefined
-    } & {
       author?: Types.Account | undefined
-    } & {
       externalService?: Types.ExternalService | undefined
-    } & {
       employmentStatuses?: Types.EmploymentStatus[] | undefined
-    } & {
       occupations?: Types.Occupation[] | undefined
-    } & {
       industries?: Types.Industry[] | undefined
-    } & {
       company?: Types.Company | undefined
     }
-  } & {
+
     job: Types.Job & {
-      ''?: Types.Account | undefined
+      account?: Types.Account | undefined
     }
-  } & {
+
     jobServiceItems: Types.JobServiceItem[]
   }
 
-export type PatchCompaniesCompanyIdContractsIdRequestBody = {
+export type PatchCompaniesCompanyIdJobOrdersJobOrderIdRequestBody = {
   jobOrder: {
     recruitmentId?: string | undefined
     accountId?: string | undefined
@@ -92,10 +85,10 @@ export type PatchCompaniesCompanyIdContractsIdRequestBody = {
   }
 }
 
-export const patchCompaniesCompanyIdContractsId = new BaseRequest<
-  PatchCompaniesCompanyIdContractsIdRequestBody,
-  PatchCompaniesCompanyIdContractsIdResponse,
-  PatchCompaniesCompanyIdContractsIdUrlParams,
+export const patchCompaniesCompanyIdJobOrdersJobOrderId = new BaseRequest<
+  PatchCompaniesCompanyIdJobOrdersJobOrderIdRequestBody,
+  PatchCompaniesCompanyIdJobOrdersJobOrderIdResponse,
+  PatchCompaniesCompanyIdJobOrdersJobOrderIdUrlParams,
   undefined
 >({
   requiredAuth: true,

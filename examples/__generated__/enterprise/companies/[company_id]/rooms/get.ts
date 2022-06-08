@@ -7,7 +7,7 @@ export type GetCompaniesCompanyIdRoomsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdRoomsResponse = {
-  rooms: Types.Room & {
+  rooms: (Types.Room & {
     account?: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
@@ -19,16 +19,25 @@ export type GetCompaniesCompanyIdRoomsResponse = {
     } & {
       features?: Types.Feature[] | undefined
     } | undefined
-  }
-
+  } & {
+    jobChangeCompletionReport?: Types.JobChangeCompletionReport | undefined
+  } & {
+    recruitmentCompletionReport?: Types.RecruitmentCompletionReport | undefined
+  } & {
+    introductionCompletionReport?: Types.IntroductionCompletionReport | undefined
+  })[]
   totalDataNums: number
+}
+
+export type GetCompaniesCompanyIdRoomsQueryParams = {
+  page?: number | undefined
 }
 
 export const getCompaniesCompanyIdRooms = new BaseRequest<
   undefined,
   GetCompaniesCompanyIdRoomsResponse,
   GetCompaniesCompanyIdRoomsUrlParams,
-  undefined
+  GetCompaniesCompanyIdRoomsQueryParams
 >({
   requiredAuth: true,
   method: "get",

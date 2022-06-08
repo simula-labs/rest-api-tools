@@ -7,7 +7,7 @@ export type GetCompaniesCompanyIdNotificationsUrlParams = {
 } | undefined
 
 export type GetCompaniesCompanyIdNotificationsResponse = {
-  notifications: (Types.Notification & {
+  companyNotifications: (Types.Notification & {
     company?: Types.Company | undefined
   } & {
     employment?: Types.Employment | undefined
@@ -23,6 +23,7 @@ export type GetCompaniesCompanyIdNotificationsRequestBody = {
 export type GetCompaniesCompanyIdNotificationsQueryParams = {
   notificationType?: 'general' | 'message' | undefined
   isRead?: boolean | undefined
+  page?: number | undefined
 }
 
 export const getCompaniesCompanyIdNotifications = new BaseRequest<

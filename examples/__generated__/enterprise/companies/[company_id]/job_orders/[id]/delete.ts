@@ -2,15 +2,15 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../../shared/index";
 
-export type DeleteCompaniesCompanyIdContractsIdUrlParams = {
+export type DeleteCompaniesCompanyIdJobOrdersJobOrderIdUrlParams = {
   companyId: string
   id: string
 } | undefined
 
-export const deleteCompaniesCompanyIdContractsId = new BaseRequest<
+export const deleteCompaniesCompanyIdJobOrdersJobOrderId = new BaseRequest<
   undefined,
   undefined,
-  DeleteCompaniesCompanyIdContractsIdUrlParams,
+  DeleteCompaniesCompanyIdJobOrdersJobOrderIdUrlParams,
   undefined
 >({
   requiredAuth: true,

@@ -6,7 +6,7 @@ import axios, {
 } from "axios";
 import humps from "humps";
 import { QueryFunctionContext } from "react-query";
-import { NetworkError, ClientError } from "./error";
+import { NetworkError } from "./error";
 
 export type HTTPMethod = "get" | "post" | "patch" | "put" | "delete";
 
@@ -245,7 +245,7 @@ export class BaseRequest<
     client.interceptors.response.use(
       (res) => res,
       (error) => {
-        throw new NetworkError(error.response.data.errors[0]?.description, error.response.status);
+        throw error;
       }
     );
     return client;

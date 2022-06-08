@@ -35,6 +35,10 @@ export type GetCompaniesCompanyIdRecruitmentsResponse = {
     industries?: Types.Industry[] | undefined
   } & {
     features?: Types.Feature[] | undefined
+  } & {
+    techStacks?: Types.TechStack[] | undefined
+  } & {
+    employmentContractTerms?: Types.EmploymentContractTerm[] | undefined
   })[]
   totalDataNums: number
 }
@@ -54,6 +58,8 @@ export type GetCompaniesCompanyIdRecruitmentsQueryParams = {
   industryIds?: string | undefined
   /** 雇用形態 */
   employmentStatusIds?: string | undefined
+  /** 「1ヵ月未満」「1ヵ月以上3ヵ月未満」「3ヵ月以上6ヵ月未満」「6ヵ月以上」 */
+  term?: 'less_than_one_month' | 'one_to_three_months' | 'three_to_six_months' | 'more_than_six_months' | undefined
   /** 「自社募集」「他社募集」「クローリング募集」 */
   sourceType?: 'client' | 'agent' | 'service' | undefined
   /** キーワード検索 */
@@ -65,9 +71,10 @@ export type GetCompaniesCompanyIdRecruitmentsQueryParams = {
   /** 発注と紐付けられた募集のみ（発注のフィルター用） */
   isJobOrdered?: boolean | undefined
   /** 業務と紐付けられた募集のみ（業務のフィルター用） */
-  isJobed?: string | undefined
+  isJobed?: boolean | undefined
   /** サンプル除外 */
   exceptSample?: boolean | undefined
+  page?: number | undefined
 }
 
 export const getCompaniesCompanyIdRecruitments = new BaseRequest<

@@ -37,17 +37,17 @@ export type GetCompaniesIdAccountsQueryParams = {
   /** 就労状況 */
   employmentStatus?: 'employed' | 'unemployed' | undefined
   /** スキル */
-  'skillIds[]'?: string | undefined
+  skillIds?: string[] | undefined
   /** 性別 */
   gender?: 'male' | 'female' | 'other' | undefined
   /** 学歴 */
-  'academicBackgrounds[]'?: 'graduate_school_doctor' | 'graduate_school_master' | 'university' | 'technical_college' | 'vocational_school' | 'junioer_college' | 'high_school' | undefined
+  academicBackgrounds?: ('graduate_school_doctor' | 'graduate_school_master' | 'university' | 'technical_college' | 'vocational_school' | 'junioer_college' | 'high_school')[] | undefined
   /** 語学力 */
-  'englishSkills[]'?: 'daily_conversation' | 'business_conversation' | 'native' | undefined
+  englishSkills?: ('daily_conversation' | 'business_conversation' | 'native')[] | undefined
   /** 現在の都道府県 */
-  'currentStateIds[]'?: string | undefined
+  currentStateIds?: string[] | undefined
   /** スカウト設定 */
-  'scoutSettings[]'?: 'accepting' | 'rejecting' | undefined
+  scoutSettings?: ('accepting' | 'rejecting')[] | undefined
   /** 弊社への関心 */
   interestedInCompany?: boolean | undefined
   /** 弊社の募集への関心 */
