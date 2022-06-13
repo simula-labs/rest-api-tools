@@ -73,9 +73,7 @@ export const build = async (config: Config) => {
     fs.mkdirSync(`${config.connectBasePath}/shared`);
     fs.writeFileSync(
       `${config.connectBasePath}/shared/types.d.ts`,
-      `/* eslint-disable */${
-        typesText.includes(BINARY_TYPE) ? "\nimport type { ReadStream } from 'fs'\n" : ""
-      }${typesText}`,
+      `/* eslint-disable */${typesText}`,
       "utf8"
     );
     fs.writeFileSync(

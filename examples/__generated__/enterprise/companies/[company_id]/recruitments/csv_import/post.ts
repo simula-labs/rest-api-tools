@@ -1,5 +1,3 @@
-import type { ReadStream } from 'fs'
-
 /* eslint-disable */
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../../shared/index";
@@ -46,7 +44,7 @@ export type PostCompaniesCompanyIdRecruitmentsCsvImportResponse = {
 }
 
 export type PostCompaniesCompanyIdRecruitmentsCsvImportRequestBody = {
-  file: (File | ReadStream)
+  file: (File)
 }
 
 export const postCompaniesCompanyIdRecruitmentsCsvImport = new BaseRequest<

@@ -252,9 +252,6 @@ export const buildV3 = (
           default:
         }
       });
-      if (methods.find((el) => el.includes(BINARY_TYPE))) {
-        methods.unshift("import type { ReadStream } from 'fs'\n");
-      }
       const requestPath = path
         .replace(/\/$/, "")
         .split("/")
