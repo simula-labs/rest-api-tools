@@ -1,3 +1,10 @@
+## [1.0.18](https://github.com/simula-labs/rest-api-tools/compare/v1.0.17...v1.0.18) (2022-06-08)
+
+
+### Bug Fixes
+
+* baseRequest error handling ([e4e4798](https://github.com/simula-labs/rest-api-tools/commit/e4e4798c2caf49bde205b37173f7b156b5100849))
+
 ## [1.0.17](https://github.com/simula-labs/rest-api-tools/compare/v1.0.16...v1.0.17) (2022-06-07)
 
 
