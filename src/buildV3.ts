@@ -252,6 +252,7 @@ export const buildV3 = (
           default:
         }
       });
+
       const requestPath = path
         .replace(/\/$/, "")
         .split("/")
