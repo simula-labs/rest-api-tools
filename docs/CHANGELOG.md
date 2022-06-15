@@ -1,3 +1,11 @@
+## [1.0.19](https://github.com/simula-labs/rest-api-tools/compare/v1.0.18...v1.0.19) (2022-06-13)
+
+
+### Bug Fixes
+
+* ci ([4c7ecc7](https://github.com/simula-labs/rest-api-tools/commit/4c7ecc7e981b8735ab52a2d7aeebfbcdf46d0d75))
+* path ([f3c75d6](https://github.com/simula-labs/rest-api-tools/commit/f3c75d6193939e0d392f8dd5f634c798c49a1b10))
+
 ## [1.0.18](https://github.com/simula-labs/rest-api-tools/compare/v1.0.17...v1.0.18) (2022-06-08)
 
 

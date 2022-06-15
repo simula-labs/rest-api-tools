@@ -1,14 +1,15 @@
 import * as fs from "fs";
 import fse from "fs-extra";
-import { BaseConfig, Config } from "./types";
+import humps from "humps";
+import { Config, EnumObject } from "./types";
 import { buildTemplate } from "./buildTemplate";
 import { writeRouteFile } from "./writeRouteFile";
 import { Schema } from "./builderUtils/schemas2Props";
 import { description2Doc, value2String, value2StringForMock } from "./builderUtils/props2String";
-import { BINARY_TYPE } from "./builderUtils/converters";
 
 export const build = async (config: Config) => {
   const schemas: Schema[] = [];
+  const enumArray: EnumObject[] = [];
   await Promise.all(
     config.openapiBindings.map(async (codeGenConfig) => {
       const connectPath = `${config.connectBasePath}/${codeGenConfig.connect}`;
@@ -49,7 +50,24 @@ export const build = async (config: Config) => {
         .replace(/(\W)Types\./g, "$1")
         .replace(/\]\?:/g, "]:")
     : null;
-
+  schemas.forEach((s) => {
+    if (Array.isArray(s.value.value)) {
+      const schemaValues = s.value.value as Prop[];
+      schemaValues.forEach((prop) => {
+        prop.values.forEach((propValue) => {
+          if (propValue.isEnum) {
+            if (!enumArray.find((el) => el.name === prop.name)) {
+              enumArray.push({
+                name: s.name + humps.pascalize(prop.name),
+                description: prop.description,
+                values: propValue.value as string[],
+              });
+            }
+          }
+        });
+      });
+    }
+  });
   const mockText = schemas.length
     ? [
         ...schemas.map((s) => ({
@@ -69,6 +87,17 @@ export const build = async (config: Config) => {
         .join("")
         .replace(/\]\?:/g, "]:")
     : null;
+  const enumText = enumArray
+    .map(
+      (enumObject) =>
+        `export const ${humps.depascalize(enumObject.name).toUpperCase()} = {\n${enumObject.values
+          .map((value) => `  ${value}: ${value}`)
+          .join(",\n")}\n} as const\n` +
+        `export type ${humps.pascalize(enumObject.name)} = typeof ${humps
+          .depascalize(enumObject.name)
+          .toUpperCase()}[keyof typeof ${humps.depascalize(enumObject.name).toUpperCase()}]`
+    )
+    .join("\n\n");
   if (typesText && mockText) {
     fs.mkdirSync(`${config.connectBasePath}/shared`);
     fs.writeFileSync(
@@ -84,6 +113,11 @@ export const build = async (config: Config) => {
     fs.writeFileSync(
       `${config.connectBasePath}/shared/index.ts`,
       `export * from "./types"`,
+      "utf8"
+    );
+    fs.writeFileSync(
+      `${config.connectBasePath}/shared/enum.ts`,
+      `/* eslint-disable */\n${enumText}`,
       "utf8"
     );
   }
