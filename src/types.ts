@@ -13,3 +13,9 @@ export type BaseConfig = {
 export type Config = BaseConfig & {
   openapiBindings: CodeGenConfig[];
 };
+
+export type EnumObject = {
+  name: string;
+  description: string;
+  values: string[];
+};
