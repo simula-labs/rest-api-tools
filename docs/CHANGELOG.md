@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/simula-labs/rest-api-tools/compare/v1.0.19...v1.1.0) (2022-06-15)
+
+
+### Bug Fixes
+
+* type ([362cfa8](https://github.com/simula-labs/rest-api-tools/commit/362cfa8c28610828b88ebab329dd155cb6d1eb18))
+
+
+### Features
+
+* enumの型・関数を生成するように ([453593f](https://github.com/simula-labs/rest-api-tools/commit/453593f4b724e360592d564d57e904bbf94d6105))
+
 ## [1.0.19](https://github.com/simula-labs/rest-api-tools/compare/v1.0.18...v1.0.19) (2022-06-13)
 
 
