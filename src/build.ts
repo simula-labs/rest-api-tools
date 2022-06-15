@@ -5,7 +5,12 @@ import { Config, EnumObject } from "./types";
 import { buildTemplate } from "./buildTemplate";
 import { writeRouteFile } from "./writeRouteFile";
 import { Schema } from "./builderUtils/schemas2Props";
-import { description2Doc, value2String, value2StringForMock } from "./builderUtils/props2String";
+import {
+  description2Doc,
+  Prop,
+  value2String,
+  value2StringForMock,
+} from "./builderUtils/props2String";
 
 export const build = async (config: Config) => {
   const schemas: Schema[] = [];

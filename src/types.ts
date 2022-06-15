@@ -16,6 +16,6 @@ export type Config = BaseConfig & {
 
 export type EnumObject = {
   name: string;
-  description: string;
+  description: string | null;
   values: string[];
 };

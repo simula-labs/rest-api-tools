@@ -1,9 +1,7 @@
 /* eslint-disable */
- import * as Enum from "./enum";
- 
 export type Company = {
   /** admin審査状態 */
-  adminVerificationStatus: Enum.CompanyAdminVerificationStatus
+  adminVerificationStatus: 'unspecified' | 'requested' | 'verified' | 'rejected' | 'canceled'
   averageAge?: number | undefined
   businessSummary?: string | undefined
   /** 資本金（税の概念なし） */
@@ -31,21 +29,21 @@ export type Company = {
   numbersOfEmployees?: string | undefined
   ownerEmail?: string | undefined
   phone?: string | undefined
-  publicVerificationStatus: Enum.CompanyPublicVerificationStatus
+  publicVerificationStatus: 'unspecified' | 'requested' | 'verified' | 'rejected'
   /** admin指定の採用報告手数料率 */
   recruitmentFeeRatio?: number | undefined
   representative?: string | undefined
   representativeKana?: string | undefined
-  type: Enum.CompanyType
+  type: 'account' | 'stub'
   updatedAt: string
   yearOfEstablishment?: string | undefined
 }
 
 export type Recruitment = {
-  accessibleType?: Enum.RecruitmentAccessibleType | undefined
+  accessibleType?: 'public' | 'private' | undefined
   appliedAccounts?: number | undefined
   /** 「時給」「日給」「月給」「年収」「1案件」 */
-  billingMethod?: Enum.RecruitmentBillingMethod | undefined
+  billingMethod?: 'hourly' | 'daily' | 'monthly' | 'yearly' | 'with_project' | undefined
   /** 勤務地不問か */
   canLiveAndWorkAnywhere?: boolean | undefined
   /** 公開出来ない理由 */
@@ -84,34 +82,34 @@ export type Recruitment = {
   /** 掲載期間（終了） */
   publishedUntilDate?: string | undefined
   /** 「下書き」「公開」「休止」「終了」「強制停止」 */
-  publishmentStatus?: Enum.RecruitmentPublishmentStatus | undefined
+  publishmentStatus?: 'draft' | 'published' | 'suspending' | 'terminated' | 'rejected' | undefined
   qualificationRequirements?: string | undefined
   /** 推薦ポイント */
   recommendedPoint?: string | undefined
   /** 「不可・時折（0-10%）」「可（10-90%）」「フルリモート（90%以上）」 */
-  remoteWorkStatus?: Enum.RecruitmentRemoteWorkStatus | undefined
+  remoteWorkStatus?: 'rarely' | 'normally' | 'full_remote' | undefined
   /** 年収・報酬の詳細 */
   salaryRemarks?: string | undefined
   /** 選考プロセス */
   selectionProcess?: string | undefined
   /** 「屋内禁煙」「喫煙室設置」「対策なし」「その他」 */
-  smokingRegulation?: Enum.RecruitmentSmokingRegulation | undefined
+  smokingRegulation?: 'no_smoking_indoors' | 'exist_smoking_room' | 'none' | 'other' | undefined
   /** 「クライアント作成（企業）」「エージェント作成」「サービス作成（クローリング）」 */
-  sourceType?: Enum.RecruitmentSourceType | undefined
+  sourceType?: 'client' | 'agent' | 'service' | undefined
   /** target_company_statusがcertainedの時、表示名を指定 */
   targetCompanyCertainName?: string | undefined
   /** 募集元企業の状態「なし」「非公開」「某社」「指定あり」 */
-  targetCompanyStatus?: Enum.RecruitmentTargetCompanyStatus | undefined
+  targetCompanyStatus?: 'none' | 'private' | 'certained' | 'specified' | undefined
   /** 最高金額（税） */
   taxForMaxAmount?: number | undefined
   /** 最低金額（税） */
   taxForMinAmount?: number | undefined
-  taxType?: Enum.RecruitmentTaxType | undefined
+  taxType?: 'included' | 'excluded' | undefined
   /** 技術スタックの備考 */
   techStackRemarks?: string | undefined
   title: string
   /** 「転職」「副業・フリーランス」 */
-  type?: Enum.RecruitmentType | undefined
+  type?: 'career' | 'project' | undefined
   updatedAt: string
   workConditions?: string | undefined
   /** 勤務地詳細 */
@@ -130,8 +128,8 @@ export type Feature = {
   createdAt: string
   id: string
   name: string
-  sourceType: Enum.FeatureSourceType
-  type: Enum.FeatureType
+  sourceType: 'company' | 'recruitment'
+  type: 'default' | 'organizational'
   updatedAt: string
 }
 
@@ -145,12 +143,12 @@ export type Account = {
   deletedAt?: string | undefined
   displayName?: string | undefined
   email?: string | undefined
-  emailVerificationStatus: Enum.AccountEmailVerificationStatus
+  emailVerificationStatus: 'unspecified' | 'request' | 'verified'
   existsApplicantResourceFromCurrentCompany?: boolean | undefined
   id: string
   /** 本人確認に足りない項目の配列（'external_account'は銀行口座、'individual.verification.document'は身分証明書） */
   identificationRequirements?: string[] | undefined
-  identityVerificationStatus: Enum.AccountIdentityVerificationStatus
+  identityVerificationStatus: 'unspecified' | 'verified' | 'checking' | 'failed'
   /** キャリアスカウト受け入れるか */
   isCareerScoutTarget: boolean
   isConcludedNda?: boolean | undefined
@@ -169,7 +167,7 @@ export type Account = {
   /** 求職者必須項目の不足項目 */
   missingRequirementsForGeneral?: string[] | undefined
   profileCompleteness?: number | undefined
-  registerAs?: Enum.AccountRegisterAs | undefined
+  registerAs?: 'general' | 'organizational' | undefined
   updatedAt: string
 }
 
@@ -184,7 +182,7 @@ export type Profile = {
   birthOfDate?: string | undefined
   createdAt: string
   /** 「日常会話レベル」「ビジネス会話レベル」「ネイティブレベル」「なし」 */
-  englishSkill?: Enum.ProfileEnglishSkill | undefined
+  englishSkill?: 'daily_conversation' | 'business_conversation' | 'native' | 'nothing' | undefined
   files?: {
     id: string
     name: string
@@ -194,15 +192,15 @@ export type Profile = {
   }[] | undefined
   firstName?: string | undefined
   firstNameKana?: string | undefined
-  gender?: Enum.ProfileGender | undefined
+  gender?: 'MALE' | 'FEMALE' | 'OTHER' | undefined
   id: string
   /** 「日常会話レベル」「ビジネス会話レベル」「ネイティブレベル」「なし」 */
-  japaneseSkill?: Enum.ProfileJapaneseSkill | undefined
+  japaneseSkill?: 'daily_conversation' | 'business_conversation' | 'native' | 'nothing' | undefined
   lastName?: string | undefined
   lastNameKana?: string | undefined
   /** マネジメント経験人数 */
-  managementExperience?: Enum.ProfileManagementExperience | undefined
-  maritalStatus?: Enum.ProfileMaritalStatus | undefined
+  managementExperience?: 'nothing' | 'less_than_5' | 'from_6_to_10' | 'from_11_to_20' | 'from_21_to_50' | 'from_51_to_100' | 'from_101_to_500' | 'more_than_501' | undefined
+  maritalStatus?: 'single' | 'married' | undefined
   nationality?: string | undefined
   /** 転職回数 */
   numberOfJobChanges?: number | undefined
@@ -264,12 +262,12 @@ export type Role = {
   id: string
   /** 役割「general」「admin」など */
   name: string
-  type: Enum.RoleType
+  type: 'default' | 'organizational'
   updatedAt: string
 }
 
 export type ApplicantResource = {
-  careerStatus?: Enum.ApplicantResourceCareerStatus | undefined
+  careerStatus?: 'backlog' | 'checked' | 'interviewing' | 'offered' | 'joined' | 'rejected' | undefined
   createdAt: string
   /** 論理削除時刻 */
   deletedAt?: string | undefined
@@ -285,10 +283,10 @@ export type ApplicantResource = {
   /** 閲覧したか（Newマークの有無）（副業・フリーランス） */
   isWatchedProject: boolean
   /** 人材管理追加のきっかけ */
-  origin?: Enum.ApplicantResourceOrigin | undefined
-  projectStatus?: Enum.ApplicantResourceProjectStatus | undefined
+  origin?: 'applicant' | 'scout' | undefined
+  projectStatus?: 'backlog' | 'in_progress' | 'closed' | undefined
   /** 応募したRecruitmentのSourceType（応募じゃなければnil） */
-  recruitmentSourceType?: Enum.ApplicantResourceRecruitmentSourceType | undefined
+  recruitmentSourceType?: 'client' | 'agent' | undefined
   updatedAt: string
 }
 
@@ -299,7 +297,7 @@ export type Job = {
   isPublic: boolean
   isSample: boolean
   /** 「進行中」「完了」 */
-  status: Enum.JobStatus
+  status: 'in_progress' | 'completed'
   updatedAt: string
 }
 
@@ -329,9 +327,9 @@ export type JobOrder = {
   /** 取引先名 */
   customerName?: string | undefined
   /** 稼働報酬制の単位（「一月あたり」「一日あたり」「一時間あたり」） */
-  feeCalculationSpan?: Enum.JobOrderFeeCalculationSpan | undefined
+  feeCalculationSpan?: 'monthly' | 'daily' | 'hourly' | undefined
   /** 「稼働報酬制」「固定報酬制」 */
-  feeType?: Enum.JobOrderFeeType | undefined
+  feeType?: 'time_based' | 'fixed' | undefined
   /** 固定報酬制の金額（税込） */
   fixedAmount?: number | undefined
   /** 固定報酬制の小計 */
@@ -360,7 +358,7 @@ export type JobOrder = {
   /** 開始日 */
   sinceDate?: string | undefined
   /** 「下書き」「先方確認中」「締結済み」「却下」 */
-  status: Enum.JobOrderStatus
+  status: 'draft' | 'applied' | 'certificated' | 'rejected'
   /** 稼働報酬制の税率 */
   taxRatio?: number | undefined
   /** 稼働報酬制の金額 */
@@ -412,14 +410,14 @@ export type Invoice = {
   /** 請求日 */
   issuedDate?: string | undefined
   /** 「下書き」「公開」「取り下げ済み」 */
-  issuingStatus: Enum.InvoiceIssuingStatus
+  issuingStatus: 'draft' | 'fixed' | 'withdrawn'
   /** 備考 */
   note?: string | undefined
-  paymentMethod?: Enum.InvoicePaymentMethod | undefined
+  paymentMethod?: 'bank' | 'credit_card' | undefined
   /** 決済日 */
   settlementDate?: string | undefined
   /** 「支払い待ち」「決済待ち」「支払いおよび決済待ち」「決済失敗」「完了」 */
-  status?: Enum.InvoiceStatus | undefined
+  status?: 'waiting_for_payment' | 'waiting_for_settlement' | 'waiting_for_payment_and_settlement' | 'failed_settlement' | 'completed' | undefined
   /** 請求額（小計） */
   subTotal?: number | undefined
   /** 税額 */
@@ -433,12 +431,12 @@ export type Invoice = {
 export type Scout = {
   createdAt: string
   id: string
-  type: Enum.ScoutType
+  type: 'career' | 'project'
   updatedAt: string
 }
 
 export type Message = {
-  actAs: Enum.MessageActAs
+  actAs: 'personal' | 'organizational'
 
   attachment?: {
     filename?: string | undefined
@@ -455,15 +453,15 @@ export type Message = {
 export type Hope = {
   amount?: number | undefined
   /** 「時給」「日給」「月給」「年収」「1案件」 */
-  billingMethod: Enum.HopeBillingMethod
+  billingMethod: 'hourly' | 'daily' | 'monthly' | 'yearly' | 'with_project'
   createdAt: string
   id: string
-  ratioOfOperation?: Enum.HopeRatioOfOperation | undefined
+  ratioOfOperation?: 'once_a_week' | 'few_days_a_week' | 'four_days_a_week' | undefined
   /** 特筆事項 */
   specialNote?: string | undefined
   /** 転職希望時期・案件開始時期 */
   timeToChangeJobs?: number | undefined
-  type: Enum.HopeType
+  type: 'career' | 'project'
   updatedAt: string
 }
 
@@ -506,7 +504,7 @@ export type IntroductionCompletionReport = {
   isEnable?: boolean | undefined
   joinedDate?: string | undefined
   memo?: string | undefined
-  paymentStatus: Enum.IntroductionCompletionReportPaymentStatus
+  paymentStatus: 'unpaid' | 'paid' | 'failed' | 'pending'
   /** 手数料（税込） */
   systemFee: number
   /** システム手数料比率 */
@@ -528,7 +526,7 @@ export type RecruitmentCompletionReport = {
   isEnable?: boolean | undefined
   joinedDate?: string | undefined
   memo?: string | undefined
-  paymentStatus: Enum.RecruitmentCompletionReportPaymentStatus
+  paymentStatus: 'unpaid' | 'paid' | 'failed' | 'pending'
   /** 手数料（税込） */
   systemFee: number
   systemFeeRatio: number
@@ -556,7 +554,7 @@ export type Subscription = {
   createdAt: string
   id: string
   sinceDate: string
-  status: Enum.SubscriptionStatus
+  status: 'active' | 'past_due' | 'unpaid' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'trialing' | 'all' | 'ended' | 'pending'
   untilDate: string
   updatedAt: string
 }
@@ -581,13 +579,13 @@ export type Product = {
   description?: string | undefined
   id: string
   name: string
-  planType?: Enum.ProductPlanType | undefined
-  type: Enum.ProductType
+  planType?: 'standard' | 'agent' | 'starter' | undefined
+  type: 'good' | 'service'
   updatedAt: string
 }
 
 export type PaymentMethod = {
-  brand: Enum.PaymentMethodBrand
+  brand: 'visa' | 'mastercard' | 'jcb' | 'american_express' | 'diners'
   createdAt: string
   expMonth: string
   expYear: string
@@ -598,7 +596,7 @@ export type PaymentMethod = {
 }
 
 export type Policy = {
-  category: Enum.PolicyCategory
+  category: 'unspecified' | 'account' | 'applicant' | 'recruitment' | 'payment'
   createdAt: string
   id: string
   name: string
@@ -656,8 +654,8 @@ export type EmploymentStatus = {
   isSelectable: boolean
   name: string
   /** 「請負」「準委任」「業務委託」 */
-  projectClassification?: Enum.EmploymentStatusProjectClassification | undefined
-  type: Enum.EmploymentStatusType
+  projectClassification?: 'contract' | 'quasi_mandate' | 'outsourcing' | undefined
+  type: 'CAREER' | 'PROJECT'
   updatedAt: string
 }
 
@@ -699,7 +697,7 @@ export type Notification = {
   /** 「未読」「既読」 */
   isRead: boolean
   /** 「通常通知」or「メッセージ通知」 */
-  notificationType: Enum.NotificationNotificationType
+  notificationType: 'general' | 'message'
   subject?: string | undefined
   updatedAt: string
   url?: string | undefined
@@ -714,8 +712,8 @@ export type PaymentHistory = {
 }
 
 export type TechStack = {
-  accessibility?: Enum.TechStackAccessibility | undefined
-  category: Enum.TechStackCategory
+  accessibility?: 'public' | 'private' | undefined
+  category: 'language' | 'framework' | 'infrastructure' | 'design_tool' | 'other'
   createdAt: string
   id: string
   name: string
@@ -727,7 +725,7 @@ export type EmploymentContractTerm = {
   id: string
   name: string
   /** 「1ヵ月未満」「1ヵ月以上3ヵ月未満」「3ヵ月以上6ヵ月未満」「6ヵ月以上」 */
-  term: Enum.EmploymentContractTermTerm
+  term: 'less_than_one_month' | 'one_to_three_months' | 'three_to_six_months' | 'more_than_six_months'
   updatedAt: string
 }
 
@@ -758,7 +756,7 @@ export type ScoutTemplate = {
 export type ScoutTicket = {
   createdAt: string
   id: string
-  type: Enum.ScoutTicketType
+  type: 'free' | 'bought'
   updatedAt: string
   usedAt?: string | undefined
 }
@@ -770,7 +768,7 @@ export type SearchCondition = {
     key: string
   }[]
   id: string
-  target: Enum.SearchConditionTarget
+  target: 'recruitment' | 'company' | 'account'
   title: string
   updatedAt: string
 }
@@ -793,7 +791,7 @@ export type AcademicHistory = {
   name: string
   sinceDate: string
   /** 「大学院（博士）」「大学院（修士）」「大学」「高専」「専門学校」「短期大学」「高校」 */
-  type: Enum.AcademicHistoryType
+  type: 'graduate_school_doctor' | 'graduate_school_master' | 'university' | 'technical_college' | 'vocational_school' | 'junior_college' | 'high_school'
   untilDate: string
   updatedAt: string
 }
@@ -857,7 +855,7 @@ export type RecruitmentInterest = {
 
 export type StateCategory = {
   /** 「日本」「海外」「その他」 */
-  countryType?: Enum.StateCategoryCountryType | undefined
+  countryType?: 'JAPAN' | 'INTERNATIONAL' | 'OTHER' | undefined
   createdAt: string
   id: string
   name: string
