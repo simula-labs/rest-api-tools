@@ -9,9 +9,7 @@ export type GetCompaniesIdAccountsUrlParams = {
 export type GetCompaniesIdAccountsResponse = {
   accounts: (Types.Account & {
     profile?: Types.Profile | undefined
-  } & {
     employments?: Types.Employment[] | undefined
-  } & {
     blockedCompanies?: Types.Company[] | undefined
   })[]
   totalDataNums: number

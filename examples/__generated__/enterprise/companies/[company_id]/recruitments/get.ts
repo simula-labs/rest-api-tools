@@ -51,13 +51,13 @@ export type GetCompaniesCompanyIdRecruitmentsQueryParams = {
   /** target_accountとその募集のWorkがあるか */
   targetAccountId?: string | undefined
   /** 「下書き」「公開」「停止」「強制停止」 */
-  publishmentStatus?: string | undefined
+  publishmentStatus?: 'draft' | 'published' | 'suspending' | 'terminated' | 'rejected' | undefined
   /** 職種 */
-  occupationIds?: string | undefined
+  occupationIds?: string[] | undefined
   /** 業種 */
-  industryIds?: string | undefined
+  industryIds?: string[] | undefined
   /** 雇用形態 */
-  employmentStatusIds?: string | undefined
+  employmentStatusIds?: string[] | undefined
   /** 「1ヵ月未満」「1ヵ月以上3ヵ月未満」「3ヵ月以上6ヵ月未満」「6ヵ月以上」 */
   term?: 'less_than_one_month' | 'one_to_three_months' | 'three_to_six_months' | 'more_than_six_months' | undefined
   /** 「自社募集」「他社募集」「クローリング募集」 */

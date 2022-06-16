@@ -1,21 +1,8 @@
 import { OpenAPIV3 } from "openapi-types";
 import humps from "humps";
-import {
-  $ref2Type,
-  BINARY_TYPE,
-  getPropertyName,
-  isRefObject,
-  schema2value,
-} from "./builderUtils/converters";
+import { $ref2Type, getPropertyName, isRefObject, schema2value } from "./builderUtils/converters";
 import schemas2Props from "./builderUtils/schemas2Props";
-import {
-  description2Doc,
-  Prop,
-  props2StringForParams,
-  PropValue,
-  value2String,
-  value2StringForMock,
-} from "./builderUtils/props2String";
+import { Prop, props2StringForParams, PropValue } from "./builderUtils/props2String";
 import { resolveReqRef, resolveResRef } from "./builderUtils/resolvers";
 import { BaseConfig, CodeGenConfig } from "./types";
 

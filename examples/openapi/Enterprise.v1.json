@@ -787,7 +787,7 @@
     "/companies/{company_id}/companies": {
       "post": {
         "summary": "企業（stub企業のみ）を作成する",
-        "operationId": "post-companies",
+        "operationId": "post-companies-company_id-companies",
         "responses": {
           "201": {
             "$ref": "#/components/responses/Company"
@@ -821,8 +821,19 @@
               }
             }
           }
+        },
+        "description": ""
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "company_id",
+          "in": "path",
+          "required": true
         }
-      }
+      ]
     },
     "/companies/{company_id}/employments": {
       "parameters": [
@@ -3104,7 +3115,14 @@
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "draft",
+                "published",
+                "suspending",
+                "terminated",
+                "rejected"
+              ]
             },
             "in": "query",
             "name": "publishment_status",
@@ -3112,7 +3130,10 @@
           },
           {
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             },
             "in": "query",
             "name": "occupation_ids",
@@ -3120,7 +3141,10 @@
           },
           {
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             },
             "in": "query",
             "name": "industry_ids",
@@ -3128,7 +3152,10 @@
           },
           {
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             },
             "in": "query",
             "name": "employment_status_ids",
@@ -3356,12 +3383,15 @@
                         "type": "string",
                         "enum": [
                           "hourly",
-                          "daily",
                           "monthly",
                           "yearly",
                           "with_project"
                         ],
-                        "description": "「時給」「日給」「月給」「年収」「1案件」"
+                        "description": "「時給」「月給」「年収」「1案件」"
+                      },
+                      "estimated_time_per_project": {
+                        "type": "integer",
+                        "description": "1案件の稼働時間目安"
                       },
                       "target_company_status": {
                         "type": "string",
@@ -5420,7 +5450,6 @@
             "type": "string",
             "enum": [
               "hourly",
-              "daily",
               "monthly",
               "yearly",
               "with_project"
@@ -5446,6 +5475,10 @@
           "department": {
             "type": "string",
             "example": "開発部"
+          },
+          "estimated_time_per_project": {
+            "type": "integer",
+            "description": "稼働時間目安"
           },
           "estimated_unit_amount": {
             "type": "integer",
@@ -5642,11 +5675,11 @@
           }
         },
         "required": [
-          "id",
           "created_at",
-          "updated_at",
+          "id",
+          "is_sample",
           "title",
-          "is_sample"
+          "updated_at"
         ]
       },
       "Industry": {
@@ -5858,11 +5891,16 @@
           "updated_at": {
             "format": "date-time",
             "type": "string"
+          },
+          "work_experienced": {
+            "type": "boolean",
+            "default": false
           }
         },
         "required": [
           "created_at",
           "email_verification_status",
+          "work_experienced",
           "id",
           "identity_verification_status",
           "is_career_scout_target",
@@ -5971,9 +6009,9 @@
           "gender": {
             "type": "string",
             "enum": [
-              "MALE",
-              "FEMALE",
-              "OTHER"
+              "male",
+              "female",
+              "other"
             ],
             "example": "MALE"
           },
@@ -6259,6 +6297,384 @@
           "type"
         ]
       },
+      "WorkHistory": {
+        "title": "WorkHistory",
+        "type": "object",
+        "x-examples": {},
+        "description": "",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "department": {
+            "type": "string",
+            "example": "部署名"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_employed": {
+            "type": "boolean",
+            "description": "「在職中」「離職中」",
+            "example": "true",
+            "default": true
+          },
+          "name": {
+            "type": "string",
+            "example": "株式会社SIMULA Labs"
+          },
+          "position": {
+            "type": "string",
+            "example": "主任"
+          },
+          "since_date": {
+            "type": "string",
+            "format": "date",
+            "example": "2019-08-01"
+          },
+          "until_date": {
+            "format": "date",
+            "example": "2020-05-01",
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name",
+          "is_employed",
+          "position",
+          "since_date",
+          "department"
+        ]
+      },
+      "ProjectHistory": {
+        "title": "ProjectHistory",
+        "type": "object",
+        "description": "職歴に紐付くプロジェクト経歴（name・positionどちらかは必須）",
+        "properties": {
+          "business_content": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_employed": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "example": "プロジェクト名"
+          },
+          "position": {
+            "type": "string"
+          },
+          "since_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "until_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "since_date",
+          "is_employed"
+        ]
+      },
+      "IndustryHistory": {
+        "title": "IndustryHistory",
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "year_of_experience": {
+            "type": "integer",
+            "example": 3,
+            "description": "年単位"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "year_of_experience"
+        ]
+      },
+      "AcademicHistory": {
+        "title": "AcademicHistory",
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "faculty": {
+            "type": "string",
+            "example": "情報コミュニケーション学部",
+            "description": "学部・学科"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "明治大学"
+          },
+          "since_date": {
+            "type": "string",
+            "format": "date",
+            "example": "2008-04-01"
+          },
+          "type": {
+            "type": "string",
+            "example": "university",
+            "enum": [
+              "graduate_school_doctor",
+              "graduate_school_master",
+              "university",
+              "technical_college",
+              "vocational_school",
+              "junior_college",
+              "high_school"
+            ],
+            "description": "「大学院（博士）」「大学院（修士）」「大学」「高専」「専門学校」「短期大学」「高校」"
+          },
+          "until_date": {
+            "type": "string",
+            "format": "date",
+            "example": "2012-03-31"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "created_at",
+          "id",
+          "name",
+          "since_date",
+          "type",
+          "until_date",
+          "updated_at"
+        ]
+      },
+      "Hope": {
+        "title": "Hope",
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number"
+          },
+          "billing_method": {
+            "type": "string",
+            "enum": [
+              "hourly",
+              "monthly",
+              "yearly",
+              "with_project"
+            ],
+            "description": "「時給」「月給」「年収」「1案件」"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ratio_of_operation": {
+            "type": "string",
+            "enum": [
+              "once_a_week",
+              "few_days_a_week",
+              "four_days_a_week"
+            ]
+          },
+          "special_note": {
+            "type": "string",
+            "description": "特筆事項"
+          },
+          "time_to_change_jobs": {
+            "type": "number",
+            "description": "転職希望時期・案件開始時期"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "career",
+              "project"
+            ]
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "billing_method",
+          "created_at",
+          "id",
+          "type",
+          "updated_at"
+        ],
+        "description": ""
+      },
+      "Skill": {
+        "title": "Skill",
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "データサイエンティスト"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name"
+        ]
+      },
+      "Achievement": {
+        "title": "Achievement",
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "example": "実績内容"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "content",
+          "created_date"
+        ]
+      },
+      "OccupationHistory": {
+        "title": "OccupationHistory",
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "year_of_experience": {
+            "type": "integer",
+            "example": 5,
+            "description": "年単位"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "year_of_experience"
+        ]
+      },
+      "Occupation": {
+        "title": "Occupation",
+        "type": "object",
+        "description": "職種",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "戦略・経営コンサルタント"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name"
+        ]
+      },
       "ApplicantResource": {
         "title": "ApplicantResource",
         "type": "object",
@@ -6439,34 +6855,6 @@
           "is_sample"
         ]
       },
-      "Skill": {
-        "title": "Skill",
-        "type": "object",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "データサイエンティスト"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "name"
-        ]
-      },
       "JobOrder": {
         "title": "JobOrder",
         "type": "object",
@@ -6628,35 +7016,6 @@
           "name"
         ]
       },
-      "Occupation": {
-        "title": "Occupation",
-        "type": "object",
-        "description": "職種",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "戦略・経営コンサルタント"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "name"
-        ]
-      },
       "Invoice": {
         "title": "Invoice",
         "type": "object",
@@ -6764,6 +7123,10 @@
               "failed_settlement",
               "completed"
             ]
+          },
+          "stripe_fee_amount": {
+            "type": "integer",
+            "description": "Stripe決済手数料"
           },
           "sub_total": {
             "type": "integer",
@@ -6876,126 +7239,6 @@
           "updated_at",
           "content",
           "act_as"
-        ]
-      },
-      "Hope": {
-        "title": "Hope",
-        "type": "object",
-        "properties": {
-          "amount": {
-            "type": "number"
-          },
-          "billing_method": {
-            "type": "string",
-            "enum": [
-              "hourly",
-              "daily",
-              "monthly",
-              "yearly",
-              "with_project"
-            ],
-            "description": "「時給」「日給」「月給」「年収」「1案件」"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "ratio_of_operation": {
-            "type": "string",
-            "enum": [
-              "once_a_week",
-              "few_days_a_week",
-              "four_days_a_week"
-            ]
-          },
-          "special_note": {
-            "type": "string",
-            "description": "特筆事項"
-          },
-          "time_to_change_jobs": {
-            "type": "number",
-            "description": "転職希望時期・案件開始時期"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "career",
-              "project"
-            ]
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "billing_method",
-          "type"
-        ]
-      },
-      "WorkHistory": {
-        "title": "WorkHistory",
-        "type": "object",
-        "x-examples": {},
-        "description": "",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "department": {
-            "type": "string",
-            "example": "部署名"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "is_employed": {
-            "type": "boolean",
-            "description": "「在職中」「離職中」",
-            "example": "true",
-            "default": true
-          },
-          "name": {
-            "type": "string",
-            "example": "株式会社SIMULA Labs"
-          },
-          "position": {
-            "type": "string",
-            "example": "主任"
-          },
-          "since_date": {
-            "type": "string",
-            "format": "date",
-            "example": "2019-08-01"
-          },
-          "until_date": {
-            "format": "date",
-            "example": "2020-05-01",
-            "type": "string"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "name",
-          "is_employed",
-          "position",
-          "since_date",
-          "department"
         ]
       },
       "Room": {
@@ -8166,160 +8409,6 @@
           "total_amount"
         ]
       },
-      "AcademicHistory": {
-        "title": "AcademicHistory",
-        "type": "object",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "faculty": {
-            "type": "string",
-            "example": "情報コミュニケーション学部",
-            "description": "学部・学科"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "明治大学"
-          },
-          "since_date": {
-            "type": "string",
-            "format": "date",
-            "example": "2008-04-01"
-          },
-          "type": {
-            "type": "string",
-            "example": "university",
-            "enum": [
-              "graduate_school_doctor",
-              "graduate_school_master",
-              "university",
-              "technical_college",
-              "vocational_school",
-              "junior_college",
-              "high_school"
-            ],
-            "description": "「大学院（博士）」「大学院（修士）」「大学」「高専」「専門学校」「短期大学」「高校」"
-          },
-          "until_date": {
-            "type": "string",
-            "format": "date",
-            "example": "2012-03-31"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "created_at",
-          "id",
-          "name",
-          "since_date",
-          "type",
-          "until_date",
-          "updated_at"
-        ]
-      },
-      "Achievement": {
-        "title": "Achievement",
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string",
-            "example": "実績内容"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "created_date": {
-            "type": "string",
-            "format": "date"
-          },
-          "description": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "content",
-          "created_date"
-        ]
-      },
-      "IndustryHistory": {
-        "title": "IndustryHistory",
-        "type": "object",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "year_of_experience": {
-            "type": "integer",
-            "example": 3,
-            "description": "年単位"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "year_of_experience"
-        ]
-      },
-      "OccupationHistory": {
-        "title": "OccupationHistory",
-        "type": "object",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "year_of_experience": {
-            "type": "integer",
-            "example": 5,
-            "description": "年単位"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "year_of_experience"
-        ]
-      },
       "OccupationSubCategory": {
         "title": "OccupationSubCategory",
         "type": "object",
@@ -8347,53 +8436,6 @@
           "created_at",
           "updated_at",
           "name"
-        ]
-      },
-      "ProjectHistory": {
-        "title": "ProjectHistory",
-        "type": "object",
-        "description": "職歴に紐付くプロジェクト経歴（name・positionどちらかは必須）",
-        "properties": {
-          "business_content": {
-            "type": "string"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "is_employed": {
-            "type": "boolean"
-          },
-          "name": {
-            "type": "string",
-            "example": "プロジェクト名"
-          },
-          "position": {
-            "type": "string"
-          },
-          "since_date": {
-            "type": "string",
-            "format": "date"
-          },
-          "until_date": {
-            "type": "string",
-            "format": "date"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "since_date",
-          "is_employed"
         ]
       },
       "ProjectResult": {
@@ -8433,9 +8475,9 @@
           "country_type": {
             "type": "string",
             "enum": [
-              "JAPAN",
-              "INTERNATIONAL",
-              "OTHER"
+              "japan",
+              "international",
+              "other"
             ],
             "description": "「日本」「海外」「その他」"
           },
@@ -8556,34 +8598,19 @@
                               "items": {
                                 "$ref": "#/components/schemas/SpecialtyCompanyType"
                               }
-                            }
-                          }
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
+                            },
                             "specialty_positions": {
                               "type": "array",
                               "items": {
                                 "$ref": "#/components/schemas/SpecialtyPosition"
                               }
-                            }
-                          }
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
+                            },
                             "occupation_main_categories": {
                               "type": "array",
                               "items": {
                                 "$ref": "#/components/schemas/OccupationMainCategory"
                               }
-                            }
-                          }
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
+                            },
                             "industry_categories": {
                               "type": "array",
                               "items": {
@@ -8593,12 +8620,7 @@
                           }
                         }
                       ]
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
+                    },
                     "employments": {
                       "type": "array",
                       "items": {
@@ -8611,12 +8633,7 @@
                             "properties": {
                               "company": {
                                 "$ref": "#/components/schemas/Company"
-                              }
-                            }
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
+                              },
                               "roles": {
                                 "type": "array",
                                 "items": {
@@ -8627,16 +8644,92 @@
                           }
                         ]
                       }
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
+                    },
                     "blocked_companies": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/Company"
+                      }
+                    },
+                    "work_histories": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/WorkHistory"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "project_histories": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/components/schemas/ProjectHistory"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "industry_histories": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/IndustryHistory"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "industry": {
+                                "$ref": "#/components/schemas/Industry"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "academic_histories": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AcademicHistory"
+                      }
+                    },
+                    "hopes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Hope"
+                      }
+                    },
+                    "skills": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Skill"
+                      }
+                    },
+                    "achievements": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Achievement"
+                      }
+                    },
+                    "occupation_histories": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/OccupationHistory"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "occupation": {
+                                "$ref": "#/components/schemas/Occupation"
+                              }
+                            }
+                          }
+                        ]
                       }
                     }
                   }
@@ -8665,23 +8758,13 @@
                         "properties": {
                           "profile": {
                             "$ref": "#/components/schemas/Profile"
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
+                          },
                           "employments": {
                             "type": "array",
                             "items": {
                               "$ref": "#/components/schemas/Employment"
                             }
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
+                          },
                           "blocked_companies": {
                             "type": "array",
                             "items": {
@@ -9520,7 +9603,7 @@
                 {
                   "type": "object",
                   "properties": {
-                    "iinvoice_detailed_items": {
+                    "invoice_detailed_items": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/InvoiceDetailedItem"

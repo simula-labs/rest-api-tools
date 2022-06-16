@@ -43,13 +43,15 @@ export type Recruitment = {
   accessibleType?: 'public' | 'private' | undefined
   appliedAccounts?: number | undefined
   /** 「時給」「日給」「月給」「年収」「1案件」 */
-  billingMethod?: 'hourly' | 'daily' | 'monthly' | 'yearly' | 'with_project' | undefined
+  billingMethod?: 'hourly' | 'monthly' | 'yearly' | 'with_project' | undefined
   /** 勤務地不問か */
   canLiveAndWorkAnywhere?: boolean | undefined
   /** 公開出来ない理由 */
   canNotReleaseReasons?: string[] | undefined
   createdAt: string
   department?: string | undefined
+  /** 稼働時間目安 */
+  estimatedTimePerProject?: number | undefined
   /** 推定単価（税込） */
   estimatedUnitAmount?: number | undefined
   id: string
@@ -169,6 +171,7 @@ export type Account = {
   profileCompleteness?: number | undefined
   registerAs?: 'general' | 'organizational' | undefined
   updatedAt: string
+  workExperienced: boolean
 }
 
 export type Profile = {
@@ -192,7 +195,7 @@ export type Profile = {
   }[] | undefined
   firstName?: string | undefined
   firstNameKana?: string | undefined
-  gender?: 'MALE' | 'FEMALE' | 'OTHER' | undefined
+  gender?: 'male' | 'female' | 'other' | undefined
   id: string
   /** 「日常会話レベル」「ビジネス会話レベル」「ネイティブレベル」「なし」 */
   japaneseSkill?: 'daily_conversation' | 'business_conversation' | 'native' | 'nothing' | undefined
@@ -266,6 +269,100 @@ export type Role = {
   updatedAt: string
 }
 
+export type WorkHistory = {
+  createdAt: string
+  department: string
+  id: string
+  /** 「在職中」「離職中」 */
+  isEmployed: boolean
+  name: string
+  position: string
+  sinceDate: string
+  untilDate?: string | undefined
+  updatedAt: string
+}
+
+/** 職歴に紐付くプロジェクト経歴（name・positionどちらかは必須） */
+export type ProjectHistory = {
+  businessContent?: string | undefined
+  createdAt: string
+  id: string
+  isEmployed: boolean
+  name?: string | undefined
+  position?: string | undefined
+  sinceDate: string
+  untilDate?: string | undefined
+  updatedAt: string
+}
+
+export type IndustryHistory = {
+  createdAt: string
+  id: string
+  updatedAt: string
+  /** 年単位 */
+  yearOfExperience: number
+}
+
+export type AcademicHistory = {
+  createdAt: string
+  /** 学部・学科 */
+  faculty?: string | undefined
+  id: string
+  name: string
+  sinceDate: string
+  /** 「大学院（博士）」「大学院（修士）」「大学」「高専」「専門学校」「短期大学」「高校」 */
+  type: 'graduate_school_doctor' | 'graduate_school_master' | 'university' | 'technical_college' | 'vocational_school' | 'junior_college' | 'high_school'
+  untilDate: string
+  updatedAt: string
+}
+
+export type Hope = {
+  amount?: number | undefined
+  /** 「時給」「月給」「年収」「1案件」 */
+  billingMethod: 'hourly' | 'monthly' | 'yearly' | 'with_project'
+  createdAt: string
+  id: string
+  ratioOfOperation?: 'once_a_week' | 'few_days_a_week' | 'four_days_a_week' | undefined
+  /** 特筆事項 */
+  specialNote?: string | undefined
+  /** 転職希望時期・案件開始時期 */
+  timeToChangeJobs?: number | undefined
+  type: 'career' | 'project'
+  updatedAt: string
+}
+
+export type Skill = {
+  createdAt: string
+  id: string
+  name: string
+  updatedAt: string
+}
+
+export type Achievement = {
+  content: string
+  createdAt: string
+  createdDate: string
+  description?: string | undefined
+  id: string
+  updatedAt: string
+}
+
+export type OccupationHistory = {
+  createdAt: string
+  id: string
+  updatedAt: string
+  /** 年単位 */
+  yearOfExperience: number
+}
+
+/** 職種 */
+export type Occupation = {
+  createdAt: string
+  id: string
+  name: string
+  updatedAt: string
+}
+
 export type ApplicantResource = {
   careerStatus?: 'backlog' | 'checked' | 'interviewing' | 'offered' | 'joined' | 'rejected' | undefined
   createdAt: string
@@ -311,13 +408,6 @@ export type JobReview = {
   /** スキルの詳細 */
   skillDescription?: string | undefined
   starRating?: number | undefined
-  updatedAt: string
-}
-
-export type Skill = {
-  createdAt: string
-  id: string
-  name: string
   updatedAt: string
 }
 
@@ -377,14 +467,6 @@ export type State = {
   updatedAt: string
 }
 
-/** 職種 */
-export type Occupation = {
-  createdAt: string
-  id: string
-  name: string
-  updatedAt: string
-}
-
 export type Invoice = {
   /** 請求額（税込） */
   amount?: number | undefined
@@ -418,6 +500,8 @@ export type Invoice = {
   settlementDate?: string | undefined
   /** 「支払い待ち」「決済待ち」「支払いおよび決済待ち」「決済失敗」「完了」 */
   status?: 'waiting_for_payment' | 'waiting_for_settlement' | 'waiting_for_payment_and_settlement' | 'failed_settlement' | 'completed' | undefined
+  /** Stripe決済手数料 */
+  stripeFeeAmount?: number | undefined
   /** 請求額（小計） */
   subTotal?: number | undefined
   /** 税額 */
@@ -447,34 +531,6 @@ export type Message = {
   content: string
   createdAt: string
   id: string
-  updatedAt: string
-}
-
-export type Hope = {
-  amount?: number | undefined
-  /** 「時給」「日給」「月給」「年収」「1案件」 */
-  billingMethod: 'hourly' | 'daily' | 'monthly' | 'yearly' | 'with_project'
-  createdAt: string
-  id: string
-  ratioOfOperation?: 'once_a_week' | 'few_days_a_week' | 'four_days_a_week' | undefined
-  /** 特筆事項 */
-  specialNote?: string | undefined
-  /** 転職希望時期・案件開始時期 */
-  timeToChangeJobs?: number | undefined
-  type: 'career' | 'project'
-  updatedAt: string
-}
-
-export type WorkHistory = {
-  createdAt: string
-  department: string
-  id: string
-  /** 「在職中」「離職中」 */
-  isEmployed: boolean
-  name: string
-  position: string
-  sinceDate: string
-  untilDate?: string | undefined
   updatedAt: string
 }
 
@@ -783,62 +839,11 @@ export type Withdrawal = {
   updatedAt: string
 }
 
-export type AcademicHistory = {
-  createdAt: string
-  /** 学部・学科 */
-  faculty?: string | undefined
-  id: string
-  name: string
-  sinceDate: string
-  /** 「大学院（博士）」「大学院（修士）」「大学」「高専」「専門学校」「短期大学」「高校」 */
-  type: 'graduate_school_doctor' | 'graduate_school_master' | 'university' | 'technical_college' | 'vocational_school' | 'junior_college' | 'high_school'
-  untilDate: string
-  updatedAt: string
-}
-
-export type Achievement = {
-  content: string
-  createdAt: string
-  createdDate: string
-  description?: string | undefined
-  id: string
-  updatedAt: string
-}
-
-export type IndustryHistory = {
-  createdAt: string
-  id: string
-  updatedAt: string
-  /** 年単位 */
-  yearOfExperience: number
-}
-
-export type OccupationHistory = {
-  createdAt: string
-  id: string
-  updatedAt: string
-  /** 年単位 */
-  yearOfExperience: number
-}
-
 /** 職種「中項目」 */
 export type OccupationSubCategory = {
   createdAt: string
   id: string
   name: string
-  updatedAt: string
-}
-
-/** 職歴に紐付くプロジェクト経歴（name・positionどちらかは必須） */
-export type ProjectHistory = {
-  businessContent?: string | undefined
-  createdAt: string
-  id: string
-  isEmployed: boolean
-  name?: string | undefined
-  position?: string | undefined
-  sinceDate: string
-  untilDate?: string | undefined
   updatedAt: string
 }
 
@@ -855,7 +860,7 @@ export type RecruitmentInterest = {
 
 export type StateCategory = {
   /** 「日本」「海外」「その他」 */
-  countryType?: 'JAPAN' | 'INTERNATIONAL' | 'OTHER' | undefined
+  countryType?: 'japan' | 'international' | 'other' | undefined
   createdAt: string
   id: string
   name: string

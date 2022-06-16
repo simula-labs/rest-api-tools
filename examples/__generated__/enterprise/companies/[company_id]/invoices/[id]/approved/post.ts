@@ -12,7 +12,7 @@ export type PostCompaniesCompanyIdInvoicesIdApprovedResponse = Types.Invoice & {
       jobOrder?: Types.JobOrder | undefined
     }
   } & {
-    iinvoiceDetailedItems: Types.InvoiceDetailedItem[]
+    invoiceDetailedItems: Types.InvoiceDetailedItem[]
   }
 
 export const postCompaniesCompanyIdInvoicesIdApproved = new BaseRequest<

@@ -10,7 +10,7 @@ import { patchCompaniesCompanyIdApplicantResourcesIdAdd } from "./companies/[com
 import { getCompaniesCompanyIdBankAccount } from "./companies/[company_id]/bank_account/get";
 import { postCompaniesCompanyIdBankAccount } from "./companies/[company_id]/bank_account/post";
 import { deleteCompaniesCompanyIdBankAccount } from "./companies/[company_id]/bank_account/delete";
-import { postCompanies } from "./companies/[company_id]/companies/post";
+import { postCompaniesCompanyIdCompanies } from "./companies/[company_id]/companies/post";
 import { getCompaniesCompanyIdEmployments } from "./companies/[company_id]/employments/get";
 import { postCompaniesCompanyIdEmployments } from "./companies/[company_id]/employments/post";
 import { postCompaniesCompanyIdEmploymentsInvite } from "./companies/[company_id]/employments/invite/post";
@@ -127,7 +127,7 @@ export const enterpriseApi = {
   getCompaniesCompanyIdBankAccount,
   postCompaniesCompanyIdBankAccount,
   deleteCompaniesCompanyIdBankAccount,
-  postCompanies,
+  postCompaniesCompanyIdCompanies,
   getCompaniesCompanyIdEmployments,
   postCompaniesCompanyIdEmployments,
   postCompaniesCompanyIdEmploymentsInvite,

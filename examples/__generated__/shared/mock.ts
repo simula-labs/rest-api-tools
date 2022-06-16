@@ -47,6 +47,7 @@ export const mockRecruitment = (modification?: Partial< Types.Recruitment>): Typ
     canNotReleaseReasons: [],
     createdAt: "string",
     department: "string",
+    estimatedTimePerProject: 0,
     estimatedUnitAmount: 0,
     id: "string",
     interestedAccounts: 0,
@@ -141,6 +142,7 @@ export const mockAccount = (modification?: Partial< Types.Account>): Types.Accou
     profileCompleteness: 0,
     registerAs: 'general',
     updatedAt: "string",
+    workExperienced: false,
     ...modification
   }
 }
@@ -160,7 +162,7 @@ export const mockProfile = (modification?: Partial< Types.Profile>): Types.Profi
     files: [],
     firstName: "string",
     firstNameKana: "string",
-    gender: 'MALE',
+    gender: 'male',
     id: "string",
     japaneseSkill: 'daily_conversation',
     lastName: "string",
@@ -246,6 +248,119 @@ export const mockRole = (modification?: Partial< Types.Role>): Types.Role => {
   }
 }
 
+export const mockWorkHistory = (modification?: Partial< Types.WorkHistory>): Types.WorkHistory => {
+  return {
+    createdAt: "string",
+    department: "string",
+    id: "string",
+    isEmployed: false,
+    name: "string",
+    position: "string",
+    sinceDate: "string",
+    untilDate: "string",
+    updatedAt: "string",
+    ...modification
+  }
+}
+
+/** 職歴に紐付くプロジェクト経歴（name・positionどちらかは必須） */
+export const mockProjectHistory = (modification?: Partial< Types.ProjectHistory>): Types.ProjectHistory => {
+  return {
+    businessContent: "string",
+    createdAt: "string",
+    id: "string",
+    isEmployed: false,
+    name: "string",
+    position: "string",
+    sinceDate: "string",
+    untilDate: "string",
+    updatedAt: "string",
+    ...modification
+  }
+}
+
+export const mockIndustryHistory = (modification?: Partial< Types.IndustryHistory>): Types.IndustryHistory => {
+  return {
+    createdAt: "string",
+    id: "string",
+    updatedAt: "string",
+    yearOfExperience: 0,
+    ...modification
+  }
+}
+
+export const mockAcademicHistory = (modification?: Partial< Types.AcademicHistory>): Types.AcademicHistory => {
+  return {
+    createdAt: "string",
+    faculty: "string",
+    id: "string",
+    name: "string",
+    sinceDate: "string",
+    type: 'graduate_school_doctor',
+    untilDate: "string",
+    updatedAt: "string",
+    ...modification
+  }
+}
+
+export const mockHope = (modification?: Partial< Types.Hope>): Types.Hope => {
+  return {
+    amount: 0,
+    billingMethod: 'hourly',
+    createdAt: "string",
+    id: "string",
+    ratioOfOperation: 'once_a_week',
+    specialNote: "string",
+    timeToChangeJobs: 0,
+    type: 'career',
+    updatedAt: "string",
+    ...modification
+  }
+}
+
+export const mockSkill = (modification?: Partial< Types.Skill>): Types.Skill => {
+  return {
+    createdAt: "string",
+    id: "string",
+    name: "string",
+    updatedAt: "string",
+    ...modification
+  }
+}
+
+export const mockAchievement = (modification?: Partial< Types.Achievement>): Types.Achievement => {
+  return {
+    content: "string",
+    createdAt: "string",
+    createdDate: "string",
+    description: "string",
+    id: "string",
+    updatedAt: "string",
+    ...modification
+  }
+}
+
+export const mockOccupationHistory = (modification?: Partial< Types.OccupationHistory>): Types.OccupationHistory => {
+  return {
+    createdAt: "string",
+    id: "string",
+    updatedAt: "string",
+    yearOfExperience: 0,
+    ...modification
+  }
+}
+
+/** 職種 */
+export const mockOccupation = (modification?: Partial< Types.Occupation>): Types.Occupation => {
+  return {
+    createdAt: "string",
+    id: "string",
+    name: "string",
+    updatedAt: "string",
+    ...modification
+  }
+}
+
 export const mockApplicantResource = (modification?: Partial< Types.ApplicantResource>): Types.ApplicantResource => {
   return {
     careerStatus: 'backlog',
@@ -285,16 +400,6 @@ export const mockJobReview = (modification?: Partial< Types.JobReview>): Types.J
     isSample: false,
     skillDescription: "string",
     starRating: 0,
-    updatedAt: "string",
-    ...modification
-  }
-}
-
-export const mockSkill = (modification?: Partial< Types.Skill>): Types.Skill => {
-  return {
-    createdAt: "string",
-    id: "string",
-    name: "string",
     updatedAt: "string",
     ...modification
   }
@@ -342,17 +447,6 @@ export const mockState = (modification?: Partial< Types.State>): Types.State => 
   }
 }
 
-/** 職種 */
-export const mockOccupation = (modification?: Partial< Types.Occupation>): Types.Occupation => {
-  return {
-    createdAt: "string",
-    id: "string",
-    name: "string",
-    updatedAt: "string",
-    ...modification
-  }
-}
-
 export const mockInvoice = (modification?: Partial< Types.Invoice>): Types.Invoice => {
   return {
     amount: 0,
@@ -370,6 +464,7 @@ export const mockInvoice = (modification?: Partial< Types.Invoice>): Types.Invoi
     paymentMethod: 'bank',
     settlementDate: "string",
     status: 'waiting_for_payment',
+    stripeFeeAmount: 0,
     subTotal: 0,
     tax: 0,
     title: "string",
@@ -403,36 +498,6 @@ export const mockMessage = (modification?: Partial< Types.Message>): Types.Messa
     content: "string",
     createdAt: "string",
     id: "string",
-    updatedAt: "string",
-    ...modification
-  }
-}
-
-export const mockHope = (modification?: Partial< Types.Hope>): Types.Hope => {
-  return {
-    amount: 0,
-    billingMethod: 'hourly',
-    createdAt: "string",
-    id: "string",
-    ratioOfOperation: 'once_a_week',
-    specialNote: "string",
-    timeToChangeJobs: 0,
-    type: 'career',
-    updatedAt: "string",
-    ...modification
-  }
-}
-
-export const mockWorkHistory = (modification?: Partial< Types.WorkHistory>): Types.WorkHistory => {
-  return {
-    createdAt: "string",
-    department: "string",
-    id: "string",
-    isEmployed: false,
-    name: "string",
-    position: "string",
-    sinceDate: "string",
-    untilDate: "string",
     updatedAt: "string",
     ...modification
   }
@@ -777,74 +842,12 @@ export const mockWithdrawal = (modification?: Partial< Types.Withdrawal>): Types
   }
 }
 
-export const mockAcademicHistory = (modification?: Partial< Types.AcademicHistory>): Types.AcademicHistory => {
-  return {
-    createdAt: "string",
-    faculty: "string",
-    id: "string",
-    name: "string",
-    sinceDate: "string",
-    type: 'graduate_school_doctor',
-    untilDate: "string",
-    updatedAt: "string",
-    ...modification
-  }
-}
-
-export const mockAchievement = (modification?: Partial< Types.Achievement>): Types.Achievement => {
-  return {
-    content: "string",
-    createdAt: "string",
-    createdDate: "string",
-    description: "string",
-    id: "string",
-    updatedAt: "string",
-    ...modification
-  }
-}
-
-export const mockIndustryHistory = (modification?: Partial< Types.IndustryHistory>): Types.IndustryHistory => {
-  return {
-    createdAt: "string",
-    id: "string",
-    updatedAt: "string",
-    yearOfExperience: 0,
-    ...modification
-  }
-}
-
-export const mockOccupationHistory = (modification?: Partial< Types.OccupationHistory>): Types.OccupationHistory => {
-  return {
-    createdAt: "string",
-    id: "string",
-    updatedAt: "string",
-    yearOfExperience: 0,
-    ...modification
-  }
-}
-
 /** 職種「中項目」 */
 export const mockOccupationSubCategory = (modification?: Partial< Types.OccupationSubCategory>): Types.OccupationSubCategory => {
   return {
     createdAt: "string",
     id: "string",
     name: "string",
-    updatedAt: "string",
-    ...modification
-  }
-}
-
-/** 職歴に紐付くプロジェクト経歴（name・positionどちらかは必須） */
-export const mockProjectHistory = (modification?: Partial< Types.ProjectHistory>): Types.ProjectHistory => {
-  return {
-    businessContent: "string",
-    createdAt: "string",
-    id: "string",
-    isEmployed: false,
-    name: "string",
-    position: "string",
-    sinceDate: "string",
-    untilDate: "string",
     updatedAt: "string",
     ...modification
   }
@@ -869,7 +872,7 @@ export const mockRecruitmentInterest = (modification?: Partial< Types.Recruitmen
 
 export const mockStateCategory = (modification?: Partial< Types.StateCategory>): Types.StateCategory => {
   return {
-    countryType: 'JAPAN',
+    countryType: 'japan',
     createdAt: "string",
     id: "string",
     name: "string",

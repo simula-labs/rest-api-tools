@@ -30,7 +30,6 @@ export type RecruitmentAccessibleType = typeof RECRUITMENT_ACCESSIBLE_TYPE[keyof
 
 export const RECRUITMENT_BILLING_METHOD = {
   'hourly': 'hourly',
-  'daily': 'daily',
   'monthly': 'monthly',
   'yearly': 'yearly',
   'with_project': 'with_project'
@@ -130,9 +129,9 @@ export const PROFILE_ENGLISH_SKILL = {
 export type ProfileEnglishSkill = typeof PROFILE_ENGLISH_SKILL[keyof typeof PROFILE_ENGLISH_SKILL]
 
 export const PROFILE_GENDER = {
-  'MALE': 'MALE',
-  'FEMALE': 'FEMALE',
-  'OTHER': 'OTHER'
+  'male': 'male',
+  'female': 'female',
+  'other': 'other'
 } as const
 export type ProfileGender = typeof PROFILE_GENDER[keyof typeof PROFILE_GENDER]
 
@@ -167,6 +166,38 @@ export const ROLE_TYPE = {
   'organizational': 'organizational'
 } as const
 export type RoleType = typeof ROLE_TYPE[keyof typeof ROLE_TYPE]
+
+export const ACADEMIC_HISTORY_TYPE = {
+  'graduate_school_doctor': 'graduate_school_doctor',
+  'graduate_school_master': 'graduate_school_master',
+  'university': 'university',
+  'technical_college': 'technical_college',
+  'vocational_school': 'vocational_school',
+  'junior_college': 'junior_college',
+  'high_school': 'high_school'
+} as const
+export type AcademicHistoryType = typeof ACADEMIC_HISTORY_TYPE[keyof typeof ACADEMIC_HISTORY_TYPE]
+
+export const HOPE_BILLING_METHOD = {
+  'hourly': 'hourly',
+  'monthly': 'monthly',
+  'yearly': 'yearly',
+  'with_project': 'with_project'
+} as const
+export type HopeBillingMethod = typeof HOPE_BILLING_METHOD[keyof typeof HOPE_BILLING_METHOD]
+
+export const HOPE_RATIO_OF_OPERATION = {
+  'once_a_week': 'once_a_week',
+  'few_days_a_week': 'few_days_a_week',
+  'four_days_a_week': 'four_days_a_week'
+} as const
+export type HopeRatioOfOperation = typeof HOPE_RATIO_OF_OPERATION[keyof typeof HOPE_RATIO_OF_OPERATION]
+
+export const HOPE_TYPE = {
+  'career': 'career',
+  'project': 'project'
+} as const
+export type HopeType = typeof HOPE_TYPE[keyof typeof HOPE_TYPE]
 
 export const APPLICANT_RESOURCE_CAREER_STATUS = {
   'backlog': 'backlog',
@@ -257,28 +288,6 @@ export const MESSAGE_ACT_AS = {
   'organizational': 'organizational'
 } as const
 export type MessageActAs = typeof MESSAGE_ACT_AS[keyof typeof MESSAGE_ACT_AS]
-
-export const HOPE_BILLING_METHOD = {
-  'hourly': 'hourly',
-  'daily': 'daily',
-  'monthly': 'monthly',
-  'yearly': 'yearly',
-  'with_project': 'with_project'
-} as const
-export type HopeBillingMethod = typeof HOPE_BILLING_METHOD[keyof typeof HOPE_BILLING_METHOD]
-
-export const HOPE_RATIO_OF_OPERATION = {
-  'once_a_week': 'once_a_week',
-  'few_days_a_week': 'few_days_a_week',
-  'four_days_a_week': 'four_days_a_week'
-} as const
-export type HopeRatioOfOperation = typeof HOPE_RATIO_OF_OPERATION[keyof typeof HOPE_RATIO_OF_OPERATION]
-
-export const HOPE_TYPE = {
-  'career': 'career',
-  'project': 'project'
-} as const
-export type HopeType = typeof HOPE_TYPE[keyof typeof HOPE_TYPE]
 
 export const INTRODUCTION_COMPLETION_REPORT_PAYMENT_STATUS = {
   'unpaid': 'unpaid',
@@ -396,20 +405,9 @@ export const SEARCH_CONDITION_TARGET = {
 } as const
 export type SearchConditionTarget = typeof SEARCH_CONDITION_TARGET[keyof typeof SEARCH_CONDITION_TARGET]
 
-export const ACADEMIC_HISTORY_TYPE = {
-  'graduate_school_doctor': 'graduate_school_doctor',
-  'graduate_school_master': 'graduate_school_master',
-  'university': 'university',
-  'technical_college': 'technical_college',
-  'vocational_school': 'vocational_school',
-  'junior_college': 'junior_college',
-  'high_school': 'high_school'
-} as const
-export type AcademicHistoryType = typeof ACADEMIC_HISTORY_TYPE[keyof typeof ACADEMIC_HISTORY_TYPE]
-
 export const STATE_CATEGORY_COUNTRY_TYPE = {
-  'JAPAN': 'JAPAN',
-  'INTERNATIONAL': 'INTERNATIONAL',
-  'OTHER': 'OTHER'
+  'japan': 'japan',
+  'international': 'international',
+  'other': 'other'
 } as const
 export type StateCategoryCountryType = typeof STATE_CATEGORY_COUNTRY_TYPE[keyof typeof STATE_CATEGORY_COUNTRY_TYPE]

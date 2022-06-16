@@ -84,11 +84,13 @@
                         "type": "string",
                         "example": "university",
                         "enum": [
-                          "graduate_school",
                           "university",
-                          "community_college",
                           "junior_college",
-                          "high_school"
+                          "high_school",
+                          "graduate_school_doctor",
+                          "graduate_school_master",
+                          "technical_college",
+                          "vocational_school"
                         ],
                         "description": "「大学院」「大学」「専門学校」「短期大学」「高校」"
                       }
@@ -170,11 +172,13 @@
                         "type": "string",
                         "example": "university",
                         "enum": [
-                          "graduate_school",
                           "university",
-                          "community_college",
                           "junior_college",
-                          "high_school"
+                          "high_school",
+                          "graduate_school_doctor",
+                          "graduate_school_master",
+                          "technical_college",
+                          "vocational_school"
                         ],
                         "description": "「大学院」「大学」「専門学校」「短期大学」「高校」"
                       }
@@ -598,8 +602,6 @@
                       "amount",
                       "billing_method",
                       "type",
-                      "workplace_ids",
-                      "industry_ids",
                       "occupation_ids"
                     ],
                     "properties": {
@@ -614,7 +616,6 @@
                         "type": "string",
                         "enum": [
                           "hourly",
-                          "daily",
                           "monthly",
                           "yearly",
                           "with_project"
@@ -1327,7 +1328,7 @@
                         "type": "integer",
                         "description": "直近の年収"
                       },
-                      "managemnt_experience": {
+                      "management_experience": {
                         "type": "integer",
                         "description": "マネジメント経験人数"
                       },
@@ -2377,6 +2378,10 @@
                         "type": "string",
                         "format": "binary"
                       },
+                      "work_experienced": {
+                        "type": "boolean",
+                        "default": false
+                      },
                       "is_career_scout_target": {
                         "type": "boolean",
                         "default": true
@@ -3032,7 +3037,8 @@
                         "enum": [
                           "hourly",
                           "monthly",
-                          "yearly"
+                          "yearly",
+                          "with_project"
                         ],
                         "description": "「時給」「月給」「年収」"
                       },
@@ -3057,6 +3063,13 @@
                         "format": "uuid",
                         "description": "StateのID"
                       },
+                      "industry_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      },
                       "employment_status_ids": {
                         "type": "array",
                         "items": {
@@ -3080,15 +3093,7 @@
                         ],
                         "description": "「~20%(週に1回)」「40~60%(週に2.3回)」「80%~(週に4回)」"
                       }
-                    },
-                    "required": [
-                      "time_to_change_job",
-                      "amount",
-                      "type",
-                      "workplace_id",
-                      "employment_status_ids",
-                      "occupation_ids"
-                    ]
+                    }
                   }
                 }
               }
@@ -3404,7 +3409,7 @@
                   "invoice": {
                     "type": "object",
                     "properties": {
-                      "issued_at": {
+                      "issued_date": {
                         "type": "string",
                         "format": "date",
                         "description": "請求日"
@@ -3427,6 +3432,14 @@
                       "note": {
                         "type": "string",
                         "description": "備考"
+                      },
+                      "issuing_status": {
+                        "type": "string",
+                        "enum": [
+                          "fixed",
+                          "draft",
+                          "withdrawn"
+                        ]
                       },
                       "invoice_detailed_items": {
                         "type": "array",
@@ -3478,7 +3491,7 @@
                       }
                     },
                     "required": [
-                      "issued_at",
+                      "issued_date",
                       "title",
                       "deadline",
                       "invoice_detailed_items"
@@ -4847,7 +4860,6 @@
             "type": "string",
             "enum": [
               "hourly",
-              "daily",
               "monthly",
               "yearly",
               "with_project"
@@ -4873,6 +4885,10 @@
           "department": {
             "type": "string",
             "example": "開発部"
+          },
+          "estimated_time_per_project": {
+            "type": "integer",
+            "description": "稼働時間目安"
           },
           "estimated_unit_amount": {
             "type": "integer",
@@ -5069,11 +5085,11 @@
           }
         },
         "required": [
-          "id",
           "created_at",
-          "updated_at",
+          "id",
+          "is_sample",
           "title",
-          "is_sample"
+          "updated_at"
         ]
       },
       "Company": {
@@ -5512,11 +5528,16 @@
           "updated_at": {
             "format": "date-time",
             "type": "string"
+          },
+          "work_experienced": {
+            "type": "boolean",
+            "default": false
           }
         },
         "required": [
           "created_at",
           "email_verification_status",
+          "work_experienced",
           "id",
           "identity_verification_status",
           "is_career_scout_target",
@@ -5726,9 +5747,9 @@
           "gender": {
             "type": "string",
             "enum": [
-              "MALE",
-              "FEMALE",
-              "OTHER"
+              "male",
+              "female",
+              "other"
             ],
             "example": "MALE"
           },
@@ -6125,12 +6146,11 @@
             "type": "string",
             "enum": [
               "hourly",
-              "daily",
               "monthly",
               "yearly",
               "with_project"
             ],
-            "description": "「時給」「日給」「月給」「年収」「1案件」"
+            "description": "「時給」「月給」「年収」「1案件」"
           },
           "created_at": {
             "type": "string",
@@ -6169,12 +6189,13 @@
           }
         },
         "required": [
-          "id",
-          "created_at",
-          "updated_at",
           "billing_method",
-          "type"
-        ]
+          "created_at",
+          "id",
+          "type",
+          "updated_at"
+        ],
+        "description": ""
       },
       "IncomeHistory": {
         "title": "IncomeHistory",
@@ -7412,6 +7433,10 @@
               "completed"
             ]
           },
+          "stripe_fee_amount": {
+            "type": "integer",
+            "description": "Stripe決済手数料"
+          },
           "sub_total": {
             "type": "integer",
             "example": 10000,
@@ -7601,9 +7626,9 @@
           "country_type": {
             "type": "string",
             "enum": [
-              "JAPAN",
-              "INTERNATIONAL",
-              "OTHER"
+              "japan",
+              "international",
+              "other"
             ],
             "description": "「日本」「海外」「その他」"
           },
@@ -7828,7 +7853,10 @@
               "type": "object",
               "properties": {
                 "achievements": {
-                  "$ref": "#/components/schemas/Achievement"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Achievement"
+                  }
                 },
                 "total_data_nums": {
                   "type": "integer"
@@ -8629,7 +8657,7 @@
                 {
                   "type": "object",
                   "properties": {
-                    "iinvoice_detailed_items": {
+                    "invoice_detailed_items": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/InvoiceDetailedItem"
@@ -8679,7 +8707,7 @@
                       {
                         "type": "object",
                         "properties": {
-                          "iinvoice_detailed_items": {
+                          "invoice_detailed_items": {
                             "type": "array",
                             "items": {
                               "$ref": "#/components/schemas/InvoiceDetailedItem"
@@ -9944,12 +9972,7 @@
                         "properties": {
                           "account": {
                             "$ref": "#/components/schemas/Account"
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
+                          },
                           "occupation": {
                             "$ref": "#/components/schemas/Occupation"
                           }
@@ -10205,23 +10228,13 @@
                                             "properties": {
                                               "workplace": {
                                                 "$ref": "#/components/schemas/State"
-                                              }
-                                            }
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
+                                              },
                                               "occpations": {
                                                 "type": "array",
                                                 "items": {
                                                   "$ref": "#/components/schemas/Occupation"
                                                 }
-                                              }
-                                            }
-                                          },
-                                          {
-                                            "type": "object",
-                                            "properties": {
+                                              },
                                               "industries": {
                                                 "type": "array",
                                                 "items": {
@@ -10235,12 +10248,7 @@
                                     }
                                   }
                                 ]
-                              }
-                            }
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
+                              },
                               "job_reviews": {
                                 "type": "array",
                                 "items": {
@@ -10265,6 +10273,12 @@
                             }
                           }
                         ]
+                      }
+                    },
+                    "skills": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Skill"
                       }
                     }
                   }

@@ -2,7 +2,11 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../shared/index";
 
-export type PostCompaniesResponse = Types.Company & {
+export type PostCompaniesCompanyIdCompaniesUrlParams = {
+  companyId: string
+} | undefined
+
+export type PostCompaniesCompanyIdCompaniesResponse = Types.Company & {
     owner: Types.Account & {
       profile?: Types.Profile & {
         placeOfResidence?: Types.State | undefined
@@ -24,17 +28,17 @@ export type PostCompaniesResponse = Types.Company & {
     paymentMethods: Types.PaymentMethod[]
   }
 
-export type PostCompaniesRequestBody = {
+export type PostCompaniesCompanyIdCompaniesRequestBody = {
   company: {
     name: string
     nameKana: string
   }
 }
 
-export const postCompanies = new BaseRequest<
-  PostCompaniesRequestBody,
-  PostCompaniesResponse,
-  undefined,
+export const postCompaniesCompanyIdCompanies = new BaseRequest<
+  PostCompaniesCompanyIdCompaniesRequestBody,
+  PostCompaniesCompanyIdCompaniesResponse,
+  PostCompaniesCompanyIdCompaniesUrlParams,
   undefined
 >({
   requiredAuth: true,

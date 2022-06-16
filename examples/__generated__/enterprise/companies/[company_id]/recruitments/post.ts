@@ -60,8 +60,10 @@ export type PostCompaniesCompanyIdRecruitmentsRequestBody = {
     taxType?: 'included' | 'excluded' | undefined
     minAmount?: number | undefined
     maxAmount?: number | undefined
-    /** 「時給」「日給」「月給」「年収」「1案件」 */
-    billingMethod?: 'hourly' | 'daily' | 'monthly' | 'yearly' | 'with_project' | undefined
+    /** 「時給」「月給」「年収」「1案件」 */
+    billingMethod?: 'hourly' | 'monthly' | 'yearly' | 'with_project' | undefined
+    /** 1案件の稼働時間目安 */
+    estimatedTimePerProject?: number | undefined
     /** 募集元企業の状態「なし」「非公開」「某社」「指定あり」 */
     targetCompanyStatus?: 'none' | 'private' | 'certained' | 'specified' | undefined
     /** 募集元企業を指定する場合は必須 */
