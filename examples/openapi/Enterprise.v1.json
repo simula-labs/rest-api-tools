@@ -663,6 +663,20 @@
                 "required": [
                   "applicant_resource"
                 ]
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "applicant_resource": {
+                      "career_status": "backlog",
+                      "project_status": "backlog",
+                      "is_checked_career": true,
+                      "is_checked_project": true,
+                      "is_watched_career": true,
+                      "is_watched_project": true
+                    }
+                  }
+                }
               }
             }
           }
@@ -1013,9 +1027,32 @@
                     }
                   }
                 }
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "employment": {
+                      "email": "sample@example.com",
+                      "role_ids": [
+                        "497f6eca-6276-4993-bfeb-53cbbbba6f08"
+                      ]
+                    }
+                  }
+                },
+                "example-2": {
+                  "value": {
+                    "employment": {
+                      "email": "sample@example.com",
+                      "role_ids": [
+                        "497f6eca-6276-4993-bfeb-53cbbbba6f08"
+                      ]
+                    }
+                  }
+                }
               }
             }
-          }
+          },
+          "description": ""
         }
       },
       "delete": {
@@ -1383,7 +1420,7 @@
         }
       }
     },
-    "/companies/{company_id}/invoices/{id}/confirm": {
+    "/companies/{company_id}/invoices/{id}/check": {
       "parameters": [
         {
           "schema": {
@@ -1403,11 +1440,11 @@
         }
       ],
       "post": {
-        "summary": "PaymentIntentの認証申請する",
+        "summary": "支払方法確定前にStripe決済手数料の確認レスポンスを返す",
         "operationId": "post-companies-company_id-invoices-id-confirm",
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "$ref": "#/components/responses/Invoice"
           }
         },
         "description": ""
@@ -1477,6 +1514,35 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/companies/{company_id}/invoices/{id}/finished_payment": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "company_id",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "銀行振込を完了する",
+        "operationId": "post-companies-company_id-invoices-id-finished_payment",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Invoice"
           }
         }
       }
@@ -3676,7 +3742,6 @@
                         "type": "string",
                         "enum": [
                           "hourly",
-                          "daily",
                           "monthly",
                           "yearly",
                           "with_project"
@@ -7797,7 +7862,11 @@
         "properties": {
           "amount": {
             "type": "integer",
-            "description": "金額"
+            "description": "金額(税込)"
+          },
+          "amount_without_tax": {
+            "type": "integer",
+            "description": "金額(税抜)"
           },
           "created_at": {
             "type": "string",
@@ -9608,6 +9677,14 @@
                       "items": {
                         "$ref": "#/components/schemas/InvoiceDetailedItem"
                       }
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "bank_account_for_payment": {
+                      "$ref": "#/components/schemas/BankAccount"
                     }
                   }
                 }
@@ -12170,6 +12247,283 @@
                   }
                 }
               ]
+            },
+            "examples": {
+              "example-1": {
+                "value": {
+                  "created_at": "2019-08-24T14:15:22Z",
+                  "department": "string",
+                  "email": "sample@example.com",
+                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                  "is_valid": false,
+                  "last_notification_read_at": "2019-08-24T14:15:22Z",
+                  "position": "string",
+                  "updated_at": "2019-08-24T14:15:22Z",
+                  "account": {
+                    "already_keep_from_current_company": true,
+                    "avatar_url": "string",
+                    "consent_nda_version": "string",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "deleted_at": "2019-08-24T14:15:22Z",
+                    "display_name": "string",
+                    "email": "test@example.com",
+                    "email_verification_status": "verified",
+                    "exists_applicant_resource_from_current_company": true,
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "identification_requirements": [
+                      "string"
+                    ],
+                    "identity_verification_status": "unspecified",
+                    "is_career_scout_target": true,
+                    "is_concluded_nda": true,
+                    "is_project_scout_target": true,
+                    "is_public_with_work": true,
+                    "is_sample": false,
+                    "is_student": false,
+                    "is_supported": true,
+                    "last_notification_read_at": "2019-08-24T14:15:22Z",
+                    "last_sign_in_at": "2019-08-24T14:15:22Z",
+                    "missing_requirements_for_agent": [
+                      "string"
+                    ],
+                    "missing_requirements_for_general": [
+                      "string"
+                    ],
+                    "profile_completeness": 0,
+                    "register_as": "general",
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "profile": {
+                      "academic_background": "東京大学",
+                      "address": "東京都港区元赤坂1-7-18",
+                      "agent_achievement": "経歴・実績",
+                      "agent_area_in_charge": "東京23区",
+                      "agent_self_introduction": "自己PR",
+                      "agent_self_message": "紹介メッセージ",
+                      "biography": "自己PR/職務要約",
+                      "birth_of_date": "2019-08-24",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "english_skill": "daily_conversation",
+                      "files": [
+                        {
+                          "id": "string",
+                          "name": "string",
+                          "content_type": "string",
+                          "url": "string",
+                          "created_at": "2019-08-24T14:15:22Z"
+                        }
+                      ],
+                      "first_name": "太郎",
+                      "first_name_kana": "タロウ",
+                      "gender": "MALE",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "japanese_skill": "native",
+                      "last_name": "山田",
+                      "last_name_kana": "ヤマダ",
+                      "management_experience": "nothing",
+                      "marital_status": "single",
+                      "nationality": "JP",
+                      "number_of_job_changes": 0,
+                      "phone": "090-XXXX-XXXX",
+                      "postal_code": "107-0051",
+                      "recent_income_amount": 0,
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "year_of_agent_experience": 10,
+                      "place_of_residence": {
+                        "country_code": 392,
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "name": "東京",
+                        "updated_at": "2019-08-24T14:15:22Z"
+                      }
+                    }
+                  },
+                  "company": {
+                    "admin_verification_status": "unspecified",
+                    "average_age": 28,
+                    "business_summary": "事業概要",
+                    "capital": 15200000,
+                    "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
+                    "cover_image_url": "string",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "deleted_at": "2019-08-24T14:15:22Z",
+                    "employment_placement_permit_number": "string",
+                    "follower_nums": 0,
+                    "head_office_location": "東京都港区元赤坂1-7-18",
+                    "hp_url": "https://simula-labs.com/",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "introduction_fee_ratio": 0,
+                    "is_following": true,
+                    "is_listed": false,
+                    "is_sample": true,
+                    "logo_url": "string",
+                    "name": "株式会社SIMULA Labs",
+                    "name_kana": "シミュララボ ",
+                    "net_sales": 50000000,
+                    "numbers_of_employees": "20",
+                    "owner_email": "string",
+                    "phone": "03-1234-5678",
+                    "public_verification_status": "unspecified",
+                    "recruitment_fee_ratio": 0,
+                    "representative": "牧野暉弘",
+                    "representative_kana": "まきのあきひろ",
+                    "type": "account",
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "year_of_establishment": "2015",
+                    "owner": {
+                      "already_keep_from_current_company": true,
+                      "avatar_url": "string",
+                      "consent_nda_version": "string",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "deleted_at": "2019-08-24T14:15:22Z",
+                      "display_name": "string",
+                      "email": "test@example.com",
+                      "email_verification_status": "verified",
+                      "exists_applicant_resource_from_current_company": true,
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "identification_requirements": [
+                        "string"
+                      ],
+                      "identity_verification_status": "unspecified",
+                      "is_career_scout_target": true,
+                      "is_concluded_nda": true,
+                      "is_project_scout_target": true,
+                      "is_public_with_work": true,
+                      "is_sample": false,
+                      "is_student": false,
+                      "is_supported": true,
+                      "last_notification_read_at": "2019-08-24T14:15:22Z",
+                      "last_sign_in_at": "2019-08-24T14:15:22Z",
+                      "missing_requirements_for_agent": [
+                        "string"
+                      ],
+                      "missing_requirements_for_general": [
+                        "string"
+                      ],
+                      "profile_completeness": 0,
+                      "register_as": "general",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "profile": {
+                        "academic_background": "東京大学",
+                        "address": "東京都港区元赤坂1-7-18",
+                        "agent_achievement": "経歴・実績",
+                        "agent_area_in_charge": "東京23区",
+                        "agent_self_introduction": "自己PR",
+                        "agent_self_message": "紹介メッセージ",
+                        "biography": "自己PR/職務要約",
+                        "birth_of_date": "2019-08-24",
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "english_skill": "daily_conversation",
+                        "files": [
+                          {
+                            "id": "string",
+                            "name": "string",
+                            "content_type": "string",
+                            "url": "string",
+                            "created_at": "2019-08-24T14:15:22Z"
+                          }
+                        ],
+                        "first_name": "太郎",
+                        "first_name_kana": "タロウ",
+                        "gender": "MALE",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "japanese_skill": "native",
+                        "last_name": "山田",
+                        "last_name_kana": "ヤマダ",
+                        "management_experience": "nothing",
+                        "marital_status": "single",
+                        "nationality": "JP",
+                        "number_of_job_changes": 0,
+                        "phone": "090-XXXX-XXXX",
+                        "postal_code": "107-0051",
+                        "recent_income_amount": 0,
+                        "updated_at": "2019-08-24T14:15:22Z",
+                        "year_of_agent_experience": 10,
+                        "place_of_residence": {
+                          "country_code": 392,
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "name": "東京",
+                          "updated_at": "2019-08-24T14:15:22Z"
+                        }
+                      }
+                    },
+                    "subscription": {
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "since_date": "2019-08-24",
+                      "status": "active",
+                      "until_date": "2019-08-24",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "price": {
+                        "active": "string",
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "currency": "string",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "tax_for_unit_amount": 0,
+                        "unit_amount": 0,
+                        "unit_amount_without_tax": 0,
+                        "updated_at": "2019-08-24T14:15:22Z",
+                        "product": {
+                          "active": true,
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "description": "string",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "name": "string",
+                          "plan_type": "standard",
+                          "type": "good",
+                          "updated_at": "2019-08-24T14:15:22Z"
+                        }
+                      }
+                    },
+                    "features": [
+                      {
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "name": "フレックスタイム",
+                        "source_type": "company",
+                        "type": "default",
+                        "updated_at": "2019-08-24T14:15:22Z"
+                      }
+                    ],
+                    "industries": [
+                      {
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "name": "銀行・信託銀行",
+                        "updated_at": "2019-08-24T14:15:22Z"
+                      }
+                    ]
+                  },
+                  "roles": [
+                    {
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "description": "Roleの説明",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "name": "general",
+                      "type": "default",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "policies": [
+                        {
+                          "category": "unspecified",
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "name": "自社企業アカウント情報の管理",
+                          "updated_at": "2019-08-24T14:15:22Z",
+                          "permissions": [
+                            {
+                              "action": "create:recruitment",
+                              "conditions": "string",
+                              "created_at": "2019-08-24T14:15:22Z",
+                              "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                              "updated_at": "2019-08-24T14:15:22Z"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
             }
           }
         }
@@ -13071,6 +13425,974 @@
                   }
                 }
               ]
+            },
+            "examples": {
+              "example-1": {
+                "value": {
+                  "career_status": "nil",
+                  "created_at": "2019-08-24T14:15:22Z",
+                  "deleted_at": "2019-08-24T14:15:22Z",
+                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                  "is_checked_career": false,
+                  "is_checked_project": false,
+                  "is_sample": false,
+                  "is_watched_career": false,
+                  "is_watched_project": false,
+                  "origin": "applicant",
+                  "project_status": "nil",
+                  "recruitment_source_type": "client",
+                  "updated_at": "2019-08-24T14:15:22Z",
+                  "account": {
+                    "already_keep_from_current_company": true,
+                    "avatar_url": "string",
+                    "consent_nda_version": "string",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "deleted_at": "2019-08-24T14:15:22Z",
+                    "display_name": "string",
+                    "email": "test@example.com",
+                    "email_verification_status": "verified",
+                    "exists_applicant_resource_from_current_company": true,
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "identification_requirements": [
+                      "string"
+                    ],
+                    "identity_verification_status": "unspecified",
+                    "is_career_scout_target": true,
+                    "is_concluded_nda": true,
+                    "is_project_scout_target": true,
+                    "is_public_with_work": true,
+                    "is_sample": false,
+                    "is_student": false,
+                    "is_supported": true,
+                    "last_notification_read_at": "2019-08-24T14:15:22Z",
+                    "last_sign_in_at": "2019-08-24T14:15:22Z",
+                    "missing_requirements_for_agent": [
+                      "string"
+                    ],
+                    "missing_requirements_for_general": [
+                      "string"
+                    ],
+                    "profile_completeness": 0,
+                    "register_as": "general",
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "jobs": [
+                      {
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "is_public": true,
+                        "is_sample": true,
+                        "status": "in_progress",
+                        "updated_at": "2019-08-24T14:15:22Z",
+                        "job_reviews": [
+                          {
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "improvement_point": "string",
+                            "is_sample": false,
+                            "skill_description": "string",
+                            "star_rating": 0,
+                            "updated_at": "2019-08-24T14:15:22Z",
+                            "skills": [
+                              {
+                                "created_at": "2019-08-24T14:15:22Z",
+                                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                                "name": "データサイエンティスト",
+                                "updated_at": "2019-08-24T14:15:22Z"
+                              }
+                            ]
+                          }
+                        ],
+                        "job_order": {
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "customer_name": "string",
+                          "fee_calculation_span": "monthly",
+                          "fee_type": "time_based",
+                          "fixed_amount": 0,
+                          "fixed_sub_total": 0,
+                          "fixed_tax": 0,
+                          "fixed_total_amount": 0,
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "is_public": true,
+                          "is_sample": true,
+                          "job_description": "string",
+                          "job_name": "string",
+                          "logical_fee_amount": 0,
+                          "number": "string",
+                          "order_date": "2019-08-24",
+                          "other_conditions": "string",
+                          "review_comment": "string",
+                          "since_date": "2019-08-24",
+                          "status": "draft",
+                          "tax_ratio": 0,
+                          "unit_time_fee": 0,
+                          "until_date": "2019-08-24",
+                          "updated_at": "2019-08-24T14:15:22Z",
+                          "recruitment": {
+                            "accessible_type": "public",
+                            "applied_accounts": 0,
+                            "billing_method": "hourly",
+                            "can_live_and_work_anywhere": false,
+                            "can_not_release_reasons": [
+                              "string"
+                            ],
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "department": "開発部",
+                            "estimated_unit_amount": 0,
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "interested_accounts": 0,
+                            "is_admin_checked": true,
+                            "is_applied": true,
+                            "is_interested": true,
+                            "is_organizational_checked": true,
+                            "is_sample": false,
+                            "is_worked_with_target_account": true,
+                            "job_description": "新規事業のフロントサイドエンジニア",
+                            "max_amount": 0,
+                            "max_amount_without_tax": 0,
+                            "max_number_of_hiring": "4名",
+                            "min_amount": 0,
+                            "min_amount_without_tax": 0,
+                            "nearest_station": "string",
+                            "page_views": 0,
+                            "position": "管理職",
+                            "published_since_date": "2019-08-24",
+                            "published_until_date": "2019-08-24",
+                            "publishment_status": "draft",
+                            "qualification_requirements": "・大卒以上　・40歳未満",
+                            "recommended_point": "string",
+                            "remote_work_status": "rarely",
+                            "salary_remarks": "月給\\416,667～（基本給\\307,719～ 固定残業代\\108,948～等を含む/月） ※経験とスキルに応じて決定します。 給与改定：年1回 試用期間：3ヶ月/給与・待遇に変動なし",
+                            "selection_process": "面接2回、最終面接1回",
+                            "smoking_regulation": "no_smoking_indoors",
+                            "source_type": "client",
+                            "target_company_certain_name": "string",
+                            "target_company_status": "none",
+                            "tax_for_max_amount": 0,
+                            "tax_for_min_amount": 0,
+                            "tax_type": "included",
+                            "tech_stack_remarks": "string",
+                            "title": "三度の飯よりReact！そんなGeekなあなたへ",
+                            "type": "career",
+                            "updated_at": "2019-08-24T14:15:22Z",
+                            "work_conditions": "保険・交通費とか諸々",
+                            "workplace_description": "string",
+                            "workplace": {
+                              "country_code": 392,
+                              "created_at": "2019-08-24T14:15:22Z",
+                              "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                              "name": "東京",
+                              "updated_at": "2019-08-24T14:15:22Z"
+                            },
+                            "occupations": [
+                              {
+                                "created_at": "2019-08-24T14:15:22Z",
+                                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                                "name": "戦略・経営コンサルタント",
+                                "updated_at": "2019-08-24T14:15:22Z"
+                              }
+                            ],
+                            "industries": [
+                              {
+                                "created_at": "2019-08-24T14:15:22Z",
+                                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                                "name": "銀行・信託銀行",
+                                "updated_at": "2019-08-24T14:15:22Z"
+                              }
+                            ]
+                          }
+                        },
+                        "invoices": [
+                          {
+                            "amount": 0,
+                            "approved_date": "2019-08-24",
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "deadline": "2019-08-24",
+                            "fee_amount": 2000,
+                            "files": [
+                              {
+                                "id": "string",
+                                "name": "string",
+                                "content_type": "string",
+                                "url": "string",
+                                "created_at": "2019-08-24T14:15:22Z"
+                              }
+                            ],
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "is_approved": false,
+                            "is_sample": false,
+                            "issued_date": "2019-08-24",
+                            "issuing_status": "draft",
+                            "note": "string",
+                            "payment_method": "bank",
+                            "settlement_date": "2019-08-24",
+                            "status": "waiting_for_payment",
+                            "sub_total": 10000,
+                            "tax": 0,
+                            "title": "string",
+                            "total_amount": 12000,
+                            "updated_at": "2019-08-24T14:15:22Z"
+                          }
+                        ],
+                        "company": {
+                          "admin_verification_status": "unspecified",
+                          "average_age": 28,
+                          "business_summary": "事業概要",
+                          "capital": 15200000,
+                          "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
+                          "cover_image_url": "string",
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "deleted_at": "2019-08-24T14:15:22Z",
+                          "employment_placement_permit_number": "string",
+                          "follower_nums": 0,
+                          "head_office_location": "東京都港区元赤坂1-7-18",
+                          "hp_url": "https://simula-labs.com/",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "introduction_fee_ratio": 0,
+                          "is_following": true,
+                          "is_listed": false,
+                          "is_sample": true,
+                          "logo_url": "string",
+                          "name": "株式会社SIMULA Labs",
+                          "name_kana": "シミュララボ ",
+                          "net_sales": 50000000,
+                          "numbers_of_employees": "20",
+                          "owner_email": "string",
+                          "phone": "03-1234-5678",
+                          "public_verification_status": "unspecified",
+                          "recruitment_fee_ratio": 0,
+                          "representative": "牧野暉弘",
+                          "representative_kana": "まきのあきひろ",
+                          "type": "account",
+                          "updated_at": "2019-08-24T14:15:22Z",
+                          "year_of_establishment": "2015"
+                        }
+                      }
+                    ],
+                    "profile": {
+                      "academic_background": "東京大学",
+                      "address": "東京都港区元赤坂1-7-18",
+                      "agent_achievement": "経歴・実績",
+                      "agent_area_in_charge": "東京23区",
+                      "agent_self_introduction": "自己PR",
+                      "agent_self_message": "紹介メッセージ",
+                      "biography": "自己PR/職務要約",
+                      "birth_of_date": "2019-08-24",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "english_skill": "daily_conversation",
+                      "files": [
+                        {
+                          "id": "string",
+                          "name": "string",
+                          "content_type": "string",
+                          "url": "string",
+                          "created_at": "2019-08-24T14:15:22Z"
+                        }
+                      ],
+                      "first_name": "太郎",
+                      "first_name_kana": "タロウ",
+                      "gender": "MALE",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "japanese_skill": "native",
+                      "last_name": "山田",
+                      "last_name_kana": "ヤマダ",
+                      "management_experience": "nothing",
+                      "marital_status": "single",
+                      "nationality": "JP",
+                      "number_of_job_changes": 0,
+                      "phone": "090-XXXX-XXXX",
+                      "postal_code": "107-0051",
+                      "recent_income_amount": 0,
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "year_of_agent_experience": 10,
+                      "place_of_residence": {
+                        "country_code": 392,
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "name": "東京",
+                        "updated_at": "2019-08-24T14:15:22Z"
+                      }
+                    },
+                    "scout_from_current_company": [
+                      {
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "type": "career",
+                        "updated_at": "2019-08-24T14:15:22Z",
+                        "message": {
+                          "act_as": "personal",
+                          "attachment": {
+                            "filename": "string",
+                            "content_type": "string",
+                            "url": "string"
+                          },
+                          "content": "お世話になっております。株式会社XXXのXXXです。",
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "updated_at": "2019-08-24T14:15:22Z",
+                          "recruitment": {
+                            "accessible_type": "public",
+                            "applied_accounts": 0,
+                            "billing_method": "hourly",
+                            "can_live_and_work_anywhere": false,
+                            "can_not_release_reasons": [
+                              "string"
+                            ],
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "department": "開発部",
+                            "estimated_unit_amount": 0,
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "interested_accounts": 0,
+                            "is_admin_checked": true,
+                            "is_applied": true,
+                            "is_interested": true,
+                            "is_organizational_checked": true,
+                            "is_sample": false,
+                            "is_worked_with_target_account": true,
+                            "job_description": "新規事業のフロントサイドエンジニア",
+                            "max_amount": 0,
+                            "max_amount_without_tax": 0,
+                            "max_number_of_hiring": "4名",
+                            "min_amount": 0,
+                            "min_amount_without_tax": 0,
+                            "nearest_station": "string",
+                            "page_views": 0,
+                            "position": "管理職",
+                            "published_since_date": "2019-08-24",
+                            "published_until_date": "2019-08-24",
+                            "publishment_status": "draft",
+                            "qualification_requirements": "・大卒以上　・40歳未満",
+                            "recommended_point": "string",
+                            "remote_work_status": "rarely",
+                            "salary_remarks": "月給\\416,667～（基本給\\307,719～ 固定残業代\\108,948～等を含む/月） ※経験とスキルに応じて決定します。 給与改定：年1回 試用期間：3ヶ月/給与・待遇に変動なし",
+                            "selection_process": "面接2回、最終面接1回",
+                            "smoking_regulation": "no_smoking_indoors",
+                            "source_type": "client",
+                            "target_company_certain_name": "string",
+                            "target_company_status": "none",
+                            "tax_for_max_amount": 0,
+                            "tax_for_min_amount": 0,
+                            "tax_type": "included",
+                            "tech_stack_remarks": "string",
+                            "title": "三度の飯よりReact！そんなGeekなあなたへ",
+                            "type": "career",
+                            "updated_at": "2019-08-24T14:15:22Z",
+                            "work_conditions": "保険・交通費とか諸々",
+                            "workplace_description": "string"
+                          }
+                        }
+                      }
+                    ],
+                    "hopes": [
+                      {
+                        "amount": 0,
+                        "billing_method": "hourly",
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "ratio_of_operation": "once_a_week",
+                        "special_note": "string",
+                        "time_to_change_jobs": 0,
+                        "type": "career",
+                        "updated_at": "2019-08-24T14:15:22Z",
+                        "occupations": [
+                          {
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "name": "戦略・経営コンサルタント",
+                            "updated_at": "2019-08-24T14:15:22Z"
+                          }
+                        ],
+                        "industries": [
+                          {
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "name": "銀行・信託銀行",
+                            "updated_at": "2019-08-24T14:15:22Z"
+                          }
+                        ],
+                        "workplaces": [
+                          {
+                            "country_code": 392,
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "name": "東京",
+                            "updated_at": "2019-08-24T14:15:22Z"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "room": {
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "exists_not_replied": true,
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "is_read_message": true,
+                    "latest_message": {
+                      "act_as": "personal",
+                      "attachment": {
+                        "filename": "string",
+                        "content_type": "string",
+                        "url": "string"
+                      },
+                      "content": "お世話になっております。株式会社XXXのXXXです。",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "updated_at": "2019-08-24T14:15:22Z"
+                    },
+                    "recruitment_completion_report": null,
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "account": {
+                      "already_keep_from_current_company": true,
+                      "avatar_url": "string",
+                      "consent_nda_version": "string",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "deleted_at": "2019-08-24T14:15:22Z",
+                      "display_name": "string",
+                      "email": "test@example.com",
+                      "email_verification_status": "verified",
+                      "exists_applicant_resource_from_current_company": true,
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "identification_requirements": [
+                        "string"
+                      ],
+                      "identity_verification_status": "unspecified",
+                      "is_career_scout_target": true,
+                      "is_concluded_nda": true,
+                      "is_project_scout_target": true,
+                      "is_public_with_work": true,
+                      "is_sample": false,
+                      "is_student": false,
+                      "is_supported": true,
+                      "last_notification_read_at": "2019-08-24T14:15:22Z",
+                      "last_sign_in_at": "2019-08-24T14:15:22Z",
+                      "missing_requirements_for_agent": [
+                        "string"
+                      ],
+                      "missing_requirements_for_general": [
+                        "string"
+                      ],
+                      "profile_completeness": 0,
+                      "register_as": "general",
+                      "updated_at": "2019-08-24T14:15:22Z"
+                    },
+                    "company": {
+                      "admin_verification_status": "unspecified",
+                      "average_age": 28,
+                      "business_summary": "事業概要",
+                      "capital": 15200000,
+                      "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
+                      "cover_image_url": "string",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "deleted_at": "2019-08-24T14:15:22Z",
+                      "employment_placement_permit_number": "string",
+                      "follower_nums": 0,
+                      "head_office_location": "東京都港区元赤坂1-7-18",
+                      "hp_url": "https://simula-labs.com/",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "introduction_fee_ratio": 0,
+                      "is_following": true,
+                      "is_listed": false,
+                      "is_sample": true,
+                      "logo_url": "string",
+                      "name": "株式会社SIMULA Labs",
+                      "name_kana": "シミュララボ ",
+                      "net_sales": 50000000,
+                      "numbers_of_employees": "20",
+                      "owner_email": "string",
+                      "phone": "03-1234-5678",
+                      "public_verification_status": "unspecified",
+                      "recruitment_fee_ratio": 0,
+                      "representative": "牧野暉弘",
+                      "representative_kana": "まきのあきひろ",
+                      "type": "account",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "year_of_establishment": "2015"
+                    }
+                  }
+                }
+              },
+              "example-2": {
+                "value": {
+                  "career_status": "nil",
+                  "created_at": "2019-08-24T14:15:22Z",
+                  "deleted_at": "2019-08-24T14:15:22Z",
+                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                  "is_checked_career": false,
+                  "is_checked_project": false,
+                  "is_sample": false,
+                  "is_watched_career": false,
+                  "is_watched_project": false,
+                  "origin": "applicant",
+                  "project_status": "nil",
+                  "recruitment_source_type": "client",
+                  "updated_at": "2019-08-24T14:15:22Z",
+                  "account": {
+                    "already_keep_from_current_company": true,
+                    "avatar_url": "string",
+                    "consent_nda_version": "string",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "deleted_at": "2019-08-24T14:15:22Z",
+                    "display_name": "string",
+                    "email": "test@example.com",
+                    "email_verification_status": "verified",
+                    "exists_applicant_resource_from_current_company": true,
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "identification_requirements": [
+                      "string"
+                    ],
+                    "identity_verification_status": "unspecified",
+                    "is_career_scout_target": true,
+                    "is_concluded_nda": true,
+                    "is_project_scout_target": true,
+                    "is_public_with_work": true,
+                    "is_sample": false,
+                    "is_student": false,
+                    "is_supported": true,
+                    "last_notification_read_at": "2019-08-24T14:15:22Z",
+                    "last_sign_in_at": "2019-08-24T14:15:22Z",
+                    "missing_requirements_for_agent": [
+                      "string"
+                    ],
+                    "missing_requirements_for_general": [
+                      "string"
+                    ],
+                    "profile_completeness": 0,
+                    "register_as": "general",
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "jobs": [
+                      {
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "is_public": true,
+                        "is_sample": true,
+                        "status": "in_progress",
+                        "updated_at": "2019-08-24T14:15:22Z",
+                        "job_reviews": [
+                          {
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "improvement_point": "string",
+                            "is_sample": false,
+                            "skill_description": "string",
+                            "star_rating": 0,
+                            "updated_at": "2019-08-24T14:15:22Z",
+                            "skills": [
+                              {
+                                "created_at": "2019-08-24T14:15:22Z",
+                                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                                "name": "データサイエンティスト",
+                                "updated_at": "2019-08-24T14:15:22Z"
+                              }
+                            ]
+                          }
+                        ],
+                        "job_order": {
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "customer_name": "string",
+                          "fee_calculation_span": "monthly",
+                          "fee_type": "time_based",
+                          "fixed_amount": 0,
+                          "fixed_sub_total": 0,
+                          "fixed_tax": 0,
+                          "fixed_total_amount": 0,
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "is_public": true,
+                          "is_sample": true,
+                          "job_description": "string",
+                          "job_name": "string",
+                          "logical_fee_amount": 0,
+                          "number": "string",
+                          "order_date": "2019-08-24",
+                          "other_conditions": "string",
+                          "review_comment": "string",
+                          "since_date": "2019-08-24",
+                          "status": "draft",
+                          "tax_ratio": 0,
+                          "unit_time_fee": 0,
+                          "until_date": "2019-08-24",
+                          "updated_at": "2019-08-24T14:15:22Z",
+                          "recruitment": {
+                            "accessible_type": "public",
+                            "applied_accounts": 0,
+                            "billing_method": "hourly",
+                            "can_live_and_work_anywhere": false,
+                            "can_not_release_reasons": [
+                              "string"
+                            ],
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "department": "開発部",
+                            "estimated_unit_amount": 0,
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "interested_accounts": 0,
+                            "is_admin_checked": true,
+                            "is_applied": true,
+                            "is_interested": true,
+                            "is_organizational_checked": true,
+                            "is_sample": false,
+                            "is_worked_with_target_account": true,
+                            "job_description": "新規事業のフロントサイドエンジニア",
+                            "max_amount": 0,
+                            "max_amount_without_tax": 0,
+                            "max_number_of_hiring": "4名",
+                            "min_amount": 0,
+                            "min_amount_without_tax": 0,
+                            "nearest_station": "string",
+                            "page_views": 0,
+                            "position": "管理職",
+                            "published_since_date": "2019-08-24",
+                            "published_until_date": "2019-08-24",
+                            "publishment_status": "draft",
+                            "qualification_requirements": "・大卒以上　・40歳未満",
+                            "recommended_point": "string",
+                            "remote_work_status": "rarely",
+                            "salary_remarks": "月給\\416,667～（基本給\\307,719～ 固定残業代\\108,948～等を含む/月） ※経験とスキルに応じて決定します。 給与改定：年1回 試用期間：3ヶ月/給与・待遇に変動なし",
+                            "selection_process": "面接2回、最終面接1回",
+                            "smoking_regulation": "no_smoking_indoors",
+                            "source_type": "client",
+                            "target_company_certain_name": "string",
+                            "target_company_status": "none",
+                            "tax_for_max_amount": 0,
+                            "tax_for_min_amount": 0,
+                            "tax_type": "included",
+                            "tech_stack_remarks": "string",
+                            "title": "三度の飯よりReact！そんなGeekなあなたへ",
+                            "type": "career",
+                            "updated_at": "2019-08-24T14:15:22Z",
+                            "work_conditions": "保険・交通費とか諸々",
+                            "workplace_description": "string",
+                            "workplace": {
+                              "country_code": 392,
+                              "created_at": "2019-08-24T14:15:22Z",
+                              "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                              "name": "東京",
+                              "updated_at": "2019-08-24T14:15:22Z"
+                            },
+                            "occupations": [
+                              {
+                                "created_at": "2019-08-24T14:15:22Z",
+                                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                                "name": "戦略・経営コンサルタント",
+                                "updated_at": "2019-08-24T14:15:22Z"
+                              }
+                            ],
+                            "industries": [
+                              {
+                                "created_at": "2019-08-24T14:15:22Z",
+                                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                                "name": "銀行・信託銀行",
+                                "updated_at": "2019-08-24T14:15:22Z"
+                              }
+                            ]
+                          }
+                        },
+                        "invoices": [
+                          {
+                            "amount": 0,
+                            "approved_date": "2019-08-24",
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "deadline": "2019-08-24",
+                            "fee_amount": 2000,
+                            "files": [
+                              {
+                                "id": "string",
+                                "name": "string",
+                                "content_type": "string",
+                                "url": "string",
+                                "created_at": "2019-08-24T14:15:22Z"
+                              }
+                            ],
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "is_approved": false,
+                            "is_sample": false,
+                            "issued_date": "2019-08-24",
+                            "issuing_status": "draft",
+                            "note": "string",
+                            "payment_method": "bank",
+                            "settlement_date": "2019-08-24",
+                            "status": "waiting_for_payment",
+                            "sub_total": 10000,
+                            "tax": 0,
+                            "title": "string",
+                            "total_amount": 12000,
+                            "updated_at": "2019-08-24T14:15:22Z"
+                          }
+                        ],
+                        "company": {
+                          "admin_verification_status": "unspecified",
+                          "average_age": 28,
+                          "business_summary": "事業概要",
+                          "capital": 15200000,
+                          "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
+                          "cover_image_url": "string",
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "deleted_at": "2019-08-24T14:15:22Z",
+                          "employment_placement_permit_number": "string",
+                          "follower_nums": 0,
+                          "head_office_location": "東京都港区元赤坂1-7-18",
+                          "hp_url": "https://simula-labs.com/",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "introduction_fee_ratio": 0,
+                          "is_following": true,
+                          "is_listed": false,
+                          "is_sample": true,
+                          "logo_url": "string",
+                          "name": "株式会社SIMULA Labs",
+                          "name_kana": "シミュララボ ",
+                          "net_sales": 50000000,
+                          "numbers_of_employees": "20",
+                          "owner_email": "string",
+                          "phone": "03-1234-5678",
+                          "public_verification_status": "unspecified",
+                          "recruitment_fee_ratio": 0,
+                          "representative": "牧野暉弘",
+                          "representative_kana": "まきのあきひろ",
+                          "type": "account",
+                          "updated_at": "2019-08-24T14:15:22Z",
+                          "year_of_establishment": "2015"
+                        }
+                      }
+                    ],
+                    "profile": {
+                      "academic_background": "東京大学",
+                      "address": "東京都港区元赤坂1-7-18",
+                      "agent_achievement": "経歴・実績",
+                      "agent_area_in_charge": "東京23区",
+                      "agent_self_introduction": "自己PR",
+                      "agent_self_message": "紹介メッセージ",
+                      "biography": "自己PR/職務要約",
+                      "birth_of_date": "2019-08-24",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "english_skill": "daily_conversation",
+                      "files": [
+                        {
+                          "id": "string",
+                          "name": "string",
+                          "content_type": "string",
+                          "url": "string",
+                          "created_at": "2019-08-24T14:15:22Z"
+                        }
+                      ],
+                      "first_name": "太郎",
+                      "first_name_kana": "タロウ",
+                      "gender": "MALE",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "japanese_skill": "native",
+                      "last_name": "山田",
+                      "last_name_kana": "ヤマダ",
+                      "management_experience": "nothing",
+                      "marital_status": "single",
+                      "nationality": "JP",
+                      "number_of_job_changes": 0,
+                      "phone": "090-XXXX-XXXX",
+                      "postal_code": "107-0051",
+                      "recent_income_amount": 0,
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "year_of_agent_experience": 10,
+                      "place_of_residence": {
+                        "country_code": 392,
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "name": "東京",
+                        "updated_at": "2019-08-24T14:15:22Z"
+                      }
+                    },
+                    "scout_from_current_company": [
+                      {
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "type": "career",
+                        "updated_at": "2019-08-24T14:15:22Z",
+                        "message": {
+                          "act_as": "personal",
+                          "attachment": {
+                            "filename": "string",
+                            "content_type": "string",
+                            "url": "string"
+                          },
+                          "content": "お世話になっております。株式会社XXXのXXXです。",
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "updated_at": "2019-08-24T14:15:22Z",
+                          "recruitment": {
+                            "accessible_type": "public",
+                            "applied_accounts": 0,
+                            "billing_method": "hourly",
+                            "can_live_and_work_anywhere": false,
+                            "can_not_release_reasons": [
+                              "string"
+                            ],
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "department": "開発部",
+                            "estimated_unit_amount": 0,
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "interested_accounts": 0,
+                            "is_admin_checked": true,
+                            "is_applied": true,
+                            "is_interested": true,
+                            "is_organizational_checked": true,
+                            "is_sample": false,
+                            "is_worked_with_target_account": true,
+                            "job_description": "新規事業のフロントサイドエンジニア",
+                            "max_amount": 0,
+                            "max_amount_without_tax": 0,
+                            "max_number_of_hiring": "4名",
+                            "min_amount": 0,
+                            "min_amount_without_tax": 0,
+                            "nearest_station": "string",
+                            "page_views": 0,
+                            "position": "管理職",
+                            "published_since_date": "2019-08-24",
+                            "published_until_date": "2019-08-24",
+                            "publishment_status": "draft",
+                            "qualification_requirements": "・大卒以上　・40歳未満",
+                            "recommended_point": "string",
+                            "remote_work_status": "rarely",
+                            "salary_remarks": "月給\\416,667～（基本給\\307,719～ 固定残業代\\108,948～等を含む/月） ※経験とスキルに応じて決定します。 給与改定：年1回 試用期間：3ヶ月/給与・待遇に変動なし",
+                            "selection_process": "面接2回、最終面接1回",
+                            "smoking_regulation": "no_smoking_indoors",
+                            "source_type": "client",
+                            "target_company_certain_name": "string",
+                            "target_company_status": "none",
+                            "tax_for_max_amount": 0,
+                            "tax_for_min_amount": 0,
+                            "tax_type": "included",
+                            "tech_stack_remarks": "string",
+                            "title": "三度の飯よりReact！そんなGeekなあなたへ",
+                            "type": "career",
+                            "updated_at": "2019-08-24T14:15:22Z",
+                            "work_conditions": "保険・交通費とか諸々",
+                            "workplace_description": "string"
+                          }
+                        }
+                      }
+                    ],
+                    "hopes": [
+                      {
+                        "amount": 0,
+                        "billing_method": "hourly",
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "ratio_of_operation": "once_a_week",
+                        "special_note": "string",
+                        "time_to_change_jobs": 0,
+                        "type": "career",
+                        "updated_at": "2019-08-24T14:15:22Z",
+                        "occupations": [
+                          {
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "name": "戦略・経営コンサルタント",
+                            "updated_at": "2019-08-24T14:15:22Z"
+                          }
+                        ],
+                        "industries": [
+                          {
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "name": "銀行・信託銀行",
+                            "updated_at": "2019-08-24T14:15:22Z"
+                          }
+                        ],
+                        "workplaces": [
+                          {
+                            "country_code": 392,
+                            "created_at": "2019-08-24T14:15:22Z",
+                            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                            "name": "東京",
+                            "updated_at": "2019-08-24T14:15:22Z"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "room": {
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "exists_not_replied": true,
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "is_read_message": true,
+                    "latest_message": {
+                      "act_as": "personal",
+                      "attachment": {
+                        "filename": "string",
+                        "content_type": "string",
+                        "url": "string"
+                      },
+                      "content": "お世話になっております。株式会社XXXのXXXです。",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "updated_at": "2019-08-24T14:15:22Z"
+                    },
+                    "recruitment_completion_report": null,
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "account": {
+                      "already_keep_from_current_company": true,
+                      "avatar_url": "string",
+                      "consent_nda_version": "string",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "deleted_at": "2019-08-24T14:15:22Z",
+                      "display_name": "string",
+                      "email": "test@example.com",
+                      "email_verification_status": "verified",
+                      "exists_applicant_resource_from_current_company": true,
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "identification_requirements": [
+                        "string"
+                      ],
+                      "identity_verification_status": "unspecified",
+                      "is_career_scout_target": true,
+                      "is_concluded_nda": true,
+                      "is_project_scout_target": true,
+                      "is_public_with_work": true,
+                      "is_sample": false,
+                      "is_student": false,
+                      "is_supported": true,
+                      "last_notification_read_at": "2019-08-24T14:15:22Z",
+                      "last_sign_in_at": "2019-08-24T14:15:22Z",
+                      "missing_requirements_for_agent": [
+                        "string"
+                      ],
+                      "missing_requirements_for_general": [
+                        "string"
+                      ],
+                      "profile_completeness": 0,
+                      "register_as": "general",
+                      "updated_at": "2019-08-24T14:15:22Z"
+                    },
+                    "company": {
+                      "admin_verification_status": "unspecified",
+                      "average_age": 28,
+                      "business_summary": "事業概要",
+                      "capital": 15200000,
+                      "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
+                      "cover_image_url": "string",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "deleted_at": "2019-08-24T14:15:22Z",
+                      "employment_placement_permit_number": "string",
+                      "follower_nums": 0,
+                      "head_office_location": "東京都港区元赤坂1-7-18",
+                      "hp_url": "https://simula-labs.com/",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "introduction_fee_ratio": 0,
+                      "is_following": true,
+                      "is_listed": false,
+                      "is_sample": true,
+                      "logo_url": "string",
+                      "name": "株式会社SIMULA Labs",
+                      "name_kana": "シミュララボ ",
+                      "net_sales": 50000000,
+                      "numbers_of_employees": "20",
+                      "owner_email": "string",
+                      "phone": "03-1234-5678",
+                      "public_verification_status": "unspecified",
+                      "recruitment_fee_ratio": 0,
+                      "representative": "牧野暉弘",
+                      "representative_kana": "まきのあきひろ",
+                      "type": "account",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "year_of_establishment": "2015"
+                    }
+                  }
+                }
+              }
             }
           }
         }

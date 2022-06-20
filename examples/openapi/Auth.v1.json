@@ -222,6 +222,20 @@
                   "token",
                   "email"
                 ]
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "token": "string",
+                    "email": "string"
+                  }
+                },
+                "example-2": {
+                  "value": {
+                    "token": "string",
+                    "email": "string"
+                  }
+                }
               }
             }
           }

@@ -588,22 +588,16 @@
                       },
                       "introduction_fee_ratio": {
                         "type": "number"
+                      },
+                      "industry_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
                 }
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "type": "object",
-                "properties": {}
-              }
-            },
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {}
               }
             }
           }
@@ -1687,12 +1681,11 @@
                         "type": "string",
                         "enum": [
                           "hourly",
-                          "daily",
                           "monthly",
                           "yearly",
                           "with_project"
                         ],
-                        "description": "「時給」「日給」「月給」「年収」「1案件」"
+                        "description": "「時給」「月給」「年収」「1案件」"
                       },
                       "target_company_status": {
                         "type": "string",
@@ -3818,6 +3811,210 @@
           "name"
         ]
       },
+      "SpecialtyCompanyType": {
+        "title": "SpecialtyCompanyType",
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "example": "内容"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "content"
+        ]
+      },
+      "SpecialtyPosition": {
+        "title": "SpecialtyPosition",
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "example": "内容"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "content"
+        ]
+      },
+      "OccupationMainCategory": {
+        "title": "OccupationMainCategory",
+        "type": "object",
+        "description": "職種「大項目」",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "コンサル"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name"
+        ]
+      },
+      "IndustryCategory": {
+        "title": "IndustryCategory",
+        "type": "object",
+        "description": "業種カテゴリー",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "金融・保険"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name"
+        ]
+      },
+      "ExternalService": {
+        "title": "ExternalService",
+        "type": "object",
+        "description": "クローリングサービス",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_contracted": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name",
+          "is_contracted"
+        ]
+      },
+      "Occupation": {
+        "title": "Occupation",
+        "type": "object",
+        "description": "職種",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "戦略・経営コンサルタント"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name"
+        ]
+      },
+      "Industry": {
+        "title": "Industry",
+        "type": "object",
+        "description": "業種",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "銀行・信託銀行"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name"
+        ]
+      },
       "TechStack": {
         "title": "TechStack",
         "type": "object",
@@ -4303,7 +4500,115 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Recruitment"
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Recruitment"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "company": {
+                      "$ref": "#/components/schemas/Company"
+                    },
+                    "workplace": {
+                      "$ref": "#/components/schemas/State"
+                    },
+                    "author": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/Account"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "profile": {
+                              "allOf": [
+                                {
+                                  "$ref": "#/components/schemas/Profile"
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "place_of_residence": {
+                                      "$ref": "#/components/schemas/State"
+                                    },
+                                    "specialty_company_types": {
+                                      "type": "array",
+                                      "items": {
+                                        "$ref": "#/components/schemas/SpecialtyCompanyType"
+                                      }
+                                    },
+                                    "specialty_positions": {
+                                      "type": "array",
+                                      "items": {
+                                        "$ref": "#/components/schemas/SpecialtyPosition"
+                                      }
+                                    },
+                                    "occupation_main_categories": {
+                                      "type": "array",
+                                      "items": {
+                                        "$ref": "#/components/schemas/OccupationMainCategory"
+                                      }
+                                    },
+                                    "industry_categories": {
+                                      "type": "array",
+                                      "items": {
+                                        "$ref": "#/components/schemas/IndustryCategory"
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "external_service": {
+                      "$ref": "#/components/schemas/ExternalService"
+                    },
+                    "employment_statuses": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/EmploymentStatus"
+                      }
+                    },
+                    "occupations": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Occupation"
+                      }
+                    },
+                    "industries": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Industry"
+                      }
+                    },
+                    "features": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Feature"
+                      }
+                    },
+                    "tech_stacks": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TechStack"
+                      }
+                    },
+                    "target_company": {
+                      "$ref": "#/components/schemas/Company"
+                    },
+                    "employment_contract_terms": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/EmploymentContractTerm"
+                      }
+                    }
+                  }
+                }
+              ]
             }
           }
         }

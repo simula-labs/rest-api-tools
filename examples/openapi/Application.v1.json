@@ -1267,12 +1267,12 @@
                       },
                       "gender": {
                         "type": "string",
+                        "example": "male",
                         "enum": [
-                          "MALE",
-                          "FEMALE",
-                          "OTHER"
-                        ],
-                        "example": "MALE"
+                          "male",
+                          "female",
+                          "other"
+                        ]
                       },
                       "phone": {
                         "type": "string",
@@ -1337,7 +1337,7 @@
                         "description": "転職回数"
                       },
                       "year_of_agent_experience": {
-                        "type": "string",
+                        "type": "integer",
                         "description": "エージェント経験年数"
                       },
                       "agent_area_in_charge": {
@@ -1425,12 +1425,12 @@
                       },
                       "gender": {
                         "type": "string",
+                        "example": "male",
                         "enum": [
-                          "MALE",
-                          "FEMALE",
-                          "OTHER"
-                        ],
-                        "example": "MALE"
+                          "male",
+                          "other",
+                          "female"
+                        ]
                       },
                       "phone": {
                         "type": "string",
@@ -1498,7 +1498,7 @@
                         "description": "転職回数"
                       },
                       "year_of_agent_experience": {
-                        "type": "string",
+                        "type": "integer",
                         "description": "エージェント経験年数"
                       },
                       "agent_area_in_charge": {
@@ -2414,6 +2414,26 @@
                           "format": "uuid"
                         }
                       }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "account": {
+                      "email": "user@example.com",
+                      "avatar": "string",
+                      "is_career_scout_target": true,
+                      "is_project_scout_target": true,
+                      "is_public_work": true,
+                      "is_student": false,
+                      "current_password": "string",
+                      "new_password": "string",
+                      "new_password_confirmation": "string",
+                      "block_company_ids": [
+                        "497f6eca-6276-4993-bfeb-53cbbbba6f08"
+                      ]
                     }
                   }
                 }
@@ -7474,7 +7494,11 @@
         "properties": {
           "amount": {
             "type": "integer",
-            "description": "金額"
+            "description": "金額(税込)"
+          },
+          "amount_without_tax": {
+            "type": "integer",
+            "description": "金額(税抜)"
           },
           "created_at": {
             "type": "string",
@@ -7776,6 +7800,412 @@
                   }
                 }
               ]
+            },
+            "examples": {
+              "example-1": {
+                "value": {
+                  "already_keep_from_current_company": true,
+                  "avatar_url": "string",
+                  "consent_nda_version": "string",
+                  "created_at": "2019-08-24T14:15:22Z",
+                  "deleted_at": "2019-08-24T14:15:22Z",
+                  "display_name": "string",
+                  "email": "test@example.com",
+                  "email_verification_status": "unspecified",
+                  "exists_applicant_resource_from_current_company": true,
+                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                  "identification_requirements": [
+                    "string"
+                  ],
+                  "identity_verification_status": "unspecified",
+                  "is_career_scout_target": true,
+                  "is_concluded_nda": true,
+                  "is_project_scout_target": true,
+                  "is_public_with_work": true,
+                  "is_sample": false,
+                  "is_student": false,
+                  "is_supported": true,
+                  "last_notification_read_at": "2019-08-24T14:15:22Z",
+                  "last_sign_in_at": "2019-08-24T14:15:22Z",
+                  "missing_requirements_for_agent": [
+                    "string"
+                  ],
+                  "missing_requirements_for_general": [
+                    "string"
+                  ],
+                  "profile_completeness": 0,
+                  "register_as": "general",
+                  "updated_at": "2019-08-24T14:15:22Z",
+                  "profile": {
+                    "academic_background": "東京大学",
+                    "address": "東京都港区元赤坂1-7-18",
+                    "agent_achievement": "経歴・実績",
+                    "agent_area_in_charge": "東京23区",
+                    "agent_self_introduction": "自己PR",
+                    "agent_self_message": "紹介メッセージ",
+                    "biography": "自己PR/職務要約",
+                    "birth_of_date": "2019-08-24",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "english_skill": "daily_conversation",
+                    "files": [
+                      {
+                        "id": "string",
+                        "name": "string",
+                        "content_type": "string",
+                        "url": "string",
+                        "created_at": "2019-08-24T14:15:22Z"
+                      }
+                    ],
+                    "first_name": "太郎",
+                    "first_name_kana": "タロウ",
+                    "gender": "MALE",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "japanese_skill": "native",
+                    "last_name": "山田",
+                    "last_name_kana": "ヤマダ",
+                    "management_experience": "nothing",
+                    "marital_status": "single",
+                    "nationality": "JP",
+                    "number_of_job_changes": 0,
+                    "phone": "090-XXXX-XXXX",
+                    "postal_code": "107-0051",
+                    "recent_income_amount": 0,
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "year_of_agent_experience": 10,
+                    "specialty_company_types": [
+                      {
+                        "content": "内容",
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "updated_at": "2019-08-24T14:15:22Z"
+                      }
+                    ],
+                    "specialty_positions": [
+                      {
+                        "content": "内容",
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "updated_at": "2019-08-24T14:15:22Z"
+                      }
+                    ],
+                    "occupation_main_categories": [
+                      {
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "name": "コンサル",
+                        "updated_at": "2019-08-24T14:15:22Z"
+                      }
+                    ],
+                    "industry_categories": [
+                      {
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "name": "金融・保険",
+                        "updated_at": "2019-08-24T14:15:22Z"
+                      }
+                    ],
+                    "place_of_residence": {
+                      "country_code": 392,
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "name": "東京",
+                      "updated_at": "2019-08-24T14:15:22Z"
+                    }
+                  },
+                  "employments": [
+                    {
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "department": "string",
+                      "email": "sample@example.com",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "is_valid": false,
+                      "last_notification_read_at": "2019-08-24T14:15:22Z",
+                      "position": "string",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "company": {
+                        "admin_verification_status": "unspecified",
+                        "average_age": 28,
+                        "business_summary": "事業概要",
+                        "capital": 15200000,
+                        "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
+                        "cover_image_url": "string",
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "deleted_at": "2019-08-24T14:15:22Z",
+                        "employment_placement_permit_number": "string",
+                        "follower_nums": 0,
+                        "head_office_location": "東京都港区元赤坂1-7-18",
+                        "hp_url": "https://simula-labs.com/",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "introduction_fee_ratio": 0,
+                        "is_following": true,
+                        "is_listed": false,
+                        "is_sample": true,
+                        "logo_url": "string",
+                        "name": "株式会社SIMULA Labs",
+                        "name_kana": "シミュララボ ",
+                        "net_sales": 50000000,
+                        "numbers_of_employees": "20",
+                        "owner_email": "string",
+                        "phone": "03-1234-5678",
+                        "public_verification_status": "unspecified",
+                        "recruitment_fee_ratio": 0,
+                        "representative": "牧野暉弘",
+                        "representative_kana": "まきのあきひろ",
+                        "type": "account",
+                        "updated_at": "2019-08-24T14:15:22Z",
+                        "year_of_establishment": "2015"
+                      },
+                      "roles": [
+                        {
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "description": "Roleの説明",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "name": "general",
+                          "type": "default",
+                          "updated_at": "2019-08-24T14:15:22Z"
+                        }
+                      ]
+                    }
+                  ],
+                  "blocked_companies": [
+                    {
+                      "admin_verification_status": "unspecified",
+                      "average_age": 28,
+                      "business_summary": "事業概要",
+                      "capital": 15200000,
+                      "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
+                      "cover_image_url": "string",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "deleted_at": "2019-08-24T14:15:22Z",
+                      "employment_placement_permit_number": "string",
+                      "follower_nums": 0,
+                      "head_office_location": "東京都港区元赤坂1-7-18",
+                      "hp_url": "https://simula-labs.com/",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "introduction_fee_ratio": 0,
+                      "is_following": true,
+                      "is_listed": false,
+                      "is_sample": true,
+                      "logo_url": "string",
+                      "name": "株式会社SIMULA Labs",
+                      "name_kana": "シミュララボ ",
+                      "net_sales": 50000000,
+                      "numbers_of_employees": "20",
+                      "owner_email": "string",
+                      "phone": "03-1234-5678",
+                      "public_verification_status": "unspecified",
+                      "recruitment_fee_ratio": 0,
+                      "representative": "牧野暉弘",
+                      "representative_kana": "まきのあきひろ",
+                      "type": "account",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "year_of_establishment": "2015"
+                    }
+                  ]
+                }
+              },
+              "example-2": {
+                "value": {
+                  "already_keep_from_current_company": true,
+                  "avatar_url": "string",
+                  "consent_nda_version": "string",
+                  "created_at": "2019-08-24T14:15:22Z",
+                  "deleted_at": "2019-08-24T14:15:22Z",
+                  "display_name": "string",
+                  "email": "test@example.com",
+                  "email_verification_status": "unspecified",
+                  "exists_applicant_resource_from_current_company": true,
+                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                  "identification_requirements": [
+                    "string"
+                  ],
+                  "identity_verification_status": "unspecified",
+                  "is_career_scout_target": true,
+                  "is_concluded_nda": true,
+                  "is_project_scout_target": true,
+                  "is_public_with_work": true,
+                  "is_sample": false,
+                  "is_student": false,
+                  "is_supported": true,
+                  "last_notification_read_at": "2019-08-24T14:15:22Z",
+                  "last_sign_in_at": "2019-08-24T14:15:22Z",
+                  "missing_requirements_for_agent": [
+                    "string"
+                  ],
+                  "missing_requirements_for_general": [
+                    "string"
+                  ],
+                  "profile_completeness": 0,
+                  "register_as": "general",
+                  "updated_at": "2019-08-24T14:15:22Z",
+                  "profile": {
+                    "academic_background": "東京大学",
+                    "address": "東京都港区元赤坂1-7-18",
+                    "agent_achievement": "経歴・実績",
+                    "agent_area_in_charge": "東京23区",
+                    "agent_self_introduction": "自己PR",
+                    "agent_self_message": "紹介メッセージ",
+                    "biography": "自己PR/職務要約",
+                    "birth_of_date": "2019-08-24",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "english_skill": "daily_conversation",
+                    "files": [
+                      {
+                        "id": "string",
+                        "name": "string",
+                        "content_type": "string",
+                        "url": "string",
+                        "created_at": "2019-08-24T14:15:22Z"
+                      }
+                    ],
+                    "first_name": "太郎",
+                    "first_name_kana": "タロウ",
+                    "gender": "MALE",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "japanese_skill": "native",
+                    "last_name": "山田",
+                    "last_name_kana": "ヤマダ",
+                    "management_experience": "nothing",
+                    "marital_status": "single",
+                    "nationality": "JP",
+                    "number_of_job_changes": 0,
+                    "phone": "090-XXXX-XXXX",
+                    "postal_code": "107-0051",
+                    "recent_income_amount": 0,
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "year_of_agent_experience": 10,
+                    "specialty_company_types": [
+                      {
+                        "content": "内容",
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "updated_at": "2019-08-24T14:15:22Z"
+                      }
+                    ],
+                    "specialty_positions": [
+                      {
+                        "content": "内容",
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "updated_at": "2019-08-24T14:15:22Z"
+                      }
+                    ],
+                    "occupation_main_categories": [
+                      {
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "name": "コンサル",
+                        "updated_at": "2019-08-24T14:15:22Z"
+                      }
+                    ],
+                    "industry_categories": [
+                      {
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "name": "金融・保険",
+                        "updated_at": "2019-08-24T14:15:22Z"
+                      }
+                    ],
+                    "place_of_residence": {
+                      "country_code": 392,
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "name": "東京",
+                      "updated_at": "2019-08-24T14:15:22Z"
+                    }
+                  },
+                  "employments": [
+                    {
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "department": "string",
+                      "email": "sample@example.com",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "is_valid": false,
+                      "last_notification_read_at": "2019-08-24T14:15:22Z",
+                      "position": "string",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "company": {
+                        "admin_verification_status": "unspecified",
+                        "average_age": 28,
+                        "business_summary": "事業概要",
+                        "capital": 15200000,
+                        "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
+                        "cover_image_url": "string",
+                        "created_at": "2019-08-24T14:15:22Z",
+                        "deleted_at": "2019-08-24T14:15:22Z",
+                        "employment_placement_permit_number": "string",
+                        "follower_nums": 0,
+                        "head_office_location": "東京都港区元赤坂1-7-18",
+                        "hp_url": "https://simula-labs.com/",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "introduction_fee_ratio": 0,
+                        "is_following": true,
+                        "is_listed": false,
+                        "is_sample": true,
+                        "logo_url": "string",
+                        "name": "株式会社SIMULA Labs",
+                        "name_kana": "シミュララボ ",
+                        "net_sales": 50000000,
+                        "numbers_of_employees": "20",
+                        "owner_email": "string",
+                        "phone": "03-1234-5678",
+                        "public_verification_status": "unspecified",
+                        "recruitment_fee_ratio": 0,
+                        "representative": "牧野暉弘",
+                        "representative_kana": "まきのあきひろ",
+                        "type": "account",
+                        "updated_at": "2019-08-24T14:15:22Z",
+                        "year_of_establishment": "2015"
+                      },
+                      "roles": [
+                        {
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "description": "Roleの説明",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "name": "general",
+                          "type": "default",
+                          "updated_at": "2019-08-24T14:15:22Z"
+                        }
+                      ]
+                    }
+                  ],
+                  "blocked_companies": [
+                    {
+                      "admin_verification_status": "unspecified",
+                      "average_age": 28,
+                      "business_summary": "事業概要",
+                      "capital": 15200000,
+                      "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
+                      "cover_image_url": "string",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "deleted_at": "2019-08-24T14:15:22Z",
+                      "employment_placement_permit_number": "string",
+                      "follower_nums": 0,
+                      "head_office_location": "東京都港区元赤坂1-7-18",
+                      "hp_url": "https://simula-labs.com/",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "introduction_fee_ratio": 0,
+                      "is_following": true,
+                      "is_listed": false,
+                      "is_sample": true,
+                      "logo_url": "string",
+                      "name": "株式会社SIMULA Labs",
+                      "name_kana": "シミュララボ ",
+                      "net_sales": 50000000,
+                      "numbers_of_employees": "20",
+                      "owner_email": "string",
+                      "phone": "03-1234-5678",
+                      "public_verification_status": "unspecified",
+                      "recruitment_fee_ratio": 0,
+                      "representative": "牧野暉弘",
+                      "representative_kana": "まきのあきひろ",
+                      "type": "account",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "year_of_establishment": "2015"
+                    }
+                  ]
+                }
+              }
             }
           }
         }

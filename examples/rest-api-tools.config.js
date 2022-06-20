@@ -9,10 +9,10 @@ module.exports = {
     //   baseURL: "https://a pi.example.com/public",
     // },
     {
-      connect: "enterprise",
-      openapi: "openapi/Enterprise.v1.json",
+      connect: "application",
+      openapi: "openapi/Application.v1.json",
       requiredAuth: true,
-      baseURL: "https://api.example.com/enterprise",
+      baseURL: "https://api.example.com/application",
     },
   ],
 };

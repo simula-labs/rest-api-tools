@@ -1,0 +1,28 @@
+/* eslint-disable */
+import { BaseRequest } from "@simula-labs/rest-api-tools";
+import type * as Types from "../../../shared/index";
+
+export type GetCompaniesRecommendedResponse = {
+  companies: (Types.Company & {
+    recruitments?: Types.Recruitment[] | undefined
+  } & {
+    industries?: Types.Industry[] | undefined
+  } & {
+    features?: Types.Feature[] | undefined
+  })[]
+  totalDataNums: number
+}
+
+export const getCompaniesRecommended = new BaseRequest<
+  undefined,
+  GetCompaniesRecommendedResponse,
+  undefined,
+  undefined
+>({
+  requiredAuth: true,
+  method: "get",
+  baseURL: "https://api.example.com/application",
+  path: "/companies/recommended",
+  tokenKey: "AUTH_TOKEN",
+  contentType: "json",
+});
