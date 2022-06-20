@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/simula-labs/rest-api-tools/compare/v1.1.0...v1.2.0) (2022-06-20)
+
+
+### Features
+
+* methodTypeでformDataを指定できるように ([e64a41e](https://github.com/simula-labs/rest-api-tools/commit/e64a41e634029d36c10dca815d71493e60465ea5))
+* methodTypeでformDataを指定できるように ([3f5fb36](https://github.com/simula-labs/rest-api-tools/commit/3f5fb36a3a8256b8ac433bbe41b9f68becdaf676))
+
 # [1.1.0](https://github.com/simula-labs/rest-api-tools/compare/v1.0.19...v1.1.0) (2022-06-15)
 
 
