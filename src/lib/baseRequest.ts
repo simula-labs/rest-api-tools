@@ -39,6 +39,7 @@ export type RequestOption = {
   method: HTTPMethod;
   path: string;
   tokenKey: string;
+  contentType?: ContentType;
 };
 
 export function mergeRequestVariables<
@@ -98,14 +99,22 @@ export class BaseRequest<
   tokenKey: string;
 
   /// content type
-  readonly contentType: ContentType = "json";
+  contentType: ContentType;
 
-  constructor({ requiredAuth, method, baseURL, path, tokenKey }: RequestOption) {
+  constructor({
+    requiredAuth,
+    method,
+    baseURL,
+    path,
+    tokenKey,
+    contentType = "json",
+  }: RequestOption) {
     this.requireAuth = requiredAuth;
     this.method = method;
     this.baseURL = baseURL;
     this.path = path;
     this.tokenKey = tokenKey;
+    this.contentType = contentType;
   }
 
   uniqueKey(variables?: RequestVariables<TInput, TPayload, TUrlParams, TQParams>): string {

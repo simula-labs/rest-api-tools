@@ -1,6 +1,12 @@
 import { OpenAPIV3 } from "openapi-types";
 import humps from "humps";
-import { $ref2Type, getPropertyName, isRefObject, schema2value } from "./builderUtils/converters";
+import {
+  $ref2Type,
+  BINARY_TYPE,
+  getPropertyName,
+  isRefObject,
+  schema2value,
+} from "./builderUtils/converters";
 import schemas2Props from "./builderUtils/schemas2Props";
 import { Prop, props2StringForParams, PropValue } from "./builderUtils/props2String";
 import { resolveReqRef, resolveResRef } from "./builderUtils/resolvers";
@@ -256,8 +262,8 @@ export const buildV3 = (
       const hasQueryParams = methods.join("").includes("QueryParams");
       const hasRequestBody = methods.join("").includes("RequestBody");
       const hasUrlParams = methods.join("").includes("UrlParams");
+      const hasFileType = methods.join("").includes(BINARY_TYPE);
 
-      // TODO: multiple/form-dataの対応
       const baseRequest =
         `export const ${humps.camelize(target.operationId)} = new BaseRequest<\n` +
         `  ${hasRequestBody ? `${pascalizedTargetOperationId}RequestBody` : undefined},\n` +
@@ -270,6 +276,7 @@ export const buildV3 = (
         `  baseURL: "${config.baseURL}",\n` +
         `  path: "${requestPath}",\n` +
         `  tokenKey: "${baseConfig.tokenKey}",\n` +
+        `  contentType: "${hasFileType ? "formData" : "json"}",\n` +
         "});\n";
       methods.push(baseRequest);
       files.push({
