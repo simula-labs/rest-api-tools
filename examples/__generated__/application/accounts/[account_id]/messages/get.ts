@@ -44,9 +44,9 @@ export const getAccountsAccountIdMessages = new BaseRequest<
   GetAccountsAccountIdMessagesUrlParams,
   GetAccountsAccountIdMessagesQueryParams
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/messages",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

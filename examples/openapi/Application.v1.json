@@ -632,9 +632,6 @@
                       "special_note": {
                         "type": "string"
                       },
-                      "beginning_period": {
-                        "type": "integer"
-                      },
                       "ratio_of_operation": {
                         "type": "string",
                         "enum": [
@@ -680,7 +677,7 @@
       },
       "get": {
         "summary": "アカウントの希望一覧を取得する",
-        "operationId": "get-accounts-account_id-hope",
+        "operationId": "get-accounts-account_id-hopes",
         "responses": {
           "200": {
             "$ref": "#/components/responses/Hopes"
@@ -813,6 +810,21 @@
                         }
                       }
                     }
+                  },
+                  "industry_history": {
+                    "type": "object",
+                    "properties": {
+                      "industry_id": {
+                        "type": "string"
+                      },
+                      "year_of_experience": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "industry_id",
+                      "year_of_experience"
+                    ]
                   }
                 }
               }
@@ -1202,6 +1214,21 @@
                         }
                       }
                     }
+                  },
+                  "occupation_history": {
+                    "type": "object",
+                    "properties": {
+                      "occupation_id": {
+                        "type": "string"
+                      },
+                      "year_of_experience": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "occupation_id",
+                      "year_of_experience"
+                    ]
                   }
                 }
               }
@@ -1329,8 +1356,18 @@
                         "description": "直近の年収"
                       },
                       "management_experience": {
-                        "type": "integer",
-                        "description": "マネジメント経験人数"
+                        "type": "string",
+                        "description": "マネジメント経験人数",
+                        "enum": [
+                          "nothing",
+                          "less_than_5",
+                          "from_6_to_10",
+                          "from_11_to_20",
+                          "from_21_to_50",
+                          "from_51_to_100",
+                          "from_101_to_500",
+                          "more_than_501"
+                        ]
                       },
                       "number_of_job_changes": {
                         "type": "integer",
@@ -1489,9 +1526,19 @@
                         "type": "integer",
                         "description": "直近の年収"
                       },
-                      "managemnt_experience": {
-                        "type": "integer",
-                        "description": "マネジメント経験人数"
+                      "management_experience": {
+                        "type": "string",
+                        "description": "マネジメント経験人数",
+                        "enum": [
+                          "nothing",
+                          "less_than_5",
+                          "from_6_to_10",
+                          "from_11_to_20",
+                          "from_21_to_50",
+                          "from_51_to_100",
+                          "from_101_to_500",
+                          "more_than_501"
+                        ]
                       },
                       "number_of_job_changes": {
                         "type": "integer",
@@ -1577,7 +1624,8 @@
                   "files": {
                     "type": "array",
                     "items": {
-                      "type": "string"
+                      "type": "string",
+                      "format": "binary"
                     }
                   }
                 }
@@ -2652,7 +2700,8 @@
                       },
                       "logo": {
                         "type": "string",
-                        "description": "画像も投稿したい時はform-dataで投げて"
+                        "description": "画像も投稿したい時はform-dataで投げて",
+                        "format": "binary"
                       },
                       "feature_ids": {
                         "type": "array",
@@ -3069,28 +3118,18 @@
                           "project"
                         ]
                       },
-                      "can_moving": {
-                        "type": "boolean"
-                      },
                       "special_note": {
                         "type": "string"
                       },
-                      "beginning_period": {
-                        "type": "integer"
-                      },
-                      "workplace_id": {
-                        "type": "string",
-                        "format": "uuid",
-                        "description": "StateのID"
-                      },
-                      "industry_ids": {
+                      "workplace_ids": {
                         "type": "array",
+                        "format": "uuid",
+                        "description": "StateのID",
                         "items": {
-                          "type": "string",
-                          "format": "uuid"
+                          "type": "string"
                         }
                       },
-                      "employment_status_ids": {
+                      "industry_ids": {
                         "type": "array",
                         "items": {
                           "type": "string",
@@ -3446,7 +3485,8 @@
                         "type": "array",
                         "description": "請求書ファイル",
                         "items": {
-                          "type": "string"
+                          "type": "string",
+                          "format": "binary"
                         }
                       },
                       "note": {
@@ -6158,6 +6198,7 @@
       "Hope": {
         "title": "Hope",
         "type": "object",
+        "description": "",
         "properties": {
           "amount": {
             "type": "number"
@@ -6192,7 +6233,7 @@
             "type": "string",
             "description": "特筆事項"
           },
-          "time_to_change_jobs": {
+          "time_to_change_job": {
             "type": "number",
             "description": "転職希望時期・案件開始時期"
           },
@@ -6214,8 +6255,7 @@
           "id",
           "type",
           "updated_at"
-        ],
-        "description": ""
+        ]
       },
       "IncomeHistory": {
         "title": "IncomeHistory",
@@ -9036,16 +9076,15 @@
                         "properties": {
                           "account": {
                             "$ref": "#/components/schemas/Account"
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
+                          },
                           "industry": {
                             "$ref": "#/components/schemas/Industry"
                           }
-                        }
+                        },
+                        "required": [
+                          "account",
+                          "industry"
+                        ]
                       }
                     ]
                   }
@@ -10367,16 +10406,15 @@
                   "properties": {
                     "account": {
                       "$ref": "#/components/schemas/Account"
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
+                    },
                     "occupation": {
                       "$ref": "#/components/schemas/Occupation"
                     }
-                  }
+                  },
+                  "required": [
+                    "account",
+                    "occupation"
+                  ]
                 }
               ]
             }

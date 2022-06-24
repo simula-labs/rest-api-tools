@@ -29,9 +29,9 @@ export const getAccountsAccountIdProjectResults = new BaseRequest<
   GetAccountsAccountIdProjectResultsUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/project_result",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

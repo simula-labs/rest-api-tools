@@ -56,9 +56,9 @@ export const postAccountsAccountIdRoomsRoomIdMessages = new BaseRequest<
   PostAccountsAccountIdRoomsRoomIdMessagesUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/rooms/:roomId/messages",
   tokenKey: "AUTH_TOKEN",
   contentType: "formData",

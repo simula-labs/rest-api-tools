@@ -74,9 +74,9 @@ export const getCompaniesCompanyIdRecruitments = new BaseRequest<
   GetCompaniesCompanyIdRecruitmentsUrlParams,
   GetCompaniesCompanyIdRecruitmentsQueryParams
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/companies/:companyId/recruitments",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

@@ -27,9 +27,9 @@ export const getAccountsAccountIdFollowing = new BaseRequest<
   GetAccountsAccountIdFollowingUrlParams,
   GetAccountsAccountIdFollowingQueryParams
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/followings",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

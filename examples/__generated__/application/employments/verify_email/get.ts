@@ -12,9 +12,9 @@ export const getEmploymentsVerifyEmail = new BaseRequest<
   undefined,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/employments/verify_email",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

@@ -8,7 +8,6 @@ export type PostAccountsAccountIdOccupationHistoriesUrlParams = {
 
 export type PostAccountsAccountIdOccupationHistoriesResponse = Types.OccupationHistory & {
     account: Types.Account
-  } & {
     occupation: Types.Occupation
   }
 
@@ -19,6 +18,11 @@ export type PostAccountsAccountIdOccupationHistoriesRequestBody = {
       yearOfExperience: number
     } | undefined
   }[]
+
+  occupationHistory: {
+    occupationId: string
+    yearOfExperience: number
+  }
 }
 
 export const postAccountsAccountIdOccupationHistories = new BaseRequest<
@@ -27,9 +31,9 @@ export const postAccountsAccountIdOccupationHistories = new BaseRequest<
   PostAccountsAccountIdOccupationHistoriesUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/occupation_histories",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

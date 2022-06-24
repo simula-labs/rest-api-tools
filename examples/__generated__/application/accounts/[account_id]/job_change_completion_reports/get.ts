@@ -20,9 +20,9 @@ export const getAccountsAccountIdJobChangeCompletionReports = new BaseRequest<
   GetAccountsAccountIdJobChangeCompletionReportsUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/job_change_completion_reports",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

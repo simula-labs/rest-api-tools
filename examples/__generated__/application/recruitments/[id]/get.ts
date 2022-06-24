@@ -46,9 +46,9 @@ export const getRecruitmentsId = new BaseRequest<
   GetRecruitmentsIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/recruitments/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

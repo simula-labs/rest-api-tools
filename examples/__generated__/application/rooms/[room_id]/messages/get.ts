@@ -39,9 +39,9 @@ export const getAccountsAccountIdRoomsRoomIdMessages = new BaseRequest<
   GetAccountsAccountIdRoomsRoomIdMessagesUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/rooms/:roomId/messages",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

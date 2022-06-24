@@ -12,9 +12,9 @@ export const deleteWorkHistoriesId = new BaseRequest<
   DeleteWorkHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "delete",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/work_histories/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

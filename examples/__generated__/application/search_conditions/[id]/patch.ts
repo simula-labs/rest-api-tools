@@ -30,9 +30,9 @@ export const patchCompaniesCompanyIdSearchConditions = new BaseRequest<
   PatchCompaniesCompanyIdSearchConditionsUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "patch",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/search_conditions/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

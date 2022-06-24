@@ -58,9 +58,9 @@ export const getAccountsAccountIdJobOrders = new BaseRequest<
   GetAccountsAccountIdJobOrdersUrlParams,
   GetAccountsAccountIdJobOrdersQueryParams
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/job_orders",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

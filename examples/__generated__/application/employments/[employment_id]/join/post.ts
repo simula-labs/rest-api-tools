@@ -16,9 +16,9 @@ export const postEmploymentsEmploymentIdJoin = new BaseRequest<
   PostEmploymentsEmploymentIdJoinUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/employments/:employmentId/join",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

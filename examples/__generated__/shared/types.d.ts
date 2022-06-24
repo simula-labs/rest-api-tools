@@ -370,7 +370,7 @@ export type Hope = {
   /** 特筆事項 */
   specialNote?: string | undefined
   /** 転職希望時期・案件開始時期 */
-  timeToChangeJobs?: number | undefined
+  timeToChangeJob?: number | undefined
   type: 'career' | 'project'
   updatedAt: string
 }

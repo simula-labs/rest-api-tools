@@ -44,7 +44,7 @@ export type PostCompaniesRequestBody = {
     /** 画像も投稿したい時はform-dataで投げて */
     cover?: string | undefined
     /** 画像も投稿したい時はform-dataで投げて */
-    logo?: string | undefined
+    logo?: File | undefined
     featureIds?: string[] | undefined
     industryIds?: string[] | undefined
   }
@@ -60,10 +60,10 @@ export const postCompanies = new BaseRequest<
   undefined,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/companies",
   tokenKey: "AUTH_TOKEN",
-  contentType: "json",
+  contentType: "formData",
 });

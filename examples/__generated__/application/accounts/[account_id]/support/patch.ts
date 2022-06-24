@@ -23,9 +23,9 @@ export const patchAccountsAccountIdSupport = new BaseRequest<
   PatchAccountsAccountIdSupportUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "patch",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/support",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

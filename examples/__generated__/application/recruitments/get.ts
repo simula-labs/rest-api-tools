@@ -73,9 +73,9 @@ export const getRecruitments = new BaseRequest<
   undefined,
   GetRecruitmentsQueryParams
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/recruitments",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

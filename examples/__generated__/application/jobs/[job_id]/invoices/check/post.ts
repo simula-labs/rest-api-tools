@@ -41,9 +41,9 @@ export const postJobsJobIdInvoicesCheck = new BaseRequest<
   PostJobsJobIdInvoicesCheckUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/jobs/:jobId/invoices/check",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

@@ -18,9 +18,9 @@ export const getJobReviewsId = new BaseRequest<
   GetJobReviewsIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/job_reviews/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

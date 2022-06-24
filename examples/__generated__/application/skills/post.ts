@@ -16,9 +16,9 @@ export const postSkills = new BaseRequest<
   undefined,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/skills",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

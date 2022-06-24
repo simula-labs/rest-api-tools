@@ -27,9 +27,9 @@ export const postAccountsAccountIdBankAccountChange = new BaseRequest<
   PostAccountsAccountIdBankAccountChangeUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/bank_account/change",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

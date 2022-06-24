@@ -40,7 +40,7 @@ export type PatchAccountsAccountIdProfileRequestBody = {
     /** 直近の年収 */
     recentIncomeAmount?: number | undefined
     /** マネジメント経験人数 */
-    managemntExperience?: number | undefined
+    managementExperience?: 'nothing' | 'less_than_5' | 'from_6_to_10' | 'from_11_to_20' | 'from_21_to_50' | 'from_51_to_100' | 'from_101_to_500' | 'more_than_501' | undefined
     /** 転職回数 */
     numberOfJobChanges?: number | undefined
     /** エージェント経験年数 */
@@ -68,9 +68,9 @@ export const patchAccountsAccountIdProfile = new BaseRequest<
   PatchAccountsAccountIdProfileUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "patch",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/profile",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

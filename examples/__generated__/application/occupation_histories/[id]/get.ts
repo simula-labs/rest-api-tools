@@ -8,7 +8,6 @@ export type GetOccupationHistoriesIdUrlParams = {
 
 export type GetOccupationHistoriesIdResponse = Types.OccupationHistory & {
     account: Types.Account
-  } & {
     occupation: Types.Occupation
   }
 
@@ -18,9 +17,9 @@ export const getOccupationHistoriesId = new BaseRequest<
   GetOccupationHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/occupation_histories/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

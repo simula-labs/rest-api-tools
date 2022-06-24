@@ -12,9 +12,9 @@ export const deleteAccountsAccountIdSupport = new BaseRequest<
   DeleteAccountsAccountIdSupportUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "delete",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/support",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

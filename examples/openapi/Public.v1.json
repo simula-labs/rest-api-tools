@@ -508,7 +508,25 @@
                     "industry_categories": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/IndustryCategory"
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/IndustryCategory"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "industries": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/components/schemas/Industry"
+                                }
+                              }
+                            },
+                            "required": [
+                              "industries"
+                            ]
+                          }
+                        ]
                       }
                     }
                   }

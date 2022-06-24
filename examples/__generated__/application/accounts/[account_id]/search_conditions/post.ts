@@ -30,9 +30,9 @@ export const postCompaniesCompanyIdSearchConditions = new BaseRequest<
   PostCompaniesCompanyIdSearchConditionsUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/search_conditions",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

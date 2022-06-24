@@ -2406,6 +2406,7 @@
       "Hope": {
         "title": "Hope",
         "type": "object",
+        "description": "",
         "properties": {
           "amount": {
             "type": "number"
@@ -2440,7 +2441,7 @@
             "type": "string",
             "description": "特筆事項"
           },
-          "time_to_change_jobs": {
+          "time_to_change_job": {
             "type": "number",
             "description": "転職希望時期・案件開始時期"
           },
@@ -2462,8 +2463,7 @@
           "id",
           "type",
           "updated_at"
-        ],
-        "description": ""
+        ]
       },
       "IndustryHistory": {
         "title": "IndustryHistory",

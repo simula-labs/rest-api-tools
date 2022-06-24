@@ -52,9 +52,9 @@ export const postAccountsAccountIdRecruitmentInterests = new BaseRequest<
   PostAccountsAccountIdRecruitmentInterestsUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/recruitment_interests",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

@@ -29,9 +29,9 @@ export const getAccountsAccountIdWithdrawalBalance = new BaseRequest<
   GetAccountsAccountIdWithdrawalBalanceUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/withdrawal_balance",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

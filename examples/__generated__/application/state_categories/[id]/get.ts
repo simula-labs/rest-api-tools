@@ -16,9 +16,9 @@ export const getCitiesId = new BaseRequest<
   GetCitiesIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/state_categories/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

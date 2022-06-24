@@ -22,7 +22,7 @@ export type PostJobsJobIdInvoicesRequestBody = {
     /** 支払期日 */
     deadline: string
     /** 請求書ファイル */
-    files?: string[] | undefined
+    files?: File[] | undefined
     /** 備考 */
     note?: string | undefined
     issuingStatus?: 'fixed' | 'draft' | 'withdrawn' | undefined
@@ -51,10 +51,10 @@ export const postJobsJobIdInvoices = new BaseRequest<
   PostJobsJobIdInvoicesUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/jobs/:jobId/invoices",
   tokenKey: "AUTH_TOKEN",
-  contentType: "json",
+  contentType: "formData",
 });

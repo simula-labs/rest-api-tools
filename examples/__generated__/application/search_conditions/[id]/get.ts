@@ -18,9 +18,9 @@ export const getSearchConditionsId = new BaseRequest<
   GetSearchConditionsIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/search_conditions/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

@@ -25,9 +25,9 @@ export const patchAcademicHistoriesId = new BaseRequest<
   PatchAcademicHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "patch",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/academic_histories/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

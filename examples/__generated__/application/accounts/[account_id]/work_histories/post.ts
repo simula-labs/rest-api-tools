@@ -30,9 +30,9 @@ export const postAccountsAccountIdWorkHistories = new BaseRequest<
   PostAccountsAccountIdWorkHistoriesUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/work_histories",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

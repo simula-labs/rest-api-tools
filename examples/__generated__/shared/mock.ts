@@ -362,7 +362,7 @@ export const mockHope = (modification?: Partial< Types.Hope>): Types.Hope => {
     id: "string",
     ratioOfOperation: 'once_a_week',
     specialNote: "string",
-    timeToChangeJobs: 0,
+    timeToChangeJob: 0,
     type: 'career',
     updatedAt: "string",
     ...modification

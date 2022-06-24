@@ -2,11 +2,11 @@
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../shared/index";
 
-export type GetAccountsAccountIdHopeUrlParams = {
+export type GetAccountsAccountIdHopesUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdHopeResponse = {
+export type GetAccountsAccountIdHopesResponse = {
   hopes: (Types.Hope & {
     industries?: Types.Industry[] | undefined
   } & {
@@ -16,15 +16,15 @@ export type GetAccountsAccountIdHopeResponse = {
   })[]
 }
 
-export const getAccountsAccountIdHope = new BaseRequest<
+export const getAccountsAccountIdHopes = new BaseRequest<
   undefined,
-  GetAccountsAccountIdHopeResponse,
-  GetAccountsAccountIdHopeUrlParams,
+  GetAccountsAccountIdHopesResponse,
+  GetAccountsAccountIdHopesUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/hopes",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

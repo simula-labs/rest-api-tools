@@ -22,9 +22,9 @@ export const postAccountsAccountIdAchievements = new BaseRequest<
   PostAccountsAccountIdAchievementsUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/achievements",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

@@ -20,9 +20,9 @@ export const getInvoicesId = new BaseRequest<
   GetInvoicesIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/invoices/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

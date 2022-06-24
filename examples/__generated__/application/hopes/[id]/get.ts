@@ -20,9 +20,9 @@ export const getHopesId = new BaseRequest<
   GetHopesIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/hopes/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

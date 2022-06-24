@@ -14,9 +14,9 @@ export const getCities = new BaseRequest<
   undefined,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/state_categories",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

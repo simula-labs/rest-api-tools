@@ -16,9 +16,9 @@ export const getAccountsAccountIdProfileSpecialtyPositions = new BaseRequest<
   GetAccountsAccountIdProfileSpecialtyPositionsUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/profile/specialty_positions",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

@@ -21,9 +21,9 @@ export const getAccountsAccountIdWorkHistories = new BaseRequest<
   GetAccountsAccountIdWorkHistoriesUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/work_histories",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

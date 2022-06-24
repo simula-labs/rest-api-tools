@@ -12,9 +12,9 @@ export const deleteAchievementsId = new BaseRequest<
   DeleteAchievementsIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "delete",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/achievements/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

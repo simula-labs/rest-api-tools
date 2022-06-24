@@ -26,9 +26,9 @@ export const getAccountsAccountIdRoomsId = new BaseRequest<
   GetAccountsAccountIdRoomsIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/rooms/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

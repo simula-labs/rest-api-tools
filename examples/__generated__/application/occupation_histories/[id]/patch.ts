@@ -8,7 +8,6 @@ export type PatchOccupationHistoriesIdUrlParams = {
 
 export type PatchOccupationHistoriesIdResponse = Types.OccupationHistory & {
     account: Types.Account
-  } & {
     occupation: Types.Occupation
   }
 
@@ -25,9 +24,9 @@ export const patchOccupationHistoriesId = new BaseRequest<
   PatchOccupationHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "patch",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/occupation_histories/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

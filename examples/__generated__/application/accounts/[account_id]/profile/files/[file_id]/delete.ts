@@ -25,9 +25,9 @@ export const deleteAccountsAccountIdProfileFilesId = new BaseRequest<
   DeleteAccountsAccountIdProfileFilesIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "delete",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/profile/files/:fileId",
   tokenKey: "AUTH_TOKEN",
   contentType: "formData",

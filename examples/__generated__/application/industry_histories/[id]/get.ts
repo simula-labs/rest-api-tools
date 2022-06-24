@@ -18,9 +18,9 @@ export const getIndustryHistoriesId = new BaseRequest<
   GetIndustryHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/industry_histories/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

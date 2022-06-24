@@ -19,7 +19,7 @@ export type PutAccountsAccountIdProfileFilesResponse = Types.Profile & {
   }
 
 export type PutAccountsAccountIdProfileFilesRequestBody = {
-  files: string[]
+  files: File[]
 }
 
 export const putAccountsAccountIdProfileFiles = new BaseRequest<
@@ -28,9 +28,9 @@ export const putAccountsAccountIdProfileFiles = new BaseRequest<
   PutAccountsAccountIdProfileFilesUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "put",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/profile/files",
   tokenKey: "AUTH_TOKEN",
   contentType: "formData",

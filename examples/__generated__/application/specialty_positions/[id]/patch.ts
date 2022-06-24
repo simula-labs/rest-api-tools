@@ -20,9 +20,9 @@ export const patchSpecialtyPositionsId = new BaseRequest<
   PatchSpecialtyPositionsIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "patch",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/specialty_positions/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

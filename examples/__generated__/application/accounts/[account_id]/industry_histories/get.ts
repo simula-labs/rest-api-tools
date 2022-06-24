@@ -8,9 +8,8 @@ export type GetAccountsAccountIdIndustryHistoriesUrlParams = {
 
 export type GetAccountsAccountIdIndustryHistoriesResponse = {
   industryHistories: (Types.IndustryHistory & {
-    account?: Types.Account | undefined
-  } & {
-    industry?: Types.Industry | undefined
+    account: Types.Account
+    industry: Types.Industry
   })[]
 }
 
@@ -20,9 +19,9 @@ export const getAccountsAccountIdIndustryHistories = new BaseRequest<
   GetAccountsAccountIdIndustryHistoriesUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/industry_histories",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

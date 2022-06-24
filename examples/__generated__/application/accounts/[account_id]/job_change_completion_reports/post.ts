@@ -25,9 +25,9 @@ export const postAccountsAccountIdCompletionReports = new BaseRequest<
   PostAccountsAccountIdCompletionReportsUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/job_change_completion_reports",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

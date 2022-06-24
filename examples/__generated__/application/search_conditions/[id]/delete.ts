@@ -12,9 +12,9 @@ export const deleteSearchConditionsId = new BaseRequest<
   DeleteSearchConditionsIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "delete",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/search_conditions/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

@@ -33,10 +33,6 @@ export const isRefObject = (
 const isArraySchema = (schema: OpenAPIV3.SchemaObject): schema is OpenAPIV3.ArraySchemaObject =>
   schema.type === "array";
 
-export const isObjectSchema = (
-  schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
-): schema is OpenAPIV3.NonArraySchemaObject => !isRefObject(schema) && schema.type !== "array";
-
 export const getPropertyName = (name: string) =>
   /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name) ? name : `'${name}'`;
 

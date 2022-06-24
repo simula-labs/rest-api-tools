@@ -27,9 +27,9 @@ export const getJobsJobIdInvoices = new BaseRequest<
   GetJobsJobIdInvoicesUrlParams,
   GetJobsJobIdInvoicesQueryParams
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/jobs/:jobId/invoices",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

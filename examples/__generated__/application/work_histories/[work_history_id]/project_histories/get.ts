@@ -19,9 +19,9 @@ export const getWorkHistoriesWorkHistoryIdProjectHistories = new BaseRequest<
   GetWorkHistoriesWorkHistoryIdProjectHistoriesUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/work_histories/:workHistoryId/project_histories",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

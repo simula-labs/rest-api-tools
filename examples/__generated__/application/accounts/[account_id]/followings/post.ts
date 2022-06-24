@@ -20,9 +20,9 @@ export const postAccountsAccountIdFollowing = new BaseRequest<
   PostAccountsAccountIdFollowingUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/followings",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

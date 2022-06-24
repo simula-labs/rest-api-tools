@@ -52,9 +52,9 @@ export const patchJobOrdersId = new BaseRequest<
   PatchJobOrdersIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "patch",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/job_orders/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

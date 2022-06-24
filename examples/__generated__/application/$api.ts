@@ -16,7 +16,7 @@ import { deleteEmploymentsId } from "./accounts/[account_id]/employments/delete"
 import { getAccountsAccountIdFollowing } from "./accounts/[account_id]/followings/get";
 import { postAccountsAccountIdFollowing } from "./accounts/[account_id]/followings/post";
 import { postAccountsAccountIdHopes } from "./accounts/[account_id]/hopes/post";
-import { getAccountsAccountIdHope } from "./accounts/[account_id]/hopes/get";
+import { getAccountsAccountIdHopes } from "./accounts/[account_id]/hopes/get";
 import { getAccountsAccountIdIdentification } from "./accounts/[account_id]/identification/get";
 import { getAccountsAccountIdIncomeHistories } from "./accounts/[account_id]/income_histories/get";
 import { getAccountsAccountIdIndustryHistories } from "./accounts/[account_id]/industry_histories/get";
@@ -145,7 +145,7 @@ export const applicationApi = {
   getAccountsAccountIdFollowing,
   postAccountsAccountIdFollowing,
   postAccountsAccountIdHopes,
-  getAccountsAccountIdHope,
+  getAccountsAccountIdHopes,
   getAccountsAccountIdIdentification,
   getAccountsAccountIdIncomeHistories,
   getAccountsAccountIdIndustryHistories,

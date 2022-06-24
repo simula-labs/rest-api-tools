@@ -21,9 +21,9 @@ export const postNdaNdaIdConsent = new BaseRequest<
   PostNdaNdaIdConsentUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/nda/:ndaId/consent",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

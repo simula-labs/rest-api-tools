@@ -26,9 +26,9 @@ export const getAccountsAccountIdRecruitmentInterests = new BaseRequest<
   GetAccountsAccountIdRecruitmentInterestsUrlParams,
   GetAccountsAccountIdRecruitmentInterestsQueryParams
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/recruitment_interests",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

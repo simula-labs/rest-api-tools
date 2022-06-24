@@ -19,6 +19,11 @@ export type PostAccountsAccountIdIndustryHistoriesRequestBody = {
       yearOfExperience: number
     } | undefined
   }[]
+
+  industryHistory: {
+    industryId: string
+    yearOfExperience: number
+  }
 }
 
 export const postAccountsAccountIdIndustryHistories = new BaseRequest<
@@ -27,9 +32,9 @@ export const postAccountsAccountIdIndustryHistories = new BaseRequest<
   PostAccountsAccountIdIndustryHistoriesUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/accounts/:accountId/industry_histories",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

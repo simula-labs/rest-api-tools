@@ -34,9 +34,9 @@ export const getCompaniesId = new BaseRequest<
   GetCompaniesIdUrlParams,
   undefined
 >({
-  requiredAuth: true,
+  requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/application",
+  baseURL: "https://api.example.com/public",
   path: "/companies/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",
