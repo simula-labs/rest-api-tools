@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/simula-labs/rest-api-tools/compare/v1.2.0...v1.2.1) (2022-06-24)
+
+
+### Bug Fixes
+
+* example ([0256d0b](https://github.com/simula-labs/rest-api-tools/commit/0256d0b1136c5142c70f7061f6e1e4aef620cf35))
+
 # [1.2.0](https://github.com/simula-labs/rest-api-tools/compare/v1.1.0...v1.2.0) (2022-06-20)
 
 
