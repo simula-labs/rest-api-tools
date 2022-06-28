@@ -17,31 +17,31 @@ export type PostJobsJobIdInvoicesResponse = Types.Invoice & {
 export type PostJobsJobIdInvoicesRequestBody = {
   invoice: {
     /** 請求日 */
-    issuedDate: string
+    issuedDate?: string | undefined
     title: string
     /** 支払期日 */
-    deadline: string
+    deadline?: string | undefined
     /** 請求書ファイル */
     files?: File[] | undefined
     /** 備考 */
     note?: string | undefined
     issuingStatus?: 'fixed' | 'draft' | 'withdrawn' | undefined
-    invoiceDetailedItems: {
-      invoiceDetailedItem: {
+    invoiceDetailedItems?: {
+      invoiceDetailedItem?: {
         /** 項目名 */
-        description: string
+        description?: string | undefined
         /** 数量 */
-        quantity: number
+        quantity?: number | undefined
         /** 単位 */
-        unitLabel: string
+        unitLabel?: string | undefined
         /** 単価 */
-        unitPrice: number
+        unitPrice?: number | undefined
         /** 消費税 */
-        taxRatio: number
+        taxRatio?: number | undefined
         /** 金額 */
-        amount: number
-      }
-    }[]
+        amount?: number | undefined
+      } | undefined
+    }[] | undefined
   }
 }
 

@@ -8,13 +8,9 @@ export type GetAccountsAccountIdProfileUrlParams = {
 
 export type GetAccountsAccountIdProfileResponse = Types.Profile & {
     specialtyCompanyTypes: Types.SpecialtyCompanyType[]
-  } & {
     specialtyPositions: Types.SpecialtyPosition[]
-  } & {
     occupationMainCategories: Types.OccupationMainCategory[]
-  } & {
     industryCategories: Types.IndustryCategory[]
-  } & {
     placeOfResidence: Types.State
   }
 

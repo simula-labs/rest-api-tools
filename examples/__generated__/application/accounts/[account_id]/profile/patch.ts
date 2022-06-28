@@ -8,13 +8,9 @@ export type PatchAccountsAccountIdProfileUrlParams = {
 
 export type PatchAccountsAccountIdProfileResponse = Types.Profile & {
     specialtyCompanyTypes: Types.SpecialtyCompanyType[]
-  } & {
     specialtyPositions: Types.SpecialtyPosition[]
-  } & {
     occupationMainCategories: Types.OccupationMainCategory[]
-  } & {
     industryCategories: Types.IndustryCategory[]
-  } & {
     placeOfResidence: Types.State
   }
 

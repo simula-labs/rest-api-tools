@@ -19,11 +19,6 @@ export type PostAccountsAccountIdIndustryHistoriesRequestBody = {
       yearOfExperience: number
     } | undefined
   }[]
-
-  industryHistory: {
-    industryId: string
-    yearOfExperience: number
-  }
 }
 
 export const postAccountsAccountIdIndustryHistories = new BaseRequest<

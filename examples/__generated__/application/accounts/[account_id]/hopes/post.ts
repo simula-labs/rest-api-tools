@@ -23,6 +23,7 @@ export type PostAccountsAccountIdHopesRequestBody = {
     billingMethod: 'hourly' | 'monthly' | 'yearly' | 'with_project'
     type: 'career' | 'project'
     specialNote?: string | undefined
+    beginningPeriod?: number | undefined
     /** 「~20%(週に1回)」「40~60%(週に2.3回)」「80%~(週に4回)」 */
     ratioOfOperation?: 'once_a_week' | 'few_days_a_week' | 'four_days_a_week' | undefined
     /** StateのID */

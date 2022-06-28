@@ -8,6 +8,7 @@ export type PostAccountsAccountIdOccupationHistoriesUrlParams = {
 
 export type PostAccountsAccountIdOccupationHistoriesResponse = Types.OccupationHistory & {
     account: Types.Account
+  } & {
     occupation: Types.Occupation
   }
 
@@ -18,11 +19,6 @@ export type PostAccountsAccountIdOccupationHistoriesRequestBody = {
       yearOfExperience: number
     } | undefined
   }[]
-
-  occupationHistory: {
-    occupationId: string
-    yearOfExperience: number
-  }
 }
 
 export const postAccountsAccountIdOccupationHistories = new BaseRequest<
