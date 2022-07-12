@@ -31,7 +31,7 @@ export const buildV3 = (
       ?.map((server) => {
         if (!server.description) throw new Error("descriptionに環境を入力してください");
 
-        return `    case environment?.includes("${server.description.toLowerCase()}"):\n      return "${
+        return `    case environment?.includes("${server.description.toLowerCase()}") && environment:\n      return "${
           server.url
         }";\n`;
       })
