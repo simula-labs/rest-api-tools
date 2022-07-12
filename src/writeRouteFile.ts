@@ -1,4 +1,5 @@
 import fs from "fs";
+import { Server } from "./types";
 
 type WriteRouteFileProps = {
   files: {
@@ -10,9 +11,15 @@ type WriteRouteFileProps = {
     operationIdImport: string;
     operationId: string;
   }[];
+  apiUrlContent: string;
 };
 
-export const writeRouteFile = ({ files, outputDir, apiMethods }: WriteRouteFileProps) => {
+export const writeRouteFile = ({
+  files,
+  outputDir,
+  apiMethods,
+  apiUrlContent,
+}: WriteRouteFileProps) => {
   files.forEach((p) => {
     const fileName = p.file.pop();
     p.file.forEach((_d, i, dirList) => {
@@ -28,10 +35,11 @@ export const writeRouteFile = ({ files, outputDir, apiMethods }: WriteRouteFileP
     );
   });
   const apiFunctionName = outputDir.split("/").pop();
-  const apiTest =
+  const api =
     `/* eslint-disable */\n` +
     `${apiMethods.map((apiMethod) => apiMethod.operationIdImport).join(";\n")}\n\n` +
     `export const ${apiFunctionName}Api = {\n` +
     `${apiMethods.map((apiMethod) => `  ${apiMethod.operationId}`).join(",\n")}\n};`;
-  fs.writeFileSync(`${outputDir}/$api.ts`, apiTest, "utf-8");
+  fs.writeFileSync(`${outputDir}/$api.ts`, api, "utf-8");
+  fs.writeFileSync(`${outputDir}/urls.ts`, apiUrlContent, "utf-8");
 };

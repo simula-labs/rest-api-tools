@@ -10,7 +10,7 @@ import {
 import schemas2Props from "./builderUtils/schemas2Props";
 import { Prop, props2StringForParams, PropValue } from "./builderUtils/props2String";
 import { resolveReqRef, resolveResRef } from "./builderUtils/resolvers";
-import { BaseConfig, CodeGenConfig } from "./types";
+import { BaseConfig, CodeGenConfig, Server } from "./types";
 
 export const buildV3 = (
   openapi: OpenAPIV3.Document,
@@ -23,6 +23,22 @@ export const buildV3 = (
     operationIdImport: string;
     operationId: string;
   }[] = [];
+  const apiUrlContent =
+    "export const API_HOST = ((): string => {\n" +
+    `  const environment = process.env.${config.apiEnvironmentVariables}\n` +
+    `  switch (environment) {\n` +
+    `${openapi.servers
+      ?.map((server) => {
+        if (!server.description) throw new Error("descriptionに環境を入力してください");
+
+        return `    case environment?.includes("${server.description.toLowerCase()}"):\n      return "${
+          server.url
+        }";\n`;
+      })
+      .join("")}` +
+    `    default:\n      throw new Error("環境変数が設定されていません")\n` +
+    "  }\n" +
+    "})();\n";
 
   Object.entries(openapi.paths).forEach(([path, targetUrl]) => {
     const urlParams: Prop[] = [];
@@ -205,7 +221,8 @@ export const buildV3 = (
       methods.push(
         `/* eslint-disable */\n` +
           `import { BaseRequest } from "@simula-labs/rest-api-tools";\n` +
-          `import type * as Types from "../${file.map(() => "").join("../")}shared/index";\n`
+          `import type * as Types from "../${file.map(() => "").join("../")}shared/index";\n` +
+          `import { API_HOST } from "${file.map(() => "").join("../")}urls";\n`
       );
       params.forEach((param) => {
         switch (param.name) {
@@ -273,7 +290,7 @@ export const buildV3 = (
         ">({\n" +
         `  requiredAuth: ${config.requiredAuth},\n` +
         `  method: "${method}",\n` +
-        `  baseURL: "${config.baseURL}",\n` +
+        `  baseURL: API_HOST,\n` +
         `  path: "${requestPath}",\n` +
         `  tokenKey: "${baseConfig.tokenKey}",\n` +
         `  contentType: "${hasFileType ? "formData" : "json"}",\n` +
@@ -290,5 +307,6 @@ export const buildV3 = (
     schemas,
     files,
     apiMethods,
+    apiUrlContent,
   };
 };

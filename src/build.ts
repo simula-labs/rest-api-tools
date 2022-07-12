@@ -38,6 +38,7 @@ export const build = async (config: Config) => {
         outputDir: `${config.connectBasePath}/${codeGenConfig.connect}`,
         files: contents.files,
         apiMethods: contents.apiMethods,
+        apiUrlContent: contents.apiUrlContent,
       });
     })
   );
@@ -120,10 +121,10 @@ export const build = async (config: Config) => {
       `export * from "./types"`,
       "utf8"
     );
-    fs.writeFileSync(
-      `${config.connectBasePath}/shared/enum.ts`,
-      `/* eslint-disable */\n${enumText}`,
-      "utf8"
-    );
   }
+  fs.writeFileSync(
+    `${config.connectBasePath}/shared/enum.ts`,
+    `/* eslint-disable */\n${enumText}`,
+    "utf8"
+  );
 };
