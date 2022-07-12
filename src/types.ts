@@ -2,7 +2,7 @@ export type CodeGenConfig = {
   connect: string;
   openapi: string;
   requiredAuth: boolean;
-  baseURL: string;
+  apiEnvironmentVariables: string;
 };
 
 export type BaseConfig = {
@@ -18,4 +18,9 @@ export type EnumObject = {
   name: string;
   description: string | null;
   values: string[];
+};
+
+export type Server = {
+  url: string;
+  environmentVariable: string;
 };
