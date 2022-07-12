@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../shared/index";
+import { API_HOST } from "../../../urls";
 
 export type PatchAccountsAccountIdProfileUrlParams = {
   accountId: string
@@ -66,7 +67,7 @@ export const patchAccountsAccountIdProfile = new BaseRequest<
 >({
   requiredAuth: false,
   method: "patch",
-  baseURL: "https://api.example.com/public",
+  baseURL: API_HOST,
   path: "/accounts/:accountId/profile",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

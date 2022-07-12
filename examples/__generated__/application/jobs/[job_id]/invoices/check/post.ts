@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../../shared/index";
+import { API_HOST } from "../../../../urls";
 
 export type PostJobsJobIdInvoicesCheckUrlParams = {
   jobId: string
@@ -43,7 +44,7 @@ export const postJobsJobIdInvoicesCheck = new BaseRequest<
 >({
   requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/public",
+  baseURL: API_HOST,
   path: "/jobs/:jobId/invoices/check",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",
