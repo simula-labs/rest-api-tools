@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/simula-labs/rest-api-tools/compare/v1.2.1...v1.3.0) (2022-07-12)
+
+
+### Features
+
+* base_urlの設定方法を変更 ([0952041](https://github.com/simula-labs/rest-api-tools/commit/09520416a7c647e8fd7de8a3f6695f25bbf549fc))
+* base_urlの設定方法を変更 ([49db383](https://github.com/simula-labs/rest-api-tools/commit/49db383e26597d0a917cefe94c6ac8bbfe520b81))
+
 ## [1.2.1](https://github.com/simula-labs/rest-api-tools/compare/v1.2.0...v1.2.1) (2022-06-24)
 
 
