@@ -1698,12 +1698,12 @@
                         "type": [
                           "string"
                         ],
+                        "description": "稼働報酬制の単位（「一月あたり」「一日あたり」「一時間あたり」）",
                         "enum": [
                           "monthly",
                           "daily",
                           "hourly"
-                        ],
-                        "description": "稼働報酬制の単位（「一月あたり」「一日あたり」「一時間あたり」）"
+                        ]
                       },
                       "unit_time_fee": {
                         "type": [
@@ -7925,15 +7925,15 @@
           }
         },
         "required": [
-          "id",
+          "amount",
           "created_at",
-          "updated_at",
           "description",
+          "id",
           "quantity",
+          "tax_ratio",
           "unit_label",
           "unit_price",
-          "tax_ratio",
-          "amount"
+          "updated_at"
         ]
       },
       "ExternalService": {

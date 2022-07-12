@@ -632,6 +632,9 @@
                       "special_note": {
                         "type": "string"
                       },
+                      "beginning_period": {
+                        "type": "integer"
+                      },
                       "ratio_of_operation": {
                         "type": "string",
                         "enum": [
@@ -810,21 +813,6 @@
                         }
                       }
                     }
-                  },
-                  "industry_history": {
-                    "type": "object",
-                    "properties": {
-                      "industry_id": {
-                        "type": "string"
-                      },
-                      "year_of_experience": {
-                        "type": "integer"
-                      }
-                    },
-                    "required": [
-                      "industry_id",
-                      "year_of_experience"
-                    ]
                   }
                 }
               }
@@ -1214,21 +1202,6 @@
                         }
                       }
                     }
-                  },
-                  "occupation_history": {
-                    "type": "object",
-                    "properties": {
-                      "occupation_id": {
-                        "type": "string"
-                      },
-                      "year_of_experience": {
-                        "type": "integer"
-                      }
-                    },
-                    "required": [
-                      "occupation_id",
-                      "year_of_experience"
-                    ]
                   }
                 }
               }
@@ -3118,18 +3091,28 @@
                           "project"
                         ]
                       },
+                      "can_moving": {
+                        "type": "boolean"
+                      },
                       "special_note": {
                         "type": "string"
                       },
-                      "workplace_ids": {
-                        "type": "array",
+                      "beginning_period": {
+                        "type": "integer"
+                      },
+                      "workplace_id": {
+                        "type": "string",
                         "format": "uuid",
-                        "description": "StateのID",
-                        "items": {
-                          "type": "string"
-                        }
+                        "description": "StateのID"
                       },
                       "industry_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      },
+                      "employment_status_ids": {
                         "type": "array",
                         "items": {
                           "type": "string",
@@ -3267,6 +3250,96 @@
           }
         },
         "operationId": "get-invoices-id"
+      },
+      "patch": {
+        "summary": "請求を更新する",
+        "operationId": "patch-invoices-id",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Invoice"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "issued_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "請求日"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "deadline": {
+                    "type": "string",
+                    "description": "支払期日",
+                    "format": "date"
+                  },
+                  "files": {
+                    "type": "array",
+                    "description": "請求書ファイル",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  },
+                  "note": {
+                    "type": "string",
+                    "description": "備考"
+                  },
+                  "issuing_status": {
+                    "type": "string",
+                    "enum": [
+                      "fixed",
+                      "draft",
+                      "withdrawn"
+                    ]
+                  },
+                  "invoice_detailed_items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "invoice_detailed_item": {
+                          "type": "object",
+                          "properties": {
+                            "description": {
+                              "type": "string",
+                              "description": "項目名"
+                            },
+                            "quantity": {
+                              "type": "number",
+                              "description": "数量"
+                            },
+                            "unit_label": {
+                              "type": "string",
+                              "description": "単位"
+                            },
+                            "unit_price": {
+                              "type": "integer",
+                              "description": "単価"
+                            },
+                            "tax_ratio": {
+                              "description": "消費税",
+                              "type": "number"
+                            },
+                            "amount": {
+                              "type": "integer",
+                              "description": "金額"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/job_change_completion_reports/{id}": {
@@ -3508,14 +3581,6 @@
                           "properties": {
                             "invoice_detailed_item": {
                               "type": "object",
-                              "required": [
-                                "description",
-                                "quantity",
-                                "unit_label",
-                                "unit_price",
-                                "tax_ratio",
-                                "amount"
-                              ],
                               "properties": {
                                 "description": {
                                   "type": "string",
@@ -3543,18 +3608,12 @@
                                 }
                               }
                             }
-                          },
-                          "required": [
-                            "invoice_detailed_item"
-                          ]
+                          }
                         }
                       }
                     },
                     "required": [
-                      "issued_date",
-                      "title",
-                      "deadline",
-                      "invoice_detailed_items"
+                      "title"
                     ]
                   }
                 }
@@ -7574,15 +7633,15 @@
           }
         },
         "required": [
-          "id",
+          "amount",
           "created_at",
-          "updated_at",
           "description",
+          "id",
           "quantity",
+          "tax_ratio",
           "unit_label",
           "unit_price",
-          "tax_ratio",
-          "amount"
+          "updated_at"
         ]
       },
       "Nda": {
@@ -9076,15 +9135,16 @@
                         "properties": {
                           "account": {
                             "$ref": "#/components/schemas/Account"
-                          },
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
                           "industry": {
                             "$ref": "#/components/schemas/Industry"
                           }
-                        },
-                        "required": [
-                          "account",
-                          "industry"
-                        ]
+                        }
                       }
                     ]
                   }
@@ -10406,15 +10466,16 @@
                   "properties": {
                     "account": {
                       "$ref": "#/components/schemas/Account"
-                    },
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
                     "occupation": {
                       "$ref": "#/components/schemas/Occupation"
                     }
-                  },
-                  "required": [
-                    "account",
-                    "occupation"
-                  ]
+                  }
                 }
               ]
             }
@@ -10552,45 +10613,25 @@
                       "items": {
                         "$ref": "#/components/schemas/SpecialtyCompanyType"
                       }
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
+                    },
                     "specialty_positions": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/SpecialtyPosition"
                       }
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
+                    },
                     "occupation_main_categories": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/OccupationMainCategory"
                       }
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
+                    },
                     "industry_categories": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/IndustryCategory"
                       }
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
+                    },
                     "place_of_residence": {
                       "$ref": "#/components/schemas/State"
                     }

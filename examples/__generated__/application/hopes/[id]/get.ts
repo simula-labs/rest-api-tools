@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../shared/index";
+import { API_HOST } from "../../urls";
 
 export type GetHopesIdUrlParams = {
   id: string
@@ -22,7 +23,7 @@ export const getHopesId = new BaseRequest<
 >({
   requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/public",
+  baseURL: API_HOST,
   path: "/hopes/:id",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

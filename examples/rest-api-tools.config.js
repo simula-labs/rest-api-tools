@@ -6,7 +6,7 @@ module.exports = {
       connect: "application",
       openapi: "openapi/Application.v1.json",
       requiredAuth: false,
-      baseURL: "https://api.example.com/public",
+      apiEnvironmentVariables: "REACT_APP_ENV",
     },
     // {
     //   connect: "application",

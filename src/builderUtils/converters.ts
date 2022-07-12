@@ -28,7 +28,9 @@ export const isRefObject = (
     | OpenAPIV3.HeaderObject
     | OpenAPIV3.ParameterObject
     | OpenAPIV3.SchemaObject
-): params is OpenAPIV3.ReferenceObject => "$ref" in params;
+): params is OpenAPIV3.ReferenceObject => {
+  return "$ref" in params;
+};
 
 const isArraySchema = (schema: OpenAPIV3.SchemaObject): schema is OpenAPIV3.ArraySchemaObject =>
   schema.type === "array";

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../shared/index";
+import { API_HOST } from "../../../urls";
 
 export type GetAccountsAccountIdIndustryHistoriesUrlParams = {
   accountId: string
@@ -8,8 +9,9 @@ export type GetAccountsAccountIdIndustryHistoriesUrlParams = {
 
 export type GetAccountsAccountIdIndustryHistoriesResponse = {
   industryHistories: (Types.IndustryHistory & {
-    account: Types.Account
-    industry: Types.Industry
+    account?: Types.Account | undefined
+  } & {
+    industry?: Types.Industry | undefined
   })[]
 }
 
@@ -21,7 +23,7 @@ export const getAccountsAccountIdIndustryHistories = new BaseRequest<
 >({
   requiredAuth: false,
   method: "get",
-  baseURL: "https://api.example.com/public",
+  baseURL: API_HOST,
   path: "/accounts/:accountId/industry_histories",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",

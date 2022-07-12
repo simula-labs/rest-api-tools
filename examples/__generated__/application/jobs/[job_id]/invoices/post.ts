@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../shared/index";
+import { API_HOST } from "../../../urls";
 
 export type PostJobsJobIdInvoicesUrlParams = {
   jobId: string
@@ -17,31 +18,31 @@ export type PostJobsJobIdInvoicesResponse = Types.Invoice & {
 export type PostJobsJobIdInvoicesRequestBody = {
   invoice: {
     /** 請求日 */
-    issuedDate: string
+    issuedDate?: string | undefined
     title: string
     /** 支払期日 */
-    deadline: string
+    deadline?: string | undefined
     /** 請求書ファイル */
     files?: File[] | undefined
     /** 備考 */
     note?: string | undefined
     issuingStatus?: 'fixed' | 'draft' | 'withdrawn' | undefined
-    invoiceDetailedItems: {
-      invoiceDetailedItem: {
+    invoiceDetailedItems?: {
+      invoiceDetailedItem?: {
         /** 項目名 */
-        description: string
+        description?: string | undefined
         /** 数量 */
-        quantity: number
+        quantity?: number | undefined
         /** 単位 */
-        unitLabel: string
+        unitLabel?: string | undefined
         /** 単価 */
-        unitPrice: number
+        unitPrice?: number | undefined
         /** 消費税 */
-        taxRatio: number
+        taxRatio?: number | undefined
         /** 金額 */
-        amount: number
-      }
-    }[]
+        amount?: number | undefined
+      } | undefined
+    }[] | undefined
   }
 }
 
@@ -53,7 +54,7 @@ export const postJobsJobIdInvoices = new BaseRequest<
 >({
   requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/public",
+  baseURL: API_HOST,
   path: "/jobs/:jobId/invoices",
   tokenKey: "AUTH_TOKEN",
   contentType: "formData",

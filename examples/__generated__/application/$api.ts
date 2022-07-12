@@ -80,6 +80,7 @@ import { getIndustryHistoriesId } from "./industry_histories/[id]/get";
 import { patchIndustryHistoriesId } from "./industry_histories/[id]/patch";
 import { deleteIndustryHistoriesId } from "./industry_histories/[id]/delete";
 import { getInvoicesId } from "./invoices/[id]/get";
+import { patchInvoicesId } from "./invoices/[id]/patch";
 import { getJobChangeCompletionReportsId } from "./job_change_completion_reports/[id]/get";
 import { getJobOrdersId } from "./job_orders/[id]/get";
 import { patchJobOrdersId } from "./job_orders/[id]/patch";
@@ -209,6 +210,7 @@ export const applicationApi = {
   patchIndustryHistoriesId,
   deleteIndustryHistoriesId,
   getInvoicesId,
+  patchInvoicesId,
   getJobChangeCompletionReportsId,
   getJobOrdersId,
   patchJobOrdersId,

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../../shared/index";
+import { API_HOST } from "../../../../urls";
 
 export type PutAccountsAccountIdProfileFilesUrlParams = {
   accountId: string
@@ -8,13 +9,9 @@ export type PutAccountsAccountIdProfileFilesUrlParams = {
 
 export type PutAccountsAccountIdProfileFilesResponse = Types.Profile & {
     specialtyCompanyTypes: Types.SpecialtyCompanyType[]
-  } & {
     specialtyPositions: Types.SpecialtyPosition[]
-  } & {
     occupationMainCategories: Types.OccupationMainCategory[]
-  } & {
     industryCategories: Types.IndustryCategory[]
-  } & {
     placeOfResidence: Types.State
   }
 
@@ -30,7 +27,7 @@ export const putAccountsAccountIdProfileFiles = new BaseRequest<
 >({
   requiredAuth: false,
   method: "put",
-  baseURL: "https://api.example.com/public",
+  baseURL: API_HOST,
   path: "/accounts/:accountId/profile/files",
   tokenKey: "AUTH_TOKEN",
   contentType: "formData",

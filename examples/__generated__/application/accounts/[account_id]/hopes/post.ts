@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../shared/index";
+import { API_HOST } from "../../../urls";
 
 export type PostAccountsAccountIdHopesUrlParams = {
   accountId: string
@@ -23,6 +24,7 @@ export type PostAccountsAccountIdHopesRequestBody = {
     billingMethod: 'hourly' | 'monthly' | 'yearly' | 'with_project'
     type: 'career' | 'project'
     specialNote?: string | undefined
+    beginningPeriod?: number | undefined
     /** 「~20%(週に1回)」「40~60%(週に2.3回)」「80%~(週に4回)」 */
     ratioOfOperation?: 'once_a_week' | 'few_days_a_week' | 'four_days_a_week' | undefined
     /** StateのID */
@@ -40,7 +42,7 @@ export const postAccountsAccountIdHopes = new BaseRequest<
 >({
   requiredAuth: false,
   method: "post",
-  baseURL: "https://api.example.com/public",
+  baseURL: API_HOST,
   path: "/accounts/:accountId/hopes",
   tokenKey: "AUTH_TOKEN",
   contentType: "json",
