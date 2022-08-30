@@ -15,9 +15,11 @@ export type AcademicHistory = {
 export type Achievement = {
   content: string
   createdAt: string
-  createdDate: string
+  createdDate?: string | undefined
   description?: string | undefined
   id: string
+  sinceDate?: string | undefined
+  untilDate?: string | undefined
   updatedAt: string
 }
 
@@ -106,6 +108,15 @@ export type Recruitment = {
   workplaceDescription?: string | undefined
 }
 
+export type Feature = {
+  createdAt: string
+  id: string
+  name: string
+  sourceType: 'company' | 'recruitment'
+  type: 'default' | 'organizational'
+  updatedAt: string
+}
+
 export type Company = {
   /** admin審査状態 */
   adminVerificationStatus: 'unspecified' | 'requested' | 'verified' | 'rejected' | 'canceled'
@@ -119,6 +130,7 @@ export type Company = {
   deletedAt?: string | undefined
   /** 有料職業紹介事業許可番号 */
   employmentPlacementPermitNumber?: string | undefined
+  features?: Feature[] | undefined
   followerNums?: number | undefined
   headOfficeLocation?: string | undefined
   hpUrl?: string | undefined
@@ -208,7 +220,6 @@ export type Account = {
   isPublicWithWork: boolean
   /** サンプルか */
   isSample: boolean
-  isStudent: boolean
   isSupported?: boolean | undefined
   lastNotificationReadAt?: string | undefined
   lastSignInAt?: string | undefined
@@ -324,22 +335,13 @@ export type Product = {
   updatedAt: string
 }
 
-export type Feature = {
-  createdAt: string
-  id: string
-  name: string
-  sourceType: 'company' | 'recruitment'
-  type: 'default' | 'organizational'
-  updatedAt: string
-}
-
 export type Role = {
   createdAt: string
   description?: string | undefined
   id: string
   /** 役割「general」「admin」など */
   name: string
-  type: 'default' | 'organizational'
+  type: 'official' | 'custom'
   updatedAt: string
 }
 
@@ -366,6 +368,8 @@ export type Hope = {
   billingMethod: 'hourly' | 'monthly' | 'yearly' | 'with_project'
   createdAt: string
   id: string
+  industries?: Industry[] | undefined
+  occupations?: Occupation[] | undefined
   ratioOfOperation?: 'once_a_week' | 'few_days_a_week' | 'four_days_a_week' | undefined
   /** 特筆事項 */
   specialNote?: string | undefined
@@ -373,6 +377,7 @@ export type Hope = {
   timeToChangeJob?: number | undefined
   type: 'career' | 'project'
   updatedAt: string
+  workplaces?: State[] | undefined
 }
 
 export type IncomeHistory = {
@@ -408,13 +413,11 @@ export type JobOrder = {
   feeCalculationSpan?: 'monthly' | 'daily' | 'hourly' | undefined
   /** 「稼働報酬制」「固定報酬制」 */
   feeType?: 'time_based' | 'fixed' | undefined
-  /** 固定報酬制の金額（税込） */
+  /** 固定報酬制の金額(税込) */
   fixedAmount?: number | undefined
-  /** 固定報酬制の小計 */
+  /** 固定報酬制の小計(税抜) */
   fixedSubTotal?: number | undefined
-  /** 固定報酬制の税額 */
-  fixedTax?: number | undefined
-  /** 固定報酬制の金額（税込）と論理手数料を合わせた総額 */
+  /** 固定報酬制の金額(税込)と論理手数料を合わせた総額 */
   fixedTotalAmount?: number | undefined
   id: string
   isPublic?: boolean | undefined
@@ -441,9 +444,22 @@ export type JobOrder = {
   taxRatio?: number | undefined
   /** 稼働報酬制の金額 */
   unitTimeFee?: number | undefined
+  /** 稼動報酬制の源泉徴収の対象か */
+  isTargetWithholdingTax?: boolean | undefined
   /** 終了日 */
   untilDate?: string | undefined
   updatedAt: string
+  /** 消費税計算方法 */
+  consumptionTaxCalculationMethod: 'floor' | 'ceil' | 'round'
+  /** 源泉徴収税計算に消費税を含めるか */
+  withholdingIncludedConsumptionTax: boolean
+  files?: {
+    id?: string | undefined
+    name?: string | undefined
+    contentType?: string | undefined
+    url?: string | undefined
+    createdAt?: string | undefined
+  }[] | undefined
 }
 
 /** クローリングサービス */
@@ -466,22 +482,45 @@ export type Job = {
   updatedAt: string
 }
 
+/** 固定報酬制の場合の各品目 */
 export type JobServiceItem = {
   /** 合計金額 */
   amount: number
   createdAt: string
-  /** 項目名 */
+  /** 品目名 */
   description: string
   id: string
   /** 数量 */
   quantity: number
-  /** 消費税 */
-  taxRatio: number
   /** 単位 */
   unitLabel: string
   /** 単価 */
   unitPrice: number
   updatedAt: string
+  /** 源泉徴収の対象か */
+  isTargetWithholding: boolean
+}
+
+/** 消費税 */
+export type ConsumptionTax = {
+  id: string
+  /** 表示名 */
+  name?: string | undefined
+  /** 税率 */
+  ratio: number
+  country: 'jpn'
+}
+
+/** 発注で、消費税率ごとに金額を保持するテーブル */
+export type JobOrderConsumptionTaxPrice = {
+  id?: string | undefined
+  amount?: number | undefined
+}
+
+/** 発注で、源泉徴収税率ごとに金額を保持するテーブル */
+export type JobOrderWithholdingTaxPrice = {
+  id: string
+  amount: number
 }
 
 export type Message = {
@@ -529,15 +568,78 @@ export type IndustryCategory = {
   updatedAt: string
 }
 
+export type IntroductionCompletionReport = {
+  /** 内定承諾日 */
+  acceptanceOfOfferDate: string
+  /** 年収 */
+  amount: number
+  /** 請求先メールアドレス */
+  billingEmails?: string[] | undefined
+  canceledAt?: string | undefined
+  /** 紹介料（年収 x 紹介料比率） */
+  commissionFee: number
+  /** 紹介料比率 */
+  commissionFeeRatio?: number | undefined
+  /** 紹介料（税抜） */
+  commissionFeeWithoutTax?: number | undefined
+  createdAt: string
+  id: string
+  isEnable?: boolean | undefined
+  joinedDate: string
+  memo?: string | undefined
+  paymentStatus: 'unpaid' | 'paid' | 'failed' | 'pending'
+  /** 取り消し理由 */
+  reasonForCancellation?: string | undefined
+  /** 手数料（税込） */
+  systemFee: number
+  /** システム手数料比率 */
+  systemFeeRatio: number
+  /** 手数料（税抜） */
+  systemFeeWithoutTax?: number | undefined
+  /** 紹介料（税） */
+  taxForCommissionFee?: number | undefined
+  /** 手数料（税） */
+  taxForSystemFee?: number | undefined
+  updatedAt: string
+}
+
+export type RecruitmentCompletionReport = {
+  /** 内定承諾日 */
+  acceptanceOfOfferDate?: string | undefined
+  /** 年収（税の概念なし） */
+  amount: number
+  billingEmails?: string[] | undefined
+  canceledAt?: string | undefined
+  /** 請求先メールアドレス */
+  createdAt: string
+  id: string
+  isEnable?: boolean | undefined
+  /** 入社日 */
+  joinedDate?: string | undefined
+  memo?: string | undefined
+  paymentStatus: 'unpaid' | 'paid' | 'failed' | 'pending'
+  /** 取り消し理由 */
+  reasonForCancellation?: string | undefined
+  /** 手数料（税込） */
+  systemFee: number
+  systemFeeRatio: number
+  /** 手数料（税抜） */
+  systemFeeWithoutTax?: number | undefined
+  /** 手数料（税） */
+  taxForSystemFee?: number | undefined
+  updatedAt: string
+}
+
 export type Room = {
   createdAt: string
   /** 未返信メッセージがあるか */
   existsNotReplied: boolean
   id: string
+  introductionCompletionReport?: IntroductionCompletionReport | undefined
   /** 未読メッセージがあればfalse */
   isReadMessage: boolean
   latestMessage?: Message | undefined
-  recruitmentCompletionReport?: string | undefined
+  recruitmentCompletionReport?: RecruitmentCompletionReport | undefined
   updatedAt: string
 }
 
@@ -612,18 +714,6 @@ export type TechStack = {
   createdAt: string
   id: string
   name: string
-  updatedAt: string
-}
-
-export type SearchCondition = {
-  createdAt: string
-  filters: {
-    /** クエリパラメータのキー */
-    key: string
-  }[]
-  id: string
-  target: 'recruitment' | 'company' | 'account'
-  title: string
   updatedAt: string
 }
 
@@ -717,14 +807,18 @@ export type Invoice = {
   status?: 'waiting_for_payment' | 'waiting_for_settlement' | 'waiting_for_payment_and_settlement' | 'failed_settlement' | 'completed' | undefined
   /** Stripe決済手数料 */
   stripeFeeAmount?: number | undefined
-  /** 請求額（小計） */
+  /** 請求額の小計(税抜) */
   subTotal?: number | undefined
-  /** 税額 */
-  tax?: number | undefined
   title?: string | undefined
   /** 請求額（税込）とシステム手数料を合わせた総額 */
   totalAmount?: number | undefined
   updatedAt: string
+  /** 消費税計算方法 */
+  consumptionTaxCalculationMethod?: 'floor' | 'ceil' | 'round' | undefined
+  /** 源泉徴収税計算に消費税を含めるか */
+  withholdingIncludedConsumptionTax?: boolean | undefined
+  /** 請求番号(発注番号と同じで任意の値) */
+  number?: string | undefined
 }
 
 export type InvoiceDetailedItem = {
@@ -738,13 +832,25 @@ export type InvoiceDetailedItem = {
   id: string
   /** 数量 */
   quantity: number
-  /** 消費税 */
-  taxRatio: number
   /** 単位 */
   unitLabel: string
   /** 単価 */
   unitPrice: number
   updatedAt: string
+  /** 源泉徴収の対象か */
+  isTargetWithholdingTax?: boolean | undefined
+}
+
+/** 請求で、消費税率ごとに金額を保持するテーブル */
+export type InvoiceConsumptionTaxPrice = {
+  id: string
+  amount: number
+}
+
+/** 請求で、源泉徴収税率ごとに金額を保持するテーブル */
+export type InvoiceWithholdingTaxPrice = {
+  id: string
+  amount: number
 }
 
 export type Nda = {

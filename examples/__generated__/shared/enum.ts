@@ -75,6 +75,18 @@ export const RECRUITMENT_TYPE = {
 } as const
 export type RecruitmentType = typeof RECRUITMENT_TYPE[keyof typeof RECRUITMENT_TYPE]
 
+export const FEATURE_SOURCE_TYPE = {
+  'company': 'company',
+  'recruitment': 'recruitment'
+} as const
+export type FeatureSourceType = typeof FEATURE_SOURCE_TYPE[keyof typeof FEATURE_SOURCE_TYPE]
+
+export const FEATURE_TYPE = {
+  'default': 'default',
+  'organizational': 'organizational'
+} as const
+export type FeatureType = typeof FEATURE_TYPE[keyof typeof FEATURE_TYPE]
+
 export const COMPANY_ADMIN_VERIFICATION_STATUS = {
   'unspecified': 'unspecified',
   'requested': 'requested',
@@ -200,21 +212,9 @@ export const PRODUCT_TYPE = {
 } as const
 export type ProductType = typeof PRODUCT_TYPE[keyof typeof PRODUCT_TYPE]
 
-export const FEATURE_SOURCE_TYPE = {
-  'company': 'company',
-  'recruitment': 'recruitment'
-} as const
-export type FeatureSourceType = typeof FEATURE_SOURCE_TYPE[keyof typeof FEATURE_SOURCE_TYPE]
-
-export const FEATURE_TYPE = {
-  'default': 'default',
-  'organizational': 'organizational'
-} as const
-export type FeatureType = typeof FEATURE_TYPE[keyof typeof FEATURE_TYPE]
-
 export const ROLE_TYPE = {
-  'default': 'default',
-  'organizational': 'organizational'
+  'official': 'official',
+  'custom': 'custom'
 } as const
 export type RoleType = typeof ROLE_TYPE[keyof typeof ROLE_TYPE]
 
@@ -269,17 +269,45 @@ export const JOB_ORDER_STATUS = {
 } as const
 export type JobOrderStatus = typeof JOB_ORDER_STATUS[keyof typeof JOB_ORDER_STATUS]
 
+export const JOB_ORDER_CONSUMPTION_TAX_CALCULATION_METHOD = {
+  'floor': 'floor',
+  'ceil': 'ceil',
+  'round': 'round'
+} as const
+export type JobOrderConsumptionTaxCalculationMethod = typeof JOB_ORDER_CONSUMPTION_TAX_CALCULATION_METHOD[keyof typeof JOB_ORDER_CONSUMPTION_TAX_CALCULATION_METHOD]
+
 export const JOB_STATUS = {
   'in_progress': 'in_progress',
   'completed': 'completed'
 } as const
 export type JobStatus = typeof JOB_STATUS[keyof typeof JOB_STATUS]
 
+export const CONSUMPTION_TAX_COUNTRY = {
+  'jpn': 'jpn'
+} as const
+export type ConsumptionTaxCountry = typeof CONSUMPTION_TAX_COUNTRY[keyof typeof CONSUMPTION_TAX_COUNTRY]
+
 export const MESSAGE_ACT_AS = {
   'personal': 'personal',
   'organizational': 'organizational'
 } as const
 export type MessageActAs = typeof MESSAGE_ACT_AS[keyof typeof MESSAGE_ACT_AS]
+
+export const INTRODUCTION_COMPLETION_REPORT_PAYMENT_STATUS = {
+  'unpaid': 'unpaid',
+  'paid': 'paid',
+  'failed': 'failed',
+  'pending': 'pending'
+} as const
+export type IntroductionCompletionReportPaymentStatus = typeof INTRODUCTION_COMPLETION_REPORT_PAYMENT_STATUS[keyof typeof INTRODUCTION_COMPLETION_REPORT_PAYMENT_STATUS]
+
+export const RECRUITMENT_COMPLETION_REPORT_PAYMENT_STATUS = {
+  'unpaid': 'unpaid',
+  'paid': 'paid',
+  'failed': 'failed',
+  'pending': 'pending'
+} as const
+export type RecruitmentCompletionReportPaymentStatus = typeof RECRUITMENT_COMPLETION_REPORT_PAYMENT_STATUS[keyof typeof RECRUITMENT_COMPLETION_REPORT_PAYMENT_STATUS]
 
 export const NOTIFICATION_NOTIFICATION_TYPE = {
   'general': 'general',
@@ -309,13 +337,6 @@ export const TECH_STACK_CATEGORY = {
   'other': 'other'
 } as const
 export type TechStackCategory = typeof TECH_STACK_CATEGORY[keyof typeof TECH_STACK_CATEGORY]
-
-export const SEARCH_CONDITION_TARGET = {
-  'recruitment': 'recruitment',
-  'company': 'company',
-  'account': 'account'
-} as const
-export type SearchConditionTarget = typeof SEARCH_CONDITION_TARGET[keyof typeof SEARCH_CONDITION_TARGET]
 
 export const PAYMENT_METHOD_BRAND = {
   'visa': 'visa',
@@ -347,6 +368,13 @@ export const INVOICE_STATUS = {
   'completed': 'completed'
 } as const
 export type InvoiceStatus = typeof INVOICE_STATUS[keyof typeof INVOICE_STATUS]
+
+export const INVOICE_CONSUMPTION_TAX_CALCULATION_METHOD = {
+  'floor': 'floor',
+  'ceil': 'ceil',
+  'round': 'round'
+} as const
+export type InvoiceConsumptionTaxCalculationMethod = typeof INVOICE_CONSUMPTION_TAX_CALCULATION_METHOD[keyof typeof INVOICE_CONSUMPTION_TAX_CALCULATION_METHOD]
 
 export const STATE_CATEGORY_COUNTRY_TYPE = {
   'japan': 'japan',

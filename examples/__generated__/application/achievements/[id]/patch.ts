@@ -12,7 +12,9 @@ export type PatchAchievementsIdResponse = Types.Achievement
 export type PatchAchievementsIdRequestBody = {
   achievement: {
     content?: string | undefined
-    createdDate?: string | undefined
+    createdDate?: string | null | undefined
+    sinceDate?: string | null | undefined
+    untilDate?: string | null | undefined
     description?: string | undefined
   }
 }

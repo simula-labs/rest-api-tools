@@ -11,6 +11,8 @@ import { postAccountsAccountIdApplicants } from "./accounts/[account_id]/applica
 import { getAccountsAccountIdBankAccount } from "./accounts/[account_id]/bank_account/get";
 import { postAccountsAccountIdBankAccount } from "./accounts/[account_id]/bank_account/post";
 import { postAccountsAccountIdBankAccountChange } from "./accounts/[account_id]/bank_account/change/post";
+import { postAccountsAccountIdBlockCompanies } from "./accounts/[account_id]/block_companies/post";
+import { getAccountsAccountIdBlockCompanies } from "./accounts/[account_id]/block_companies/get";
 import { getAccountsAccountIdEmployments } from "./accounts/[account_id]/employments/get";
 import { deleteEmploymentsId } from "./accounts/[account_id]/employments/delete";
 import { getAccountsAccountIdFollowing } from "./accounts/[account_id]/followings/get";
@@ -21,6 +23,7 @@ import { getAccountsAccountIdIdentification } from "./accounts/[account_id]/iden
 import { getAccountsAccountIdIncomeHistories } from "./accounts/[account_id]/income_histories/get";
 import { getAccountsAccountIdIndustryHistories } from "./accounts/[account_id]/industry_histories/get";
 import { postAccountsAccountIdIndustryHistories } from "./accounts/[account_id]/industry_histories/post";
+import { postAccountsAccountIdIndustryHistory } from "./accounts/[account_id]/industry_history/post";
 import { postAccountsAccountIdCompletionReports } from "./accounts/[account_id]/job_change_completion_reports/post";
 import { getAccountsAccountIdJobChangeCompletionReports } from "./accounts/[account_id]/job_change_completion_reports/get";
 import { getAccountsAccountIdJobOrders } from "./accounts/[account_id]/job_orders/get";
@@ -31,10 +34,11 @@ import { getaccountsAccountIdAgreeConsentMatters } from "./accounts/[account_id]
 import { getAccountsAccountIdNotifications } from "./accounts/[account_id]/notifications/get";
 import { getAccountsAccountIdOccupationHistories } from "./accounts/[account_id]/occupation_histories/get";
 import { postAccountsAccountIdOccupationHistories } from "./accounts/[account_id]/occupation_histories/post";
+import { postAccountsAccountIdOccupationHistory } from "./accounts/[account_id]/occupation_history/post";
 import { getAccountsAccountIdProfile } from "./accounts/[account_id]/profile/get";
 import { postAccountsAccountIdProfile } from "./accounts/[account_id]/profile/post";
 import { patchAccountsAccountIdProfile } from "./accounts/[account_id]/profile/patch";
-import { putAccountsAccountIdProfileFiles } from "./accounts/[account_id]/profile/files/put";
+import { patchAccountsAccountIdProfileFiles } from "./accounts/[account_id]/profile/files/patch";
 import { deleteAccountsAccountIdProfileFilesId } from "./accounts/[account_id]/profile/files/[file_id]/delete";
 import { getAccountsAccountIdProfileSpecialtyCompanyTypes } from "./accounts/[account_id]/profile/specialty_company_types/get";
 import { postAccountsAccountIdProfileSpecialtyCompanyTypes } from "./accounts/[account_id]/profile/specialty_company_types/post";
@@ -44,8 +48,6 @@ import { getAccountsAccountIdProjectResults } from "./accounts/[account_id]/proj
 import { getAccountsAccountIdRecruitmentInterests } from "./accounts/[account_id]/recruitment_interests/get";
 import { postAccountsAccountIdRecruitmentInterests } from "./accounts/[account_id]/recruitment_interests/post";
 import { getAccountsAccountIdRooms } from "./accounts/[account_id]/rooms/get";
-import { getAccountsAccountIdSearchConditions } from "./accounts/[account_id]/search_conditions/get";
-import { postCompaniesCompanyIdSearchConditions } from "./accounts/[account_id]/search_conditions/post";
 import { getAccountsAccountIdSkills } from "./accounts/[account_id]/skills/get";
 import { patchAccountsAccountIdSkills } from "./accounts/[account_id]/skills/patch";
 import { postAccountsAccountIdSupport } from "./accounts/[account_id]/support/post";
@@ -62,6 +64,7 @@ import { patchAccountsId } from "./accounts/[id]/patch";
 import { deleteAccountsId } from "./accounts/[id]/delete";
 import { patchAchievementsId } from "./achievements/[id]/patch";
 import { deleteAchievementsId } from "./achievements/[id]/delete";
+import { deleteBlockCompanies } from "./block_companies/[company_id]/delete";
 import { getCompanies } from "./companies/get";
 import { postCompanies } from "./companies/post";
 import { getCompaniesRecommended } from "./companies/recommended/get";
@@ -81,6 +84,8 @@ import { patchIndustryHistoriesId } from "./industry_histories/[id]/patch";
 import { deleteIndustryHistoriesId } from "./industry_histories/[id]/delete";
 import { getInvoicesId } from "./invoices/[id]/get";
 import { patchInvoicesId } from "./invoices/[id]/patch";
+import { patchInvoicesInvoiceIdFiles } from "./invoices/[invoice_id]/files/patch";
+import { deleteInvoicesInvoiceIdFilesFileId } from "./invoices/[invoice_id]/files/[file_id]/delete";
 import { getJobChangeCompletionReportsId } from "./job_change_completion_reports/[id]/get";
 import { getJobOrdersId } from "./job_orders/[id]/get";
 import { patchJobOrdersId } from "./job_orders/[id]/patch";
@@ -89,7 +94,6 @@ import { getJobsId } from "./jobs/[id]/get";
 import { patchJobsId } from "./jobs/[id]/patch";
 import { getJobsJobIdInvoices } from "./jobs/[job_id]/invoices/get";
 import { postJobsJobIdInvoices } from "./jobs/[job_id]/invoices/post";
-import { postJobsJobIdInvoicesCheck } from "./jobs/[job_id]/invoices/check/post";
 import { getJobsJobIdJobReviews } from "./jobs/[job_id]/job_reviews/get";
 import { getAccountsAccountIdRoomsRoomIdMessagesId } from "./messages/[id]/get";
 import { getNda } from "./nda/get";
@@ -110,9 +114,6 @@ import { getAccountsAccountIdRoomsId } from "./rooms/[id]/get";
 import { postRoomsRoomIdMarkAsRead } from "./rooms/[room_id]/mark_as_read/post";
 import { getAccountsAccountIdRoomsRoomIdMessages } from "./rooms/[room_id]/messages/get";
 import { postAccountsAccountIdRoomsRoomIdMessages } from "./rooms/[room_id]/messages/post";
-import { getSearchConditionsId } from "./search_conditions/[id]/get";
-import { patchCompaniesCompanyIdSearchConditions } from "./search_conditions/[id]/patch";
-import { deleteSearchConditionsId } from "./search_conditions/[id]/delete";
 import { getSkills } from "./skills/get";
 import { postSkills } from "./skills/post";
 import { patchSpecialtyCompanyTypesId } from "./specialty_company_types/[id]/patch";
@@ -141,6 +142,8 @@ export const applicationApi = {
   getAccountsAccountIdBankAccount,
   postAccountsAccountIdBankAccount,
   postAccountsAccountIdBankAccountChange,
+  postAccountsAccountIdBlockCompanies,
+  getAccountsAccountIdBlockCompanies,
   getAccountsAccountIdEmployments,
   deleteEmploymentsId,
   getAccountsAccountIdFollowing,
@@ -151,6 +154,7 @@ export const applicationApi = {
   getAccountsAccountIdIncomeHistories,
   getAccountsAccountIdIndustryHistories,
   postAccountsAccountIdIndustryHistories,
+  postAccountsAccountIdIndustryHistory,
   postAccountsAccountIdCompletionReports,
   getAccountsAccountIdJobChangeCompletionReports,
   getAccountsAccountIdJobOrders,
@@ -161,10 +165,11 @@ export const applicationApi = {
   getAccountsAccountIdNotifications,
   getAccountsAccountIdOccupationHistories,
   postAccountsAccountIdOccupationHistories,
+  postAccountsAccountIdOccupationHistory,
   getAccountsAccountIdProfile,
   postAccountsAccountIdProfile,
   patchAccountsAccountIdProfile,
-  putAccountsAccountIdProfileFiles,
+  patchAccountsAccountIdProfileFiles,
   deleteAccountsAccountIdProfileFilesId,
   getAccountsAccountIdProfileSpecialtyCompanyTypes,
   postAccountsAccountIdProfileSpecialtyCompanyTypes,
@@ -174,8 +179,6 @@ export const applicationApi = {
   getAccountsAccountIdRecruitmentInterests,
   postAccountsAccountIdRecruitmentInterests,
   getAccountsAccountIdRooms,
-  getAccountsAccountIdSearchConditions,
-  postCompaniesCompanyIdSearchConditions,
   getAccountsAccountIdSkills,
   patchAccountsAccountIdSkills,
   postAccountsAccountIdSupport,
@@ -192,6 +195,7 @@ export const applicationApi = {
   deleteAccountsId,
   patchAchievementsId,
   deleteAchievementsId,
+  deleteBlockCompanies,
   getCompanies,
   postCompanies,
   getCompaniesRecommended,
@@ -211,6 +215,8 @@ export const applicationApi = {
   deleteIndustryHistoriesId,
   getInvoicesId,
   patchInvoicesId,
+  patchInvoicesInvoiceIdFiles,
+  deleteInvoicesInvoiceIdFilesFileId,
   getJobChangeCompletionReportsId,
   getJobOrdersId,
   patchJobOrdersId,
@@ -219,7 +225,6 @@ export const applicationApi = {
   patchJobsId,
   getJobsJobIdInvoices,
   postJobsJobIdInvoices,
-  postJobsJobIdInvoicesCheck,
   getJobsJobIdJobReviews,
   getAccountsAccountIdRoomsRoomIdMessagesId,
   getNda,
@@ -240,9 +245,6 @@ export const applicationApi = {
   postRoomsRoomIdMarkAsRead,
   getAccountsAccountIdRoomsRoomIdMessages,
   postAccountsAccountIdRoomsRoomIdMessages,
-  getSearchConditionsId,
-  patchCompaniesCompanyIdSearchConditions,
-  deleteSearchConditionsId,
   getSkills,
   postSkills,
   patchSpecialtyCompanyTypesId,

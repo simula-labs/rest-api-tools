@@ -9,7 +9,6 @@ export type PostAccountsAccountIdOccupationHistoriesUrlParams = {
 
 export type PostAccountsAccountIdOccupationHistoriesResponse = Types.OccupationHistory & {
     account: Types.Account
-  } & {
     occupation: Types.Occupation
   }
 

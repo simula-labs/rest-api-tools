@@ -9,8 +9,8 @@ export type GetAccountsAccountIdOccupationHistoriesUrlParams = {
 
 export type GetAccountsAccountIdOccupationHistoriesResponse = {
   occupationHistories: (Types.OccupationHistory & {
-    account?: Types.Account | undefined
-    occupation?: Types.Occupation | undefined
+    account: Types.Account
+    occupation: Types.Occupation
   })[]
 }
 

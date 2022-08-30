@@ -1,13 +1,13 @@
 /* eslint-disable */
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../../shared/index";
-import { API_HOST } from "../../urls";
+import type * as Types from "../../../../shared/index";
+import { API_HOST } from "../../../urls";
 
-export type GetInvoicesIdUrlParams = {
-  id: string
+export type PatchInvoicesInvoiceIdFilesUrlParams = {
+  invoiceId: string
 } | undefined
 
-export type GetInvoicesIdResponse = Types.Invoice & {
+export type PatchInvoicesInvoiceIdFilesResponse = Types.Invoice & {
     job: Types.Job & {
       jobOrder?: Types.JobOrder | undefined
     }
@@ -21,16 +21,20 @@ export type GetInvoicesIdResponse = Types.Invoice & {
     invoiceWithholdingTaxPrice: Types.InvoiceWithholdingTaxPrice
   }
 
-export const getInvoicesId = new BaseRequest<
-  undefined,
-  GetInvoicesIdResponse,
-  GetInvoicesIdUrlParams,
+export type PatchInvoicesInvoiceIdFilesRequestBody = {
+  files: File[]
+}
+
+export const patchInvoicesInvoiceIdFiles = new BaseRequest<
+  PatchInvoicesInvoiceIdFilesRequestBody,
+  PatchInvoicesInvoiceIdFilesResponse,
+  PatchInvoicesInvoiceIdFilesUrlParams,
   undefined
 >({
   requiredAuth: false,
-  method: "get",
+  method: "patch",
   baseURL: API_HOST,
-  path: "/invoices/:id",
+  path: "/invoices/:invoiceId/files",
   tokenKey: "AUTH_TOKEN",
-  contentType: "json",
+  contentType: "formData",
 });

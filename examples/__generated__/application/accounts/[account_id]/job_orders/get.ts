@@ -10,34 +10,33 @@ export type GetAccountsAccountIdJobOrdersUrlParams = {
 export type GetAccountsAccountIdJobOrdersResponse = {
   jobOrders: (Types.JobOrder & {
     account?: Types.Account | undefined
-  } & {
+
     company?: Types.Company & {
       industries?: string | undefined
-    } & {
       owner?: string | undefined
     } | undefined
-  } & {
+
     recruitment?: Types.Recruitment & {
       workplace?: Types.State | undefined
-    } & {
       author?: Types.Account | undefined
-    } & {
       externalService?: Types.ExternalService | undefined
-    } & {
       employmentStatuses?: Types.EmploymentStatus[] | undefined
-    } & {
       occupations?: Types.Occupation[] | undefined
-    } & {
       industries?: Types.Industry[] | undefined
-    } & {
       company?: Types.Company | undefined
     } | undefined
-  } & {
+
     job?: Types.Job & {
       ''?: Types.Account | undefined
     } | undefined
-  } & {
-    jobServiceItems?: Types.JobServiceItem[] | undefined
+
+    jobServiceItems?: (Types.JobServiceItem & {
+      consumptionTax?: Types.ConsumptionTax | undefined
+    })[] | undefined
+    jobOrderConsumptionTaxPrices?: (Types.JobOrderConsumptionTaxPrice & {
+      consumptionTax?: Types.ConsumptionTax | undefined
+    })[] | undefined
+    jobOrderWithholdingTaxPrice?: Types.JobOrderWithholdingTaxPrice | undefined
   })[]
   totalDataNums: number
 }

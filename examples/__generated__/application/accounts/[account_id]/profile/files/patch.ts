@@ -3,30 +3,34 @@ import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../../../shared/index";
 import { API_HOST } from "../../../../urls";
 
-export type PutAccountsAccountIdProfileFilesUrlParams = {
+export type PatchAccountsAccountIdProfileFilesUrlParams = {
   accountId: string
 } | undefined
 
-export type PutAccountsAccountIdProfileFilesResponse = Types.Profile & {
+export type PatchAccountsAccountIdProfileFilesResponse = Types.Profile & {
     specialtyCompanyTypes: Types.SpecialtyCompanyType[]
+  } & {
     specialtyPositions: Types.SpecialtyPosition[]
+  } & {
     occupationMainCategories: Types.OccupationMainCategory[]
+  } & {
     industryCategories: Types.IndustryCategory[]
+  } & {
     placeOfResidence: Types.State
   }
 
-export type PutAccountsAccountIdProfileFilesRequestBody = {
+export type PatchAccountsAccountIdProfileFilesRequestBody = {
   files: File[]
 }
 
-export const putAccountsAccountIdProfileFiles = new BaseRequest<
-  PutAccountsAccountIdProfileFilesRequestBody,
-  PutAccountsAccountIdProfileFilesResponse,
-  PutAccountsAccountIdProfileFilesUrlParams,
+export const patchAccountsAccountIdProfileFiles = new BaseRequest<
+  PatchAccountsAccountIdProfileFilesRequestBody,
+  PatchAccountsAccountIdProfileFilesResponse,
+  PatchAccountsAccountIdProfileFilesUrlParams,
   undefined
 >({
   requiredAuth: false,
-  method: "put",
+  method: "patch",
   baseURL: API_HOST,
   path: "/accounts/:accountId/profile/files",
   tokenKey: "AUTH_TOKEN",

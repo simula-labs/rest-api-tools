@@ -12,7 +12,9 @@ export type PostAccountsAccountIdAchievementsResponse = Types.Achievement
 export type PostAccountsAccountIdAchievementsRequestBody = {
   achievement: {
     content: string
-    createdDate: string
+    createdDate?: string | null | undefined
+    sinceDate?: string | null | undefined
+    untilDate?: string | null | undefined
     description?: string | undefined
   }
 }

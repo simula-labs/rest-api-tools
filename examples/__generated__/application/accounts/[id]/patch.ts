@@ -31,12 +31,10 @@ export type PatchAccountsIdRequestBody = {
     isCareerScoutTarget?: boolean | undefined
     isProjectScoutTarget?: boolean | undefined
     isPublicWork?: boolean | undefined
-    isStudent?: boolean | undefined
     /** 新パスワードを設定する時に必要 */
     currentPassword?: string | undefined
     newPassword?: string | undefined
     newPasswordConfirmation?: string | undefined
-    blockCompanyIds?: string[] | undefined
   }
 }
 

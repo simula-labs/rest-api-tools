@@ -9,7 +9,6 @@ export type PatchOccupationHistoriesIdUrlParams = {
 
 export type PatchOccupationHistoriesIdResponse = Types.OccupationHistory & {
     account: Types.Account
-  } & {
     occupation: Types.Occupation
   }
 

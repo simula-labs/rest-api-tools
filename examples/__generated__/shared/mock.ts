@@ -22,6 +22,8 @@ export const mockAchievement = (modification?: Partial< Types.Achievement>): Typ
     createdDate: "string",
     description: "string",
     id: "string",
+    sinceDate: "string",
+    untilDate: "string",
     updatedAt: "string",
     ...modification
   }
@@ -89,6 +91,18 @@ export const mockRecruitment = (modification?: Partial< Types.Recruitment>): Typ
   }
 }
 
+export const mockFeature = (modification?: Partial< Types.Feature>): Types.Feature => {
+  return {
+    createdAt: "string",
+    id: "string",
+    name: "string",
+    sourceType: 'company',
+    type: 'default',
+    updatedAt: "string",
+    ...modification
+  }
+}
+
 export const mockCompany = (modification?: Partial< Types.Company>): Types.Company => {
   return {
     adminVerificationStatus: 'unspecified',
@@ -100,6 +114,7 @@ export const mockCompany = (modification?: Partial< Types.Company>): Types.Compa
     createdAt: "string",
     deletedAt: "string",
     employmentPlacementPermitNumber: "string",
+    features: [],
     followerNums: 0,
     headOfficeLocation: "string",
     hpUrl: "string",
@@ -191,7 +206,6 @@ export const mockAccount = (modification?: Partial< Types.Account>): Types.Accou
     isProjectScoutTarget: false,
     isPublicWithWork: false,
     isSample: false,
-    isStudent: false,
     isSupported: false,
     lastNotificationReadAt: "string",
     lastSignInAt: "string",
@@ -308,25 +322,13 @@ export const mockProduct = (modification?: Partial< Types.Product>): Types.Produ
   }
 }
 
-export const mockFeature = (modification?: Partial< Types.Feature>): Types.Feature => {
-  return {
-    createdAt: "string",
-    id: "string",
-    name: "string",
-    sourceType: 'company',
-    type: 'default',
-    updatedAt: "string",
-    ...modification
-  }
-}
-
 export const mockRole = (modification?: Partial< Types.Role>): Types.Role => {
   return {
     createdAt: "string",
     description: "string",
     id: "string",
     name: "string",
-    type: 'default',
+    type: 'official',
     updatedAt: "string",
     ...modification
   }
@@ -360,11 +362,14 @@ export const mockHope = (modification?: Partial< Types.Hope>): Types.Hope => {
     billingMethod: 'hourly',
     createdAt: "string",
     id: "string",
+    industries: [],
+    occupations: [],
     ratioOfOperation: 'once_a_week',
     specialNote: "string",
     timeToChangeJob: 0,
     type: 'career',
     updatedAt: "string",
+    workplaces: [],
     ...modification
   }
 }
@@ -409,7 +414,6 @@ export const mockJobOrder = (modification?: Partial< Types.JobOrder>): Types.Job
     feeType: 'time_based',
     fixedAmount: 0,
     fixedSubTotal: 0,
-    fixedTax: 0,
     fixedTotalAmount: 0,
     id: "string",
     isPublic: false,
@@ -425,8 +429,12 @@ export const mockJobOrder = (modification?: Partial< Types.JobOrder>): Types.Job
     status: 'draft',
     taxRatio: 0,
     unitTimeFee: 0,
+    isTargetWithholdingTax: false,
     untilDate: "string",
     updatedAt: "string",
+    consumptionTaxCalculationMethod: 'floor',
+    withholdingIncludedConsumptionTax: false,
+    files: [],
     ...modification
   }
 }
@@ -455,6 +463,7 @@ export const mockJob = (modification?: Partial< Types.Job>): Types.Job => {
   }
 }
 
+/** 固定報酬制の場合の各品目 */
 export const mockJobServiceItem = (modification?: Partial< Types.JobServiceItem>): Types.JobServiceItem => {
   return {
     amount: 0,
@@ -462,10 +471,39 @@ export const mockJobServiceItem = (modification?: Partial< Types.JobServiceItem>
     description: "string",
     id: "string",
     quantity: 0,
-    taxRatio: 0,
     unitLabel: "string",
     unitPrice: 0,
     updatedAt: "string",
+    isTargetWithholding: false,
+    ...modification
+  }
+}
+
+/** 消費税 */
+export const mockConsumptionTax = (modification?: Partial< Types.ConsumptionTax>): Types.ConsumptionTax => {
+  return {
+    id: "string",
+    name: "string",
+    ratio: 0,
+    country: 'jpn',
+    ...modification
+  }
+}
+
+/** 発注で、消費税率ごとに金額を保持するテーブル */
+export const mockJobOrderConsumptionTaxPrice = (modification?: Partial< Types.JobOrderConsumptionTaxPrice>): Types.JobOrderConsumptionTaxPrice => {
+  return {
+    id: "string",
+    amount: 0,
+    ...modification
+  }
+}
+
+/** 発注で、源泉徴収税率ごとに金額を保持するテーブル */
+export const mockJobOrderWithholdingTaxPrice = (modification?: Partial< Types.JobOrderWithholdingTaxPrice>): Types.JobOrderWithholdingTaxPrice => {
+  return {
+    id: "string",
+    amount: 0,
     ...modification
   }
 }
@@ -531,14 +569,63 @@ export const mockIndustryCategory = (modification?: Partial< Types.IndustryCateg
   }
 }
 
+export const mockIntroductionCompletionReport = (modification?: Partial< Types.IntroductionCompletionReport>): Types.IntroductionCompletionReport => {
+  return {
+    acceptanceOfOfferDate: "string",
+    amount: 0,
+    billingEmails: [],
+    canceledAt: "string",
+    commissionFee: 0,
+    commissionFeeRatio: 0,
+    commissionFeeWithoutTax: 0,
+    createdAt: "string",
+    id: "string",
+    isEnable: false,
+    joinedDate: "string",
+    memo: "string",
+    paymentStatus: 'unpaid',
+    reasonForCancellation: "string",
+    systemFee: 0,
+    systemFeeRatio: 0,
+    systemFeeWithoutTax: 0,
+    taxForCommissionFee: 0,
+    taxForSystemFee: 0,
+    updatedAt: "string",
+    ...modification
+  }
+}
+
+export const mockRecruitmentCompletionReport = (modification?: Partial< Types.RecruitmentCompletionReport>): Types.RecruitmentCompletionReport => {
+  return {
+    acceptanceOfOfferDate: "string",
+    amount: 0,
+    billingEmails: [],
+    canceledAt: "string",
+    createdAt: "string",
+    id: "string",
+    isEnable: false,
+    joinedDate: "string",
+    memo: "string",
+    paymentStatus: 'unpaid',
+    reasonForCancellation: "string",
+    systemFee: 0,
+    systemFeeRatio: 0,
+    systemFeeWithoutTax: 0,
+    taxForSystemFee: 0,
+    updatedAt: "string",
+    ...modification
+  }
+}
+
 export const mockRoom = (modification?: Partial< Types.Room>): Types.Room => {
   return {
     createdAt: "string",
     existsNotReplied: false,
     id: "string",
+    introductionCompletionReport: mockIntroductionCompletionReport(),
     isReadMessage: false,
     latestMessage: mockMessage(),
-    recruitmentCompletionReport: "string",
+    recruitmentCompletionReport: mockRecruitmentCompletionReport(),
     updatedAt: "string",
     ...modification
   }
@@ -634,18 +721,6 @@ export const mockTechStack = (modification?: Partial< Types.TechStack>): Types.T
   }
 }
 
-export const mockSearchCondition = (modification?: Partial< Types.SearchCondition>): Types.SearchCondition => {
-  return {
-    createdAt: "string",
-    filters: [],
-    id: "string",
-    target: 'recruitment',
-    title: "string",
-    updatedAt: "string",
-    ...modification
-  }
-}
-
 export const mockSupport = (modification?: Partial< Types.Support>): Types.Support => {
   return {
     career: false,
@@ -734,10 +809,12 @@ export const mockInvoice = (modification?: Partial< Types.Invoice>): Types.Invoi
     status: 'waiting_for_payment',
     stripeFeeAmount: 0,
     subTotal: 0,
-    tax: 0,
     title: "string",
     totalAmount: 0,
     updatedAt: "string",
+    consumptionTaxCalculationMethod: 'floor',
+    withholdingIncludedConsumptionTax: false,
+    number: "string",
     ...modification
   }
 }
@@ -750,10 +827,28 @@ export const mockInvoiceDetailedItem = (modification?: Partial< Types.InvoiceDet
     description: "string",
     id: "string",
     quantity: 0,
-    taxRatio: 0,
     unitLabel: "string",
     unitPrice: 0,
     updatedAt: "string",
+    isTargetWithholdingTax: false,
+    ...modification
+  }
+}
+
+/** 請求で、消費税率ごとに金額を保持するテーブル */
+export const mockInvoiceConsumptionTaxPrice = (modification?: Partial< Types.InvoiceConsumptionTaxPrice>): Types.InvoiceConsumptionTaxPrice => {
+  return {
+    id: "string",
+    amount: 0,
+    ...modification
+  }
+}
+
+/** 請求で、源泉徴収税率ごとに金額を保持するテーブル */
+export const mockInvoiceWithholdingTaxPrice = (modification?: Partial< Types.InvoiceWithholdingTaxPrice>): Types.InvoiceWithholdingTaxPrice => {
+  return {
+    id: "string",
+    amount: 0,
     ...modification
   }
 }

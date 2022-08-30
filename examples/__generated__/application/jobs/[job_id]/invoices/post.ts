@@ -11,8 +11,14 @@ export type PostJobsJobIdInvoicesResponse = Types.Invoice & {
     job: Types.Job & {
       jobOrder?: Types.JobOrder | undefined
     }
-  } & {
-    invoiceDetailedItems: Types.InvoiceDetailedItem[]
+
+    invoiceDetailedItems: (Types.InvoiceDetailedItem & {
+      consumptionTax?: Types.ConsumptionTax | undefined
+    })[]
+    invoiceConsumptionTaxPrices: (Types.InvoiceConsumptionTaxPrice & {
+      consumptionTax?: Types.ConsumptionTax | undefined
+    })[]
+    invoiceWithholdingTaxPrice: Types.InvoiceWithholdingTaxPrice
   }
 
 export type PostJobsJobIdInvoicesRequestBody = {
@@ -22,11 +28,13 @@ export type PostJobsJobIdInvoicesRequestBody = {
     title: string
     /** 支払期日 */
     deadline?: string | undefined
-    /** 請求書ファイル */
-    files?: File[] | undefined
     /** 備考 */
     note?: string | undefined
     issuingStatus?: 'fixed' | 'draft' | 'withdrawn' | undefined
+    /** 消費税計算方法 */
+    consumptionTaxCalculationMethod: 'floor' | 'ceil' | 'round'
+    /** 源泉徴収税計算に消費税を含めるか */
+    withholdingIncludedConsumptionTax: boolean
     invoiceDetailedItems?: {
       invoiceDetailedItem?: {
         /** 項目名 */
@@ -38,11 +46,17 @@ export type PostJobsJobIdInvoicesRequestBody = {
         /** 単価 */
         unitPrice?: number | undefined
         /** 消費税 */
-        taxRatio?: number | undefined
+        consumptionTaxId?: string | undefined
         /** 金額 */
         amount?: number | undefined
+        /** 稼動報酬制の源泉徴収の対象か */
+        isTargetWithholdingTax?: boolean | undefined
       } | undefined
     }[] | undefined
+    /** 合計金額 */
+    amount: number
+    /** 請求番号(発注番号と同じで任意の値) */
+    number?: string | undefined
   }
 }
 
@@ -57,5 +71,5 @@ export const postJobsJobIdInvoices = new BaseRequest<
   baseURL: API_HOST,
   path: "/jobs/:jobId/invoices",
   tokenKey: "AUTH_TOKEN",
-  contentType: "formData",
+  contentType: "json",
 });

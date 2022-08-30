@@ -19,6 +19,7 @@ export type GetAccountsAccountIdNotificationsResponse = {
 export type GetAccountsAccountIdNotificationsQueryParams = {
   notificationType?: 'general' | 'message' | undefined
   isRead?: boolean | undefined
+  page?: number | undefined
 }
 
 export const getAccountsAccountIdNotifications = new BaseRequest<

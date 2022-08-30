@@ -9,8 +9,14 @@ export type PostAccountsAccountIdProfileSpecialtyPositionsUrlParams = {
 
 export type PostAccountsAccountIdProfileSpecialtyPositionsResponse = Types.SpecialtyPosition
 
+export type PostAccountsAccountIdProfileSpecialtyPositionsRequestBody = {
+  specialtyPosition: {
+    content?: string | undefined
+  }
+}
+
 export const postAccountsAccountIdProfileSpecialtyPositions = new BaseRequest<
-  undefined,
+  PostAccountsAccountIdProfileSpecialtyPositionsRequestBody,
   PostAccountsAccountIdProfileSpecialtyPositionsResponse,
   PostAccountsAccountIdProfileSpecialtyPositionsUrlParams,
   undefined

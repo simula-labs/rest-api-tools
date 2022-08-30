@@ -10,9 +10,13 @@ export type DeleteAccountsAccountIdProfileFilesIdUrlParams = {
 
 export type DeleteAccountsAccountIdProfileFilesIdResponse = Types.Profile & {
     specialtyCompanyTypes: Types.SpecialtyCompanyType[]
+  } & {
     specialtyPositions: Types.SpecialtyPosition[]
+  } & {
     occupationMainCategories: Types.OccupationMainCategory[]
+  } & {
     industryCategories: Types.IndustryCategory[]
+  } & {
     placeOfResidence: Types.State
   }
 

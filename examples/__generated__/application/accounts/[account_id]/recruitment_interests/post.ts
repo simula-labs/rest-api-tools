@@ -39,6 +39,8 @@ export type PostAccountsAccountIdRecruitmentInterestsResponse = Types.Recruitmen
     employmentContractTerm: Types.EmploymentContractTerm[]
   } & {
     techStack: Types.TechStack[]
+  } & {
+    targetCompany: Types.Company
   }
 
 export type PostAccountsAccountIdRecruitmentInterestsRequestBody = {

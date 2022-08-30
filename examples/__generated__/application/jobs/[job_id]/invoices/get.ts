@@ -12,8 +12,14 @@ export type GetJobsJobIdInvoicesResponse = {
     job?: Types.Job & {
       jobOrder?: Types.JobOrder | undefined
     } | undefined
-  } & {
-    invoiceDetailedItems?: Types.InvoiceDetailedItem[] | undefined
+
+    invoiceDetailedItems?: (Types.InvoiceDetailedItem & {
+      consumptionTax?: Types.ConsumptionTax | undefined
+    })[] | undefined
+    invoiceConsumptionTaxPrices?: (Types.InvoiceConsumptionTaxPrice & {
+      consumptionTax?: Types.ConsumptionTax | undefined
+    })[] | undefined
+    invoiceWithholdingTaxPrice?: Types.InvoiceWithholdingTaxPrice | undefined
   })[]
   totalDataNums: number
 }

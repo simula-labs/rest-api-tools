@@ -1,13 +1,14 @@
 /* eslint-disable */
 import { BaseRequest } from "@simula-labs/rest-api-tools";
-import type * as Types from "../../../shared/index";
-import { API_HOST } from "../../urls";
+import type * as Types from "../../../../../shared/index";
+import { API_HOST } from "../../../../urls";
 
-export type GetInvoicesIdUrlParams = {
-  id: string
+export type DeleteInvoicesInvoiceIdFilesFileIdUrlParams = {
+  invoiceId: string
+  fileId: string
 } | undefined
 
-export type GetInvoicesIdResponse = Types.Invoice & {
+export type DeleteInvoicesInvoiceIdFilesFileIdResponse = Types.Invoice & {
     job: Types.Job & {
       jobOrder?: Types.JobOrder | undefined
     }
@@ -21,16 +22,16 @@ export type GetInvoicesIdResponse = Types.Invoice & {
     invoiceWithholdingTaxPrice: Types.InvoiceWithholdingTaxPrice
   }
 
-export const getInvoicesId = new BaseRequest<
+export const deleteInvoicesInvoiceIdFilesFileId = new BaseRequest<
   undefined,
-  GetInvoicesIdResponse,
-  GetInvoicesIdUrlParams,
+  DeleteInvoicesInvoiceIdFilesFileIdResponse,
+  DeleteInvoicesInvoiceIdFilesFileIdUrlParams,
   undefined
 >({
   requiredAuth: false,
-  method: "get",
+  method: "delete",
   baseURL: API_HOST,
-  path: "/invoices/:id",
+  path: "/invoices/:invoiceId/files/:fileId",
   tokenKey: "AUTH_TOKEN",
-  contentType: "json",
+  contentType: "formData",
 });

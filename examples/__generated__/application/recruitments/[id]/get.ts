@@ -39,6 +39,8 @@ export type GetRecruitmentsIdResponse = Types.Recruitment & {
     employmentContractTerm: Types.EmploymentContractTerm[]
   } & {
     techStack: Types.TechStack[]
+  } & {
+    targetCompany: Types.Company
   }
 
 export const getRecruitmentsId = new BaseRequest<

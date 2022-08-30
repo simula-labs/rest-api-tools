@@ -19,7 +19,7 @@
       "description": "Stg"
     },
     {
-      "url": "https://api-dev.prob-woks.com/v1",
+      "url": "https://api-dev.prob-works.com/v1",
       "description": "Dev"
     }
   ],
@@ -242,15 +242,25 @@
                       },
                       "created_date": {
                         "type": "string",
-                        "format": "date"
+                        "format": "date",
+                        "nullable": true
+                      },
+                      "since_date": {
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true
+                      },
+                      "until_date": {
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true
                       },
                       "description": {
                         "type": "string"
                       }
                     },
                     "required": [
-                      "content",
-                      "created_date"
+                      "content"
                     ]
                   }
                 }
@@ -468,6 +478,58 @@
         }
       }
     },
+    "/accounts/{account_id}/block_companies": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "account_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "アカウントのブロック企業を作成する",
+        "operationId": "post-accounts-account_id-block_companies",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "block_company": {
+                    "type": "object",
+                    "properties": {
+                      "company_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Companies"
+          }
+        }
+      },
+      "get": {
+        "summary": "アカウントのブロック企業一覧を取得する",
+        "operationId": "get-accounts-account_id-block_companies",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Companies"
+          }
+        }
+      }
+    },
     "/accounts/{account_id}/employments": {
       "parameters": [
         {
@@ -563,9 +625,19 @@
                     ]
                   }
                 }
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "following": {
+                      "company_id": "b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf"
+                    }
+                  }
+                }
               }
             }
-          }
+          },
+          "description": ""
         }
       }
     },
@@ -631,9 +703,6 @@
                       },
                       "special_note": {
                         "type": "string"
-                      },
-                      "beginning_period": {
-                        "type": "integer"
                       },
                       "ratio_of_operation": {
                         "type": "string",
@@ -813,6 +882,54 @@
                         }
                       }
                     }
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/accounts/{account_id}/industry_history": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "account_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "アカウントの経験業種を作成する（単体）",
+        "operationId": "post-accounts-account_id-industry_history",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/IndustryHistory"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "industry_history": {
+                    "type": "object",
+                    "properties": {
+                      "industry_id": {
+                        "type": "string"
+                      },
+                      "year_of_experience": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "industry_id",
+                      "year_of_experience"
+                    ]
                   }
                 }
               }
@@ -1141,6 +1258,13 @@
             },
             "in": "query",
             "name": "is_read"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "page"
           }
         ]
       }
@@ -1202,6 +1326,54 @@
                         }
                       }
                     }
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/accounts/{account_id}/occupation_history": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "account_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "アカウントの経験職種を作成する（単体）",
+        "operationId": "post-accounts-account_id-occupation_history",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/OccupationHistory"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "occupation_history": {
+                    "type": "object",
+                    "properties": {
+                      "occupation_id": {
+                        "type": "string"
+                      },
+                      "year_of_experience": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "occupation_id",
+                      "year_of_experience"
+                    ]
                   }
                 }
               }
@@ -1580,9 +1752,9 @@
           "required": true
         }
       ],
-      "put": {
+      "patch": {
         "summary": "アカウントのプロフィールにファイルを紐づける",
-        "operationId": "put-accounts-account_id-profile-files",
+        "operationId": "patch-accounts-account_id-profile-files",
         "responses": {
           "200": {
             "$ref": "#/components/responses/Profile"
@@ -1634,7 +1806,8 @@
           "200": {
             "$ref": "#/components/responses/Profile"
           }
-        }
+        },
+        "description": ""
       }
     },
     "/accounts/{account_id}/profile/specialty_company_types": {
@@ -1697,7 +1870,27 @@
           "200": {
             "$ref": "#/components/responses/SpecialtyPosition"
           }
-        }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "specialty_position": {
+                    "type": "object",
+                    "properties": {
+                      "content": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": ""
       }
     },
     "/accounts/{account_id}/project_result": {
@@ -1817,117 +2010,6 @@
             "name": "page"
           }
         ]
-      }
-    },
-    "/accounts/{account_id}/search_conditions": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "account_id",
-          "in": "path",
-          "required": true
-        }
-      ],
-      "get": {
-        "summary": "アカウントの検索条件一覧を取得する",
-        "tags": [],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/SearchConditions"
-          }
-        },
-        "operationId": "get-accounts-account_id-search_conditions",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "company_id",
-            "description": "その企業の検索条件一覧を返す"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "example": "recruitment"
-            },
-            "in": "query",
-            "name": "target",
-            "description": "ターゲット"
-          }
-        ]
-      },
-      "post": {
-        "summary": "アカウントの検索条件を作成",
-        "operationId": "post-companies-company_id-search_conditions",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/SearchCondition"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "search_condition": {
-                    "type": "object",
-                    "properties": {
-                      "title": {
-                        "type": "string",
-                        "example": "バックエンドエンジニア検索"
-                      },
-                      "target": {
-                        "type": "string",
-                        "enum": [
-                          "account",
-                          "recruitment",
-                          "company"
-                        ],
-                        "example": "recruitment"
-                      },
-                      "filters": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "key": {
-                              "type": "string",
-                              "description": "クエリパラメータのキー",
-                              "example": "name"
-                            },
-                            "value": {
-                              "description": "クエリパラメータの値",
-                              "type": [
-                                "string",
-                                "number",
-                                "integer",
-                                "boolean"
-                              ]
-                            }
-                          },
-                          "required": [
-                            "key",
-                            "value"
-                          ]
-                        }
-                      }
-                    },
-                    "required": [
-                      "title",
-                      "target",
-                      "filters"
-                    ]
-                  }
-                }
-              }
-            }
-          },
-          "description": "filtersは部分的な更新ができないため、更新でも必ずすべてのフィルターを送る"
-        }
       }
     },
     "/accounts/{account_id}/skills": {
@@ -2414,10 +2496,6 @@
                       "is_public_work": {
                         "type": "boolean"
                       },
-                      "is_student": {
-                        "type": "boolean",
-                        "default": false
-                      },
                       "current_password": {
                         "type": "string",
                         "description": "新パスワードを設定する時に必要"
@@ -2427,38 +2505,12 @@
                       },
                       "new_password_confirmation": {
                         "type": "string"
-                      },
-                      "block_company_ids": {
-                        "type": "array",
-                        "items": {
-                          "type": "string",
-                          "format": "uuid"
-                        }
                       }
                     }
                   }
                 }
               },
-              "examples": {
-                "example-1": {
-                  "value": {
-                    "account": {
-                      "email": "user@example.com",
-                      "avatar": "string",
-                      "is_career_scout_target": true,
-                      "is_project_scout_target": true,
-                      "is_public_work": true,
-                      "is_student": false,
-                      "current_password": "string",
-                      "new_password": "string",
-                      "new_password_confirmation": "string",
-                      "block_company_ids": [
-                        "497f6eca-6276-4993-bfeb-53cbbbba6f08"
-                      ]
-                    }
-                  }
-                }
-              }
+              "examples": {}
             }
           }
         }
@@ -2508,7 +2560,19 @@
                         "type": "string"
                       },
                       "created_date": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true
+                      },
+                      "since_date": {
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true
+                      },
+                      "until_date": {
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true
                       },
                       "description": {
                         "type": "string"
@@ -2524,6 +2588,27 @@
       "delete": {
         "summary": "実績を削除する",
         "operationId": "delete-achievements-id",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/block_companies/{company_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "company_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "delete": {
+        "summary": "ブロック企業を削除する",
+        "operationId": "delete-block_companies",
         "responses": {
           "204": {
             "description": "No Content"
@@ -3091,28 +3176,18 @@
                           "project"
                         ]
                       },
-                      "can_moving": {
-                        "type": "boolean"
-                      },
                       "special_note": {
                         "type": "string"
                       },
-                      "beginning_period": {
-                        "type": "integer"
-                      },
-                      "workplace_id": {
-                        "type": "string",
-                        "format": "uuid",
-                        "description": "StateのID"
-                      },
-                      "industry_ids": {
+                      "workplace_ids": {
                         "type": "array",
+                        "format": "uuid",
+                        "description": "StateのID",
                         "items": {
-                          "type": "string",
-                          "format": "uuid"
+                          "type": "string"
                         }
                       },
-                      "employment_status_ids": {
+                      "industry_ids": {
                         "type": "array",
                         "items": {
                           "type": "string",
@@ -3265,79 +3340,169 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "issued_date": {
-                    "type": "string",
-                    "format": "date",
-                    "description": "請求日"
-                  },
-                  "title": {
-                    "type": "string"
-                  },
-                  "deadline": {
-                    "type": "string",
-                    "description": "支払期日",
-                    "format": "date"
-                  },
-                  "files": {
-                    "type": "array",
-                    "description": "請求書ファイル",
-                    "items": {
-                      "type": "string",
-                      "format": "binary"
-                    }
-                  },
-                  "note": {
-                    "type": "string",
-                    "description": "備考"
-                  },
-                  "issuing_status": {
-                    "type": "string",
-                    "enum": [
-                      "fixed",
-                      "draft",
-                      "withdrawn"
-                    ]
-                  },
-                  "invoice_detailed_items": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "invoice_detailed_item": {
+                  "invoice": {
+                    "type": "object",
+                    "properties": {
+                      "issued_date": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "請求日"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "deadline": {
+                        "type": "string",
+                        "description": "支払期日",
+                        "format": "date"
+                      },
+                      "note": {
+                        "type": "string",
+                        "description": "備考"
+                      },
+                      "issuing_status": {
+                        "type": "string",
+                        "enum": [
+                          "fixed",
+                          "draft",
+                          "withdrawn"
+                        ]
+                      },
+                      "consumption_tax_calculation_method": {
+                        "type": "string",
+                        "description": "消費税計算方法",
+                        "enum": [
+                          "floor",
+                          "ceil",
+                          "round"
+                        ],
+                        "default": "floor"
+                      },
+                      "withholding_included_consumption_tax": {
+                        "type": "boolean",
+                        "description": "源泉徴収税計算に消費税を含めるか",
+                        "default": false
+                      },
+                      "invoice_detailed_items": {
+                        "type": "array",
+                        "items": {
                           "type": "object",
                           "properties": {
-                            "description": {
-                              "type": "string",
-                              "description": "項目名"
-                            },
-                            "quantity": {
-                              "type": "number",
-                              "description": "数量"
-                            },
-                            "unit_label": {
-                              "type": "string",
-                              "description": "単位"
-                            },
-                            "unit_price": {
-                              "type": "integer",
-                              "description": "単価"
-                            },
-                            "tax_ratio": {
-                              "description": "消費税",
-                              "type": "number"
-                            },
-                            "amount": {
-                              "type": "integer",
-                              "description": "金額"
+                            "invoice_detailed_item": {
+                              "type": "object",
+                              "properties": {
+                                "description": {
+                                  "type": "string",
+                                  "description": "項目名"
+                                },
+                                "quantity": {
+                                  "type": "number",
+                                  "description": "数量"
+                                },
+                                "unit_label": {
+                                  "type": "string",
+                                  "description": "単位"
+                                },
+                                "unit_price": {
+                                  "type": "integer",
+                                  "description": "単価"
+                                },
+                                "consumption_tax_id": {
+                                  "type": "string",
+                                  "description": "消費税",
+                                  "format": "uuid"
+                                },
+                                "amount": {
+                                  "type": "integer",
+                                  "description": "金額"
+                                }
+                              }
                             }
                           }
                         }
+                      },
+                      "amount": {
+                        "type": "integer",
+                        "description": "合計金額"
+                      },
+                      "number": {
+                        "type": "string",
+                        "description": "請求番号"
                       }
                     }
                   }
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/invoices/{invoice_id}/files": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "invoice_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "patch": {
+        "summary": "請求にファイルを紐付ける",
+        "operationId": "patch-invoices-invoice_id-files",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Invoice"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/invoices/{invoice_id}/files/{file_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "invoice_id",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "file_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "delete": {
+        "summary": "請求に紐付けられているファイルを削除する",
+        "operationId": "delete-invoices-invoice_id-files-file_id",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Invoice"
           }
         }
       }
@@ -3554,14 +3719,6 @@
                         "description": "支払期日",
                         "format": "date"
                       },
-                      "files": {
-                        "type": "array",
-                        "description": "請求書ファイル",
-                        "items": {
-                          "type": "string",
-                          "format": "binary"
-                        }
-                      },
                       "note": {
                         "type": "string",
                         "description": "備考"
@@ -3574,6 +3731,21 @@
                           "withdrawn"
                         ]
                       },
+                      "consumption_tax_calculation_method": {
+                        "type": "string",
+                        "description": "消費税計算方法",
+                        "enum": [
+                          "floor",
+                          "ceil",
+                          "round"
+                        ],
+                        "default": "floor"
+                      },
+                      "withholding_included_consumption_tax": {
+                        "type": "boolean",
+                        "description": "源泉徴収税計算に消費税を含めるか",
+                        "default": false
+                      },
                       "invoice_detailed_items": {
                         "type": "array",
                         "items": {
@@ -3598,116 +3770,41 @@
                                   "type": "integer",
                                   "description": "単価"
                                 },
-                                "tax_ratio": {
+                                "consumption_tax_id": {
+                                  "type": "string",
                                   "description": "消費税",
-                                  "type": "number"
+                                  "format": "uuid"
                                 },
                                 "amount": {
                                   "type": "integer",
                                   "description": "金額"
+                                },
+                                "is_target_withholding_tax": {
+                                  "type": "boolean",
+                                  "description": "稼動報酬制の源泉徴収の対象か"
                                 }
                               }
                             }
                           }
                         }
+                      },
+                      "amount": {
+                        "type": "integer",
+                        "description": "合計金額"
+                      },
+                      "number": {
+                        "type": "string",
+                        "description": "請求番号(発注番号と同じで任意の値)"
                       }
                     },
                     "required": [
-                      "title"
+                      "title",
+                      "consumption_tax_calculation_method",
+                      "withholding_included_consumption_tax",
+                      "amount"
                     ]
                   }
                 }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/jobs/{job_id}/invoices/check": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "job_id",
-          "in": "path",
-          "required": true
-        }
-      ],
-      "post": {
-        "summary": "請求作成前の確認レスポンスを返す",
-        "operationId": "post-jobs-job_id-invoices-check",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/Invoice"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "invoice": {
-                    "type": "object",
-                    "required": [
-                      "invoice_detailed_items"
-                    ],
-                    "properties": {
-                      "invoice_detailed_items": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "invoice_detailed_item": {
-                              "type": "object",
-                              "required": [
-                                "description",
-                                "quantity",
-                                "unit_label",
-                                "unit_price",
-                                "tax_ratio",
-                                "amount"
-                              ],
-                              "properties": {
-                                "description": {
-                                  "type": "string",
-                                  "description": "項目名"
-                                },
-                                "quantity": {
-                                  "type": "number",
-                                  "description": "数量"
-                                },
-                                "unit_label": {
-                                  "type": "string",
-                                  "description": "単位"
-                                },
-                                "unit_price": {
-                                  "type": "integer",
-                                  "description": "単価"
-                                },
-                                "tax_ratio": {
-                                  "description": "消費税",
-                                  "type": "number"
-                                },
-                                "amount": {
-                                  "type": "integer",
-                                  "description": "金額"
-                                }
-                              }
-                            }
-                          },
-                          "required": [
-                            "invoice_detailed_item"
-                          ]
-                        }
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "invoice"
-                ]
               }
             }
           }
@@ -4341,105 +4438,6 @@
         }
       }
     },
-    "/search_conditions/{id}": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "id",
-          "in": "path",
-          "required": true
-        }
-      ],
-      "get": {
-        "summary": "検索条件を取得する",
-        "tags": [],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/SearchCondition"
-          }
-        },
-        "operationId": "get-search_conditions-id"
-      },
-      "patch": {
-        "summary": "アカウントの検索条件を更新する",
-        "operationId": "patch-companies-company_id-search_conditions",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/SearchCondition"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "search_condition": {
-                    "type": "object",
-                    "properties": {
-                      "title": {
-                        "type": "string",
-                        "example": "バックエンドエンジニア検索"
-                      },
-                      "target": {
-                        "type": "string",
-                        "enum": [
-                          "account",
-                          "recruitment",
-                          "company"
-                        ],
-                        "example": "recruitment"
-                      },
-                      "filters": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "key": {
-                              "type": "string",
-                              "description": "クエリパラメータのキー",
-                              "example": "name"
-                            },
-                            "value": {
-                              "description": "クエリパラメータの値",
-                              "type": [
-                                "string",
-                                "number",
-                                "integer",
-                                "boolean"
-                              ]
-                            }
-                          },
-                          "required": [
-                            "key",
-                            "value"
-                          ]
-                        }
-                      }
-                    },
-                    "required": [
-                      "filters"
-                    ]
-                  }
-                }
-              }
-            }
-          },
-          "description": "filtersは部分的な更新ができないため、更新でも必ずすべてのフィルターを送る"
-        }
-      },
-      "delete": {
-        "summary": "検索条件を削除する",
-        "operationId": "delete-search_conditions-id",
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        }
-      }
-    },
     "/skills": {
       "get": {
         "summary": "スキル一覧を取得する",
@@ -4929,6 +4927,14 @@
             "type": "string",
             "format": "uuid"
           },
+          "since_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "until_date": {
+            "type": "string",
+            "format": "date"
+          },
           "updated_at": {
             "type": "string",
             "format": "date-time"
@@ -4938,8 +4944,7 @@
           "id",
           "created_at",
           "updated_at",
-          "content",
-          "created_date"
+          "content"
         ]
       },
       "Applicant": {
@@ -4958,7 +4963,14 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "examples": [
+          {
+            "created_at": "2019-08-24T14:15:22Z",
+            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+            "updated_at": "2019-08-24T14:15:22Z"
+          }
+        ]
       },
       "Recruitment": {
         "title": "Recruitment",
@@ -5211,6 +5223,51 @@
           "updated_at"
         ]
       },
+      "Feature": {
+        "title": "Feature",
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "フレックスタイム"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": [
+              "company",
+              "recruitment"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "default",
+              "organizational"
+            ],
+            "default": "default"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name",
+          "type",
+          "source_type"
+        ]
+      },
       "Company": {
         "title": "Company",
         "type": "object",
@@ -5260,6 +5317,12 @@
           "employment_placement_permit_number": {
             "type": "string",
             "description": "有料職業紹介事業許可番号"
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Feature"
+            }
           },
           "follower_nums": {
             "type": "integer"
@@ -5360,13 +5423,13 @@
           }
         },
         "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "type",
-          "name",
           "admin_verification_status",
-          "public_verification_status"
+          "created_at",
+          "id",
+          "name",
+          "public_verification_status",
+          "type",
+          "updated_at"
         ]
       },
       "Industry": {
@@ -5513,12 +5576,8 @@
         ]
       },
       "Account": {
-        "description": "",
         "title": "Account",
         "type": "object",
-        "x-tags": [
-          "Account"
-        ],
         "properties": {
           "already_keep_from_current_company": {
             "type": "boolean"
@@ -5604,10 +5663,6 @@
             "description": "サンプルか",
             "type": "boolean"
           },
-          "is_student": {
-            "default": false,
-            "type": "boolean"
-          },
           "is_supported": {
             "type": "boolean"
           },
@@ -5656,15 +5711,14 @@
         "required": [
           "created_at",
           "email_verification_status",
-          "work_experienced",
           "id",
           "identity_verification_status",
           "is_career_scout_target",
           "is_project_scout_target",
           "is_public_with_work",
           "is_sample",
-          "is_student",
-          "updated_at"
+          "updated_at",
+          "work_experienced"
         ]
       },
       "BankAccount": {
@@ -5771,9 +5825,6 @@
       "Profile": {
         "title": "Profile",
         "type": "object",
-        "x-tags": [
-          "Account"
-        ],
         "description": "",
         "properties": {
           "academic_background": {
@@ -5949,6 +6000,45 @@
           "created_at",
           "id",
           "updated_at"
+        ],
+        "examples": [
+          {
+            "academic_background": "東京大学",
+            "address": "東京都港区元赤坂1-7-18",
+            "agent_achievement": "経歴・実績",
+            "agent_area_in_charge": "東京23区",
+            "agent_self_introduction": "自己PR",
+            "agent_self_message": "紹介メッセージ",
+            "biography": "自己PR/職務要約",
+            "birth_of_date": "2019-08-24",
+            "created_at": "2019-08-24T14:15:22Z",
+            "english_skill": "daily_conversation",
+            "files": [
+              {
+                "id": "string",
+                "name": "string",
+                "content_type": "string",
+                "url": "string",
+                "created_at": "2019-08-24T14:15:22Z"
+              }
+            ],
+            "first_name": "太郎",
+            "first_name_kana": "タロウ",
+            "gender": "MALE",
+            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+            "japanese_skill": "native",
+            "last_name": "山田",
+            "last_name_kana": "ヤマダ",
+            "management_experience": "nothing",
+            "marital_status": "single",
+            "nationality": "JP",
+            "number_of_job_changes": 0,
+            "phone": "090-XXXX-XXXX",
+            "postal_code": "107-0051",
+            "recent_income_amount": 0,
+            "updated_at": "2019-08-24T14:15:22Z",
+            "year_of_agent_experience": 10
+          }
         ]
       },
       "Subscription": {
@@ -6096,51 +6186,6 @@
           "type"
         ]
       },
-      "Feature": {
-        "title": "Feature",
-        "type": "object",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "フレックスタイム"
-          },
-          "source_type": {
-            "type": "string",
-            "enum": [
-              "company",
-              "recruitment"
-            ]
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "default",
-              "organizational"
-            ],
-            "default": "default"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "name",
-          "type",
-          "source_type"
-        ]
-      },
       "Role": {
         "title": "Role",
         "type": "object",
@@ -6159,14 +6204,13 @@
           },
           "name": {
             "type": "string",
-            "example": "general",
             "description": "役割「general」「admin」など"
           },
           "type": {
             "type": "string",
             "enum": [
-              "default",
-              "organizational"
+              "official",
+              "custom"
             ],
             "example": "default"
           },
@@ -6280,6 +6324,18 @@
             "type": "string",
             "format": "uuid"
           },
+          "industries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Industry"
+            }
+          },
+          "occupations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Occupation"
+            }
+          },
           "ratio_of_operation": {
             "type": "string",
             "enum": [
@@ -6306,6 +6362,12 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "workplaces": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/State"
+            }
           }
         },
         "required": [
@@ -6439,19 +6501,15 @@
           },
           "fixed_amount": {
             "type": "integer",
-            "description": "固定報酬制の金額（税込）"
+            "description": "固定報酬制の金額(税込)"
           },
           "fixed_sub_total": {
             "type": "integer",
-            "description": "固定報酬制の小計"
-          },
-          "fixed_tax": {
-            "type": "integer",
-            "description": "固定報酬制の税額"
+            "description": "固定報酬制の小計(税抜)"
           },
           "fixed_total_amount": {
             "type": "integer",
-            "description": "固定報酬制の金額（税込）と論理手数料を合わせた総額"
+            "description": "固定報酬制の金額(税込)と論理手数料を合わせた総額"
           },
           "id": {
             "type": "string",
@@ -6516,6 +6574,11 @@
             "type": "integer",
             "description": "稼働報酬制の金額"
           },
+          "is_target_withholding_tax": {
+            "type": "boolean",
+            "description": "稼動報酬制の源泉徴収の対象か",
+            "default": false
+          },
           "until_date": {
             "type": "string",
             "format": "date",
@@ -6524,14 +6587,55 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "consumption_tax_calculation_method": {
+            "type": "string",
+            "description": "消費税計算方法",
+            "enum": [
+              "floor",
+              "ceil",
+              "round"
+            ],
+            "default": "floor"
+          },
+          "withholding_included_consumption_tax": {
+            "type": "boolean",
+            "description": "源泉徴収税計算に消費税を含めるか",
+            "default": false
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "content_type": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
           }
         },
         "required": [
-          "id",
           "created_at",
-          "updated_at",
+          "id",
+          "is_sample",
           "status",
-          "is_sample"
+          "updated_at",
+          "consumption_tax_calculation_method",
+          "withholding_included_consumption_tax"
         ]
       },
       "ExternalService": {
@@ -6612,6 +6716,7 @@
       "JobServiceItem": {
         "title": "JobServiceItem",
         "type": "object",
+        "description": "固定報酬制の場合の各品目",
         "properties": {
           "amount": {
             "type": "integer",
@@ -6623,7 +6728,7 @@
           },
           "description": {
             "type": "string",
-            "description": "項目名"
+            "description": "品目名"
           },
           "id": {
             "type": "string",
@@ -6632,10 +6737,6 @@
           "quantity": {
             "type": "number",
             "description": "数量"
-          },
-          "tax_ratio": {
-            "type": "number",
-            "description": "消費税"
           },
           "unit_label": {
             "type": "string",
@@ -6648,17 +6749,82 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "is_target_withholding": {
+            "type": "boolean",
+            "description": "源泉徴収の対象か",
+            "default": false
+          }
+        },
+        "required": [
+          "amount",
+          "created_at",
+          "description",
+          "id",
+          "quantity",
+          "unit_label",
+          "unit_price",
+          "updated_at",
+          "is_target_withholding"
+        ]
+      },
+      "ConsumptionTax": {
+        "title": "ConsumptionTax",
+        "type": "object",
+        "description": "消費税",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "表示名"
+          },
+          "ratio": {
+            "type": "number",
+            "description": "税率"
+          },
+          "country": {
+            "type": "string",
+            "default": "jpn",
+            "enum": [
+              "jpn"
+            ]
           }
         },
         "required": [
           "id",
-          "created_at",
-          "updated_at",
-          "description",
-          "quantity",
-          "unit_label",
-          "unit_price",
-          "tax_ratio",
+          "ratio",
+          "country"
+        ]
+      },
+      "JobOrderConsumptionTaxPrice": {
+        "title": "JobOrderConsumptionTaxPrice",
+        "type": "object",
+        "description": "発注で、消費税率ごとに金額を保持するテーブル",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "integer"
+          }
+        }
+      },
+      "JobOrderWithholdingTaxPrice": {
+        "title": "JobOrderWithholdingTaxPrice",
+        "type": "object",
+        "description": "発注で、源泉徴収税率ごとに金額を保持するテーブル",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
           "amount"
         ]
       },
@@ -6826,6 +6992,201 @@
           "name"
         ]
       },
+      "IntroductionCompletionReport": {
+        "title": "IntroductionCompletionReport",
+        "type": "object",
+        "properties": {
+          "acceptance_of_offer_date": {
+            "type": "string",
+            "format": "date",
+            "description": "内定承諾日"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "年収"
+          },
+          "billing_emails": {
+            "type": "array",
+            "description": "請求先メールアドレス",
+            "items": {
+              "type": "string"
+            }
+          },
+          "canceled_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "commission_fee": {
+            "type": "integer",
+            "description": "紹介料（年収 x 紹介料比率）"
+          },
+          "commission_fee_ratio": {
+            "type": "number",
+            "description": "紹介料比率"
+          },
+          "commission_fee_without_tax": {
+            "type": "integer",
+            "description": "紹介料（税抜）"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_enable": {
+            "type": "boolean",
+            "default": true
+          },
+          "joined_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "memo": {
+            "type": "string"
+          },
+          "payment_status": {
+            "type": "string",
+            "enum": [
+              "unpaid",
+              "paid",
+              "failed",
+              "pending"
+            ]
+          },
+          "reason_for_cancellation": {
+            "type": "string",
+            "description": "取り消し理由"
+          },
+          "system_fee": {
+            "type": "integer",
+            "description": "手数料（税込）"
+          },
+          "system_fee_ratio": {
+            "type": "number",
+            "description": "システム手数料比率"
+          },
+          "system_fee_without_tax": {
+            "type": "integer",
+            "description": "手数料（税抜）"
+          },
+          "tax_for_commission_fee": {
+            "type": "integer",
+            "description": "紹介料（税）"
+          },
+          "tax_for_system_fee": {
+            "type": "integer",
+            "description": "手数料（税）"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "acceptance_of_offer_date",
+          "amount",
+          "commission_fee",
+          "created_at",
+          "id",
+          "joined_date",
+          "payment_status",
+          "system_fee",
+          "system_fee_ratio",
+          "updated_at"
+        ]
+      },
+      "RecruitmentCompletionReport": {
+        "title": "RecruitmentCompletionReport",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "acceptance_of_offer_date": {
+            "type": "string",
+            "format": "date",
+            "description": "内定承諾日"
+          },
+          "amount": {
+            "type": "integer",
+            "example": 4000000,
+            "description": "年収（税の概念なし）"
+          },
+          "billing_emails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "canceled_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "請求先メールアドレス"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_enable": {
+            "type": "boolean",
+            "default": true
+          },
+          "joined_date": {
+            "type": "string",
+            "format": "date",
+            "description": "入社日"
+          },
+          "memo": {
+            "type": "string"
+          },
+          "payment_status": {
+            "type": "string",
+            "enum": [
+              "unpaid",
+              "paid",
+              "failed",
+              "pending"
+            ]
+          },
+          "reason_for_cancellation": {
+            "type": "string",
+            "description": "取り消し理由"
+          },
+          "system_fee": {
+            "type": "integer",
+            "description": "手数料（税込）"
+          },
+          "system_fee_ratio": {
+            "type": "number"
+          },
+          "system_fee_without_tax": {
+            "type": "integer",
+            "description": "手数料（税抜）"
+          },
+          "tax_for_system_fee": {
+            "type": "integer",
+            "description": "手数料（税）"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "amount",
+          "created_at",
+          "id",
+          "payment_status",
+          "system_fee",
+          "system_fee_ratio",
+          "updated_at"
+        ]
+      },
       "Room": {
         "title": "Room",
         "type": "object",
@@ -6842,6 +7203,9 @@
             "type": "string",
             "format": "uuid"
           },
+          "introduction_completion_report": {
+            "$ref": "#/components/schemas/IntroductionCompletionReport"
+          },
           "is_read_message": {
             "type": "boolean",
             "description": "未読メッセージがあればfalse"
@@ -6850,7 +7214,7 @@
             "$ref": "#/components/schemas/Message"
           },
           "recruitment_completion_report": {
-            "type": null
+            "$ref": "#/components/schemas/RecruitmentCompletionReport"
           },
           "updated_at": {
             "type": "string",
@@ -6858,11 +7222,11 @@
           }
         },
         "required": [
-          "id",
           "created_at",
-          "updated_at",
+          "exists_not_replied",
+          "id",
           "is_read_message",
-          "exists_not_replied"
+          "updated_at"
         ]
       },
       "ConsentMatter": {
@@ -7146,71 +7510,6 @@
           "type"
         ]
       },
-      "SearchCondition": {
-        "title": "SearchCondition",
-        "type": "object",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "filters": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "description": "",
-              "properties": {
-                "key": {
-                  "type": "string",
-                  "description": "クエリパラメータのキー"
-                },
-                "value": {
-                  "description": "クエリパラメータの値",
-                  "type": [
-                    "string",
-                    "number",
-                    "integer",
-                    "boolean"
-                  ]
-                }
-              },
-              "required": [
-                "key",
-                "value"
-              ]
-            }
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "target": {
-            "type": "string",
-            "enum": [
-              "recruitment",
-              "company",
-              "account"
-            ],
-            "example": "recruitment"
-          },
-          "title": {
-            "type": "string",
-            "example": "Rubyエンジニア検索"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "title",
-          "target",
-          "filters"
-        ]
-      },
       "Support": {
         "title": "Support",
         "type": "object",
@@ -7286,7 +7585,6 @@
       "WorkHistory": {
         "title": "WorkHistory",
         "type": "object",
-        "x-examples": {},
         "description": "",
         "properties": {
           "created_at": {
@@ -7559,11 +7857,7 @@
           "sub_total": {
             "type": "integer",
             "example": 10000,
-            "description": "請求額（小計）"
-          },
-          "tax": {
-            "type": "integer",
-            "description": "税額"
+            "description": "請求額の小計(税抜)"
           },
           "title": {
             "type": "string"
@@ -7576,15 +7870,34 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "consumption_tax_calculation_method": {
+            "type": "string",
+            "description": "消費税計算方法",
+            "enum": [
+              "floor",
+              "ceil",
+              "round"
+            ],
+            "default": "floor"
+          },
+          "withholding_included_consumption_tax": {
+            "type": "boolean",
+            "description": "源泉徴収税計算に消費税を含めるか",
+            "default": false
+          },
+          "number": {
+            "type": "string",
+            "description": "請求番号(発注番号と同じで任意の値)"
           }
         },
         "required": [
-          "id",
           "created_at",
-          "updated_at",
-          "issuing_status",
+          "id",
           "is_approved",
-          "is_sample"
+          "is_sample",
+          "issuing_status",
+          "updated_at"
         ]
       },
       "InvoiceDetailedItem": {
@@ -7615,10 +7928,6 @@
             "description": "数量",
             "type": "number"
           },
-          "tax_ratio": {
-            "type": "number",
-            "description": "消費税"
-          },
           "unit_label": {
             "type": "string",
             "description": "単位"
@@ -7630,6 +7939,11 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "is_target_withholding_tax": {
+            "type": "boolean",
+            "description": "源泉徴収の対象か",
+            "default": false
           }
         },
         "required": [
@@ -7638,10 +7952,43 @@
           "description",
           "id",
           "quantity",
-          "tax_ratio",
           "unit_label",
           "unit_price",
           "updated_at"
+        ]
+      },
+      "InvoiceConsumptionTaxPrice": {
+        "title": "InvoiceConsumptionTaxPrice",
+        "type": "object",
+        "description": "請求で、消費税率ごとに金額を保持するテーブル",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "amount"
+        ]
+      },
+      "InvoiceWithholdingTaxPrice": {
+        "title": "InvoiceWithholdingTaxPrice",
+        "type": "object",
+        "description": "請求で、源泉徴収税率ごとに金額を保持するテーブル",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "amount"
         ]
       },
       "Nda": {
@@ -7900,412 +8247,7 @@
                 }
               ]
             },
-            "examples": {
-              "example-1": {
-                "value": {
-                  "already_keep_from_current_company": true,
-                  "avatar_url": "string",
-                  "consent_nda_version": "string",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "deleted_at": "2019-08-24T14:15:22Z",
-                  "display_name": "string",
-                  "email": "test@example.com",
-                  "email_verification_status": "unspecified",
-                  "exists_applicant_resource_from_current_company": true,
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "identification_requirements": [
-                    "string"
-                  ],
-                  "identity_verification_status": "unspecified",
-                  "is_career_scout_target": true,
-                  "is_concluded_nda": true,
-                  "is_project_scout_target": true,
-                  "is_public_with_work": true,
-                  "is_sample": false,
-                  "is_student": false,
-                  "is_supported": true,
-                  "last_notification_read_at": "2019-08-24T14:15:22Z",
-                  "last_sign_in_at": "2019-08-24T14:15:22Z",
-                  "missing_requirements_for_agent": [
-                    "string"
-                  ],
-                  "missing_requirements_for_general": [
-                    "string"
-                  ],
-                  "profile_completeness": 0,
-                  "register_as": "general",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "profile": {
-                    "academic_background": "東京大学",
-                    "address": "東京都港区元赤坂1-7-18",
-                    "agent_achievement": "経歴・実績",
-                    "agent_area_in_charge": "東京23区",
-                    "agent_self_introduction": "自己PR",
-                    "agent_self_message": "紹介メッセージ",
-                    "biography": "自己PR/職務要約",
-                    "birth_of_date": "2019-08-24",
-                    "created_at": "2019-08-24T14:15:22Z",
-                    "english_skill": "daily_conversation",
-                    "files": [
-                      {
-                        "id": "string",
-                        "name": "string",
-                        "content_type": "string",
-                        "url": "string",
-                        "created_at": "2019-08-24T14:15:22Z"
-                      }
-                    ],
-                    "first_name": "太郎",
-                    "first_name_kana": "タロウ",
-                    "gender": "MALE",
-                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                    "japanese_skill": "native",
-                    "last_name": "山田",
-                    "last_name_kana": "ヤマダ",
-                    "management_experience": "nothing",
-                    "marital_status": "single",
-                    "nationality": "JP",
-                    "number_of_job_changes": 0,
-                    "phone": "090-XXXX-XXXX",
-                    "postal_code": "107-0051",
-                    "recent_income_amount": 0,
-                    "updated_at": "2019-08-24T14:15:22Z",
-                    "year_of_agent_experience": 10,
-                    "specialty_company_types": [
-                      {
-                        "content": "内容",
-                        "created_at": "2019-08-24T14:15:22Z",
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "updated_at": "2019-08-24T14:15:22Z"
-                      }
-                    ],
-                    "specialty_positions": [
-                      {
-                        "content": "内容",
-                        "created_at": "2019-08-24T14:15:22Z",
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "updated_at": "2019-08-24T14:15:22Z"
-                      }
-                    ],
-                    "occupation_main_categories": [
-                      {
-                        "created_at": "2019-08-24T14:15:22Z",
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "name": "コンサル",
-                        "updated_at": "2019-08-24T14:15:22Z"
-                      }
-                    ],
-                    "industry_categories": [
-                      {
-                        "created_at": "2019-08-24T14:15:22Z",
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "name": "金融・保険",
-                        "updated_at": "2019-08-24T14:15:22Z"
-                      }
-                    ],
-                    "place_of_residence": {
-                      "country_code": 392,
-                      "created_at": "2019-08-24T14:15:22Z",
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                      "name": "東京",
-                      "updated_at": "2019-08-24T14:15:22Z"
-                    }
-                  },
-                  "employments": [
-                    {
-                      "created_at": "2019-08-24T14:15:22Z",
-                      "department": "string",
-                      "email": "sample@example.com",
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                      "is_valid": false,
-                      "last_notification_read_at": "2019-08-24T14:15:22Z",
-                      "position": "string",
-                      "updated_at": "2019-08-24T14:15:22Z",
-                      "company": {
-                        "admin_verification_status": "unspecified",
-                        "average_age": 28,
-                        "business_summary": "事業概要",
-                        "capital": 15200000,
-                        "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
-                        "cover_image_url": "string",
-                        "created_at": "2019-08-24T14:15:22Z",
-                        "deleted_at": "2019-08-24T14:15:22Z",
-                        "employment_placement_permit_number": "string",
-                        "follower_nums": 0,
-                        "head_office_location": "東京都港区元赤坂1-7-18",
-                        "hp_url": "https://simula-labs.com/",
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "introduction_fee_ratio": 0,
-                        "is_following": true,
-                        "is_listed": false,
-                        "is_sample": true,
-                        "logo_url": "string",
-                        "name": "株式会社SIMULA Labs",
-                        "name_kana": "シミュララボ ",
-                        "net_sales": 50000000,
-                        "numbers_of_employees": "20",
-                        "owner_email": "string",
-                        "phone": "03-1234-5678",
-                        "public_verification_status": "unspecified",
-                        "recruitment_fee_ratio": 0,
-                        "representative": "牧野暉弘",
-                        "representative_kana": "まきのあきひろ",
-                        "type": "account",
-                        "updated_at": "2019-08-24T14:15:22Z",
-                        "year_of_establishment": "2015"
-                      },
-                      "roles": [
-                        {
-                          "created_at": "2019-08-24T14:15:22Z",
-                          "description": "Roleの説明",
-                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                          "name": "general",
-                          "type": "default",
-                          "updated_at": "2019-08-24T14:15:22Z"
-                        }
-                      ]
-                    }
-                  ],
-                  "blocked_companies": [
-                    {
-                      "admin_verification_status": "unspecified",
-                      "average_age": 28,
-                      "business_summary": "事業概要",
-                      "capital": 15200000,
-                      "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
-                      "cover_image_url": "string",
-                      "created_at": "2019-08-24T14:15:22Z",
-                      "deleted_at": "2019-08-24T14:15:22Z",
-                      "employment_placement_permit_number": "string",
-                      "follower_nums": 0,
-                      "head_office_location": "東京都港区元赤坂1-7-18",
-                      "hp_url": "https://simula-labs.com/",
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                      "introduction_fee_ratio": 0,
-                      "is_following": true,
-                      "is_listed": false,
-                      "is_sample": true,
-                      "logo_url": "string",
-                      "name": "株式会社SIMULA Labs",
-                      "name_kana": "シミュララボ ",
-                      "net_sales": 50000000,
-                      "numbers_of_employees": "20",
-                      "owner_email": "string",
-                      "phone": "03-1234-5678",
-                      "public_verification_status": "unspecified",
-                      "recruitment_fee_ratio": 0,
-                      "representative": "牧野暉弘",
-                      "representative_kana": "まきのあきひろ",
-                      "type": "account",
-                      "updated_at": "2019-08-24T14:15:22Z",
-                      "year_of_establishment": "2015"
-                    }
-                  ]
-                }
-              },
-              "example-2": {
-                "value": {
-                  "already_keep_from_current_company": true,
-                  "avatar_url": "string",
-                  "consent_nda_version": "string",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "deleted_at": "2019-08-24T14:15:22Z",
-                  "display_name": "string",
-                  "email": "test@example.com",
-                  "email_verification_status": "unspecified",
-                  "exists_applicant_resource_from_current_company": true,
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "identification_requirements": [
-                    "string"
-                  ],
-                  "identity_verification_status": "unspecified",
-                  "is_career_scout_target": true,
-                  "is_concluded_nda": true,
-                  "is_project_scout_target": true,
-                  "is_public_with_work": true,
-                  "is_sample": false,
-                  "is_student": false,
-                  "is_supported": true,
-                  "last_notification_read_at": "2019-08-24T14:15:22Z",
-                  "last_sign_in_at": "2019-08-24T14:15:22Z",
-                  "missing_requirements_for_agent": [
-                    "string"
-                  ],
-                  "missing_requirements_for_general": [
-                    "string"
-                  ],
-                  "profile_completeness": 0,
-                  "register_as": "general",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "profile": {
-                    "academic_background": "東京大学",
-                    "address": "東京都港区元赤坂1-7-18",
-                    "agent_achievement": "経歴・実績",
-                    "agent_area_in_charge": "東京23区",
-                    "agent_self_introduction": "自己PR",
-                    "agent_self_message": "紹介メッセージ",
-                    "biography": "自己PR/職務要約",
-                    "birth_of_date": "2019-08-24",
-                    "created_at": "2019-08-24T14:15:22Z",
-                    "english_skill": "daily_conversation",
-                    "files": [
-                      {
-                        "id": "string",
-                        "name": "string",
-                        "content_type": "string",
-                        "url": "string",
-                        "created_at": "2019-08-24T14:15:22Z"
-                      }
-                    ],
-                    "first_name": "太郎",
-                    "first_name_kana": "タロウ",
-                    "gender": "MALE",
-                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                    "japanese_skill": "native",
-                    "last_name": "山田",
-                    "last_name_kana": "ヤマダ",
-                    "management_experience": "nothing",
-                    "marital_status": "single",
-                    "nationality": "JP",
-                    "number_of_job_changes": 0,
-                    "phone": "090-XXXX-XXXX",
-                    "postal_code": "107-0051",
-                    "recent_income_amount": 0,
-                    "updated_at": "2019-08-24T14:15:22Z",
-                    "year_of_agent_experience": 10,
-                    "specialty_company_types": [
-                      {
-                        "content": "内容",
-                        "created_at": "2019-08-24T14:15:22Z",
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "updated_at": "2019-08-24T14:15:22Z"
-                      }
-                    ],
-                    "specialty_positions": [
-                      {
-                        "content": "内容",
-                        "created_at": "2019-08-24T14:15:22Z",
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "updated_at": "2019-08-24T14:15:22Z"
-                      }
-                    ],
-                    "occupation_main_categories": [
-                      {
-                        "created_at": "2019-08-24T14:15:22Z",
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "name": "コンサル",
-                        "updated_at": "2019-08-24T14:15:22Z"
-                      }
-                    ],
-                    "industry_categories": [
-                      {
-                        "created_at": "2019-08-24T14:15:22Z",
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "name": "金融・保険",
-                        "updated_at": "2019-08-24T14:15:22Z"
-                      }
-                    ],
-                    "place_of_residence": {
-                      "country_code": 392,
-                      "created_at": "2019-08-24T14:15:22Z",
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                      "name": "東京",
-                      "updated_at": "2019-08-24T14:15:22Z"
-                    }
-                  },
-                  "employments": [
-                    {
-                      "created_at": "2019-08-24T14:15:22Z",
-                      "department": "string",
-                      "email": "sample@example.com",
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                      "is_valid": false,
-                      "last_notification_read_at": "2019-08-24T14:15:22Z",
-                      "position": "string",
-                      "updated_at": "2019-08-24T14:15:22Z",
-                      "company": {
-                        "admin_verification_status": "unspecified",
-                        "average_age": 28,
-                        "business_summary": "事業概要",
-                        "capital": 15200000,
-                        "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
-                        "cover_image_url": "string",
-                        "created_at": "2019-08-24T14:15:22Z",
-                        "deleted_at": "2019-08-24T14:15:22Z",
-                        "employment_placement_permit_number": "string",
-                        "follower_nums": 0,
-                        "head_office_location": "東京都港区元赤坂1-7-18",
-                        "hp_url": "https://simula-labs.com/",
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "introduction_fee_ratio": 0,
-                        "is_following": true,
-                        "is_listed": false,
-                        "is_sample": true,
-                        "logo_url": "string",
-                        "name": "株式会社SIMULA Labs",
-                        "name_kana": "シミュララボ ",
-                        "net_sales": 50000000,
-                        "numbers_of_employees": "20",
-                        "owner_email": "string",
-                        "phone": "03-1234-5678",
-                        "public_verification_status": "unspecified",
-                        "recruitment_fee_ratio": 0,
-                        "representative": "牧野暉弘",
-                        "representative_kana": "まきのあきひろ",
-                        "type": "account",
-                        "updated_at": "2019-08-24T14:15:22Z",
-                        "year_of_establishment": "2015"
-                      },
-                      "roles": [
-                        {
-                          "created_at": "2019-08-24T14:15:22Z",
-                          "description": "Roleの説明",
-                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                          "name": "general",
-                          "type": "default",
-                          "updated_at": "2019-08-24T14:15:22Z"
-                        }
-                      ]
-                    }
-                  ],
-                  "blocked_companies": [
-                    {
-                      "admin_verification_status": "unspecified",
-                      "average_age": 28,
-                      "business_summary": "事業概要",
-                      "capital": 15200000,
-                      "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
-                      "cover_image_url": "string",
-                      "created_at": "2019-08-24T14:15:22Z",
-                      "deleted_at": "2019-08-24T14:15:22Z",
-                      "employment_placement_permit_number": "string",
-                      "follower_nums": 0,
-                      "head_office_location": "東京都港区元赤坂1-7-18",
-                      "hp_url": "https://simula-labs.com/",
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                      "introduction_fee_ratio": 0,
-                      "is_following": true,
-                      "is_listed": false,
-                      "is_sample": true,
-                      "logo_url": "string",
-                      "name": "株式会社SIMULA Labs",
-                      "name_kana": "シミュララボ ",
-                      "net_sales": 50000000,
-                      "numbers_of_employees": "20",
-                      "owner_email": "string",
-                      "phone": "03-1234-5678",
-                      "public_verification_status": "unspecified",
-                      "recruitment_fee_ratio": 0,
-                      "representative": "牧野暉弘",
-                      "representative_kana": "まきのあきひろ",
-                      "type": "account",
-                      "updated_at": "2019-08-24T14:15:22Z",
-                      "year_of_establishment": "2015"
-                    }
-                  ]
-                }
-              }
-            }
+            "examples": {}
           }
         }
       },
@@ -8719,6 +8661,119 @@
                 },
                 "total_data_nums": {
                   "type": "integer"
+                }
+              }
+            },
+            "examples": {
+              "example-1": {
+                "value": {
+                  "companies": [
+                    {
+                      "admin_verification_status": "unspecified",
+                      "average_age": 28,
+                      "business_summary": "事業概要",
+                      "capital": 15200000,
+                      "corporate_pr": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。",
+                      "cover_image_url": "string",
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "deleted_at": "2019-08-24T14:15:22Z",
+                      "employment_placement_permit_number": "string",
+                      "features": [
+                        {
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "name": "フレックスタイム",
+                          "source_type": "company",
+                          "type": "default",
+                          "updated_at": "2019-08-24T14:15:22Z"
+                        }
+                      ],
+                      "follower_nums": 0,
+                      "head_office_location": "東京都港区元赤坂1-7-18",
+                      "hp_url": "https://simula-labs.com/",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "introduction_fee_ratio": 0,
+                      "is_following": true,
+                      "is_listed": false,
+                      "is_sample": true,
+                      "logo_url": "string",
+                      "name": "株式会社SIMULA Labs",
+                      "name_kana": "シミュララボ ",
+                      "net_sales": 50000000,
+                      "numbers_of_employees": "20",
+                      "owner_email": "string",
+                      "phone": "03-1234-5678",
+                      "public_verification_status": "unspecified",
+                      "recruitment_fee_ratio": 0,
+                      "representative": "牧野暉弘",
+                      "representative_kana": "まきのあきひろ",
+                      "type": "account",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "year_of_establishment": "2015",
+                      "recruitments": [
+                        {
+                          "accessible_type": "public",
+                          "applied_accounts": 0,
+                          "billing_method": "hourly",
+                          "can_live_and_work_anywhere": false,
+                          "can_not_release_reasons": [
+                            "string"
+                          ],
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "department": "開発部",
+                          "estimated_time_per_project": 0,
+                          "estimated_unit_amount": 0,
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "interested_accounts": 0,
+                          "is_admin_checked": true,
+                          "is_applied": true,
+                          "is_interested": true,
+                          "is_organizational_checked": true,
+                          "is_sample": false,
+                          "is_worked_with_target_account": true,
+                          "job_description": "新規事業のフロントサイドエンジニア",
+                          "max_amount": 0,
+                          "max_amount_without_tax": 0,
+                          "max_number_of_hiring": "4名",
+                          "min_amount": 0,
+                          "min_amount_without_tax": 0,
+                          "nearest_station": "string",
+                          "page_views": 0,
+                          "position": "管理職",
+                          "published_since_date": "2019-08-24",
+                          "published_until_date": "2019-08-24",
+                          "publishment_status": "draft",
+                          "qualification_requirements": "・大卒以上　・40歳未満",
+                          "recommended_point": "string",
+                          "remote_work_status": "rarely",
+                          "salary_remarks": "月給\\416,667～（基本給\\307,719～ 固定残業代\\108,948～等を含む/月） ※経験とスキルに応じて決定します。 給与改定：年1回 試用期間：3ヶ月/給与・待遇に変動なし",
+                          "selection_process": "面接2回、最終面接1回",
+                          "smoking_regulation": "no_smoking_indoors",
+                          "source_type": "client",
+                          "target_company_certain_name": "string",
+                          "target_company_status": "none",
+                          "tax_for_max_amount": 0,
+                          "tax_for_min_amount": 0,
+                          "tax_type": "included",
+                          "tech_stack_remarks": "string",
+                          "title": "三度の飯よりReact！そんなGeekなあなたへ",
+                          "type": "career",
+                          "updated_at": "2019-08-24T14:15:22Z",
+                          "work_conditions": "保険・交通費とか諸々",
+                          "workplace_description": "string"
+                        }
+                      ],
+                      "industries": [
+                        {
+                          "created_at": "2019-08-24T14:15:22Z",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "name": "銀行・信託銀行",
+                          "updated_at": "2019-08-24T14:15:22Z"
+                        }
+                      ]
+                    }
+                  ],
+                  "total_data_nums": 0
                 }
               }
             }
@@ -9135,16 +9190,15 @@
                         "properties": {
                           "account": {
                             "$ref": "#/components/schemas/Account"
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
+                          },
                           "industry": {
                             "$ref": "#/components/schemas/Industry"
                           }
-                        }
+                        },
+                        "required": [
+                          "account",
+                          "industry"
+                        ]
                       }
                     ]
                   }
@@ -9180,17 +9234,45 @@
                           }
                         }
                       ]
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
+                    },
                     "invoice_detailed_items": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/InvoiceDetailedItem"
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/InvoiceDetailedItem"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "consumption_tax": {
+                                "$ref": "#/components/schemas/ConsumptionTax"
+                              }
+                            }
+                          }
+                        ]
                       }
+                    },
+                    "invoice_consumption_tax_prices": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/InvoiceConsumptionTaxPrice"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "consumption_tax": {
+                                "$ref": "#/components/schemas/ConsumptionTax"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "invoice_withholding_tax_price": {
+                      "$ref": "#/components/schemas/InvoiceWithholdingTaxPrice"
                     }
                   }
                 }
@@ -9230,17 +9312,45 @@
                                 }
                               }
                             ]
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
+                          },
                           "invoice_detailed_items": {
                             "type": "array",
                             "items": {
-                              "$ref": "#/components/schemas/InvoiceDetailedItem"
+                              "allOf": [
+                                {
+                                  "$ref": "#/components/schemas/InvoiceDetailedItem"
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "consumption_tax": {
+                                      "$ref": "#/components/schemas/ConsumptionTax"
+                                    }
+                                  }
+                                }
+                              ]
                             }
+                          },
+                          "invoice_consumption_tax_prices": {
+                            "type": "array",
+                            "items": {
+                              "allOf": [
+                                {
+                                  "$ref": "#/components/schemas/InvoiceConsumptionTaxPrice"
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "consumption_tax": {
+                                      "$ref": "#/components/schemas/ConsumptionTax"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "invoice_withholding_tax_price": {
+                            "$ref": "#/components/schemas/InvoiceWithholdingTaxPrice"
                           }
                         }
                       }
@@ -9337,12 +9447,7 @@
                   "properties": {
                     "account": {
                       "$ref": "#/components/schemas/Account"
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
+                    },
                     "company": {
                       "allOf": [
                         {
@@ -9353,24 +9458,14 @@
                           "properties": {
                             "industries": {
                               "type": "string"
-                            }
-                          }
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
+                            },
                             "owner": {
                               "type": "string"
                             }
                           }
                         }
                       ]
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
+                    },
                     "recruitment": {
                       "allOf": [
                         {
@@ -9381,73 +9476,38 @@
                           "properties": {
                             "workplace": {
                               "$ref": "#/components/schemas/State"
-                            }
-                          }
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
+                            },
                             "author": {
                               "$ref": "#/components/schemas/Account"
-                            }
-                          }
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
+                            },
                             "external_service": {
                               "$ref": "#/components/schemas/ExternalService"
-                            }
-                          }
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
+                            },
                             "employment_statuses": {
                               "type": "array",
                               "items": {
                                 "$ref": "#/components/schemas/EmploymentStatus"
                               }
-                            }
-                          }
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
+                            },
                             "occupations": {
                               "type": "array",
                               "items": {
                                 "$ref": "#/components/schemas/Occupation"
                               }
-                            }
-                          }
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
+                            },
                             "industries": {
                               "type": "array",
                               "items": {
                                 "$ref": "#/components/schemas/Industry"
                               }
-                            }
-                          }
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
+                            },
                             "company": {
                               "$ref": "#/components/schemas/Company"
                             }
                           }
                         }
                       ]
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
+                    },
                     "job": {
                       "allOf": [
                         {
@@ -9456,23 +9516,51 @@
                         {
                           "type": "object",
                           "properties": {
-                            "": {
+                            "account": {
                               "$ref": "#/components/schemas/Account"
                             }
                           }
                         }
                       ]
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
+                    },
                     "job_service_items": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/JobServiceItem"
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/JobServiceItem"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "consumption_tax": {
+                                "$ref": "#/components/schemas/ConsumptionTax"
+                              }
+                            }
+                          }
+                        ]
                       }
+                    },
+                    "job_order_consumption_tax_prices": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/JobOrderConsumptionTaxPrice"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "consumption_tax": {
+                                "$ref": "#/components/schemas/ConsumptionTax"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "job_order_withholding_tax_price": {
+                      "$ref": "#/components/schemas/JobOrderWithholdingTaxPrice"
                     }
                   }
                 }
@@ -9500,12 +9588,7 @@
                         "properties": {
                           "account": {
                             "$ref": "#/components/schemas/Account"
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
+                          },
                           "company": {
                             "allOf": [
                               {
@@ -9516,24 +9599,14 @@
                                 "properties": {
                                   "industries": {
                                     "type": "string"
-                                  }
-                                }
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
+                                  },
                                   "owner": {
                                     "type": "string"
                                   }
                                 }
                               }
                             ]
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
+                          },
                           "recruitment": {
                             "allOf": [
                               {
@@ -9544,73 +9617,38 @@
                                 "properties": {
                                   "workplace": {
                                     "$ref": "#/components/schemas/State"
-                                  }
-                                }
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
+                                  },
                                   "author": {
                                     "$ref": "#/components/schemas/Account"
-                                  }
-                                }
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
+                                  },
                                   "external_service": {
                                     "$ref": "#/components/schemas/ExternalService"
-                                  }
-                                }
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
+                                  },
                                   "employment_statuses": {
                                     "type": "array",
                                     "items": {
                                       "$ref": "#/components/schemas/EmploymentStatus"
                                     }
-                                  }
-                                }
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
+                                  },
                                   "occupations": {
                                     "type": "array",
                                     "items": {
                                       "$ref": "#/components/schemas/Occupation"
                                     }
-                                  }
-                                }
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
+                                  },
                                   "industries": {
                                     "type": "array",
                                     "items": {
                                       "$ref": "#/components/schemas/Industry"
                                     }
-                                  }
-                                }
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
+                                  },
                                   "company": {
                                     "$ref": "#/components/schemas/Company"
                                   }
                                 }
                               }
                             ]
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
+                          },
                           "job": {
                             "allOf": [
                               {
@@ -9625,17 +9663,45 @@
                                 }
                               }
                             ]
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
+                          },
                           "job_service_items": {
                             "type": "array",
                             "items": {
-                              "$ref": "#/components/schemas/JobServiceItem"
+                              "allOf": [
+                                {
+                                  "$ref": "#/components/schemas/JobServiceItem"
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "consumption_tax": {
+                                      "$ref": "#/components/schemas/ConsumptionTax"
+                                    }
+                                  }
+                                }
+                              ]
                             }
+                          },
+                          "job_order_consumption_tax_prices": {
+                            "type": "array",
+                            "items": {
+                              "allOf": [
+                                {
+                                  "$ref": "#/components/schemas/JobOrderConsumptionTaxPrice"
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "consumption_tax": {
+                                      "$ref": "#/components/schemas/ConsumptionTax"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "job_order_withholding_tax_price": {
+                            "$ref": "#/components/schemas/JobOrderWithholdingTaxPrice"
                           }
                         }
                       }
@@ -10466,16 +10532,15 @@
                   "properties": {
                     "account": {
                       "$ref": "#/components/schemas/Account"
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
+                    },
                     "occupation": {
                       "$ref": "#/components/schemas/Occupation"
                     }
-                  }
+                  },
+                  "required": [
+                    "account",
+                    "occupation"
+                  ]
                 }
               ]
             }
@@ -10505,7 +10570,11 @@
                           "occupation": {
                             "$ref": "#/components/schemas/Occupation"
                           }
-                        }
+                        },
+                        "required": [
+                          "account",
+                          "occupation"
+                        ]
                       }
                     ]
                   }
@@ -10613,25 +10682,45 @@
                       "items": {
                         "$ref": "#/components/schemas/SpecialtyCompanyType"
                       }
-                    },
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
                     "specialty_positions": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/SpecialtyPosition"
                       }
-                    },
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
                     "occupation_main_categories": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/OccupationMainCategory"
                       }
-                    },
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
                     "industry_categories": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/IndustryCategory"
                       }
-                    },
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
                     "place_of_residence": {
                       "$ref": "#/components/schemas/State"
                     }
@@ -11019,6 +11108,14 @@
                       }
                     }
                   }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "target_company": {
+                      "$ref": "#/components/schemas/Company"
+                    }
+                  }
                 }
               ]
             }
@@ -11365,77 +11462,6 @@
                 "rooms",
                 "total_data_nums"
               ]
-            }
-          }
-        }
-      },
-      "SearchCondition": {
-        "description": "",
-        "content": {
-          "application/json": {
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/SearchCondition"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "account": {
-                      "$ref": "#/components/schemas/Account"
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "company": {
-                      "$ref": "#/components/schemas/Company"
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      },
-      "SearchConditions": {
-        "description": "",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "search_conditions": {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/SearchCondition"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "account": {
-                            "$ref": "#/components/schemas/Account"
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "company": {
-                            "$ref": "#/components/schemas/Company"
-                          }
-                        }
-                      }
-                    ]
-                  }
-                },
-                "total_data_nums": {
-                  "type": "integer"
-                }
-              }
             }
           }
         }
