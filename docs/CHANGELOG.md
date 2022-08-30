@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/simula-labs/rest-api-tools/compare/v1.3.0...v1.3.1) (2022-07-12)
+
+
+### Bug Fixes
+
+* api urlの関数を修正 ([177dd66](https://github.com/simula-labs/rest-api-tools/commit/177dd66d7bd1cb6f5a11941db602d025b1f7e4f8))
+
 # [1.3.0](https://github.com/simula-labs/rest-api-tools/compare/v1.2.1...v1.3.0) (2022-07-12)
 
 
