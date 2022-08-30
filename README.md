@@ -1,7 +1,14 @@
-## Setup
+## 開発環境の作り方
 1. `npm i`
-2. `npm link`
-3. `npm run generate`
+2. `npm run build:watch`
+3. 別のターミナルを開いて`cd examples`
+4. `npm run generate`
+
+## examplesのoepenapiを最新のものにする方法
+1. [spec](https://github.com/simula-labs/prob-works_spec)ファイルをエディターで開く
+2. `npm run build`コマンドを実行する
+3. 2で生成された`/build`ディレクトリをコピーする
+4. `/examples/openapi`ディレクトリを書き換える
 
 ## 使用の際の注意事項
 - rest-api-tools.config.jsファイルをroot直下に置くこと
@@ -16,6 +23,7 @@ module.exports = {
   baseURL: "https://api.example.com/public",
   openapiBindings: [
     {
+      // connectBasePath以下のどのディレクトリに作成するか
       connect: "public",
       openapi: "openapi/Public.v1.yaml",
       requiredAuth: false,
