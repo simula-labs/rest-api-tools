@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/simula-labs/rest-api-tools/compare/v1.3.1...v1.4.0) (2022-10-10)
+
+
+### Features
+
+* deleteでもrequestBodyを渡せるように ([0b52b54](https://github.com/simula-labs/rest-api-tools/commit/0b52b5473786f3dff91abe98b2f65b17e7acd671))
+
 ## [1.3.1](https://github.com/simula-labs/rest-api-tools/compare/v1.3.0...v1.3.1) (2022-07-12)
 
 
