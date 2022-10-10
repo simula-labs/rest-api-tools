@@ -6,7 +6,6 @@ import axios, {
 } from "axios";
 import humps from "humps";
 import { QueryFunctionContext } from "react-query";
-import { NetworkError } from "./error";
 
 export type HTTPMethod = "get" | "post" | "patch" | "put" | "delete";
 
@@ -215,7 +214,9 @@ export class BaseRequest<
         case "patch":
           return this.apiClient.patch<TPayload>(this.configurePath(urlParams, qParams), pParams);
         case "delete":
-          return this.apiClient.delete<TPayload>(this.configurePath(urlParams, qParams));
+          return this.apiClient.delete<TPayload>(this.configurePath(urlParams, qParams), {
+            data: pParams,
+          });
         default:
           throw new Error(`${this.method} is not supported.`);
       }
