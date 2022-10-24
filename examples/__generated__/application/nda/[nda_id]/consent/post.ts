@@ -22,7 +22,7 @@ export const postNdaNdaIdConsent = new BaseRequest<
   PostNdaNdaIdConsentUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/nda/:ndaId/consent",

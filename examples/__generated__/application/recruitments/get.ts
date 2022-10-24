@@ -3,38 +3,7 @@ import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../shared/index";
 import { API_HOST } from "../urls";
 
-export type GetRecruitmentsResponse = {
-  recruitments: (Types.Recruitment & {
-    company?: Types.Company | undefined
-  } & {
-    workplace?: Types.State | undefined
-  } & {
-    author?: Types.Account & {
-      profile?: Types.Profile & {
-        placeOfResidence?: Types.State | undefined
-      } & {
-        specialtyCompanyTypes?: Types.SpecialtyCompanyType[] | undefined
-      } & {
-        specialtyPositions?: Types.SpecialtyPosition[] | undefined
-      } & {
-        occupationMainCategories?: Types.OccupationMainCategory[] | undefined
-      } & {
-        industryCategories?: Types.IndustryCategory[] | undefined
-      } | undefined
-    } | undefined
-  } & {
-    externalService?: Types.ExternalService | undefined
-  } & {
-    employmentStatuses?: Types.EmploymentStatus[] | undefined
-  } & {
-    occupations?: Types.Occupation[] | undefined
-  } & {
-    industries?: Types.Industry[] | undefined
-  } & {
-    features?: Types.Feature[] | undefined
-  })[]
-  totalDataNums: number
-}
+export type GetRecruitmentsResponse = Types.RecruitmentsRes
 
 export type GetRecruitmentsQueryParams = {
   /** 職種 */
@@ -74,7 +43,7 @@ export const getRecruitments = new BaseRequest<
   undefined,
   GetRecruitmentsQueryParams
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/recruitments",

@@ -7,9 +7,7 @@ export type PostAccountsAccountIdSupportUrlParams = {
   accountId: string
 } | undefined
 
-export type PostAccountsAccountIdSupportResponse = Types.Support & {
-    account: Types.Account
-  }
+export type PostAccountsAccountIdSupportResponse = Types.SupportRes
 
 export type PostAccountsAccountIdSupportRequestBody = {
   support: {
@@ -24,7 +22,7 @@ export const postAccountsAccountIdSupport = new BaseRequest<
   PostAccountsAccountIdSupportUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/accounts/:accountId/support",

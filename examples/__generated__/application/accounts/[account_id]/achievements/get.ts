@@ -7,10 +7,7 @@ export type GetAccountsAccountIdAchievementsUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdAchievementsResponse = {
-  achievements: Types.Achievement[]
-  totalDataNums: number
-}
+export type GetAccountsAccountIdAchievementsResponse = Types.AchievementsRes
 
 export const getAccountsAccountIdAchievements = new BaseRequest<
   undefined,
@@ -18,7 +15,7 @@ export const getAccountsAccountIdAchievements = new BaseRequest<
   GetAccountsAccountIdAchievementsUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/achievements",

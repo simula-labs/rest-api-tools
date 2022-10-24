@@ -13,7 +13,7 @@ export const deleteIndustryHistoriesId = new BaseRequest<
   DeleteIndustryHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/industry_histories/:id",

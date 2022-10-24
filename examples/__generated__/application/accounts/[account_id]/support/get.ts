@@ -7,9 +7,7 @@ export type GetAccountsAccountIdSupportUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdSupportResponse = Types.Support & {
-    account: Types.Account
-  }
+export type GetAccountsAccountIdSupportResponse = Types.SupportRes
 
 export const getAccountsAccountIdSupport = new BaseRequest<
   undefined,
@@ -17,7 +15,7 @@ export const getAccountsAccountIdSupport = new BaseRequest<
   GetAccountsAccountIdSupportUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/support",

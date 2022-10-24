@@ -7,11 +7,7 @@ export type PatchIndustryHistoriesIdUrlParams = {
   id: string
 } | undefined
 
-export type PatchIndustryHistoriesIdResponse = Types.IndustryHistory & {
-    account: Types.Account
-  } & {
-    industry: Types.Industry
-  }
+export type PatchIndustryHistoriesIdResponse = Types.IndustryHistoryRes
 
 export type PatchIndustryHistoriesIdRequestBody = {
   industryHistory: {
@@ -26,7 +22,7 @@ export const patchIndustryHistoriesId = new BaseRequest<
   PatchIndustryHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "patch",
   baseURL: API_HOST,
   path: "/industry_histories/:id",

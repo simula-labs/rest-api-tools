@@ -7,11 +7,7 @@ export type PostAccountsAccountIdCompletionReportsUrlParams = {
   accountId: string
 } | undefined
 
-export type PostAccountsAccountIdCompletionReportsResponse = Types.JobChangeCompletionReport & {
-    account: Types.Account
-  } & {
-    company: Types.Company
-  }
+export type PostAccountsAccountIdCompletionReportsResponse = Types.JobChangeCompletionReportRes
 
 export type PostAccountsAccountIdCompletionReportsRequestBody = {
   jobChangeCompletionReport: {
@@ -26,7 +22,7 @@ export const postAccountsAccountIdCompletionReports = new BaseRequest<
   PostAccountsAccountIdCompletionReportsUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/accounts/:accountId/job_change_completion_reports",

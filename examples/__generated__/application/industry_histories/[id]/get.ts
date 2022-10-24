@@ -7,11 +7,7 @@ export type GetIndustryHistoriesIdUrlParams = {
   id: string
 } | undefined
 
-export type GetIndustryHistoriesIdResponse = Types.IndustryHistory & {
-    account: Types.Account
-  } & {
-    industry: Types.Industry
-  }
+export type GetIndustryHistoriesIdResponse = Types.IndustryHistoryRes
 
 export const getIndustryHistoriesId = new BaseRequest<
   undefined,
@@ -19,7 +15,7 @@ export const getIndustryHistoriesId = new BaseRequest<
   GetIndustryHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/industry_histories/:id",

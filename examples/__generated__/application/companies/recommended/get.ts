@@ -3,16 +3,7 @@ import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../../shared/index";
 import { API_HOST } from "../../urls";
 
-export type GetCompaniesRecommendedResponse = {
-  companies: (Types.Company & {
-    recruitments?: Types.Recruitment[] | undefined
-  } & {
-    industries?: Types.Industry[] | undefined
-  } & {
-    features?: Types.Feature[] | undefined
-  })[]
-  totalDataNums: number
-}
+export type GetCompaniesRecommendedResponse = Types.CompaniesRes
 
 export const getCompaniesRecommended = new BaseRequest<
   undefined,
@@ -20,7 +11,7 @@ export const getCompaniesRecommended = new BaseRequest<
   undefined,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/companies/recommended",

@@ -7,14 +7,7 @@ export type GetAccountsAccountIdNotificationsUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdNotificationsResponse = {
-  accountNotifications: (Types.Notification & {
-    account?: Types.Account | undefined
-  } & {
-    room?: Types.Room | undefined
-  })[]
-  totalDataNums: number
-}
+export type GetAccountsAccountIdNotificationsResponse = Types.NotificationsRes
 
 export type GetAccountsAccountIdNotificationsQueryParams = {
   notificationType?: 'general' | 'message' | undefined
@@ -28,7 +21,7 @@ export const getAccountsAccountIdNotifications = new BaseRequest<
   GetAccountsAccountIdNotificationsUrlParams,
   GetAccountsAccountIdNotificationsQueryParams
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/notifications",

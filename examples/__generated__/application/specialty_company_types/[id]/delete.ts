@@ -13,7 +13,7 @@ export const deleteSpecialtyCompanyTypesId = new BaseRequest<
   DeleteSpecialtyCompanyTypesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/specialty_company_types/:id",

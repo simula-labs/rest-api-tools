@@ -7,16 +7,7 @@ export type GetAccountsAccountIdBlockCompaniesUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdBlockCompaniesResponse = {
-  companies: (Types.Company & {
-    recruitments?: Types.Recruitment[] | undefined
-  } & {
-    industries?: Types.Industry[] | undefined
-  } & {
-    features?: Types.Feature[] | undefined
-  })[]
-  totalDataNums: number
-}
+export type GetAccountsAccountIdBlockCompaniesResponse = Types.CompaniesRes
 
 export const getAccountsAccountIdBlockCompanies = new BaseRequest<
   undefined,
@@ -24,7 +15,7 @@ export const getAccountsAccountIdBlockCompanies = new BaseRequest<
   GetAccountsAccountIdBlockCompaniesUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/block_companies",

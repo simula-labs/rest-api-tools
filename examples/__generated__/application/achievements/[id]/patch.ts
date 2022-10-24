@@ -7,7 +7,7 @@ export type PatchAchievementsIdUrlParams = {
   id: string
 } | undefined
 
-export type PatchAchievementsIdResponse = Types.Achievement
+export type PatchAchievementsIdResponse = Types.AchievementRes
 
 export type PatchAchievementsIdRequestBody = {
   achievement: {
@@ -25,7 +25,7 @@ export const patchAchievementsId = new BaseRequest<
   PatchAchievementsIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "patch",
   baseURL: API_HOST,
   path: "/achievements/:id",

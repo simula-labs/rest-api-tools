@@ -38,12 +38,13 @@
             "schema": {
               "type": "string",
               "enum": [
-                "applicant"
+                "applicant",
+                "agent"
               ]
             },
             "in": "query",
             "name": "type",
-            "description": "'applicant'を指定すると、応募者のアカウント一覧を取得する"
+            "description": "applicantを指定すると、応募者のアカウント一覧を取得する agentを指定すると、エージェントのアカウント一覧を取得する"
           },
           {
             "schema": {
@@ -51,7 +52,54 @@
             },
             "in": "query",
             "name": "keyword",
-            "description": "アカウントの名前検索"
+            "description": "アカウントのID、名前、emailで検索"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "requested",
+                "verified",
+                "rejected",
+                "canceled",
+                "deleted"
+              ]
+            },
+            "in": "query",
+            "name": "admin_verification_status",
+            "description": "admin審査状態"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "sort_asc_last_sign_in_at",
+            "description": "trueなら昇順、falseなら降順"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "sort_asc_account_created_at",
+            "description": "trueなら昇順、falseなら降順"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "page"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "company_name",
+            "description": "会社名で検索"
           }
         ],
         "description": "typeで'applicant'を指定したら、応募者のアカウント一覧を取得できる。\nレスポンスは:id, :recruitments, :applied_at, :profile"
@@ -426,6 +474,69 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/Company"
+          }
+        }
+      }
+    },
+    "/accounts/{account_id}/accept_agent": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "account_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "エージェント審査を承認する",
+        "operationId": "post-accounts-account_id-accept_agent",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Account"
+          }
+        }
+      }
+    },
+    "/accounts/{account_id}/reject_agent": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "account_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "エージェント審査を拒否する",
+        "operationId": "post-accounts-account_id-reject_agent",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Account"
+          }
+        }
+      }
+    },
+    "/accounts/{account_id}/force_cancel_agent": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "account_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "エージェント審査を強制解除する",
+        "operationId": "post-accounts-account_id-force_cancel_agent",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Account"
           }
         }
       }
@@ -1681,11 +1792,11 @@
                       },
                       "type": {
                         "type": "string",
+                        "example": "career",
                         "enum": [
-                          "career",
-                          "project"
-                        ],
-                        "example": "career"
+                          "CareerRecruitment",
+                          "ProjectRecruitment"
+                        ]
                       },
                       "accessible_type": {
                         "type": "string",
@@ -2192,10 +2303,18 @@
             "type": "boolean"
           },
           "avatar_url": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
           },
           "consent_nda_version": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "description": "同意したNDAのバージョン"
           },
           "created_at": {
@@ -2205,10 +2324,18 @@
           "deleted_at": {
             "description": "論理削除時刻",
             "format": "date-time",
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
           },
           "display_name": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
           },
           "email": {
             "example": "test@example.com",
@@ -2234,7 +2361,11 @@
           },
           "identification_requirements": {
             "description": "本人確認に足りない項目の配列（'external_account'は銀行口座、'individual.verification.document'は身分証明書）\n",
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
+            "nullable": true,
             "items": {
               "type": "string"
             }
@@ -2277,7 +2408,11 @@
           },
           "last_notification_read_at": {
             "format": "date-time",
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
           },
           "last_sign_in_at": {
             "format": "date-time",
@@ -2300,13 +2435,34 @@
           "profile_completeness": {
             "type": "number"
           },
+          "project_result_total": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "PJT X件/XXX万円以上(enterpriseのみ)"
+          },
+          "recent_income_amount_range": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "直近の年収レンジ(enterpriseのみ)"
+          },
           "register_as": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "enum": [
               "general",
-              "organizational"
+              "company",
+              "agent"
             ],
-            "example": "general",
-            "type": "string"
+            "example": "general"
           },
           "updated_at": {
             "format": "date-time",
@@ -2315,19 +2471,435 @@
           "work_experienced": {
             "type": "boolean",
             "default": false
+          },
+          "working_experience": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "社会人歴(enterpriseのみ)"
+          },
+          "is_read_account_interest": {
+            "type": "boolean"
+          },
+          "is_following_current_company": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "already_keep_from_current_company",
+          "avatar_url",
+          "consent_nda_version",
+          "created_at",
+          "deleted_at",
+          "display_name",
+          "email",
+          "email_verification_status",
+          "exists_applicant_resource_from_current_company",
+          "id",
+          "identification_requirements",
+          "identity_verification_status",
+          "is_career_scout_target",
+          "is_concluded_nda",
+          "is_project_scout_target",
+          "is_public_with_work",
+          "is_sample",
+          "is_supported",
+          "last_notification_read_at",
+          "last_sign_in_at",
+          "missing_requirements_for_agent",
+          "missing_requirements_for_general",
+          "profile_completeness",
+          "project_result_total",
+          "recent_income_amount_range",
+          "register_as",
+          "updated_at",
+          "work_experienced",
+          "working_experience",
+          "is_read_account_interest",
+          "is_following_current_company"
+        ]
+      },
+      "WorkHistory": {
+        "title": "WorkHistory",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "department": {
+            "type": "string",
+            "example": "部署名"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_employed": {
+            "type": "boolean",
+            "description": "「在職中」「離職中」",
+            "example": "true",
+            "default": true
+          },
+          "name": {
+            "type": "string",
+            "example": "株式会社SIMULA Labs"
+          },
+          "position": {
+            "type": "string",
+            "example": "主任"
+          },
+          "since_date": {
+            "type": "string",
+            "format": "date",
+            "example": "2019-08-01"
+          },
+          "until_date": {
+            "format": "date",
+            "example": "2020-05-01",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "required": [
           "created_at",
-          "email_verification_status",
+          "department",
           "id",
-          "identity_verification_status",
-          "is_career_scout_target",
-          "is_project_scout_target",
-          "is_public_with_work",
-          "is_sample",
+          "is_employed",
+          "name",
+          "position",
+          "since_date",
+          "until_date",
+          "updated_at"
+        ]
+      },
+      "Profile": {
+        "title": "Profile",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "address": {
+            "example": "東京都港区元赤坂1-7-18",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "biography": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "自己PR/職務要約"
+          },
+          "birth_of_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "format": "date",
+            "description": ""
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "english_skill": {
+            "type": "string",
+            "description": "「日常会話レベル」「ビジネス会話レベル」「ネイティブレベル」「なし」",
+            "enum": [
+              "daily_conversation",
+              "business_conversation",
+              "native",
+              "nothing"
+            ],
+            "example": "daily_conversation"
+          },
+          "files": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "nullable": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "content_type": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "content_type",
+                "url",
+                "created_at"
+              ]
+            }
+          },
+          "first_name": {
+            "type": "string",
+            "example": "太郎"
+          },
+          "first_name_kana": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "タロウ"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "male",
+              "female",
+              "other"
+            ],
+            "example": "MALE"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "japanese_skill": {
+            "type": "string",
+            "description": "「日常会話レベル」「ビジネス会話レベル」「ネイティブレベル」「なし」",
+            "enum": [
+              "daily_conversation",
+              "business_conversation",
+              "native",
+              "nothing"
+            ],
+            "example": "native"
+          },
+          "last_name": {
+            "type": "string",
+            "example": "山田"
+          },
+          "last_name_kana": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "ヤマダ"
+          },
+          "management_experience": {
+            "type": "string",
+            "description": "マネジメント経験人数",
+            "enum": [
+              "from_6_to_10",
+              "from_11_to_20",
+              "from_21_to_50",
+              "from_51_to_100",
+              "from_101_to_500",
+              "more_than_501",
+              "nothing",
+              "less_than_5"
+            ]
+          },
+          "marital_status": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "enum": [
+              "single",
+              "married"
+            ]
+          },
+          "nationality": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "JP"
+          },
+          "number_of_job_changes": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "転職回数"
+          },
+          "phone": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "090-XXXX-XXXX"
+          },
+          "postal_code": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "107-0051"
+          },
+          "recent_income_amount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "直近の年収（税の概念なし）"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "address",
+          "biography",
+          "birth_of_date",
+          "created_at",
+          "english_skill",
+          "files",
+          "first_name",
+          "first_name_kana",
+          "gender",
+          "id",
+          "japanese_skill",
+          "last_name",
+          "last_name_kana",
+          "management_experience",
+          "marital_status",
+          "nationality",
+          "number_of_job_changes",
+          "phone",
+          "postal_code",
+          "recent_income_amount",
+          "updated_at"
+        ]
+      },
+      "State": {
+        "title": "State",
+        "type": "object",
+        "properties": {
+          "country_code": {
+            "type": "number",
+            "example": 392,
+            "description": "国名コードの数字"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "東京"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
           "updated_at",
-          "work_experienced"
+          "country_code",
+          "name"
+        ]
+      },
+      "ProjectHistory": {
+        "title": "ProjectHistory",
+        "type": "object",
+        "description": "職歴に紐付くプロジェクト経歴（name・positionどちらかは必須）",
+        "properties": {
+          "business_content": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_employed": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "example": "プロジェクト名"
+          },
+          "position": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "since_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "until_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "format": "date"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "business_content",
+          "created_at",
+          "id",
+          "is_employed",
+          "name",
+          "position",
+          "since_date",
+          "until_date",
+          "updated_at"
         ]
       },
       "AcademicHistory": {
@@ -2339,7 +2911,11 @@
             "format": "date-time"
           },
           "faculty": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "example": "情報コミュニケーション学部",
             "description": "学部・学科"
           },
@@ -2382,6 +2958,7 @@
         },
         "required": [
           "created_at",
+          "faculty",
           "id",
           "name",
           "since_date",
@@ -2390,148 +2967,17 @@
           "updated_at"
         ]
       },
-      "Achievement": {
-        "title": "Achievement",
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string",
-            "example": "実績内容"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "created_date": {
-            "type": "string",
-            "format": "date"
-          },
-          "description": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "since_date": {
-            "type": "string",
-            "format": "date"
-          },
-          "until_date": {
-            "type": "string",
-            "format": "date"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "content"
-        ]
-      },
-      "Industry": {
-        "title": "Industry",
-        "type": "object",
-        "description": "業種",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "銀行・信託銀行"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "name"
-        ]
-      },
-      "Occupation": {
-        "title": "Occupation",
-        "type": "object",
-        "description": "職種",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "戦略・経営コンサルタント"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "name"
-        ]
-      },
-      "State": {
-        "title": "State",
-        "type": "object",
-        "properties": {
-          "country_code": {
-            "type": "number",
-            "example": 392,
-            "description": "国名コードの数字"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "東京"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "country_code",
-          "name"
-        ]
-      },
       "Hope": {
         "title": "Hope",
         "type": "object",
         "description": "",
         "properties": {
           "amount": {
-            "type": "number"
+            "type": [
+              "number",
+              "null"
+            ],
+            "nullable": true
           },
           "billing_method": {
             "type": "string",
@@ -2551,20 +2997,12 @@
             "type": "string",
             "format": "uuid"
           },
-          "industries": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Industry"
-            }
-          },
-          "occupations": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Occupation"
-            }
-          },
           "ratio_of_operation": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "enum": [
               "once_a_week",
               "few_days_a_week",
@@ -2572,11 +3010,19 @@
             ]
           },
           "special_note": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "description": "特筆事項"
           },
           "time_to_change_job": {
-            "type": "number",
+            "type": [
+              "number",
+              "null"
+            ],
+            "nullable": true,
             "description": "転職希望時期・案件開始時期"
           },
           "type": {
@@ -2589,24 +3035,22 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
-          },
-          "workplaces": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/State"
-            }
           }
         },
         "required": [
+          "amount",
           "billing_method",
           "created_at",
           "id",
+          "ratio_of_operation",
+          "special_note",
+          "time_to_change_job",
           "type",
           "updated_at"
         ]
       },
-      "IndustryHistory": {
-        "title": "IndustryHistory",
+      "Skill": {
+        "title": "Skill",
         "type": "object",
         "properties": {
           "created_at": {
@@ -2617,21 +3061,79 @@
             "type": "string",
             "format": "uuid"
           },
+          "name": {
+            "type": "string",
+            "example": "データサイエンティスト"
+          },
           "updated_at": {
             "type": "string",
             "format": "date-time"
-          },
-          "year_of_experience": {
-            "type": "integer",
-            "example": 3,
-            "description": "年単位"
           }
         },
         "required": [
           "id",
           "created_at",
           "updated_at",
-          "year_of_experience"
+          "name"
+        ]
+      },
+      "Achievement": {
+        "title": "Achievement",
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "example": "実績内容"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "since_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "format": "date"
+          },
+          "until_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "format": "date"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "content",
+          "created_at",
+          "created_date",
+          "description",
+          "id",
+          "since_date",
+          "until_date",
+          "updated_at"
         ]
       },
       "OccupationHistory": {
@@ -2663,9 +3165,10 @@
           "year_of_experience"
         ]
       },
-      "Skill": {
-        "title": "Skill",
+      "Occupation": {
+        "title": "Occupation",
         "type": "object",
+        "description": "職種",
         "properties": {
           "created_at": {
             "type": "string",
@@ -2677,7 +3180,65 @@
           },
           "name": {
             "type": "string",
-            "example": "データサイエンティスト"
+            "example": "戦略・経営コンサルタント"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name"
+        ]
+      },
+      "IndustryHistory": {
+        "title": "IndustryHistory",
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "year_of_experience": {
+            "type": "integer",
+            "example": 3,
+            "description": "年単位"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "year_of_experience"
+        ]
+      },
+      "Industry": {
+        "title": "Industry",
+        "type": "object",
+        "description": "業種",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "銀行・信託銀行"
           },
           "updated_at": {
             "type": "string",
@@ -2734,46 +3295,24 @@
           "is_sample"
         ]
       },
-      "WorkHistory": {
-        "title": "WorkHistory",
+      "Applicant": {
+        "title": "Applicant",
         "type": "object",
-        "description": "",
+        "examples": [
+          {
+            "created_at": "2019-08-24T14:15:22Z",
+            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+            "updated_at": "2019-08-24T14:15:22Z"
+          }
+        ],
         "properties": {
           "created_at": {
             "type": "string",
             "format": "date-time"
           },
-          "department": {
-            "type": "string",
-            "example": "部署名"
-          },
           "id": {
             "type": "string",
             "format": "uuid"
-          },
-          "is_employed": {
-            "type": "boolean",
-            "description": "「在職中」「離職中」",
-            "example": "true",
-            "default": true
-          },
-          "name": {
-            "type": "string",
-            "example": "株式会社SIMULA Labs"
-          },
-          "position": {
-            "type": "string",
-            "example": "主任"
-          },
-          "since_date": {
-            "type": "string",
-            "format": "date",
-            "example": "2019-08-01"
-          },
-          "until_date": {
-            "format": "date",
-            "example": "2020-05-01",
-            "type": "string"
           },
           "updated_at": {
             "type": "string",
@@ -2781,14 +3320,2013 @@
           }
         },
         "required": [
-          "id",
           "created_at",
-          "updated_at",
-          "name",
-          "is_employed",
+          "id",
+          "updated_at"
+        ]
+      },
+      "Recruitment": {
+        "title": "Recruitment",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "accessible_type": {
+            "type": "string",
+            "enum": [
+              "public",
+              "private"
+            ]
+          },
+          "applied_accounts": {
+            "type": "integer"
+          },
+          "billing_method": {
+            "type": "string",
+            "enum": [
+              "hourly",
+              "monthly",
+              "yearly",
+              "with_project"
+            ],
+            "description": "「時給」「日給」「月給」「年収」「1案件」"
+          },
+          "can_live_and_work_anywhere": {
+            "type": "boolean",
+            "default": false,
+            "description": "勤務地不問か"
+          },
+          "can_not_release_reasons": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "nullable": true,
+            "description": "公開出来ない理由",
+            "items": {
+              "type": "string"
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "department": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "開発部"
+          },
+          "estimated_time_per_project": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "稼働時間目安"
+          },
+          "estimated_unit_amount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "推定単価（税込）"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "interested_accounts": {
+            "type": "integer"
+          },
+          "is_admin_checked": {
+            "type": "boolean",
+            "description": "admin用のフラグ"
+          },
+          "is_applied": {
+            "type": "boolean"
+          },
+          "is_interested": {
+            "type": "boolean"
+          },
+          "is_organizational_checked": {
+            "type": "boolean",
+            "description": "企業内でのフラグ"
+          },
+          "is_sample": {
+            "type": "boolean",
+            "default": false,
+            "description": "サンプルか"
+          },
+          "is_worked_with_target_account": {
+            "type": "boolean"
+          },
+          "job_description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "新規事業のフロントサイドエンジニア"
+          },
+          "max_amount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "最高金額（税込）"
+          },
+          "max_amount_without_tax": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "最高金額（税抜）"
+          },
+          "max_number_of_hiring": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "採用人数",
+            "example": "4名"
+          },
+          "min_amount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "最低金額（税込）"
+          },
+          "min_amount_without_tax": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "最低金額（税抜）"
+          },
+          "nearest_station": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "page_views": {
+            "type": "integer"
+          },
+          "position": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "管理職"
+          },
+          "published_since_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "format": "date",
+            "description": "掲載期間（開始）"
+          },
+          "published_until_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "format": "date",
+            "description": "掲載期間（終了）"
+          },
+          "publishment_status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "published",
+              "suspending",
+              "terminated",
+              "rejected"
+            ],
+            "description": "「下書き」「公開」「休止」「終了」「強制停止」"
+          },
+          "qualification_requirements": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "・大卒以上　・40歳未満"
+          },
+          "recommended_point": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "推薦ポイント"
+          },
+          "remote_work_status": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "enum": [
+              "rarely",
+              "normally",
+              "full_remote"
+            ],
+            "description": "「不可・時折（0-10%）」「可（10-90%）」「フルリモート（90%以上）」"
+          },
+          "salary_remarks": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "年収・報酬の詳細",
+            "example": "月給\\416,667～（基本給\\307,719～ 固定残業代\\108,948～等を含む/月） ※経験とスキルに応じて決定します。 給与改定：年1回 試用期間：3ヶ月/給与・待遇に変動なし"
+          },
+          "selection_process": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "選考プロセス",
+            "example": "面接2回、最終面接1回"
+          },
+          "smoking_regulation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "enum": [
+              "no_smoking_indoors",
+              "exist_smoking_room",
+              "none",
+              "other"
+            ],
+            "description": "「屋内禁煙」「喫煙室設置」「対策なし」「その他」"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": [
+              "client",
+              "agent",
+              "service"
+            ],
+            "description": "「クライアント作成（企業）」「エージェント作成」「サービス作成（クローリング）」"
+          },
+          "target_company_certain_name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "target_company_statusがcertainedの時、表示名を指定"
+          },
+          "target_company_status": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "enum": [
+              "none",
+              "private",
+              "certained",
+              "specified"
+            ],
+            "description": "募集元企業の状態「なし」「非公開」「某社」「指定あり」"
+          },
+          "tax_for_max_amount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "最高金額（税）"
+          },
+          "tax_for_min_amount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "最低金額（税）"
+          },
+          "tech_stack_remarks": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "技術スタックの備考"
+          },
+          "title": {
+            "type": "string",
+            "example": "三度の飯よりReact！そんなGeekなあなたへ"
+          },
+          "type": {
+            "type": "string",
+            "default": "career",
+            "description": "「転職」「副業・フリーランス」",
+            "enum": [
+              "CareerRecruitment",
+              "ProjectRecruitment"
+            ]
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "work_conditions": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "保険・交通費とか諸々"
+          },
+          "workplace_description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "勤務地詳細"
+          }
+        },
+        "required": [
+          "accessible_type",
+          "applied_accounts",
+          "billing_method",
+          "can_live_and_work_anywhere",
+          "can_not_release_reasons",
+          "created_at",
+          "department",
+          "estimated_time_per_project",
+          "estimated_unit_amount",
+          "id",
+          "interested_accounts",
+          "is_admin_checked",
+          "is_applied",
+          "is_interested",
+          "is_organizational_checked",
+          "is_sample",
+          "is_worked_with_target_account",
+          "job_description",
+          "max_amount",
+          "max_amount_without_tax",
+          "max_number_of_hiring",
+          "min_amount",
+          "min_amount_without_tax",
+          "nearest_station",
+          "page_views",
           "position",
+          "published_since_date",
+          "published_until_date",
+          "publishment_status",
+          "qualification_requirements",
+          "recommended_point",
+          "remote_work_status",
+          "salary_remarks",
+          "selection_process",
+          "smoking_regulation",
+          "source_type",
+          "target_company_certain_name",
+          "target_company_status",
+          "tax_for_max_amount",
+          "tax_for_min_amount",
+          "tech_stack_remarks",
+          "title",
+          "type",
+          "updated_at",
+          "work_conditions",
+          "workplace_description"
+        ]
+      },
+      "RecruitmentInterest": {
+        "title": "RecruitmentInterest",
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "created_at",
+          "id",
+          "updated_at"
+        ]
+      },
+      "Scout": {
+        "title": "Scout",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "auto_remainder_period": {
+            "type": "string",
+            "description": "自動リマンド期間",
+            "enum": [
+              "nothing",
+              "three_days",
+              "five_days",
+              "seven_days"
+            ],
+            "default": "nothing"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_checked": {
+            "type": "boolean",
+            "default": false,
+            "description": "重要フラグ"
+          },
+          "is_opened": {
+            "type": "boolean",
+            "default": false,
+            "description": "開封済みか"
+          },
+          "sender_type": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "agent"
+            ],
+            "description": "送信者種別(通常orエージェント)"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "CareerScout",
+              "ProjectScout"
+            ]
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sender_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "auto_remainder_period",
+          "created_at",
+          "id",
+          "is_checked",
+          "is_opened",
+          "sender_type",
+          "title",
+          "type",
+          "updated_at",
+          "sender_id"
+        ]
+      },
+      "Message": {
+        "title": "Message",
+        "type": "object",
+        "properties": {
+          "act_as": {
+            "type": "string",
+            "enum": [
+              "personal",
+              "organizational"
+            ]
+          },
+          "attachment": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "nullable": true,
+            "required": [
+              "filename",
+              "content_type",
+              "url"
+            ],
+            "properties": {
+              "filename": {
+                "type": "string"
+              },
+              "content_type": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            }
+          },
+          "content": {
+            "type": "string",
+            "description": "企業側のみ返ってくる"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_draft": {
+            "type": "boolean",
+            "default": true
+          },
+          "transformed_content": {
+            "type": "string",
+            "description": "general側のみ返ってくる"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "act_as",
+          "attachment",
+          "content",
+          "created_at",
+          "id",
+          "is_draft",
+          "transformed_content",
+          "updated_at"
+        ]
+      },
+      "AccountsRes": {
+        "type": "object",
+        "properties": {
+          "accounts": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Account"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "latest_work_history": {
+                      "$ref": "#/components/schemas/WorkHistory"
+                    },
+                    "profile": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/Profile"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "place_of_residence": {
+                              "$ref": "#/components/schemas/State"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "work_histories": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/WorkHistory"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "project_histories": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/components/schemas/ProjectHistory"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "academic_histories": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AcademicHistory"
+                      }
+                    },
+                    "hopes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Hope"
+                      }
+                    },
+                    "skills": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Skill"
+                      }
+                    },
+                    "achievements": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Achievement"
+                      }
+                    },
+                    "occupation_histories": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/OccupationHistory"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "occupation": {
+                                "$ref": "#/components/schemas/Occupation"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "industry_histories": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/IndustryHistory"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "industry": {
+                                "$ref": "#/components/schemas/Industry"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "jobs": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Job"
+                      }
+                    },
+                    "applicant_contact_histories_from_current_company": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "typename": {
+                            "type": "string",
+                            "enum": [
+                              "RecruitmentInterest",
+                              "Applicant"
+                            ]
+                          },
+                          "timestamp": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "resource": {
+                            "anyOf": [
+                              {
+                                "allOf": [
+                                  {
+                                    "$ref": "#/components/schemas/Applicant"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "recruitment": {
+                                        "$ref": "#/components/schemas/Recruitment"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "allOf": [
+                                  {
+                                    "$ref": "#/components/schemas/RecruitmentInterest"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "recruitment": {
+                                        "$ref": "#/components/schemas/Recruitment"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "scouts_from_current_company": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/Scout"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "sender": {
+                                "$ref": "#/components/schemas/Account"
+                              },
+                              "message": {
+                                "$ref": "#/components/schemas/Message"
+                              },
+                              "recruitments": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/components/schemas/Recruitment"
+                                }
+                              }
+                            },
+                            "required": [
+                              "sender",
+                              "message",
+                              "recruitments"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "scouts_from_current_account": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/Scout"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "sender": {
+                                "$ref": "#/components/schemas/Account"
+                              },
+                              "message": {
+                                "$ref": "#/components/schemas/Message"
+                              },
+                              "recruitments": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/components/schemas/Recruitment"
+                                }
+                              }
+                            },
+                            "required": [
+                              "sender",
+                              "message",
+                              "recruitments"
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "latest_work_history",
+                    "profile",
+                    "work_histories",
+                    "academic_histories",
+                    "hopes",
+                    "skills",
+                    "achievements",
+                    "occupation_histories",
+                    "industry_histories",
+                    "jobs",
+                    "applicant_contact_histories_from_current_company",
+                    "scouts_from_current_company"
+                  ]
+                }
+              ]
+            }
+          },
+          "total_data_nums": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "accounts",
+          "total_data_nums"
+        ]
+      },
+      "AcademicHistoriesRes": {
+        "type": "object",
+        "properties": {
+          "academic_histories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcademicHistory"
+            }
+          }
+        },
+        "required": [
+          "academic_histories"
+        ]
+      },
+      "AchievementsRes": {
+        "type": "object",
+        "properties": {
+          "achievements": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Achievement"
+                }
+              ]
+            }
+          },
+          "total_data_nums": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "achievements",
+          "total_data_nums"
+        ]
+      },
+      "HopesRes": {
+        "type": "object",
+        "properties": {
+          "hopes": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Hope"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "industries": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Industry"
+                      }
+                    }
+                  },
+                  "required": [
+                    "industries"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "occupations": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Occupation"
+                      }
+                    }
+                  },
+                  "required": [
+                    "occupations"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "workplaces": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/State"
+                      }
+                    }
+                  },
+                  "required": [
+                    "workplaces"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "hopes"
+        ]
+      },
+      "IndustryHistoriesRes": {
+        "type": "object",
+        "properties": {
+          "industry_histories": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/IndustryHistory"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "account": {
+                      "$ref": "#/components/schemas/Account"
+                    },
+                    "industry": {
+                      "$ref": "#/components/schemas/Industry"
+                    }
+                  },
+                  "required": [
+                    "account",
+                    "industry"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "industry_histories"
+        ]
+      },
+      "OccupationHistoriesRes": {
+        "type": "object",
+        "properties": {
+          "occupation_histories": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/OccupationHistory"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "account": {
+                      "$ref": "#/components/schemas/Account"
+                    },
+                    "occupation": {
+                      "$ref": "#/components/schemas/Occupation"
+                    }
+                  },
+                  "required": [
+                    "account",
+                    "occupation"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "occupation_histories"
+        ]
+      },
+      "ProjectResult": {
+        "title": "ProjectResult",
+        "type": "object",
+        "properties": {
+          "total_jobs_num": {
+            "type": "integer"
+          },
+          "total_rate": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "total_jobs_num",
+          "total_rate"
+        ]
+      },
+      "JobOrder": {
+        "title": "JobOrder",
+        "type": "object",
+        "description": "appliedの場合はcustomer_name以外必須",
+        "properties": {
+          "consumption_tax_calculation_method": {
+            "type": "string",
+            "description": "消費税計算方法",
+            "enum": [
+              "floor",
+              "ceil",
+              "round"
+            ],
+            "default": "floor"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "customer_name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "取引先名"
+          },
+          "fee_calculation_span": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "enum": [
+              "monthly",
+              "daily",
+              "hourly"
+            ],
+            "description": "稼働報酬制の単位（「一月あたり」「一日あたり」「一時間あたり」）"
+          },
+          "fee_type": {
+            "type": "string",
+            "description": "「稼働報酬制」「固定報酬制」",
+            "enum": [
+              "time_based",
+              "fixed"
+            ]
+          },
+          "files": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "nullable": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "content_type": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "content_type",
+                "url",
+                "created_at"
+              ]
+            }
+          },
+          "fixed_amount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "固定報酬制の金額(税込)"
+          },
+          "fixed_sub_total": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "固定報酬制の小計(税抜)"
+          },
+          "fixed_total_amount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "固定報酬制の金額(税込)と論理手数料を合わせた総額"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_public": {
+            "type": "boolean"
+          },
+          "is_sample": {
+            "type": "boolean"
+          },
+          "is_target_withholding_tax": {
+            "type": "boolean",
+            "description": "稼動報酬制の源泉徴収の対象か",
+            "default": false
+          },
+          "job_description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "仕事内容"
+          },
+          "job_name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "業務名"
+          },
+          "logical_fee_amount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "論理手数料（報酬額ときっかけを元に算出する手数料の予定額）"
+          },
+          "number": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "発注番号"
+          },
+          "order_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "発注日",
+            "format": "date"
+          },
+          "other_conditions": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "諸条件"
+          },
+          "review_comment": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "受注者からのコメント"
+          },
+          "since_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "format": "date",
+            "description": "開始日"
+          },
+          "status": {
+            "type": "string",
+            "default": "draft",
+            "enum": [
+              "draft",
+              "applied",
+              "certificated",
+              "rejected"
+            ],
+            "description": "「下書き」「先方確認中」「締結済み」「却下」"
+          },
+          "tax_ratio": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "nullable": true,
+            "description": "稼働報酬制の税率"
+          },
+          "unit_time_fee": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "description": "稼働報酬制の金額"
+          },
+          "until_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "format": "date",
+            "description": "終了日"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "withholding_included_consumption_tax": {
+            "type": "boolean",
+            "description": "源泉徴収税計算に消費税を含めるか",
+            "default": false
+          }
+        },
+        "required": [
+          "consumption_tax_calculation_method",
+          "created_at",
+          "customer_name",
+          "fee_calculation_span",
+          "fee_type",
+          "files",
+          "fixed_amount",
+          "fixed_sub_total",
+          "fixed_total_amount",
+          "id",
+          "is_public",
+          "is_sample",
+          "is_target_withholding_tax",
+          "job_description",
+          "job_name",
+          "logical_fee_amount",
+          "number",
+          "order_date",
+          "other_conditions",
+          "review_comment",
           "since_date",
-          "department"
+          "status",
+          "tax_ratio",
+          "unit_time_fee",
+          "until_date",
+          "updated_at",
+          "withholding_included_consumption_tax"
+        ]
+      },
+      "JobReview": {
+        "title": "JobReview",
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "improvement_point": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "もっとこうして欲しかった点"
+          },
+          "is_sample": {
+            "type": "boolean",
+            "default": false,
+            "description": "サンプルか"
+          },
+          "skill_description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "スキルの詳細"
+          },
+          "star_rating": {
+            "type": "integer"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "created_at",
+          "id",
+          "improvement_point",
+          "is_sample",
+          "skill_description",
+          "star_rating",
+          "updated_at"
+        ]
+      },
+      "ProjectResultRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProjectResult"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "jobs": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Job"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "job_order": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/JobOrder"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "recruitment": {
+                                  "allOf": [
+                                    {
+                                      "$ref": "#/components/schemas/Recruitment"
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "workplace": {
+                                          "$ref": "#/components/schemas/State"
+                                        },
+                                        "occpations": {
+                                          "type": "array",
+                                          "items": {
+                                            "$ref": "#/components/schemas/Occupation"
+                                          }
+                                        },
+                                        "industries": {
+                                          "type": "array",
+                                          "items": {
+                                            "$ref": "#/components/schemas/Industry"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "job_reviews": {
+                          "type": "array",
+                          "items": {
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/JobReview"
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "skills": {
+                                    "type": "array",
+                                    "items": {
+                                      "$ref": "#/components/schemas/Skill"
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "job_order",
+                        "job_reviews"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "skills": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Skill"
+                }
+              }
+            },
+            "required": [
+              "jobs",
+              "skills"
+            ]
+          }
+        ]
+      },
+      "SkillsRes": {
+        "type": "object",
+        "properties": {
+          "skills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Skill"
+            }
+          }
+        },
+        "required": [
+          "skills"
+        ]
+      },
+      "WorkHistoriesRes": {
+        "type": "object",
+        "properties": {
+          "work_histories": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/WorkHistory"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "account": {
+                      "$ref": "#/components/schemas/Account"
+                    }
+                  },
+                  "required": [
+                    "account"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "project_histories": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ProjectHistory"
+                      }
+                    }
+                  },
+                  "required": [
+                    "project_histories"
+                  ]
+                }
+              ]
+            }
+          },
+          "total_data_nums": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "work_histories",
+          "total_data_nums"
+        ]
+      },
+      "AccountRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Account"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "latest_work_history": {
+                "$ref": "#/components/schemas/WorkHistory"
+              },
+              "profile": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Profile"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "place_of_residence": {
+                        "$ref": "#/components/schemas/State"
+                      }
+                    },
+                    "required": [
+                      "place_of_residence"
+                    ]
+                  }
+                ]
+              },
+              "work_histories": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/WorkHistory"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "project_histories": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ProjectHistory"
+                          }
+                        }
+                      },
+                      "required": [
+                        "project_histories"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "academic_histories": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AcademicHistory"
+                }
+              },
+              "hopes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Hope"
+                }
+              },
+              "skills": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Skill"
+                }
+              },
+              "achievements": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Achievement"
+                }
+              },
+              "occupation_histories": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OccupationHistory"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "occupation": {
+                          "$ref": "#/components/schemas/Occupation"
+                        }
+                      },
+                      "required": [
+                        "occupation"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "industry_histories": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/IndustryHistory"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "industry": {
+                          "$ref": "#/components/schemas/Industry"
+                        }
+                      },
+                      "required": [
+                        "industry"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "jobs": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              },
+              "applicant_contact_histories_from_current_company": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "typename": {
+                      "type": "string",
+                      "enum": [
+                        "RecruitmentInterest",
+                        "Applicant"
+                      ]
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "resource": {
+                      "anyOf": [
+                        {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/Applicant"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "recruitment": {
+                                  "$ref": "#/components/schemas/Recruitment"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/RecruitmentInterest"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "recruitment": {
+                                  "$ref": "#/components/schemas/Recruitment"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "typename",
+                    "timestamp",
+                    "resource"
+                  ]
+                }
+              },
+              "scouts_from_current_company": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Scout"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "sender": {
+                          "$ref": "#/components/schemas/Account"
+                        },
+                        "message": {
+                          "$ref": "#/components/schemas/Message"
+                        },
+                        "recruitments": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Recruitment"
+                          }
+                        }
+                      },
+                      "required": [
+                        "sender",
+                        "message",
+                        "recruitments"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "scouts_from_current_account": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Scout"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "sender": {
+                          "$ref": "#/components/schemas/Account"
+                        },
+                        "message": {
+                          "$ref": "#/components/schemas/Message"
+                        },
+                        "recruitments": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Recruitment"
+                          }
+                        }
+                      },
+                      "required": [
+                        "sender",
+                        "message",
+                        "recruitments"
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            "required": [
+              "latest_work_history",
+              "profile",
+              "work_histories",
+              "academic_histories",
+              "hopes",
+              "skills",
+              "achievements",
+              "occupation_histories",
+              "industry_histories",
+              "jobs",
+              "applicant_contact_histories_from_current_company",
+              "scouts_from_current_company"
+            ]
+          }
+        ]
+      },
+      "Company": {
+        "title": "Company",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "admin_verification_status": {
+            "type": "string",
+            "enum": [
+              "unspecified",
+              "requested",
+              "verified",
+              "rejected",
+              "canceled"
+            ],
+            "default": "unspecified",
+            "description": "admin審査状態"
+          },
+          "average_age": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "example": 28
+          },
+          "business_summary": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "事業概要"
+          },
+          "capital": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "example": 15200000,
+            "description": "資本金（税の概念なし）"
+          },
+          "corporate_pr": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "maxLength": 500,
+            "example": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。"
+          },
+          "cover_image_url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deleted_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "format": "date-time"
+          },
+          "employment_placement_permit_number": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "description": "有料職業紹介事業許可番号"
+          },
+          "follower_nums": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true
+          },
+          "head_office_location": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "東京都港区元赤坂1-7-18"
+          },
+          "hp_url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "format": "uri",
+            "example": "https://simula-labs.com/"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "introduction_fee_ratio": {
+            "type": "number",
+            "description": "admin指定の紹介報告手数料率"
+          },
+          "is_following": {
+            "type": "boolean"
+          },
+          "is_listed": {
+            "type": "boolean",
+            "default": false,
+            "example": false
+          },
+          "is_sample": {
+            "type": "boolean"
+          },
+          "logo_url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "example": "株式会社SIMULA Labs"
+          },
+          "name_kana": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "シミュララボ "
+          },
+          "net_sales": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
+            "example": 50000000,
+            "description": "前年度の売上高（税込）"
+          },
+          "numbers_of_employees": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "20"
+          },
+          "owner_email": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "phone": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "03-1234-5678"
+          },
+          "public_verification_status": {
+            "type": "string",
+            "enum": [
+              "unspecified",
+              "requested",
+              "verified",
+              "rejected"
+            ],
+            "default": "unspecified"
+          },
+          "recruitment_fee_ratio": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "nullable": true,
+            "description": "admin指定の採用報告手数料率"
+          },
+          "representative": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "牧野暉弘"
+          },
+          "representative_kana": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "example": "まきのあきひろ"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "account",
+              "stub"
+            ],
+            "default": "account"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "year_of_establishment": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
+            "format": "date",
+            "example": "2015"
+          }
+        },
+        "required": [
+          "admin_verification_status",
+          "average_age",
+          "business_summary",
+          "capital",
+          "corporate_pr",
+          "cover_image_url",
+          "created_at",
+          "deleted_at",
+          "employment_placement_permit_number",
+          "follower_nums",
+          "head_office_location",
+          "hp_url",
+          "id",
+          "introduction_fee_ratio",
+          "is_following",
+          "is_listed",
+          "is_sample",
+          "logo_url",
+          "name",
+          "name_kana",
+          "net_sales",
+          "numbers_of_employees",
+          "owner_email",
+          "phone",
+          "public_verification_status",
+          "recruitment_fee_ratio",
+          "representative",
+          "representative_kana",
+          "type",
+          "updated_at",
+          "year_of_establishment"
         ]
       },
       "Feature": {
@@ -2836,387 +5374,54 @@
           "source_type"
         ]
       },
-      "Company": {
-        "title": "Company",
+      "CompaniesRes": {
         "type": "object",
-        "description": "",
         "properties": {
-          "admin_verification_status": {
-            "type": "string",
-            "enum": [
-              "unspecified",
-              "requested",
-              "verified",
-              "rejected",
-              "canceled"
-            ],
-            "default": "unspecified",
-            "description": "admin審査状態"
-          },
-          "average_age": {
-            "type": "integer",
-            "example": 28
-          },
-          "business_summary": {
-            "type": "string",
-            "example": "事業概要"
-          },
-          "capital": {
-            "type": "integer",
-            "example": 15200000,
-            "description": "資本金（税の概念なし）"
-          },
-          "corporate_pr": {
-            "type": "string",
-            "maxLength": 500,
-            "example": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。"
-          },
-          "cover_image_url": {
-            "type": "string"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "deleted_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "employment_placement_permit_number": {
-            "type": "string",
-            "description": "有料職業紹介事業許可番号"
-          },
-          "features": {
+          "companies": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Feature"
-            }
-          },
-          "follower_nums": {
-            "type": "integer"
-          },
-          "head_office_location": {
-            "type": "string",
-            "example": "東京都港区元赤坂1-7-18"
-          },
-          "hp_url": {
-            "type": "string",
-            "format": "uri",
-            "example": "https://simula-labs.com/"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "introduction_fee_ratio": {
-            "type": "number",
-            "description": "admin指定の紹介報告手数料率"
-          },
-          "is_following": {
-            "type": "boolean"
-          },
-          "is_listed": {
-            "type": "boolean",
-            "default": false,
-            "example": false
-          },
-          "is_sample": {
-            "type": "boolean"
-          },
-          "logo_url": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "example": "株式会社SIMULA Labs"
-          },
-          "name_kana": {
-            "type": "string",
-            "example": "シミュララボ "
-          },
-          "net_sales": {
-            "type": "integer",
-            "example": 50000000,
-            "description": "前年度の売上高（税込）"
-          },
-          "numbers_of_employees": {
-            "type": "string",
-            "example": "20"
-          },
-          "owner_email": {
-            "type": "string"
-          },
-          "phone": {
-            "type": "string",
-            "example": "03-1234-5678"
-          },
-          "public_verification_status": {
-            "type": "string",
-            "enum": [
-              "unspecified",
-              "requested",
-              "verified",
-              "rejected"
-            ],
-            "default": "unspecified"
-          },
-          "recruitment_fee_ratio": {
-            "type": "number",
-            "description": "admin指定の採用報告手数料率"
-          },
-          "representative": {
-            "type": "string",
-            "example": "牧野暉弘"
-          },
-          "representative_kana": {
-            "type": "string",
-            "example": "まきのあきひろ"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "account",
-              "stub"
-            ],
-            "default": "account"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "year_of_establishment": {
-            "type": "string",
-            "format": "date",
-            "example": "2015"
-          }
-        },
-        "required": [
-          "admin_verification_status",
-          "created_at",
-          "id",
-          "name",
-          "public_verification_status",
-          "type",
-          "updated_at"
-        ]
-      },
-      "Profile": {
-        "title": "Profile",
-        "type": "object",
-        "description": "",
-        "properties": {
-          "academic_background": {
-            "type": "string",
-            "example": "東京大学"
-          },
-          "address": {
-            "type": "string",
-            "example": "東京都港区元赤坂1-7-18"
-          },
-          "agent_achievement": {
-            "type": "string",
-            "example": "経歴・実績"
-          },
-          "agent_area_in_charge": {
-            "type": "string",
-            "example": "東京23区"
-          },
-          "agent_self_introduction": {
-            "type": "string",
-            "example": "自己PR"
-          },
-          "agent_self_message": {
-            "type": "string",
-            "example": "紹介メッセージ"
-          },
-          "biography": {
-            "type": "string",
-            "example": "自己PR/職務要約"
-          },
-          "birth_of_date": {
-            "type": "string",
-            "format": "date",
-            "description": ""
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "english_skill": {
-            "type": "string",
-            "description": "「日常会話レベル」「ビジネス会話レベル」「ネイティブレベル」「なし」",
-            "enum": [
-              "daily_conversation",
-              "business_conversation",
-              "native",
-              "nothing"
-            ],
-            "example": "daily_conversation"
-          },
-          "files": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Company"
                 },
-                "name": {
-                  "type": "string"
-                },
-                "content_type": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time"
+                {
+                  "type": "object",
+                  "properties": {
+                    "recruitments": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Recruitment"
+                      }
+                    },
+                    "industries": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Industry"
+                      }
+                    },
+                    "features": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Feature"
+                      }
+                    }
+                  },
+                  "required": [
+                    "recruitments",
+                    "industries",
+                    "features"
+                  ]
                 }
-              },
-              "required": [
-                "id",
-                "name",
-                "content_type",
-                "url",
-                "created_at"
               ]
             }
           },
-          "first_name": {
-            "type": "string",
-            "example": "太郎"
-          },
-          "first_name_kana": {
-            "type": "string",
-            "example": "タロウ"
-          },
-          "gender": {
-            "type": "string",
-            "enum": [
-              "male",
-              "female",
-              "other"
-            ],
-            "example": "MALE"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "japanese_skill": {
-            "type": "string",
-            "description": "「日常会話レベル」「ビジネス会話レベル」「ネイティブレベル」「なし」",
-            "enum": [
-              "daily_conversation",
-              "business_conversation",
-              "native",
-              "nothing"
-            ],
-            "example": "native"
-          },
-          "last_name": {
-            "type": "string",
-            "example": "山田"
-          },
-          "last_name_kana": {
-            "type": "string",
-            "example": "ヤマダ"
-          },
-          "management_experience": {
-            "type": "string",
-            "description": "マネジメント経験人数",
-            "enum": [
-              "nothing",
-              "less_than_5",
-              "from_6_to_10",
-              "from_11_to_20",
-              "from_21_to_50",
-              "from_51_to_100",
-              "from_101_to_500",
-              "more_than_501"
-            ]
-          },
-          "marital_status": {
-            "type": "string",
-            "enum": [
-              "single",
-              "married"
-            ]
-          },
-          "nationality": {
-            "type": "string",
-            "example": "JP"
-          },
-          "number_of_job_changes": {
-            "type": "integer",
-            "description": "転職回数"
-          },
-          "phone": {
-            "type": "string",
-            "example": "090-XXXX-XXXX"
-          },
-          "postal_code": {
-            "type": "string",
-            "example": "107-0051"
-          },
-          "recent_income_amount": {
-            "type": "integer",
-            "description": "直近の年収（税の概念なし）"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "year_of_agent_experience": {
-            "type": "integer",
-            "example": 10
+          "total_data_nums": {
+            "type": "integer"
           }
         },
         "required": [
-          "created_at",
-          "id",
-          "updated_at"
-        ],
-        "examples": [
-          {
-            "academic_background": "東京大学",
-            "address": "東京都港区元赤坂1-7-18",
-            "agent_achievement": "経歴・実績",
-            "agent_area_in_charge": "東京23区",
-            "agent_self_introduction": "自己PR",
-            "agent_self_message": "紹介メッセージ",
-            "biography": "自己PR/職務要約",
-            "birth_of_date": "2019-08-24",
-            "created_at": "2019-08-24T14:15:22Z",
-            "english_skill": "daily_conversation",
-            "files": [
-              {
-                "id": "string",
-                "name": "string",
-                "content_type": "string",
-                "url": "string",
-                "created_at": "2019-08-24T14:15:22Z"
-              }
-            ],
-            "first_name": "太郎",
-            "first_name_kana": "タロウ",
-            "gender": "MALE",
-            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-            "japanese_skill": "native",
-            "last_name": "山田",
-            "last_name_kana": "ヤマダ",
-            "management_experience": "nothing",
-            "marital_status": "single",
-            "nationality": "JP",
-            "number_of_job_changes": 0,
-            "phone": "090-XXXX-XXXX",
-            "postal_code": "107-0051",
-            "recent_income_amount": 0,
-            "updated_at": "2019-08-24T14:15:22Z",
-            "year_of_agent_experience": 10
-          }
+          "companies",
+          "total_data_nums"
         ]
       },
       "Subscription": {
@@ -3289,7 +5494,11 @@
             "format": "uuid"
           },
           "tax_for_unit_amount": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
             "description": "価格（税）"
           },
           "unit_amount": {
@@ -3297,8 +5506,124 @@
             "description": "価格（税込）"
           },
           "unit_amount_without_tax": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
             "description": "価格（税抜）"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "active",
+          "created_at",
+          "currency",
+          "id",
+          "tax_for_unit_amount",
+          "unit_amount",
+          "unit_amount_without_tax",
+          "updated_at"
+        ]
+      },
+      "Product": {
+        "title": "Product",
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "plan_type": {
+            "type": "string",
+            "enum": [
+              "standard",
+              "agent",
+              "starter"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "good",
+              "service"
+            ]
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "active",
+          "created_at",
+          "description",
+          "id",
+          "name",
+          "plan_type",
+          "type",
+          "updated_at"
+        ]
+      },
+      "PaymentMethod": {
+        "title": "PaymentMethod",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "brand": {
+            "type": "string",
+            "enum": [
+              "visa",
+              "mastercard",
+              "jcb",
+              "american_express",
+              "diners"
+            ],
+            "example": "visa"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "exp_month": {
+            "type": "string",
+            "example": "8"
+          },
+          "exp_year": {
+            "type": "string",
+            "example": "2023"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_default": {
+            "type": "boolean",
+            "default": false
+          },
+          "last4": {
+            "type": "string",
+            "example": "1234"
           },
           "updated_at": {
             "type": "string",
@@ -3309,260 +5634,200 @@
           "id",
           "created_at",
           "updated_at",
-          "active",
-          "currency",
-          "unit_amount"
+          "brand",
+          "exp_month",
+          "exp_year",
+          "last4",
+          "is_default"
         ]
       },
-      "Recruitment": {
-        "title": "Recruitment",
+      "OrgUnit": {
+        "title": "OrgUnit",
         "type": "object",
-        "description": "",
         "properties": {
-          "accessible_type": {
-            "type": "string",
-            "enum": [
-              "public",
-              "private"
-            ]
-          },
-          "applied_accounts": {
-            "type": "integer"
-          },
-          "billing_method": {
-            "type": "string",
-            "enum": [
-              "hourly",
-              "monthly",
-              "yearly",
-              "with_project"
-            ],
-            "description": "「時給」「日給」「月給」「年収」「1案件」"
-          },
-          "can_live_and_work_anywhere": {
-            "type": "boolean",
-            "default": false,
-            "description": "勤務地不問か"
-          },
-          "can_not_release_reasons": {
-            "type": "array",
-            "description": "公開出来ない理由",
-            "items": {
-              "type": "string"
-            }
-          },
           "created_at": {
             "type": "string",
             "format": "date-time"
           },
-          "department": {
-            "type": "string",
-            "example": "開発部"
-          },
-          "estimated_time_per_project": {
-            "type": "integer",
-            "description": "稼働時間目安"
-          },
-          "estimated_unit_amount": {
-            "type": "integer",
-            "description": "推定単価（税込）"
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
           },
           "id": {
             "type": "string",
             "format": "uuid"
           },
-          "interested_accounts": {
-            "type": "integer"
-          },
-          "is_admin_checked": {
-            "type": "boolean",
-            "description": "admin用のフラグ"
-          },
-          "is_applied": {
+          "is_root": {
             "type": "boolean"
           },
-          "is_interested": {
-            "type": "boolean"
-          },
-          "is_organizational_checked": {
-            "type": "boolean",
-            "description": "企業内でのフラグ"
-          },
-          "is_sample": {
-            "type": "boolean",
-            "default": false,
-            "description": "サンプルか"
-          },
-          "is_worked_with_target_account": {
-            "type": "boolean"
-          },
-          "job_description": {
-            "type": "string",
-            "example": "新規事業のフロントサイドエンジニア"
-          },
-          "max_amount": {
-            "type": "integer",
-            "description": "最高金額（税込）"
-          },
-          "max_amount_without_tax": {
-            "type": "integer",
-            "description": "最高金額（税抜）"
-          },
-          "max_number_of_hiring": {
-            "type": "string",
-            "description": "採用人数",
-            "example": "4名"
-          },
-          "min_amount": {
-            "type": "integer",
-            "description": "最低金額（税込）"
-          },
-          "min_amount_without_tax": {
-            "type": "integer",
-            "description": "最低金額（税抜）"
-          },
-          "nearest_station": {
+          "name": {
             "type": "string"
-          },
-          "page_views": {
-            "type": "integer"
-          },
-          "position": {
-            "type": "string",
-            "example": "管理職"
-          },
-          "published_since_date": {
-            "type": "string",
-            "format": "date",
-            "description": "掲載期間（開始）"
-          },
-          "published_until_date": {
-            "type": "string",
-            "format": "date",
-            "description": "掲載期間（終了）"
-          },
-          "publishment_status": {
-            "type": "string",
-            "enum": [
-              "draft",
-              "published",
-              "suspending",
-              "terminated",
-              "rejected"
-            ],
-            "description": "「下書き」「公開」「休止」「終了」「強制停止」"
-          },
-          "qualification_requirements": {
-            "type": "string",
-            "example": "・大卒以上　・40歳未満"
-          },
-          "recommended_point": {
-            "type": "string",
-            "description": "推薦ポイント"
-          },
-          "remote_work_status": {
-            "type": "string",
-            "enum": [
-              "rarely",
-              "normally",
-              "full_remote"
-            ],
-            "description": "「不可・時折（0-10%）」「可（10-90%）」「フルリモート（90%以上）」"
-          },
-          "salary_remarks": {
-            "type": "string",
-            "description": "年収・報酬の詳細",
-            "example": "月給\\416,667～（基本給\\307,719～ 固定残業代\\108,948～等を含む/月） ※経験とスキルに応じて決定します。 給与改定：年1回 試用期間：3ヶ月/給与・待遇に変動なし"
-          },
-          "selection_process": {
-            "type": "string",
-            "description": "選考プロセス",
-            "example": "面接2回、最終面接1回"
-          },
-          "smoking_regulation": {
-            "type": "string",
-            "enum": [
-              "no_smoking_indoors",
-              "exist_smoking_room",
-              "none",
-              "other"
-            ],
-            "description": "「屋内禁煙」「喫煙室設置」「対策なし」「その他」"
-          },
-          "source_type": {
-            "type": "string",
-            "enum": [
-              "client",
-              "agent",
-              "service"
-            ],
-            "description": "「クライアント作成（企業）」「エージェント作成」「サービス作成（クローリング）」"
-          },
-          "target_company_certain_name": {
-            "type": "string",
-            "description": "target_company_statusがcertainedの時、表示名を指定"
-          },
-          "target_company_status": {
-            "type": "string",
-            "enum": [
-              "none",
-              "private",
-              "certained",
-              "specified"
-            ],
-            "description": "募集元企業の状態「なし」「非公開」「某社」「指定あり」"
-          },
-          "tax_for_max_amount": {
-            "type": "integer",
-            "description": "最高金額（税）"
-          },
-          "tax_for_min_amount": {
-            "type": "integer",
-            "description": "最低金額（税）"
-          },
-          "tax_type": {
-            "type": "string",
-            "enum": [
-              "included",
-              "excluded"
-            ]
-          },
-          "tech_stack_remarks": {
-            "type": "string",
-            "description": "技術スタックの備考"
-          },
-          "title": {
-            "type": "string",
-            "example": "三度の飯よりReact！そんなGeekなあなたへ"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "career",
-              "project"
-            ],
-            "default": "career",
-            "description": "「転職」「副業・フリーランス」"
           },
           "updated_at": {
             "type": "string",
             "format": "date-time"
-          },
-          "work_conditions": {
-            "type": "string",
-            "example": "保険・交通費とか諸々"
-          },
-          "workplace_description": {
-            "type": "string",
-            "description": "勤務地詳細"
           }
         },
         "required": [
           "created_at",
+          "description",
           "id",
-          "is_sample",
-          "title",
+          "is_root",
+          "name",
           "updated_at"
+        ]
+      },
+      "ExternalService": {
+        "title": "ExternalService",
+        "type": "object",
+        "description": "クローリングサービス",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_contracted": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name",
+          "is_contracted"
+        ]
+      },
+      "CompanyRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Company"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "owner": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Account"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "profile": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/Profile"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "place_of_residence": {
+                                "$ref": "#/components/schemas/State"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "profile"
+                    ]
+                  }
+                ]
+              },
+              "subscription": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Subscription"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "price": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/Price"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "product": {
+                                "$ref": "#/components/schemas/Product"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "price"
+                    ]
+                  }
+                ]
+              },
+              "recruitments": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Recruitment"
+                }
+              },
+              "industries": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Industry"
+                }
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Feature"
+                }
+              },
+              "payment_methods": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PaymentMethod"
+                }
+              },
+              "org_units": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrgUnit"
+                }
+              },
+              "external_services": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExternalService"
+                }
+              }
+            },
+            "required": [
+              "owner",
+              "subscription",
+              "recruitments",
+              "industries",
+              "features",
+              "payment_methods",
+              "org_units",
+              "external_services"
+            ]
+          }
         ]
       },
       "ConsentMatter": {
@@ -3591,6 +5856,35 @@
           "created_at",
           "updated_at",
           "content"
+        ]
+      },
+      "ConsentMattersRes": {
+        "type": "object",
+        "properties": {
+          "consent_matters": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ConsentMatter"
+                }
+              ]
+            }
+          },
+          "total_data_nums": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "consent_matters",
+          "total_data_nums"
+        ]
+      },
+      "ConsentMatterRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ConsentMatter"
+          }
         ]
       },
       "EmploymentContractTerm": {
@@ -3633,6 +5927,13 @@
           "term"
         ]
       },
+      "EmploymentContractTermRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EmploymentContractTerm"
+          }
+        ]
+      },
       "EmploymentStatus": {
         "title": "EmploymentStatus",
         "type": "object",
@@ -3655,7 +5956,11 @@
             "example": "正社員"
           },
           "project_classification": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "enum": [
               "contract",
               "quasi_mandate",
@@ -3676,12 +5981,67 @@
           }
         },
         "required": [
-          "id",
           "created_at",
-          "updated_at",
+          "id",
+          "is_selectable",
           "name",
+          "project_classification",
           "type",
-          "is_selectable"
+          "updated_at"
+        ]
+      },
+      "EmploymentStatusesRes": {
+        "type": "object",
+        "properties": {
+          "employment_statuses": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/EmploymentStatus"
+                }
+              ]
+            }
+          },
+          "total_data_nums": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "employment_statuses",
+          "total_data_nums"
+        ]
+      },
+      "EmploymentStatusRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EmploymentStatus"
+          }
+        ]
+      },
+      "FeaturesRes": {
+        "type": "object",
+        "properties": {
+          "features": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Feature"
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "features"
+        ]
+      },
+      "FeatureRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Feature"
+          }
         ]
       },
       "IntroductionCompletionReport": {
@@ -3689,7 +6049,11 @@
         "type": "object",
         "properties": {
           "acceptance_of_offer_date": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "format": "date",
             "description": "内定承諾日"
           },
@@ -3698,26 +6062,46 @@
             "description": "年収"
           },
           "billing_emails": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
+            "nullable": true,
             "description": "請求先メールアドレス",
             "items": {
               "type": "string"
             }
           },
           "canceled_at": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "format": "date-time"
           },
           "commission_fee": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
             "description": "紹介料（年収 x 紹介料比率）"
           },
           "commission_fee_ratio": {
-            "type": "number",
+            "type": [
+              "number",
+              "null"
+            ],
+            "nullable": true,
             "description": "紹介料比率"
           },
           "commission_fee_without_tax": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
             "description": "紹介料（税抜）"
           },
           "created_at": {
@@ -3733,11 +6117,19 @@
             "default": true
           },
           "joined_date": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "format": "date"
           },
           "memo": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
           },
           "payment_status": {
             "type": "string",
@@ -3749,27 +6141,51 @@
             ]
           },
           "reason_for_cancellation": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "description": "取り消し理由"
           },
           "system_fee": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
             "description": "手数料（税込）"
           },
           "system_fee_ratio": {
-            "type": "number",
+            "type": [
+              "number",
+              "null"
+            ],
+            "nullable": true,
             "description": "システム手数料比率"
           },
           "system_fee_without_tax": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
             "description": "手数料（税抜）"
           },
           "tax_for_commission_fee": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
             "description": "紹介料（税）"
           },
           "tax_for_system_fee": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
             "description": "手数料（税）"
           },
           "updated_at": {
@@ -3780,14 +6196,69 @@
         "required": [
           "acceptance_of_offer_date",
           "amount",
+          "billing_emails",
+          "canceled_at",
           "commission_fee",
+          "commission_fee_ratio",
+          "commission_fee_without_tax",
           "created_at",
           "id",
+          "is_enable",
           "joined_date",
+          "memo",
           "payment_status",
+          "reason_for_cancellation",
           "system_fee",
           "system_fee_ratio",
+          "system_fee_without_tax",
+          "tax_for_commission_fee",
+          "tax_for_system_fee",
           "updated_at"
+        ]
+      },
+      "IntroductionCompletionReportsRes": {
+        "type": "object",
+        "properties": {
+          "introduction_completion_reports": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/IntroductionCompletionReport"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "account": {
+                      "$ref": "#/components/schemas/Account"
+                    },
+                    "company": {
+                      "$ref": "#/components/schemas/Company"
+                    },
+                    "agent": {
+                      "$ref": "#/components/schemas/Account"
+                    },
+                    "occupation": {
+                      "$ref": "#/components/schemas/Occupation"
+                    },
+                    "industry": {
+                      "$ref": "#/components/schemas/Industry"
+                    }
+                  },
+                  "required": [
+                    "account",
+                    "company",
+                    "agent",
+                    "occupation",
+                    "industry"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "introduction_completion_reports"
         ]
       },
       "JobChangeCompletionReport": {
@@ -3817,6 +6288,46 @@
           "created_at",
           "updated_at",
           "amount"
+        ]
+      },
+      "JobChangeCompletionReportsRes": {
+        "type": "object",
+        "properties": {
+          "job_change_completion_reports": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/JobChangeCompletionReport"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "account": {
+                      "$ref": "#/components/schemas/Account"
+                    }
+                  },
+                  "required": [
+                    "account"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "company": {
+                      "$ref": "#/components/schemas/Company"
+                    }
+                  },
+                  "required": [
+                    "company"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "job_change_completion_reports"
         ]
       },
       "OfficialInformation": {
@@ -3856,6 +6367,31 @@
           "content",
           "html_content",
           "is_released"
+        ]
+      },
+      "OfficialInformationsRes": {
+        "type": "object",
+        "properties": {
+          "official_informations": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/OfficialInformation"
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "official_informations"
+        ]
+      },
+      "OfficialInformationRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OfficialInformation"
+          }
         ]
       },
       "Payout": {
@@ -3913,6 +6449,35 @@
           "stripe_po_id"
         ]
       },
+      "PayoutsRes": {
+        "type": "object",
+        "properties": {
+          "payouts": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Payout"
+                }
+              ]
+            }
+          },
+          "total_data_nums": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "payouts",
+          "total_data_nums"
+        ]
+      },
+      "PriceRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Price"
+          }
+        ]
+      },
       "PrivacyPolicyHistory": {
         "title": "PrivacyPolicyHistory",
         "type": "object",
@@ -3946,54 +6511,80 @@
           "version"
         ]
       },
-      "Product": {
-        "title": "Product",
+      "PrivacyPolicyHistoriesRes": {
         "type": "object",
         "properties": {
-          "active": {
-            "type": "boolean"
+          "privacy_policy_histories": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/PrivacyPolicyHistory"
+                }
+              ]
+            }
           },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "description": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string"
-          },
-          "plan_type": {
-            "type": "string",
-            "enum": [
-              "standard",
-              "agent",
-              "starter"
-            ]
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "good",
-              "service"
-            ]
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
+          "total_data_nums": {
+            "type": "integer"
           }
         },
         "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "name",
-          "active",
-          "type"
+          "privacy_policy_histories",
+          "total_data_nums"
+        ]
+      },
+      "PrivacyPolicyHistoryRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PrivacyPolicyHistory"
+          }
+        ]
+      },
+      "ProductsRes": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Product"
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "products"
+        ]
+      },
+      "ProductRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Product"
+          }
+        ]
+      },
+      "PricesRes": {
+        "type": "object",
+        "properties": {
+          "prices": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Price"
+                }
+              ]
+            }
+          },
+          "total_data_nums": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "prices",
+          "total_data_nums"
         ]
       },
       "RecruitmentCompletionReport": {
@@ -4002,7 +6593,11 @@
         "description": "",
         "properties": {
           "acceptance_of_offer_date": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "format": "date",
             "description": "内定承諾日"
           },
@@ -4014,11 +6609,19 @@
           "billing_emails": {
             "type": "array",
             "items": {
-              "type": "string"
-            }
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "nullable": true
           },
           "canceled_at": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "format": "date-time"
           },
           "created_at": {
@@ -4035,12 +6638,20 @@
             "default": true
           },
           "joined_date": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "format": "date",
             "description": "入社日"
           },
           "memo": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
           },
           "payment_status": {
             "type": "string",
@@ -4052,7 +6663,11 @@
             ]
           },
           "reason_for_cancellation": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true,
             "description": "取り消し理由"
           },
           "system_fee": {
@@ -4060,14 +6675,26 @@
             "description": "手数料（税込）"
           },
           "system_fee_ratio": {
-            "type": "number"
+            "type": [
+              "number",
+              "null"
+            ],
+            "nullable": true
           },
           "system_fee_without_tax": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
             "description": "手数料（税抜）"
           },
           "tax_for_system_fee": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true,
             "description": "手数料（税）"
           },
           "updated_at": {
@@ -4076,13 +6703,67 @@
           }
         },
         "required": [
+          "acceptance_of_offer_date",
           "amount",
+          "billing_emails",
+          "canceled_at",
           "created_at",
           "id",
+          "is_enable",
+          "joined_date",
+          "memo",
           "payment_status",
+          "reason_for_cancellation",
           "system_fee",
           "system_fee_ratio",
+          "system_fee_without_tax",
+          "tax_for_system_fee",
           "updated_at"
+        ]
+      },
+      "RecruitmentCompletionReportsRes": {
+        "type": "object",
+        "properties": {
+          "recruitment_completion_reports": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/RecruitmentCompletionReport"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "company": {
+                      "$ref": "#/components/schemas/Company"
+                    },
+                    "account": {
+                      "$ref": "#/components/schemas/Account"
+                    },
+                    "occupation": {
+                      "$ref": "#/components/schemas/Occupation"
+                    },
+                    "industry": {
+                      "$ref": "#/components/schemas/Industry"
+                    }
+                  },
+                  "required": [
+                    "company",
+                    "account",
+                    "occupation",
+                    "industry"
+                  ]
+                }
+              ]
+            }
+          },
+          "total_data_nums": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "recruitment_completion_reports",
+          "total_data_nums"
         ]
       },
       "SpecialtyCompanyType": {
@@ -4199,628 +6880,12 @@
           "name"
         ]
       },
-      "ExternalService": {
-        "title": "ExternalService",
-        "type": "object",
-        "description": "クローリングサービス",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "is_contracted": {
-            "type": "boolean"
-          },
-          "name": {
-            "type": "string"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "name",
-          "is_contracted"
-        ]
-      },
-      "TechStack": {
-        "title": "TechStack",
+      "RecruitmentsRes": {
         "type": "object",
         "properties": {
-          "accessibility": {
-            "type": "string",
-            "enum": [
-              "public",
-              "private"
-            ]
-          },
-          "category": {
-            "type": "string",
-            "enum": [
-              "language",
-              "framework",
-              "infrastructure",
-              "design_tool",
-              "other"
-            ]
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "Ruby"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "category",
-          "name",
-          "type"
-        ]
-      },
-      "TermHistory": {
-        "title": "TermHistory",
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string",
-            "example": "利用規約の内容"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "common",
-              "plan"
-            ]
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "version": {
-            "type": "string",
-            "example": "1.0"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "content",
-          "version",
-          "type"
-        ]
-      }
-    },
-    "responses": {
-      "AcademicHistories": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "academic_histories": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AcademicHistory"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "Account": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Account"
-            }
-          }
-        }
-      },
-      "Accounts": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "accounts": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Account"
-                  }
-                },
-                "total_data_nums": {
-                  "type": "integer"
-                }
-              }
-            },
-            "examples": {
-              "example-1": {
-                "value": {
-                  "accounts": [
-                    {
-                      "already_keep_from_current_company": true,
-                      "avatar_url": "string",
-                      "consent_nda_version": "string",
-                      "created_at": "2019-08-24T14:15:22Z",
-                      "deleted_at": "2019-08-24T14:15:22Z",
-                      "display_name": "string",
-                      "email": "test@example.com",
-                      "email_verification_status": "verified",
-                      "exists_applicant_resource_from_current_company": true,
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                      "identification_requirements": [
-                        "string"
-                      ],
-                      "identity_verification_status": "unspecified",
-                      "is_career_scout_target": true,
-                      "is_concluded_nda": true,
-                      "is_project_scout_target": true,
-                      "is_public_with_work": true,
-                      "is_sample": false,
-                      "is_supported": true,
-                      "last_notification_read_at": "2019-08-24T14:15:22Z",
-                      "last_sign_in_at": "2019-08-24T14:15:22Z",
-                      "missing_requirements_for_agent": [
-                        "string"
-                      ],
-                      "missing_requirements_for_general": [
-                        "string"
-                      ],
-                      "profile_completeness": 0,
-                      "register_as": "general",
-                      "updated_at": "2019-08-24T14:15:22Z",
-                      "work_experienced": false
-                    }
-                  ],
-                  "total_data_nums": 0
-                }
-              }
-            }
-          }
-        }
-      },
-      "Achievements": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "achievements": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Achievement"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "Company": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/Company"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "owner": {
-                      "allOf": [
-                        {
-                          "$ref": "#/components/schemas/Account"
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "profile": {
-                              "$ref": "#/components/schemas/Profile"
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "subscription": {
-                      "allOf": [
-                        {
-                          "$ref": "#/components/schemas/Subscription"
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "price": {
-                              "$ref": "#/components/schemas/Price"
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "recruitments": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Recruitment"
-                      }
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "industries": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/IndustryHistory"
-                      }
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "features": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Feature"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      },
-      "Companies": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "companies": {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/Company"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "owner": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/Account"
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "profile": {
-                                    "$ref": "#/components/schemas/Profile"
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "subscription": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/Subscription"
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "price": {
-                                    "$ref": "#/components/schemas/Price"
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "recruitments": {
-                            "type": "array",
-                            "items": {
-                              "$ref": "#/components/schemas/Recruitment"
-                            }
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "industries": {
-                            "type": "array",
-                            "items": {
-                              "$ref": "#/components/schemas/IndustryHistory"
-                            }
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "features": {
-                            "type": "array",
-                            "items": {
-                              "$ref": "#/components/schemas/Feature"
-                            }
-                          }
-                        }
-                      }
-                    ]
-                  }
-                },
-                "total_data_nums": {
-                  "type": "integer"
-                }
-              }
-            }
-          }
-        }
-      },
-      "EmploymentContractTerm": {
-        "description": "",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/EmploymentContractTerm"
-            }
-          }
-        }
-      },
-      "EmploymentContractTerms": {
-        "description": "",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "employment_contract_terms": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EmploymentContractTerm"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "EmploymentStatus": {
-        "description": "",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/EmploymentStatus"
-            }
-          }
-        }
-      },
-      "EmploymentStatuses": {
-        "description": "",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "employment_statuses": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EmploymentStatus"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "IndustryHistories": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "industry_histories": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/IndustryHistory"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "IntroductionCompletionReports": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "introduction_completion_reports": {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/IntroductionCompletionReport"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "company": {
-                            "$ref": "#/components/schemas/Company"
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "account": {
-                            "$ref": "#/components/schemas/Account"
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "agent": {
-                            "$ref": "#/components/schemas/Account"
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "occupation": {
-                            "$ref": "#/components/schemas/Occupation"
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "industry": {
-                            "$ref": "#/components/schemas/Industry"
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "Hopes": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "hopes": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Hope"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "OfficialInformation": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/OfficialInformation"
-            }
-          }
-        }
-      },
-      "OfficialInformations": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "official_informations": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/OfficialInformation"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "Products": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "products": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Product"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "Recruitment": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
+          "recruitments": {
+            "type": "array",
+            "items": {
               "allOf": [
                 {
                   "$ref": "#/components/schemas/Recruitment"
@@ -4911,43 +6976,648 @@
                       "items": {
                         "$ref": "#/components/schemas/Feature"
                       }
-                    },
-                    "tech_stacks": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/TechStack"
-                      }
-                    },
-                    "target_company": {
-                      "$ref": "#/components/schemas/Company"
-                    },
-                    "employment_contract_terms": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/EmploymentContractTerm"
-                      }
                     }
-                  }
+                  },
+                  "required": [
+                    "company",
+                    "workplace",
+                    "author",
+                    "external_service",
+                    "employment_statuses",
+                    "occupations",
+                    "industries",
+                    "features"
+                  ]
                 }
               ]
+            }
+          },
+          "total_data_nums": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "recruitments",
+          "total_data_nums"
+        ]
+      },
+      "AgentProfile": {
+        "title": "AgentProfile",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "academic_background": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "achievement": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "admin_verification_status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "requested",
+              "verified",
+              "rejected",
+              "canceled",
+              "deleted"
+            ],
+            "default": "unspecified",
+            "description": "admin審査状態"
+          },
+          "area_in_charge": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "message": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "self_pr": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending"
+            ]
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "year_of_agent_experience": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "nullable": true
+          },
+          "pledge_url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "nullable": true
+          },
+          "offer_letter_urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "academic_background",
+          "achievement",
+          "admin_verification_status",
+          "area_in_charge",
+          "description",
+          "id",
+          "message",
+          "self_pr",
+          "status",
+          "updated_at",
+          "year_of_agent_experience",
+          "pledge_url",
+          "offer_letter_urls"
+        ]
+      },
+      "TechStack": {
+        "title": "TechStack",
+        "type": "object",
+        "properties": {
+          "accessibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "private"
+            ]
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "language",
+              "framework",
+              "infrastructure",
+              "design_tool",
+              "other"
+            ]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "Ruby"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "accessibility",
+          "category",
+          "created_at",
+          "id",
+          "name",
+          "updated_at"
+        ]
+      },
+      "RecruitmentRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Recruitment"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "company": {
+                "$ref": "#/components/schemas/Company"
+              },
+              "workplace": {
+                "$ref": "#/components/schemas/State"
+              },
+              "author": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Account"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "profile": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/Profile"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "place_of_residence": {
+                                "$ref": "#/components/schemas/State"
+                              },
+                              "specialty_company_types": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/components/schemas/SpecialtyCompanyType"
+                                }
+                              },
+                              "specialty_positions": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/components/schemas/SpecialtyPosition"
+                                }
+                              },
+                              "occupation_main_categories": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/components/schemas/OccupationMainCategory"
+                                }
+                              },
+                              "industry_categories": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/components/schemas/IndustryCategory"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "agent_profile": {
+                        "$ref": "#/components/schemas/AgentProfile"
+                      }
+                    },
+                    "required": [
+                      "profile",
+                      "agent_profile"
+                    ]
+                  }
+                ]
+              },
+              "external_service": {
+                "$ref": "#/components/schemas/ExternalService"
+              },
+              "employment_statuses": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EmploymentStatus"
+                }
+              },
+              "occupations": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Occupation"
+                }
+              },
+              "industries": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Industry"
+                }
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Feature"
+                }
+              },
+              "employment_contract_terms": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EmploymentContractTerm"
+                }
+              },
+              "tech_stack": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TechStack"
+                }
+              },
+              "target_company": {
+                "$ref": "#/components/schemas/Company"
+              }
+            },
+            "required": [
+              "company",
+              "workplace",
+              "author",
+              "external_service",
+              "employment_statuses",
+              "occupations",
+              "industries",
+              "features",
+              "employment_contract_terms",
+              "tech_stack",
+              "target_company"
+            ]
+          }
+        ]
+      },
+      "StatesRes": {
+        "type": "object",
+        "properties": {
+          "states": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/State"
+                }
+              ]
+            }
+          },
+          "total_data_nums": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "states",
+          "total_data_nums"
+        ]
+      },
+      "StateRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/State"
+          }
+        ]
+      },
+      "TechStacksRes": {
+        "type": "object",
+        "properties": {
+          "tech_stacks": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/TechStack"
+                }
+              ]
+            }
+          },
+          "total_data_nums": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "tech_stacks",
+          "total_data_nums"
+        ]
+      },
+      "TechStackRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/TechStack"
+          }
+        ]
+      },
+      "TermHistory": {
+        "title": "TermHistory",
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "example": "利用規約の内容"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "common",
+              "plan"
+            ]
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "version": {
+            "type": "string",
+            "example": "1.0"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "content",
+          "version",
+          "type"
+        ]
+      },
+      "TermHistoriesRes": {
+        "type": "object",
+        "properties": {
+          "term_histories": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/TermHistory"
+                }
+              ]
+            }
+          },
+          "total_data_nums": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "term_histories",
+          "total_data_nums"
+        ]
+      },
+      "TermHistoryRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/TermHistory"
+          }
+        ]
+      },
+      "EmploymentContractTermsRes": {
+        "type": "object",
+        "properties": {
+          "employment_contract_terms": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/EmploymentContractTerm"
+                }
+              ]
+            }
+          },
+          "total_data_nums": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "employment_contract_terms",
+          "total_data_nums"
+        ]
+      }
+    },
+    "responses": {
+      "AcademicHistories": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AcademicHistoriesRes"
+            }
+          }
+        }
+      },
+      "Account": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AccountRes"
+            }
+          }
+        }
+      },
+      "Accounts": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AccountsRes"
+            }
+          }
+        }
+      },
+      "Achievements": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AchievementsRes"
+            }
+          }
+        }
+      },
+      "Company": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CompanyRes"
+            }
+          }
+        }
+      },
+      "Companies": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CompaniesRes"
+            }
+          }
+        }
+      },
+      "EmploymentContractTerm": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/EmploymentContractTermRes"
+            }
+          }
+        }
+      },
+      "EmploymentContractTerms": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/EmploymentContractTermsRes"
+            }
+          }
+        }
+      },
+      "EmploymentStatus": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/EmploymentStatusRes"
+            }
+          }
+        }
+      },
+      "EmploymentStatuses": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/EmploymentStatusesRes"
+            }
+          }
+        }
+      },
+      "IndustryHistories": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/IndustryHistoriesRes"
+            }
+          }
+        }
+      },
+      "IntroductionCompletionReports": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/IntroductionCompletionReportsRes"
+            }
+          }
+        }
+      },
+      "Hopes": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/HopesRes"
+            }
+          }
+        }
+      },
+      "OfficialInformation": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OfficialInformationRes"
+            }
+          }
+        }
+      },
+      "OfficialInformations": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OfficialInformationsRes"
+            }
+          }
+        }
+      },
+      "Products": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProductsRes"
+            }
+          }
+        }
+      },
+      "Recruitment": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RecruitmentRes"
             }
           }
         }
       },
       "Recruitments": {
-        "description": "Example response",
+        "description": "",
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "recruitments": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Recruitment"
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/RecruitmentsRes"
             }
           }
         }
@@ -4957,7 +7627,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/State"
+              "$ref": "#/components/schemas/StateRes"
             }
           }
         }
@@ -4967,201 +7637,97 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "states": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/State"
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/StatesRes"
             }
           }
         }
       },
       "WorkHistories": {
-        "description": "Example response",
+        "description": "",
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "work_histories": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WorkHistory"
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/WorkHistoriesRes"
             }
           }
         }
       },
       "Product": {
-        "description": "Example response",
+        "description": "",
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Product"
+              "$ref": "#/components/schemas/ProductRes"
             }
           }
         }
       },
       "JobChangeCompletionReports": {
-        "description": "Example response",
+        "description": "",
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "job_change_completion_reports": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/JobChangeCompletionReport"
-                  }
-                },
-                "total_data_nums": {
-                  "type": "number"
-                }
-              },
-              "required": [
-                "job_change_completion_reports",
-                "total_data_nums"
-              ]
+              "$ref": "#/components/schemas/JobChangeCompletionReportsRes"
             }
           }
         }
       },
       "RecruitmentCompletionReports": {
-        "description": "Example response",
+        "description": "",
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "recruitment_completion_reports": {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/RecruitmentCompletionReport"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "company": {
-                            "$ref": "#/components/schemas/Company"
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "account": {
-                            "$ref": "#/components/schemas/Account"
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "occupation": {
-                            "$ref": "#/components/schemas/Occupation"
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "industry": {
-                            "$ref": "#/components/schemas/Industry"
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/RecruitmentCompletionReportsRes"
             }
           }
         }
       },
       "Skills": {
-        "description": "Example response",
+        "description": "",
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "skills": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Skill"
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/SkillsRes"
             }
           }
         }
       },
       "OccupationHistories": {
-        "description": "Example response",
+        "description": "",
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "occupation_histories": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/OccupationHistory"
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/OccupationHistoriesRes"
             }
           }
         }
       },
       "Payouts": {
-        "description": "Example response",
+        "description": "",
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "payouts": {
-                  "$ref": "#/components/schemas/Payout"
-                }
-              }
+              "$ref": "#/components/schemas/PayoutsRes"
             }
           }
         }
       },
       "Features": {
-        "description": "Example response",
+        "description": "",
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "features": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Feature"
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/FeaturesRes"
             }
           }
         }
       },
       "Feature": {
-        "description": "Example response",
+        "description": "",
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Feature"
+              "$ref": "#/components/schemas/FeatureRes"
             }
           }
         }
@@ -5171,7 +7737,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/TermHistory"
+              "$ref": "#/components/schemas/TermHistoryRes"
             }
           }
         }
@@ -5181,15 +7747,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "term_histories": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TermHistory"
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/TermHistoriesRes"
             }
           }
         }
@@ -5199,7 +7757,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/PrivacyPolicyHistory"
+              "$ref": "#/components/schemas/PrivacyPolicyHistoryRes"
             }
           }
         }
@@ -5209,15 +7767,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "privacy_policy_histories": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PrivacyPolicyHistory"
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/PrivacyPolicyHistoriesRes"
             }
           }
         }
@@ -5227,25 +7777,17 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/ConsentMatter"
+              "$ref": "#/components/schemas/ConsentMatterRes"
             }
           }
         }
       },
       "ConsentMatters": {
-        "description": "Example response",
+        "description": "",
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "consent_matters": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ConsentMatter"
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/ConsentMattersRes"
             }
           }
         }
@@ -5255,25 +7797,17 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/TechStack"
+              "$ref": "#/components/schemas/TechStackRes"
             }
           }
         }
       },
       "TechStacks": {
-        "description": "Example response",
+        "description": "",
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "tech_stacks": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TechStack"
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/TechStacksRes"
             }
           }
         }
@@ -5283,7 +7817,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Price"
+              "$ref": "#/components/schemas/PriceRes"
             }
           }
         }
@@ -5293,15 +7827,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "prices": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Price"
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/PricesRes"
             }
           }
         }
@@ -5311,26 +7837,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "properties": {
-                "total_rate": {
-                  "type": "number"
-                },
-                "skills": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Skill"
-                  }
-                },
-                "total_jobs_num": {
-                  "type": "integer"
-                },
-                "jobs": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Job"
-                  }
-                }
-              }
+              "$ref": "#/components/schemas/ProjectResultRes"
             }
           }
         }

@@ -7,9 +7,7 @@ export type GetAccountsAccountIdAcademicHistoriesUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdAcademicHistoriesResponse = {
-  academicHistories: Types.AcademicHistory[]
-}
+export type GetAccountsAccountIdAcademicHistoriesResponse = Types.AcademicHistoriesRes
 
 export const getAccountsAccountIdAcademicHistories = new BaseRequest<
   undefined,
@@ -17,7 +15,7 @@ export const getAccountsAccountIdAcademicHistories = new BaseRequest<
   GetAccountsAccountIdAcademicHistoriesUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/academic_histories",

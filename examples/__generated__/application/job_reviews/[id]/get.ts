@@ -7,11 +7,7 @@ export type GetJobReviewsIdUrlParams = {
   id: string
 } | undefined
 
-export type GetJobReviewsIdResponse = Types.JobReview & {
-    skills: Types.Skill[]
-  } & {
-    job: Types.Job
-  }
+export type GetJobReviewsIdResponse = Types.JobReviewRes
 
 export const getJobReviewsId = new BaseRequest<
   undefined,
@@ -19,7 +15,7 @@ export const getJobReviewsId = new BaseRequest<
   GetJobReviewsIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/job_reviews/:id",

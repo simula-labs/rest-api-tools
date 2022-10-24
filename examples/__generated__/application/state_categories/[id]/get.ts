@@ -7,9 +7,7 @@ export type GetCitiesIdUrlParams = {
   id: string
 } | undefined
 
-export type GetCitiesIdResponse = Types.StateCategory & {
-    states: Types.State[]
-  }
+export type GetCitiesIdResponse = Types.StateCategoryRes
 
 export const getCitiesId = new BaseRequest<
   undefined,
@@ -17,7 +15,7 @@ export const getCitiesId = new BaseRequest<
   GetCitiesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/state_categories/:id",

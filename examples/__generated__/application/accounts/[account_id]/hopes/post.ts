@@ -7,13 +7,7 @@ export type PostAccountsAccountIdHopesUrlParams = {
   accountId: string
 } | undefined
 
-export type PostAccountsAccountIdHopesResponse = Types.Hope & {
-    industries: Types.Industry[]
-  } & {
-    occupations: Types.Occupation[]
-  } & {
-    workplaces: Types.State[]
-  }
+export type PostAccountsAccountIdHopesResponse = Types.HopeRes
 
 export type PostAccountsAccountIdHopesRequestBody = {
   hope: {
@@ -39,7 +33,7 @@ export const postAccountsAccountIdHopes = new BaseRequest<
   PostAccountsAccountIdHopesUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/accounts/:accountId/hopes",

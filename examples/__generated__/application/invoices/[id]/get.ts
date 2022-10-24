@@ -7,19 +7,7 @@ export type GetInvoicesIdUrlParams = {
   id: string
 } | undefined
 
-export type GetInvoicesIdResponse = Types.Invoice & {
-    job: Types.Job & {
-      jobOrder?: Types.JobOrder | undefined
-    }
-
-    invoiceDetailedItems: (Types.InvoiceDetailedItem & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[]
-    invoiceConsumptionTaxPrices: (Types.InvoiceConsumptionTaxPrice & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[]
-    invoiceWithholdingTaxPrice: Types.InvoiceWithholdingTaxPrice
-  }
+export type GetInvoicesIdResponse = Types.InvoiceRes
 
 export const getInvoicesId = new BaseRequest<
   undefined,
@@ -27,7 +15,7 @@ export const getInvoicesId = new BaseRequest<
   GetInvoicesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/invoices/:id",

@@ -7,9 +7,7 @@ export type GetAccountsAccountIdBankAccountUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdBankAccountResponse = Types.BankAccount & {
-    account: Types.Account
-  }
+export type GetAccountsAccountIdBankAccountResponse = Types.BankAccountRes
 
 export const getAccountsAccountIdBankAccount = new BaseRequest<
   undefined,
@@ -17,7 +15,7 @@ export const getAccountsAccountIdBankAccount = new BaseRequest<
   GetAccountsAccountIdBankAccountUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/bank_account",

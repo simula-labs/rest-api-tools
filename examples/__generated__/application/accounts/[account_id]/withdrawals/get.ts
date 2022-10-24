@@ -7,12 +7,7 @@ export type GetAccountsAccountIdWithdrawalsUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdWithdrawalsResponse = {
-  withdrawals: (Types.Withdrawal & {
-    account?: Types.Account | undefined
-  })[]
-  totalDataNums: number
-}
+export type GetAccountsAccountIdWithdrawalsResponse = Types.WithdrawalsRes
 
 export type GetAccountsAccountIdWithdrawalsQueryParams = {
   page?: number | undefined
@@ -24,7 +19,7 @@ export const getAccountsAccountIdWithdrawals = new BaseRequest<
   GetAccountsAccountIdWithdrawalsUrlParams,
   GetAccountsAccountIdWithdrawalsQueryParams
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/withdrawals",

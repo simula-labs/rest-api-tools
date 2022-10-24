@@ -7,11 +7,7 @@ export type PostAccountsAccountIdIndustryHistoryUrlParams = {
   accountId: string
 } | undefined
 
-export type PostAccountsAccountIdIndustryHistoryResponse = Types.IndustryHistory & {
-    account: Types.Account
-  } & {
-    industry: Types.Industry
-  }
+export type PostAccountsAccountIdIndustryHistoryResponse = Types.IndustryHistoryRes
 
 export type PostAccountsAccountIdIndustryHistoryRequestBody = {
   industryHistory: {
@@ -26,7 +22,7 @@ export const postAccountsAccountIdIndustryHistory = new BaseRequest<
   PostAccountsAccountIdIndustryHistoryUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/accounts/:accountId/industry_history",

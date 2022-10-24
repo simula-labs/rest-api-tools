@@ -7,12 +7,7 @@ export type GetAccountsAccountIdIncomeHistoriesUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdIncomeHistoriesResponse = {
-  incomeHistories: (Types.IncomeHistory & {
-    account?: Types.Account | undefined
-  })[]
-  totalDataNums: number
-}
+export type GetAccountsAccountIdIncomeHistoriesResponse = Types.IncomeHistoriesRes
 
 export type GetAccountsAccountIdIncomeHistoriesQueryParams = {
   page?: number | undefined
@@ -24,7 +19,7 @@ export const getAccountsAccountIdIncomeHistories = new BaseRequest<
   GetAccountsAccountIdIncomeHistoriesUrlParams,
   GetAccountsAccountIdIncomeHistoriesQueryParams
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/income_histories",

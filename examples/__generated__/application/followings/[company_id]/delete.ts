@@ -13,7 +13,7 @@ export const deleteAccountsAccountIdFollowingCompanyId = new BaseRequest<
   DeleteAccountsAccountIdFollowingCompanyIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/followings/:companyId",

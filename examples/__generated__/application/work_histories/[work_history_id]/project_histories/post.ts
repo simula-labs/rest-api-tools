@@ -7,9 +7,7 @@ export type PostWorkHistoriesWorkHistoryIdProjectHistoriesUrlParams = {
   workHistoryId: string
 } | undefined
 
-export type PostWorkHistoriesWorkHistoryIdProjectHistoriesResponse = Types.ProjectHistory & {
-    workHistory: Types.WorkHistory
-  }
+export type PostWorkHistoriesWorkHistoryIdProjectHistoriesResponse = Types.ProjectHistoryRes
 
 export type PostWorkHistoriesWorkHistoryIdProjectHistoriesRequestBody =   /** name・positionどちらかは必須 */
 {
@@ -29,7 +27,7 @@ export const postWorkHistoriesWorkHistoryIdProjectHistories = new BaseRequest<
   PostWorkHistoriesWorkHistoryIdProjectHistoriesUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/work_histories/:workHistoryId/project_histories",

@@ -7,11 +7,7 @@ export type PatchWorkHistoriesIdUrlParams = {
   id: string
 } | undefined
 
-export type PatchWorkHistoriesIdResponse = Types.WorkHistory & {
-    account: Types.Account
-  } & {
-    projectHistories: Types.ProjectHistory[]
-  }
+export type PatchWorkHistoriesIdResponse = Types.WorkHistoryRes
 
 export type PatchWorkHistoriesIdRequestBody = {
   workHistory: {
@@ -31,7 +27,7 @@ export const patchWorkHistoriesId = new BaseRequest<
   PatchWorkHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "patch",
   baseURL: API_HOST,
   path: "/work_histories/:id",

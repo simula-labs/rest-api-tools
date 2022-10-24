@@ -13,7 +13,7 @@ export const deleteRecruitmentInterestsRecruitmentId = new BaseRequest<
   DeleteRecruitmentInterestsRecruitmentIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/recruitment_interests/:recruitmentId",

@@ -7,21 +7,7 @@ export type GetAccountsIdUrlParams = {
   id: string
 } | undefined
 
-export type GetAccountsIdResponse = Types.Account & {
-    profile: Types.Profile & {
-      specialtyCompanyTypes?: Types.SpecialtyCompanyType[] | undefined
-      specialtyPositions?: Types.SpecialtyPosition[] | undefined
-      occupationMainCategories?: Types.OccupationMainCategory[] | undefined
-      industryCategories?: Types.IndustryCategory[] | undefined
-      placeOfResidence?: Types.State | undefined
-    }
-
-    employments: (Types.Employment & {
-      company?: Types.Company | undefined
-      roles?: Types.Role[] | undefined
-    })[]
-    blockedCompanies: Types.Company[]
-  }
+export type GetAccountsIdResponse = Types.AccountRes
 
 export const getAccountsId = new BaseRequest<
   undefined,
@@ -29,7 +15,7 @@ export const getAccountsId = new BaseRequest<
   GetAccountsIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:id",

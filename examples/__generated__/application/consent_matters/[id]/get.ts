@@ -15,7 +15,7 @@ export const getContentMattersId = new BaseRequest<
   GetContentMattersIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/consent_matters/:id",

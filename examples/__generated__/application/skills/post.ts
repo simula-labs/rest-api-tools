@@ -3,7 +3,7 @@ import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../shared/index";
 import { API_HOST } from "../urls";
 
-export type PostSkillsResponse = Types.Skill
+export type PostSkillsResponse = Types.SkillRes
 
 export type PostSkillsRequestBody = {
   skill: {
@@ -17,7 +17,7 @@ export const postSkills = new BaseRequest<
   undefined,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/skills",

@@ -8,17 +8,7 @@ export type DeleteAccountsAccountIdProfileFilesIdUrlParams = {
   fileId: string
 } | undefined
 
-export type DeleteAccountsAccountIdProfileFilesIdResponse = Types.Profile & {
-    specialtyCompanyTypes: Types.SpecialtyCompanyType[]
-  } & {
-    specialtyPositions: Types.SpecialtyPosition[]
-  } & {
-    occupationMainCategories: Types.OccupationMainCategory[]
-  } & {
-    industryCategories: Types.IndustryCategory[]
-  } & {
-    placeOfResidence: Types.State
-  }
+export type DeleteAccountsAccountIdProfileFilesIdResponse = Types.ProfileRes
 
 export const deleteAccountsAccountIdProfileFilesId = new BaseRequest<
   undefined,
@@ -26,7 +16,7 @@ export const deleteAccountsAccountIdProfileFilesId = new BaseRequest<
   DeleteAccountsAccountIdProfileFilesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/accounts/:accountId/profile/files/:fileId",

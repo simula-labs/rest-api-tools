@@ -13,7 +13,7 @@ export const postAccountsAccountIdMarkAsRead = new BaseRequest<
   PostAccountsAccountIdMarkAsReadUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/accounts/:accountId/mark_as_read",

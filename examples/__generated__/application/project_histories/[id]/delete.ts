@@ -7,11 +7,7 @@ export type DeleteProjectHistoriesIdUrlParams = {
   id: string
 } | undefined
 
-export type DeleteProjectHistoriesIdResponse = Types.WorkHistory & {
-    account: Types.Account
-  } & {
-    projectHistories: Types.ProjectHistory[]
-  }
+export type DeleteProjectHistoriesIdResponse = Types.WorkHistoryRes
 
 export const deleteProjectHistoriesId = new BaseRequest<
   undefined,
@@ -19,7 +15,7 @@ export const deleteProjectHistoriesId = new BaseRequest<
   DeleteProjectHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/project_histories/:id",

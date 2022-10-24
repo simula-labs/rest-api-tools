@@ -3,27 +3,7 @@ import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../shared/index";
 import { API_HOST } from "../urls";
 
-export type PostCompaniesResponse = Types.Company & {
-    owner: Types.Account & {
-      profile?: Types.Profile & {
-        placeOfResidence?: Types.State | undefined
-      } | undefined
-    }
-  } & {
-    subscription: Types.Subscription & {
-      price?: Types.Price & {
-        product?: Types.Product | undefined
-      } | undefined
-    }
-  } & {
-    recruitments: Types.Recruitment[]
-  } & {
-    industries: Types.Industry[]
-  } & {
-    features: Types.Feature[]
-  } & {
-    paymentMethods: Types.PaymentMethod[]
-  }
+export type PostCompaniesResponse = Types.CompanyRes
 
 export type PostCompaniesRequestBody = {
   company: {
@@ -48,6 +28,7 @@ export type PostCompaniesRequestBody = {
     logo?: File | undefined
     featureIds?: string[] | undefined
     industryIds?: string[] | undefined
+    employmentPlacementPermitNumber?: string | undefined
   }
 
   employment: {
@@ -61,7 +42,7 @@ export const postCompanies = new BaseRequest<
   undefined,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/companies",

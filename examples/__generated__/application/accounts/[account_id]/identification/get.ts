@@ -17,7 +17,7 @@ export const getAccountsAccountIdIdentification = new BaseRequest<
   GetAccountsAccountIdIdentificationUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/identification",

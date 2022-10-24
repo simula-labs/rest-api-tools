@@ -13,7 +13,7 @@ export const deleteWorkHistoriesId = new BaseRequest<
   DeleteWorkHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/work_histories/:id",

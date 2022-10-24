@@ -13,7 +13,7 @@ export const deleteAcademicHistoriesId = new BaseRequest<
   DeleteAcademicHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/academic_histories/:id",
