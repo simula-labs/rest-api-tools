@@ -13,7 +13,7 @@ export const deleteBlockCompanies = new BaseRequest<
   DeleteBlockCompaniesUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/block_companies/:companyId",

@@ -7,41 +7,7 @@ export type GetRecruitmentsIdUrlParams = {
   id: string
 } | undefined
 
-export type GetRecruitmentsIdResponse = Types.Recruitment & {
-    company: Types.Company
-  } & {
-    workplace: Types.State
-  } & {
-    author: Types.Account & {
-      profile?: Types.Profile & {
-        placeOfResidence?: Types.State | undefined
-      } & {
-        specialtyCompanyTypes?: Types.SpecialtyCompanyType[] | undefined
-      } & {
-        specialtyPositions?: Types.SpecialtyPosition[] | undefined
-      } & {
-        occupationMainCategories?: Types.OccupationMainCategory[] | undefined
-      } & {
-        industryCategories?: Types.IndustryCategory[] | undefined
-      } | undefined
-    }
-  } & {
-    externalService: Types.ExternalService
-  } & {
-    employmentStatuses: Types.EmploymentStatus[]
-  } & {
-    occupations: Types.Occupation[]
-  } & {
-    industries: Types.Industry[]
-  } & {
-    features: Types.Feature[]
-  } & {
-    employmentContractTerm: Types.EmploymentContractTerm[]
-  } & {
-    techStack: Types.TechStack[]
-  } & {
-    targetCompany: Types.Company
-  }
+export type GetRecruitmentsIdResponse = Types.RecruitmentRes
 
 export const getRecruitmentsId = new BaseRequest<
   undefined,
@@ -49,7 +15,7 @@ export const getRecruitmentsId = new BaseRequest<
   GetRecruitmentsIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/recruitments/:id",

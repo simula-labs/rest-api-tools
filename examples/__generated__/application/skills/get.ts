@@ -3,9 +3,7 @@ import { BaseRequest } from "@simula-labs/rest-api-tools";
 import type * as Types from "../../shared/index";
 import { API_HOST } from "../urls";
 
-export type GetSkillsResponse = {
-  skills: Types.Skill[]
-}
+export type GetSkillsResponse = Types.SkillsRes
 
 export type GetSkillsQueryParams = {
   /** 検索キーワード */
@@ -18,7 +16,7 @@ export const getSkills = new BaseRequest<
   undefined,
   GetSkillsQueryParams
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/skills",

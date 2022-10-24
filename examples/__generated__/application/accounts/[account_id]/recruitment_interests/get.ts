@@ -7,15 +7,7 @@ export type GetAccountsAccountIdRecruitmentInterestsUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdRecruitmentInterestsResponse = {
-  recruitments: (Types.Recruitment & {
-    occupations?: Types.Occupation[] | undefined
-    industries?: Types.Industry[] | undefined
-    workplace?: Types.State | undefined
-    company?: Types.Company | undefined
-  })[]
-  totalDataNums: number
-}
+export type GetAccountsAccountIdRecruitmentInterestsResponse = Types.RecruitmentInterestsRes
 
 export type GetAccountsAccountIdRecruitmentInterestsQueryParams = {
   page?: number | undefined
@@ -27,7 +19,7 @@ export const getAccountsAccountIdRecruitmentInterests = new BaseRequest<
   GetAccountsAccountIdRecruitmentInterestsUrlParams,
   GetAccountsAccountIdRecruitmentInterestsQueryParams
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/recruitment_interests",

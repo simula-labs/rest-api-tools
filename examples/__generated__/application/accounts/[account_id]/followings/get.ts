@@ -7,16 +7,7 @@ export type GetAccountsAccountIdFollowingUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdFollowingResponse = {
-  companies: (Types.Company & {
-    recruitments?: Types.Recruitment[] | undefined
-  } & {
-    industries?: Types.Industry[] | undefined
-  } & {
-    features?: Types.Feature[] | undefined
-  })[]
-  totalDataNums: number
-}
+export type GetAccountsAccountIdFollowingResponse = Types.CompaniesRes
 
 export type GetAccountsAccountIdFollowingQueryParams = {
   page?: number | undefined
@@ -28,7 +19,7 @@ export const getAccountsAccountIdFollowing = new BaseRequest<
   GetAccountsAccountIdFollowingUrlParams,
   GetAccountsAccountIdFollowingQueryParams
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/followings",

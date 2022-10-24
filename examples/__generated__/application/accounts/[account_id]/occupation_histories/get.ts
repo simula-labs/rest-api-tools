@@ -7,12 +7,7 @@ export type GetAccountsAccountIdOccupationHistoriesUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdOccupationHistoriesResponse = {
-  occupationHistories: (Types.OccupationHistory & {
-    account: Types.Account
-    occupation: Types.Occupation
-  })[]
-}
+export type GetAccountsAccountIdOccupationHistoriesResponse = Types.OccupationHistoriesRes
 
 export const getAccountsAccountIdOccupationHistories = new BaseRequest<
   undefined,
@@ -20,7 +15,7 @@ export const getAccountsAccountIdOccupationHistories = new BaseRequest<
   GetAccountsAccountIdOccupationHistoriesUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/occupation_histories",

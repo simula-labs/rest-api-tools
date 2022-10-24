@@ -7,16 +7,7 @@ export type PostAccountsAccountIdBlockCompaniesUrlParams = {
   accountId: string
 } | undefined
 
-export type PostAccountsAccountIdBlockCompaniesResponse = {
-  companies: (Types.Company & {
-    recruitments?: Types.Recruitment[] | undefined
-  } & {
-    industries?: Types.Industry[] | undefined
-  } & {
-    features?: Types.Feature[] | undefined
-  })[]
-  totalDataNums: number
-}
+export type PostAccountsAccountIdBlockCompaniesResponse = Types.CompaniesRes
 
 export type PostAccountsAccountIdBlockCompaniesRequestBody = {
   blockCompany: {
@@ -30,7 +21,7 @@ export const postAccountsAccountIdBlockCompanies = new BaseRequest<
   PostAccountsAccountIdBlockCompaniesUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/accounts/:accountId/block_companies",

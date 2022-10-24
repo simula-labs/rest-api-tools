@@ -7,21 +7,7 @@ export type DeleteAccountsIdUrlParams = {
   id: string
 } | undefined
 
-export type DeleteAccountsIdResponse = Types.Account & {
-    profile: Types.Profile & {
-      specialtyCompanyTypes?: Types.SpecialtyCompanyType[] | undefined
-      specialtyPositions?: Types.SpecialtyPosition[] | undefined
-      occupationMainCategories?: Types.OccupationMainCategory[] | undefined
-      industryCategories?: Types.IndustryCategory[] | undefined
-      placeOfResidence?: Types.State | undefined
-    }
-
-    employments: (Types.Employment & {
-      company?: Types.Company | undefined
-      roles?: Types.Role[] | undefined
-    })[]
-    blockedCompanies: Types.Company[]
-  }
+export type DeleteAccountsIdResponse = Types.AccountRes
 
 export const deleteAccountsId = new BaseRequest<
   undefined,
@@ -29,7 +15,7 @@ export const deleteAccountsId = new BaseRequest<
   DeleteAccountsIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/accounts/:id",

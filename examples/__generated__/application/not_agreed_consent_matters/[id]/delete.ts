@@ -13,7 +13,7 @@ export const deleteNotAgreedConsentMattersId = new BaseRequest<
   DeleteNotAgreedConsentMattersIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/not_agreed_consent_matters/:id",

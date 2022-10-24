@@ -7,19 +7,7 @@ export type PostJobsJobIdInvoicesUrlParams = {
   jobId: string
 } | undefined
 
-export type PostJobsJobIdInvoicesResponse = Types.Invoice & {
-    job: Types.Job & {
-      jobOrder?: Types.JobOrder | undefined
-    }
-
-    invoiceDetailedItems: (Types.InvoiceDetailedItem & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[]
-    invoiceConsumptionTaxPrices: (Types.InvoiceConsumptionTaxPrice & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[]
-    invoiceWithholdingTaxPrice: Types.InvoiceWithholdingTaxPrice
-  }
+export type PostJobsJobIdInvoicesResponse = Types.InvoiceRes
 
 export type PostJobsJobIdInvoicesRequestBody = {
   invoice: {
@@ -66,7 +54,7 @@ export const postJobsJobIdInvoices = new BaseRequest<
   PostJobsJobIdInvoicesUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/jobs/:jobId/invoices",

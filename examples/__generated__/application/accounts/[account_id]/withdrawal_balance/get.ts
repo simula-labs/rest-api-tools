@@ -30,7 +30,7 @@ export const getAccountsAccountIdWithdrawalBalance = new BaseRequest<
   GetAccountsAccountIdWithdrawalBalanceUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/withdrawal_balance",

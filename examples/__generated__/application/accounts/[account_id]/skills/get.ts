@@ -7,9 +7,7 @@ export type GetAccountsAccountIdSkillsUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdSkillsResponse = {
-  skills: Types.Skill[]
-}
+export type GetAccountsAccountIdSkillsResponse = Types.SkillsRes
 
 export const getAccountsAccountIdSkills = new BaseRequest<
   undefined,
@@ -17,7 +15,7 @@ export const getAccountsAccountIdSkills = new BaseRequest<
   GetAccountsAccountIdSkillsUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/skills",

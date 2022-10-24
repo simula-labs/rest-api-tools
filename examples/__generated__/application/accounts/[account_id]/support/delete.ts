@@ -13,7 +13,7 @@ export const deleteAccountsAccountIdSupport = new BaseRequest<
   DeleteAccountsAccountIdSupportUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/accounts/:accountId/support",

@@ -13,7 +13,7 @@ export const deleteAchievementsId = new BaseRequest<
   DeleteAchievementsIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/achievements/:id",

@@ -7,22 +7,7 @@ export type GetJobsJobIdInvoicesUrlParams = {
   jobId: string
 } | undefined
 
-export type GetJobsJobIdInvoicesResponse = {
-  invoices: (Types.Invoice & {
-    job?: Types.Job & {
-      jobOrder?: Types.JobOrder | undefined
-    } | undefined
-
-    invoiceDetailedItems?: (Types.InvoiceDetailedItem & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[] | undefined
-    invoiceConsumptionTaxPrices?: (Types.InvoiceConsumptionTaxPrice & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[] | undefined
-    invoiceWithholdingTaxPrice?: Types.InvoiceWithholdingTaxPrice | undefined
-  })[]
-  totalDataNums: number
-}
+export type GetJobsJobIdInvoicesResponse = Types.InvoicesRes
 
 export type GetJobsJobIdInvoicesQueryParams = {
   page?: number | undefined
@@ -34,7 +19,7 @@ export const getJobsJobIdInvoices = new BaseRequest<
   GetJobsJobIdInvoicesUrlParams,
   GetJobsJobIdInvoicesQueryParams
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/jobs/:jobId/invoices",

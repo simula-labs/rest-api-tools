@@ -7,19 +7,7 @@ export type PatchInvoicesInvoiceIdFilesUrlParams = {
   invoiceId: string
 } | undefined
 
-export type PatchInvoicesInvoiceIdFilesResponse = Types.Invoice & {
-    job: Types.Job & {
-      jobOrder?: Types.JobOrder | undefined
-    }
-
-    invoiceDetailedItems: (Types.InvoiceDetailedItem & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[]
-    invoiceConsumptionTaxPrices: (Types.InvoiceConsumptionTaxPrice & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[]
-    invoiceWithholdingTaxPrice: Types.InvoiceWithholdingTaxPrice
-  }
+export type PatchInvoicesInvoiceIdFilesResponse = Types.InvoiceRes
 
 export type PatchInvoicesInvoiceIdFilesRequestBody = {
   files: File[]
@@ -31,7 +19,7 @@ export const patchInvoicesInvoiceIdFiles = new BaseRequest<
   PatchInvoicesInvoiceIdFilesUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "patch",
   baseURL: API_HOST,
   path: "/invoices/:invoiceId/files",

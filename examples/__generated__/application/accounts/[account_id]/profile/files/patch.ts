@@ -7,17 +7,7 @@ export type PatchAccountsAccountIdProfileFilesUrlParams = {
   accountId: string
 } | undefined
 
-export type PatchAccountsAccountIdProfileFilesResponse = Types.Profile & {
-    specialtyCompanyTypes: Types.SpecialtyCompanyType[]
-  } & {
-    specialtyPositions: Types.SpecialtyPosition[]
-  } & {
-    occupationMainCategories: Types.OccupationMainCategory[]
-  } & {
-    industryCategories: Types.IndustryCategory[]
-  } & {
-    placeOfResidence: Types.State
-  }
+export type PatchAccountsAccountIdProfileFilesResponse = Types.ProfileRes
 
 export type PatchAccountsAccountIdProfileFilesRequestBody = {
   files: File[]
@@ -29,7 +19,7 @@ export const patchAccountsAccountIdProfileFiles = new BaseRequest<
   PatchAccountsAccountIdProfileFilesUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "patch",
   baseURL: API_HOST,
   path: "/accounts/:accountId/profile/files",

@@ -7,44 +7,7 @@ export type GetAccountsAccountIdJobsUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdJobsResponse = {
-  jobs: (Types.Job & {
-    account?: Types.Account | undefined
-  } & {
-    company?: Types.Company & {
-      industries?: Types.Industry[] | undefined
-    } & {
-      owner?: Types.Account & {
-        profile?: Types.Profile & {
-          placeOfResidence?: Types.State | undefined
-        } | undefined
-      } | undefined
-    } | undefined
-  } & {
-    jobOrder?: Types.JobOrder & {
-      recruitment?: Types.Recruitment & {
-        workplace?: Types.State | undefined
-      } & {
-        author?: Types.Account | undefined
-      } & {
-        employmentStatuses?: Types.EmploymentStatus[] | undefined
-      } & {
-        occupations?: Types.Occupation[] | undefined
-      } & {
-        industries?: Types.Industry[] | undefined
-      } & {
-        company?: Types.Company | undefined
-      } | undefined
-    } & {
-      account?: Types.Account | undefined
-    } | undefined
-  } & {
-    jobReviews?: string | undefined
-  } & {
-    invoices?: string | undefined
-  })[]
-  totalDataNums: number
-}
+export type GetAccountsAccountIdJobsResponse = Types.JobsRes
 
 export type GetAccountsAccountIdJobsQueryParams = {
   /** ステータス */
@@ -63,7 +26,7 @@ export const getAccountsAccountIdJobs = new BaseRequest<
   GetAccountsAccountIdJobsUrlParams,
   GetAccountsAccountIdJobsQueryParams
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/jobs",

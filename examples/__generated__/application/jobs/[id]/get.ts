@@ -7,41 +7,7 @@ export type GetJobsIdUrlParams = {
   id: string
 } | undefined
 
-export type GetJobsIdResponse = Types.Job & {
-    account: Types.Account
-  } & {
-    company: Types.Company & {
-      industries?: Types.Industry[] | undefined
-    } & {
-      owner?: Types.Account & {
-        profile?: Types.Profile & {
-          placeOfResidence?: Types.State | undefined
-        } | undefined
-      } | undefined
-    }
-  } & {
-    jobOrder: Types.JobOrder & {
-      recruitment?: Types.Recruitment & {
-        workplace?: Types.State | undefined
-      } & {
-        author?: Types.Account | undefined
-      } & {
-        employmentStatuses?: Types.EmploymentStatus[] | undefined
-      } & {
-        occupations?: Types.Occupation[] | undefined
-      } & {
-        industries?: Types.Industry[] | undefined
-      } & {
-        company?: Types.Company | undefined
-      } | undefined
-    } & {
-      account?: Types.Account | undefined
-    }
-  } & {
-    jobReviews: string
-  } & {
-    invoices: string
-  }
+export type GetJobsIdResponse = Types.JobRes
 
 export const getJobsId = new BaseRequest<
   undefined,
@@ -49,7 +15,7 @@ export const getJobsId = new BaseRequest<
   GetJobsIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/jobs/:id",

@@ -17,7 +17,7 @@ export const getaccountsAccountIdAgreeConsentMatters = new BaseRequest<
   GetaccountsAccountIdAgreeConsentMattersUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/not_agreed_consent_matters",

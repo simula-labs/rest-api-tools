@@ -7,22 +7,7 @@ export type GetAccountsAccountIdProjectResultsUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdProjectResultsResponse = Types.ProjectResult & {
-    jobs: (Types.Job & {
-      jobOrder?: Types.JobOrder & {
-        recruitment?: Types.Recruitment & {
-          workplace?: Types.State | undefined
-          occpations?: Types.Occupation[] | undefined
-          industries?: Types.Industry[] | undefined
-        } | undefined
-      } | undefined
-
-      jobReviews?: (Types.JobReview & {
-        skills?: Types.Skill[] | undefined
-      })[] | undefined
-    })[]
-    skills: Types.Skill[]
-  }
+export type GetAccountsAccountIdProjectResultsResponse = Types.ProjectResultRes
 
 export const getAccountsAccountIdProjectResults = new BaseRequest<
   undefined,
@@ -30,7 +15,7 @@ export const getAccountsAccountIdProjectResults = new BaseRequest<
   GetAccountsAccountIdProjectResultsUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/project_result",

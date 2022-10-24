@@ -10,7 +10,7 @@ import {
 import schemas2Props from "./builderUtils/schemas2Props";
 import { Prop, props2StringForParams, PropValue } from "./builderUtils/props2String";
 import { resolveReqRef, resolveResRef } from "./builderUtils/resolvers";
-import { BaseConfig, CodeGenConfig, Server } from "./types";
+import { BaseConfig, CodeGenConfig } from "./types";
 
 export const buildV3 = (
   openapi: OpenAPIV3.Document,

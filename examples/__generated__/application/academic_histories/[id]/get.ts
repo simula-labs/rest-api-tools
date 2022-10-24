@@ -7,7 +7,7 @@ export type GetAcademicHistoriesIdUrlParams = {
   id: string
 } | undefined
 
-export type GetAcademicHistoriesIdResponse = Types.AcademicHistory
+export type GetAcademicHistoriesIdResponse = Types.AcademicHistoryRes
 
 export const getAcademicHistoriesId = new BaseRequest<
   undefined,
@@ -15,7 +15,7 @@ export const getAcademicHistoriesId = new BaseRequest<
   GetAcademicHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/academic_histories/:id",

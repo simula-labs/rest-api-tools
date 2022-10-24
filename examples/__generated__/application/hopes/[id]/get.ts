@@ -7,13 +7,7 @@ export type GetHopesIdUrlParams = {
   id: string
 } | undefined
 
-export type GetHopesIdResponse = Types.Hope & {
-    industries: Types.Industry[]
-  } & {
-    occupations: Types.Occupation[]
-  } & {
-    workplaces: Types.State[]
-  }
+export type GetHopesIdResponse = Types.HopeRes
 
 export const getHopesId = new BaseRequest<
   undefined,
@@ -21,7 +15,7 @@ export const getHopesId = new BaseRequest<
   GetHopesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/hopes/:id",

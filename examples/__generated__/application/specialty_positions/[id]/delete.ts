@@ -13,7 +13,7 @@ export const deleteSpecialtyPositionsId = new BaseRequest<
   DeleteSpecialtyPositionsIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/specialty_positions/:id",

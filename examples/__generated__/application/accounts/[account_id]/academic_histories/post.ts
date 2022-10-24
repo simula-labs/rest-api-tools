@@ -7,7 +7,7 @@ export type PostAccountsAccountIdAcademicHistoriesUrlParams = {
   accountId: string
 } | undefined
 
-export type PostAccountsAccountIdAcademicHistoriesResponse = Types.AcademicHistory
+export type PostAccountsAccountIdAcademicHistoriesResponse = Types.AcademicHistoriesRes
 
 export type PostAccountsAccountIdAcademicHistoriesRequestBody = {
   academicHistory: {
@@ -26,7 +26,7 @@ export const postAccountsAccountIdAcademicHistories = new BaseRequest<
   PostAccountsAccountIdAcademicHistoriesUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/accounts/:accountId/academic_histories",

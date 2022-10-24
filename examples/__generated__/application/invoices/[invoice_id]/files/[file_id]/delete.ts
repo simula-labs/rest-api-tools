@@ -8,19 +8,7 @@ export type DeleteInvoicesInvoiceIdFilesFileIdUrlParams = {
   fileId: string
 } | undefined
 
-export type DeleteInvoicesInvoiceIdFilesFileIdResponse = Types.Invoice & {
-    job: Types.Job & {
-      jobOrder?: Types.JobOrder | undefined
-    }
-
-    invoiceDetailedItems: (Types.InvoiceDetailedItem & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[]
-    invoiceConsumptionTaxPrices: (Types.InvoiceConsumptionTaxPrice & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[]
-    invoiceWithholdingTaxPrice: Types.InvoiceWithholdingTaxPrice
-  }
+export type DeleteInvoicesInvoiceIdFilesFileIdResponse = Types.InvoiceRes
 
 export const deleteInvoicesInvoiceIdFilesFileId = new BaseRequest<
   undefined,
@@ -28,7 +16,7 @@ export const deleteInvoicesInvoiceIdFilesFileId = new BaseRequest<
   DeleteInvoicesInvoiceIdFilesFileIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/invoices/:invoiceId/files/:fileId",

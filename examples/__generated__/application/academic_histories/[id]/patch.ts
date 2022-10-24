@@ -7,7 +7,7 @@ export type PatchAcademicHistoriesIdUrlParams = {
   id: string
 } | undefined
 
-export type PatchAcademicHistoriesIdResponse = Types.AcademicHistory
+export type PatchAcademicHistoriesIdResponse = Types.AcademicHistoriesRes
 
 export type PatchAcademicHistoriesIdRequestBody = {
   academicHistory: {
@@ -26,7 +26,7 @@ export const patchAcademicHistoriesId = new BaseRequest<
   PatchAcademicHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "patch",
   baseURL: API_HOST,
   path: "/academic_histories/:id",

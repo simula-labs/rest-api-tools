@@ -7,13 +7,7 @@ export type PatchHopesIdUrlParams = {
   id: string
 } | undefined
 
-export type PatchHopesIdResponse = Types.Hope & {
-    industries: Types.Industry[]
-  } & {
-    occupations: Types.Occupation[]
-  } & {
-    workplaces: Types.State[]
-  }
+export type PatchHopesIdResponse = Types.HopeRes
 
 export type PatchHopesIdRequestBody = {
   hope: {
@@ -39,7 +33,7 @@ export const patchHopesId = new BaseRequest<
   PatchHopesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "patch",
   baseURL: API_HOST,
   path: "/hopes/:id",

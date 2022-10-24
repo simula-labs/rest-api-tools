@@ -5,12 +5,7 @@ import { Config, EnumObject } from "./types";
 import { buildTemplate } from "./buildTemplate";
 import { writeRouteFile } from "./writeRouteFile";
 import { Schema } from "./builderUtils/schemas2Props";
-import {
-  description2Doc,
-  Prop,
-  value2String,
-  value2StringForMock,
-} from "./builderUtils/props2String";
+import { description2Doc, value2String, value2StringForMock } from "./builderUtils/props2String";
 
 export const build = async (config: Config) => {
   const schemas: Schema[] = [];
@@ -58,19 +53,21 @@ export const build = async (config: Config) => {
     : null;
   schemas.forEach((s) => {
     if (Array.isArray(s.value.value)) {
-      const schemaValues = s.value.value as Prop[];
+      const schemaValues = s.value.value;
       schemaValues.forEach((prop) => {
-        prop.values.forEach((propValue) => {
-          if (propValue.isEnum) {
-            if (!enumArray.find((el) => el.name === prop.name)) {
-              enumArray.push({
-                name: s.name + humps.pascalize(prop.name),
-                description: prop.description,
-                values: propValue.value as string[],
-              });
+        if (typeof prop === "object" && "values" in prop) {
+          prop.values.forEach((propValue) => {
+            if (propValue.isEnum) {
+              if (!enumArray.find((el) => el.name === prop.name)) {
+                enumArray.push({
+                  name: s.name + humps.pascalize(prop.name),
+                  description: prop.description,
+                  values: propValue.value as string[],
+                });
+              }
             }
-          }
-        });
+          });
+        }
       });
     }
   });

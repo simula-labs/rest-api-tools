@@ -7,39 +7,7 @@ export type GetAccountsAccountIdEmploymentsUrlParams = {
   accountId: string
 } | undefined
 
-export type GetAccountsAccountIdEmploymentsResponse = {
-  employments: (Types.Employment & {
-    account?: Types.Account & {
-      profile?: Types.Profile & {
-        placeOfResidence?: Types.State | undefined
-      } | undefined
-    } | undefined
-  } & {
-    company?: Types.Company & {
-      owner?: Types.Account & {
-        profile?: Types.Profile & {
-          placeOfResidence?: Types.State | undefined
-        } | undefined
-      } | undefined
-    } & {
-      subscription?: Types.Subscription & {
-        price?: Types.Price & {
-          product?: Types.Product | undefined
-        } | undefined
-      } | undefined
-    } & {
-      features?: Types.Feature[] | undefined
-    } & {
-      industries?: Types.Industry[] | undefined
-    } | undefined
-  } & {
-    roles?: (Types.Role & {
-      policies?: (Types.Policy & {
-        permissions?: Types.Permission[] | undefined
-      })[] | undefined
-    })[] | undefined
-  })[]
-}
+export type GetAccountsAccountIdEmploymentsResponse = Types.EmploymentsRes
 
 export const getAccountsAccountIdEmployments = new BaseRequest<
   undefined,
@@ -47,7 +15,7 @@ export const getAccountsAccountIdEmployments = new BaseRequest<
   GetAccountsAccountIdEmploymentsUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/accounts/:accountId/employments",

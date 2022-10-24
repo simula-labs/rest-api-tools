@@ -13,7 +13,7 @@ export const deleteEmploymentsId = new BaseRequest<
   DeleteEmploymentsIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/accounts/:accountId/employments",

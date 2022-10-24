@@ -13,7 +13,7 @@ export const getEmploymentsVerifyEmail = new BaseRequest<
   undefined,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/employments/verify_email",

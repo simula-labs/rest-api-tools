@@ -7,36 +7,7 @@ export type PatchJobOrdersIdUrlParams = {
   id: string
 } | undefined
 
-export type PatchJobOrdersIdResponse = Types.JobOrder & {
-    account: Types.Account
-
-    company: Types.Company & {
-      industries?: string | undefined
-      owner?: string | undefined
-    }
-
-    recruitment: Types.Recruitment & {
-      workplace?: Types.State | undefined
-      author?: Types.Account | undefined
-      externalService?: Types.ExternalService | undefined
-      employmentStatuses?: Types.EmploymentStatus[] | undefined
-      occupations?: Types.Occupation[] | undefined
-      industries?: Types.Industry[] | undefined
-      company?: Types.Company | undefined
-    }
-
-    job: Types.Job & {
-      account?: Types.Account | undefined
-    }
-
-    jobServiceItems: (Types.JobServiceItem & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[]
-    jobOrderConsumptionTaxPrices: (Types.JobOrderConsumptionTaxPrice & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[]
-    jobOrderWithholdingTaxPrice: Types.JobOrderWithholdingTaxPrice
-  }
+export type PatchJobOrdersIdResponse = Types.JobOrderRes
 
 export type PatchJobOrdersIdRequestBody = {
   jobOrder: {
@@ -52,7 +23,7 @@ export const patchJobOrdersId = new BaseRequest<
   PatchJobOrdersIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "patch",
   baseURL: API_HOST,
   path: "/job_orders/:id",

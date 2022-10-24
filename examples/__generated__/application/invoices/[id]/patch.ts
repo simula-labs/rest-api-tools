@@ -7,19 +7,7 @@ export type PatchInvoicesIdUrlParams = {
   id: string
 } | undefined
 
-export type PatchInvoicesIdResponse = Types.Invoice & {
-    job: Types.Job & {
-      jobOrder?: Types.JobOrder | undefined
-    }
-
-    invoiceDetailedItems: (Types.InvoiceDetailedItem & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[]
-    invoiceConsumptionTaxPrices: (Types.InvoiceConsumptionTaxPrice & {
-      consumptionTax?: Types.ConsumptionTax | undefined
-    })[]
-    invoiceWithholdingTaxPrice: Types.InvoiceWithholdingTaxPrice
-  }
+export type PatchInvoicesIdResponse = Types.InvoiceRes
 
 export type PatchInvoicesIdRequestBody = {
   invoice: {
@@ -64,7 +52,7 @@ export const patchInvoicesId = new BaseRequest<
   PatchInvoicesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "patch",
   baseURL: API_HOST,
   path: "/invoices/:id",

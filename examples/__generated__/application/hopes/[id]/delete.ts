@@ -13,7 +13,7 @@ export const deleteHopesId = new BaseRequest<
   DeleteHopesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "delete",
   baseURL: API_HOST,
   path: "/hopes/:id",

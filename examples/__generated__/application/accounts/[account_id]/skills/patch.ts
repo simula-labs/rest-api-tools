@@ -7,9 +7,7 @@ export type PatchAccountsAccountIdSkillsUrlParams = {
   accountId: string
 } | undefined
 
-export type PatchAccountsAccountIdSkillsResponse = {
-  skills: Types.Skill[]
-}
+export type PatchAccountsAccountIdSkillsResponse = Types.SkillsRes
 
 export type PatchAccountsAccountIdSkillsRequestBody = {
   skill: {
@@ -23,7 +21,7 @@ export const patchAccountsAccountIdSkills = new BaseRequest<
   PatchAccountsAccountIdSkillsUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "patch",
   baseURL: API_HOST,
   path: "/accounts/:accountId/skills",

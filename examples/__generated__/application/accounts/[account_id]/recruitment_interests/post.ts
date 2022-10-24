@@ -7,41 +7,7 @@ export type PostAccountsAccountIdRecruitmentInterestsUrlParams = {
   accountId: string
 } | undefined
 
-export type PostAccountsAccountIdRecruitmentInterestsResponse = Types.Recruitment & {
-    company: Types.Company
-  } & {
-    workplace: Types.State
-  } & {
-    author: Types.Account & {
-      profile?: Types.Profile & {
-        placeOfResidence?: Types.State | undefined
-      } & {
-        specialtyCompanyTypes?: Types.SpecialtyCompanyType[] | undefined
-      } & {
-        specialtyPositions?: Types.SpecialtyPosition[] | undefined
-      } & {
-        occupationMainCategories?: Types.OccupationMainCategory[] | undefined
-      } & {
-        industryCategories?: Types.IndustryCategory[] | undefined
-      } | undefined
-    }
-  } & {
-    externalService: Types.ExternalService
-  } & {
-    employmentStatuses: Types.EmploymentStatus[]
-  } & {
-    occupations: Types.Occupation[]
-  } & {
-    industries: Types.Industry[]
-  } & {
-    features: Types.Feature[]
-  } & {
-    employmentContractTerm: Types.EmploymentContractTerm[]
-  } & {
-    techStack: Types.TechStack[]
-  } & {
-    targetCompany: Types.Company
-  }
+export type PostAccountsAccountIdRecruitmentInterestsResponse = Types.RecruitmentRes
 
 export type PostAccountsAccountIdRecruitmentInterestsRequestBody = {
   recruitmentInterest: {
@@ -55,7 +21,7 @@ export const postAccountsAccountIdRecruitmentInterests = new BaseRequest<
   PostAccountsAccountIdRecruitmentInterestsUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/accounts/:accountId/recruitment_interests",

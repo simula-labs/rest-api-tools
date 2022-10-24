@@ -7,11 +7,7 @@ export type GetWorkHistoriesIdUrlParams = {
   id: string
 } | undefined
 
-export type GetWorkHistoriesIdResponse = Types.WorkHistory & {
-    account: Types.Account
-  } & {
-    projectHistories: Types.ProjectHistory[]
-  }
+export type GetWorkHistoriesIdResponse = Types.WorkHistoryRes
 
 export const getWorkHistoriesId = new BaseRequest<
   undefined,
@@ -19,7 +15,7 @@ export const getWorkHistoriesId = new BaseRequest<
   GetWorkHistoriesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/work_histories/:id",

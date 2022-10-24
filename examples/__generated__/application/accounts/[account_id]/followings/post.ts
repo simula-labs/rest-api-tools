@@ -21,7 +21,7 @@ export const postAccountsAccountIdFollowing = new BaseRequest<
   PostAccountsAccountIdFollowingUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/accounts/:accountId/followings",

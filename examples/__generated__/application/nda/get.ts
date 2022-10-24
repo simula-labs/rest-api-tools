@@ -11,7 +11,7 @@ export const getNda = new BaseRequest<
   undefined,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/nda",

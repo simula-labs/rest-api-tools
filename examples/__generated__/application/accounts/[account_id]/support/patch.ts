@@ -7,9 +7,7 @@ export type PatchAccountsAccountIdSupportUrlParams = {
   accountId: string
 } | undefined
 
-export type PatchAccountsAccountIdSupportResponse = Types.Support & {
-    account: Types.Account
-  }
+export type PatchAccountsAccountIdSupportResponse = Types.SupportRes
 
 export type PatchAccountsAccountIdSupportRequestBody = {
   support: {
@@ -24,7 +22,7 @@ export const patchAccountsAccountIdSupport = new BaseRequest<
   PatchAccountsAccountIdSupportUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "patch",
   baseURL: API_HOST,
   path: "/accounts/:accountId/support",

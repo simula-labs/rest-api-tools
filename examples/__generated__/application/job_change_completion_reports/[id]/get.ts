@@ -7,11 +7,7 @@ export type GetJobChangeCompletionReportsIdUrlParams = {
   id: string
 } | undefined
 
-export type GetJobChangeCompletionReportsIdResponse = Types.JobChangeCompletionReport & {
-    account: Types.Account
-  } & {
-    company: Types.Company
-  }
+export type GetJobChangeCompletionReportsIdResponse = Types.JobChangeCompletionReportRes
 
 export const getJobChangeCompletionReportsId = new BaseRequest<
   undefined,
@@ -19,7 +15,7 @@ export const getJobChangeCompletionReportsId = new BaseRequest<
   GetJobChangeCompletionReportsIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "get",
   baseURL: API_HOST,
   path: "/job_change_completion_reports/:id",

@@ -7,9 +7,7 @@ export type PostAccountsAccountIdWithdrawalsUrlParams = {
   accountId: string
 } | undefined
 
-export type PostAccountsAccountIdWithdrawalsResponse = Types.Withdrawal & {
-    account: Types.Account
-  }
+export type PostAccountsAccountIdWithdrawalsResponse = Types.WithdrawalRes
 
 export type PostAccountsAccountIdWithdrawalsRequestBody = {
   withdrawal: {
@@ -23,7 +21,7 @@ export const postAccountsAccountIdWithdrawals = new BaseRequest<
   PostAccountsAccountIdWithdrawalsUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/accounts/:accountId/withdrawals",

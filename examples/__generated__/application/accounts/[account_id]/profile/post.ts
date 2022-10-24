@@ -7,17 +7,7 @@ export type PostAccountsAccountIdProfileUrlParams = {
   accountId: string
 } | undefined
 
-export type PostAccountsAccountIdProfileResponse = Types.Profile & {
-    specialtyCompanyTypes: Types.SpecialtyCompanyType[]
-  } & {
-    specialtyPositions: Types.SpecialtyPosition[]
-  } & {
-    occupationMainCategories: Types.OccupationMainCategory[]
-  } & {
-    industryCategories: Types.IndustryCategory[]
-  } & {
-    placeOfResidence: Types.State
-  }
+export type PostAccountsAccountIdProfileResponse = Types.ProfileRes
 
 export type PostAccountsAccountIdProfileRequestBody = {
   profile: {
@@ -40,25 +30,11 @@ export type PostAccountsAccountIdProfileRequestBody = {
     /** 直近の年収 */
     recentIncomeAmount?: number | undefined
     /** マネジメント経験人数 */
-    managementExperience?: 'nothing' | 'less_than_5' | 'from_6_to_10' | 'from_11_to_20' | 'from_21_to_50' | 'from_51_to_100' | 'from_101_to_500' | 'more_than_501' | undefined
+    managementExperience?: 'from_6_to_10' | 'from_11_to_20' | 'from_21_to_50' | 'from_51_to_100' | 'from_101_to_500' | 'more_than_501' | 'nothing' | 'less_than_5' | undefined
     /** 転職回数 */
     numberOfJobChanges?: number | undefined
-    /** エージェント経験年数 */
-    yearOfAgentExperience?: number | undefined
-    /** エージェント担当エリア */
-    agentAreaInCharge?: string | undefined
-    /** エージェント自己紹介メッセージ */
-    agentSelfMessage?: string | undefined
-    /** エージェント自己PR */
-    agentSelfIntroduction?: string | undefined
-    /** エージェント実績 */
-    agentAchievement?: string | undefined
     /** 「配偶者無」「配偶者有」 */
     maritalStatus?: 'single' | 'married' | undefined
-    /** エージェント得意職種 */
-    occupationMainCategoryIds?: string[] | undefined
-    /** エージェント得意業種 */
-    industryCategoryIds?: string[] | undefined
   }
 }
 
@@ -68,7 +44,7 @@ export const postAccountsAccountIdProfile = new BaseRequest<
   PostAccountsAccountIdProfileUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/accounts/:accountId/profile",

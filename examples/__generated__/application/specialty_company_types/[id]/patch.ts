@@ -7,7 +7,7 @@ export type PatchSpecialtyCompanyTypesIdUrlParams = {
   id: string
 } | undefined
 
-export type PatchSpecialtyCompanyTypesIdResponse = Types.SpecialtyCompanyType
+export type PatchSpecialtyCompanyTypesIdResponse = Types.SpecialtyCompanyTypeRes
 
 export type PatchSpecialtyCompanyTypesIdRequestBody = {
   specialtyCompanyType: {
@@ -21,7 +21,7 @@ export const patchSpecialtyCompanyTypesId = new BaseRequest<
   PatchSpecialtyCompanyTypesIdUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "patch",
   baseURL: API_HOST,
   path: "/specialty_company_types/:id",

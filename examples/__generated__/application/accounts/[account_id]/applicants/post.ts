@@ -7,11 +7,7 @@ export type PostAccountsAccountIdApplicantsUrlParams = {
   accountId: string
 } | undefined
 
-export type PostAccountsAccountIdApplicantsResponse = Types.Applicant & {
-    recruitment: Types.Recruitment
-  } & {
-    account: Types.Account
-  }
+export type PostAccountsAccountIdApplicantsResponse = Types.ApplicantRes
 
 export type PostAccountsAccountIdApplicantsRequestBody = {
   applicant: {
@@ -25,7 +21,7 @@ export const postAccountsAccountIdApplicants = new BaseRequest<
   PostAccountsAccountIdApplicantsUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/accounts/:accountId/applicants",

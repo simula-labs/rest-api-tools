@@ -7,9 +7,7 @@ export type PostAccountsAccountIdBankAccountChangeUrlParams = {
   accountId: string
 } | undefined
 
-export type PostAccountsAccountIdBankAccountChangeResponse = Types.BankAccount & {
-    account: Types.Account
-  }
+export type PostAccountsAccountIdBankAccountChangeResponse = Types.BankAccountRes
 
 export type PostAccountsAccountIdBankAccountChangeRequestBody = {
   bankAccount: {
@@ -28,7 +26,7 @@ export const postAccountsAccountIdBankAccountChange = new BaseRequest<
   PostAccountsAccountIdBankAccountChangeUrlParams,
   undefined
 >({
-  requiredAuth: false,
+  requiredAuth: true,
   method: "post",
   baseURL: API_HOST,
   path: "/accounts/:accountId/bank_account/change",
