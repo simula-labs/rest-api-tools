@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/simula-labs/rest-api-tools/compare/v1.5.0...v1.5.1) (2022-10-26)
+
+
+### Bug Fixes
+
+* mockは生成しないように ([c3c230d](https://github.com/simula-labs/rest-api-tools/commit/c3c230d56bd8fc2aa207ad36375b1f49ba5e15cf))
+
 # [1.5.0](https://github.com/simula-labs/rest-api-tools/compare/v1.4.0...v1.5.0) (2022-10-26)
 
 
