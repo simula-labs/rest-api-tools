@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/simula-labs/rest-api-tools/compare/v1.4.0...v1.5.0) (2022-10-26)
+
+
+### Features
+
+* schema変更に伴うcodegenの修正 ([3841097](https://github.com/simula-labs/rest-api-tools/commit/3841097b6d901a14459aaf69dd0be791214ecca9))
+
 # [1.4.0](https://github.com/simula-labs/rest-api-tools/compare/v1.3.1...v1.4.0) (2022-10-10)
 
 
