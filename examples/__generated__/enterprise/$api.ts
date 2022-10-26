@@ -98,6 +98,8 @@ import { postCompaniesCompanyIdRecruitmentsCsvImport } from "./companies/[compan
 import { getCompaniesCompanyIdRecruitmentsId } from "./companies/[company_id]/recruitments/[id]/get";
 import { patchCompaniesCompanyIdRecruitmentsId } from "./companies/[company_id]/recruitments/[id]/patch";
 import { deleteCompaniesCompanyIdRecruitmentsId } from "./companies/[company_id]/recruitments/[id]/delete";
+import { getCompaniesCompanyIdApplicants } from "./companies/[company_id]/applicants/get";
+import { getCompaniesCompanyIdApplicantsId } from "./companies/[company_id]/applicants/[id]/get";
 import { getCompaniesCompanyIdRecruitmentsRecruitmentIdApplicants } from "./companies/[company_id]/recruitments/[recruitment_id]/applicants/get";
 import { getCompaniesCompanyIdRoles } from "./companies/[company_id]/roles/get";
 import { postCompaniesCompanyIdRoles } from "./companies/[company_id]/roles/post";
@@ -234,6 +236,8 @@ export const enterpriseApi = {
   getCompaniesCompanyIdRecruitmentsId,
   patchCompaniesCompanyIdRecruitmentsId,
   deleteCompaniesCompanyIdRecruitmentsId,
+  getCompaniesCompanyIdApplicants,
+  getCompaniesCompanyIdApplicantsId,
   getCompaniesCompanyIdRecruitmentsRecruitmentIdApplicants,
   getCompaniesCompanyIdRoles,
   postCompaniesCompanyIdRoles,
