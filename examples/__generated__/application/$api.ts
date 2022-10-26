@@ -82,8 +82,9 @@ import { getCompaniesRecommended } from "./companies/recommended/get";
 import { getCompaniesCompanyIdRecruitments } from "./companies/[company_id]/recruitments/get";
 import { getCompaniesId } from "./companies/[id]/get";
 import { getContentMattersId } from "./consent_matters/[id]/get";
-import { getContentMatters } from "./content_matters/get";
+import { getContentMatters } from "./consent_matters/get";
 import { getEmploymentsVerifyEmail } from "./employments/verify_email/get";
+import { deleteEmploymentsId } from "./employments/[id]/delete";
 import { postEmploymentsEmploymentIdJoin } from "./employments/[employment_id]/join/post";
 import { deleteAccountsAccountIdFollowingCompanyId } from "./followings/[company_id]/delete";
 import { getHopesId } from "./hopes/[id]/get";
@@ -223,6 +224,7 @@ export const applicationApi = {
   getContentMattersId,
   getContentMatters,
   getEmploymentsVerifyEmail,
+  deleteEmploymentsId,
   postEmploymentsEmploymentIdJoin,
   deleteAccountsAccountIdFollowingCompanyId,
   getHopesId,

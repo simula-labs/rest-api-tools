@@ -7,7 +7,7 @@ export type PostAccountsAccountIdIndustryHistoriesUrlParams = {
   accountId: string
 } | undefined
 
-export type PostAccountsAccountIdIndustryHistoriesResponse = Types.IndustryHistoryRes
+export type PostAccountsAccountIdIndustryHistoriesResponse = Types.IndustryHistoriesRes
 
 export type PostAccountsAccountIdIndustryHistoriesRequestBody = {
   industryHistories: {

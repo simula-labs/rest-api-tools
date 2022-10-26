@@ -2,12 +2,12 @@ module.exports = {
   connectBasePath: "__generated__",
   tokenKey: "AUTH_TOKEN",
   openapiBindings: [
-    // {
-    //   connect: "admin",
-    //   openapi: "./openapi/Admin.v1.json",
-    //   apiEnvironmentVariables: "REACT_APP_ENV",
-    //   requiredAuth: true,
-    // },
+    {
+      connect: "admin",
+      openapi: "./openapi/Admin.v1.json",
+      apiEnvironmentVariables: "REACT_APP_ENV",
+      requiredAuth: true,
+    },
     {
       connect: "adminAuth",
       openapi: "./openapi/AdminAuth.v1.json",

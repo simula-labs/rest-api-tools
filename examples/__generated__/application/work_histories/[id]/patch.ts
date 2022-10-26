@@ -7,7 +7,7 @@ export type PatchWorkHistoriesIdUrlParams = {
   id: string
 } | undefined
 
-export type PatchWorkHistoriesIdResponse = Types.WorkHistoryRes
+export type PatchWorkHistoriesIdResponse = Types.WorkHistoriesRes
 
 export type PatchWorkHistoriesIdRequestBody = {
   workHistory: {

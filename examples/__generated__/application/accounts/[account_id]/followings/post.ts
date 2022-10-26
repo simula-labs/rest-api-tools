@@ -7,7 +7,7 @@ export type PostAccountsAccountIdFollowingUrlParams = {
   accountId: string
 } | undefined
 
-export type PostAccountsAccountIdFollowingResponse = Types.Company
+export type PostAccountsAccountIdFollowingResponse = Types.CompanyRes
 
 export type PostAccountsAccountIdFollowingRequestBody = {
   following: {

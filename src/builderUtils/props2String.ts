@@ -24,23 +24,29 @@ const array2String = (val: PropValue, indent: string) => {
   return `${hasMulti ? "(" : ""}${value2String(val, indent)}${hasMulti ? ")" : ""}[]`;
 };
 
-export const value2String = (v: PropValue, indent: string): string =>
-  `${
-    v.hasOf
-      ? values2String(v.value as PropValue[], v.hasOf, indent)
-      : v.isArray
-      ? array2String(v.value as PropValue, indent)
-      : v.isEnum
-      ? (v.value as string[]).join(" | ")
-      : Array.isArray(v.value)
-      ? props2String(v.value as Prop[], `  ${indent}`)
-      : v.value
-  }${v.nullable ? " | null" : ""}`;
+export const value2String = (v: PropValue, indent: string, anyOfNull = false): string => {
+  return anyOfNull
+    ? "null"
+    : `${
+        v.hasOf
+          ? values2String(v.value as PropValue[], v.hasOf, indent)
+          : v.isArray
+          ? array2String(v.value as PropValue, indent)
+          : v.isEnum
+          ? (v.value as string[]).join(" | ")
+          : Array.isArray(v.value)
+          ? props2String(v.value as Prop[], `  ${indent}`)
+          : v.value
+      }${v.nullable ? " | null" : ""}`;
+};
 
-const values2String = (values: PropValue[], hasOf: PropValue["hasOf"], indent: string) =>
-  `${hasOf === "anyOf" ? "Partial<" : ""}${values
-    .map((a) => value2String(a, indent))
-    .join(hasOf === "oneOf" ? " | " : " & ")}${hasOf === "anyOf" ? ">" : ""}`;
+const values2String = (values: PropValue[], hasOf: PropValue["hasOf"], indent: string) => {
+  return `${values
+    .map((a) => {
+      return value2String(a, indent, hasOf === "anyOf" && a.nullable);
+    })
+    .join(hasOf === "oneOf" || hasOf === "anyOf" ? " | " : " & ")}`;
+};
 
 const isMultiLine = (values: PropValue[]) =>
   values.find((v) => !v.isEnum && Array.isArray(v.value));
@@ -86,9 +92,7 @@ export const value2StringForParams = (v: PropValue, indent: string): string =>
   }${v.nullable ? " | null" : ""}`;
 
 const values2StringForParams = (values: PropValue[], hasOf: PropValue["hasOf"], indent: string) =>
-  `${hasOf === "anyOf" ? "Partial<" : ""}${values
-    .map((a) => value2StringForParams(a, indent))
-    .join(hasOf === "oneOf" ? " | " : " & ")}${hasOf === "anyOf" ? ">" : ""}`;
+  `${values.map((a) => value2StringForParams(a, indent)).join(hasOf === "oneOf" ? " | " : " & ")}`;
 
 export const props2StringForParams = (props: Prop[], indent: string) =>
   `${props
@@ -161,9 +165,9 @@ export const props2StringForMock = (props: Prop[], indent: string, first: boolea
 };
 
 const prop2StringForMock = (props: Prop, hasOf: PropValue["hasOf"], indent: string) =>
-  `${hasOf === "anyOf" ? "Partial<" : ""}${props.values
+  `${props.values
     .map((a) => value2StringForMock(a, indent, false, humps.camelize(props.name)))
-    .join(hasOf === "oneOf" ? " | " : " & ")}${hasOf === "anyOf" ? ">" : ""}`;
+    .join(hasOf === "oneOf" ? " | " : " & ")}`;
 
 const values2StringForParamsForMock = (
   values: PropValue[],
