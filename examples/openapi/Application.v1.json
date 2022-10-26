@@ -898,18 +898,6 @@
       "post": {
         "summary": "アカウントのフォローを作成する",
         "operationId": "post-accounts-account_id-following",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Company"
-                }
-              }
-            }
-          }
-        },
         "requestBody": {
           "content": {
             "application/json": {
@@ -942,6 +930,11 @@
             }
           },
           "description": ""
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Company"
+          }
         }
       }
     },
@@ -1155,7 +1148,7 @@
         "operationId": "post-accounts-account_id-industry_histories",
         "responses": {
           "201": {
-            "$ref": "#/components/responses/IndustryHistory"
+            "$ref": "#/components/responses/IndustryHistories"
           }
         },
         "requestBody": {
@@ -3485,7 +3478,7 @@
         "operationId": "get-content_matters-id"
       }
     },
-    "/content_matters": {
+    "/consent_matters": {
       "get": {
         "summary": "追加項目一覧を取得する",
         "tags": [],
@@ -3534,6 +3527,27 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/employments/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "delete": {
+        "summary": "雇用を削除する",
+        "operationId": "delete-employments-id",
+        "responses": {
+          "204": {
+            "description": "No Content"
           }
         }
       }
@@ -5252,10 +5266,7 @@
             "format": "date-time"
           },
           "faculty": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "情報コミュニケーション学部",
             "description": "学部・学科"
@@ -5346,10 +5357,7 @@
             "format": "date"
           },
           "description": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "id": {
@@ -5357,18 +5365,12 @@
             "format": "uuid"
           },
           "since_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date"
           },
           "until_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date"
           },
@@ -5419,17 +5421,11 @@
         "description": "",
         "properties": {
           "academic_background": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "achievement": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "admin_verification_status": {
@@ -5446,17 +5442,11 @@
             "description": "admin審査状態"
           },
           "area_in_charge": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "description": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "id": {
@@ -5464,17 +5454,11 @@
             "format": "uuid"
           },
           "message": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "self_pr": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "status": {
@@ -5491,10 +5475,7 @@
             "type": "integer"
           },
           "pledge": {
-            "type": [
-              "object",
-              "null"
-            ],
+            "type": "object",
             "nullable": true,
             "required": [
               "id",
@@ -5523,10 +5504,7 @@
             }
           },
           "offer_letters": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": "array",
             "nullable": true,
             "items": {
               "type": "object",
@@ -5835,10 +5813,7 @@
             "description": "勤務地不問か"
           },
           "can_not_release_reasons": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": "array",
             "nullable": true,
             "description": "公開出来ない理由",
             "items": {
@@ -5850,26 +5825,17 @@
             "format": "date-time"
           },
           "department": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "開発部"
           },
           "estimated_time_per_project": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "稼働時間目安"
           },
           "estimated_unit_amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "推定単価（税込）"
           },
@@ -5885,17 +5851,11 @@
             "description": "admin用のフラグ"
           },
           "is_applied_by_current_account": {
-            "type": [
-              "boolean",
-              "null"
-            ],
+            "type": "boolean",
             "nullable": true
           },
           "is_interested_by_current_account": {
-            "type": [
-              "boolean",
-              "null"
-            ],
+            "type": "boolean",
             "nullable": true
           },
           "is_organizational_checked": {
@@ -5908,93 +5868,60 @@
             "description": "サンプルか"
           },
           "is_worked_with_target_account": {
-            "type": [
-              "boolean",
-              "null"
-            ],
+            "type": "boolean",
             "nullable": true
           },
           "job_description": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "新規事業のフロントサイドエンジニア"
           },
           "max_amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "最高金額（税込）"
           },
           "max_amount_without_tax": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "最高金額（税抜）"
           },
           "max_number_of_hiring": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "採用人数",
             "example": "4名"
           },
           "min_amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "最低金額（税込）"
           },
           "min_amount_without_tax": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "最低金額（税抜）"
           },
           "nearest_station": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "page_views": {
             "type": "integer"
           },
           "position": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "管理職"
           },
           "published_since_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date",
             "description": "掲載期間（開始）"
           },
           "published_until_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date",
             "description": "掲載期間（終了）"
@@ -6011,26 +5938,17 @@
             "description": "「下書き」「公開」「休止」「終了」「強制停止」"
           },
           "qualification_requirements": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "・大卒以上　・40歳未満"
           },
           "recommended_point": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "推薦ポイント"
           },
           "remote_work_status": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "enum": [
               "rarely",
@@ -6040,28 +5958,19 @@
             "description": "「不可・時折（0-10%）」「可（10-90%）」「フルリモート（90%以上）」"
           },
           "salary_remarks": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "年収・報酬の詳細",
             "example": "月給\\416,667～（基本給\\307,719～ 固定残業代\\108,948～等を含む/月） ※経験とスキルに応じて決定します。 給与改定：年1回 試用期間：3ヶ月/給与・待遇に変動なし"
           },
           "selection_process": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "選考プロセス",
             "example": "面接2回、最終面接1回"
           },
           "smoking_regulation": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "enum": [
               "no_smoking_indoors",
@@ -6081,18 +5990,12 @@
             "description": "「クライアント作成（企業）」「エージェント作成」「サービス作成（クローリング）」"
           },
           "target_company_certain_name": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "target_company_statusがcertainedの時、表示名を指定"
           },
           "target_company_status": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "enum": [
               "none",
@@ -6103,26 +6006,17 @@
             "description": "募集元企業の状態「なし」「非公開」「某社」「指定あり」"
           },
           "tax_for_max_amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "最高金額（税）"
           },
           "tax_for_min_amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "最低金額（税）"
           },
           "tech_stack_remarks": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "技術スタックの備考"
           },
@@ -6144,18 +6038,12 @@
             "format": "date-time"
           },
           "work_conditions": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "保険・交通費とか諸々"
           },
           "workplace_description": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "勤務地詳細"
           }
@@ -6227,44 +6115,29 @@
             "description": "admin審査状態"
           },
           "average_age": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "example": 28
           },
           "business_summary": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "事業概要"
           },
           "capital": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "example": 15200000,
             "description": "資本金（税の概念なし）"
           },
           "corporate_pr": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "maxLength": 500,
             "example": "ヒトが生涯の中で最も長く過ごす「働く」という時間。 日本の場合、この働く時間をどう過ごすかはほとんど就活の間に決まってしまっていると言ってもいいでしょう。"
           },
           "cover_image_url": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "created_at": {
@@ -6272,41 +6145,26 @@
             "format": "date-time"
           },
           "deleted_at": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date-time"
           },
           "employment_placement_permit_number": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "有料職業紹介事業許可番号"
           },
           "follower_nums": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true
           },
           "head_office_location": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "東京都港区元赤坂1-7-18"
           },
           "hp_url": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "uri",
             "example": "https://simula-labs.com/"
@@ -6316,18 +6174,12 @@
             "format": "uuid"
           },
           "introduction_fee_ratio": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "nullable": true,
             "description": "admin指定の紹介報告手数料率"
           },
           "is_following_by_current_account": {
-            "type": [
-              "boolean",
-              "null"
-            ],
+            "type": "boolean",
             "nullable": true
           },
           "is_listed": {
@@ -6339,10 +6191,7 @@
             "type": "boolean"
           },
           "logo_url": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "name": {
@@ -6350,35 +6199,23 @@
             "example": "株式会社SIMULA Labs"
           },
           "name_kana": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "シミュララボ "
           },
           "net_sales": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "example": 50000000,
             "description": "前年度の売上高（税込）"
           },
           "numbers_of_employees": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "20"
           },
           "phone": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "03-1234-5678"
           },
@@ -6393,26 +6230,17 @@
             "default": "unspecified"
           },
           "recruitment_fee_ratio": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "nullable": true,
             "description": "admin指定の採用報告手数料率"
           },
           "representative": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "牧野暉弘"
           },
           "representative_kana": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "まきのあきひろ"
           },
@@ -6429,10 +6257,7 @@
             "format": "date-time"
           },
           "year_of_establishment": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date",
             "example": "2015"
@@ -6505,10 +6330,7 @@
         "type": "object",
         "properties": {
           "country_code": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": 392,
             "description": "国名コードの数字"
@@ -6560,10 +6382,7 @@
             "example": "正社員"
           },
           "project_classification": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "enum": [
               "contract",
@@ -6628,17 +6447,11 @@
         "type": "object",
         "properties": {
           "already_keep_from_current_company": {
-            "type": [
-              "boolean",
-              "null"
-            ],
+            "type": "boolean",
             "nullable": true
           },
           "avatar_url": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "created_at": {
@@ -6648,17 +6461,11 @@
           "deleted_at": {
             "description": "論理削除時刻",
             "format": "date-time",
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "display_name": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "email": {
@@ -6677,10 +6484,7 @@
             "type": "string"
           },
           "exists_applicant_resource_from_current_company": {
-            "type": [
-              "boolean",
-              "null"
-            ],
+            "type": "boolean",
             "nullable": true
           },
           "id": {
@@ -6689,10 +6493,7 @@
           },
           "identification_requirements": {
             "description": "本人確認に足りない項目の配列（'external_account'は銀行口座、'individual.verification.document'は身分証明書）\n",
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": "array",
             "nullable": true,
             "items": {
               "type": "string"
@@ -6718,10 +6519,7 @@
           },
           "is_opened_to_latest_scout": {
             "description": "直近のスカウトを開封しているか",
-            "type": [
-              "boolean",
-              "null"
-            ],
+            "type": "boolean",
             "nullable": true
           },
           "is_project_scout_target": {
@@ -6744,10 +6542,7 @@
           },
           "last_notification_read_at": {
             "format": "date-time",
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "last_sign_in_at": {
@@ -6772,26 +6567,17 @@
             "type": "number"
           },
           "project_result_total": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "PJT X件/XXX万円以上(enterpriseのみ)"
           },
           "recent_income_amount_range": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "直近の年収レンジ(enterpriseのみ)"
           },
           "register_as": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "enum": [
               "general",
@@ -6809,25 +6595,16 @@
             "default": false
           },
           "working_experience": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "社会人歴(enterpriseのみ)"
           },
           "is_read_account_interest": {
-            "type": [
-              "boolean",
-              "null"
-            ],
+            "type": "boolean",
             "nullable": true
           },
           "is_following_current_company": {
-            "type": [
-              "boolean",
-              "null"
-            ],
+            "type": "boolean",
             "nullable": true
           }
         },
@@ -7036,7 +6813,7 @@
                     "$ref": "#/components/schemas/Company"
                   },
                   {
-                    "nullable": true
+                    "type": "null"
                   }
                 ]
               },
@@ -7046,7 +6823,7 @@
                     "$ref": "#/components/schemas/Account"
                   },
                   {
-                    "nullable": true
+                    "type": "null"
                   }
                 ]
               }
@@ -7061,25 +6838,16 @@
         "properties": {
           "address": {
             "example": "東京都港区元赤坂1-7-18",
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "biography": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "自己PR/職務要約"
           },
           "birth_of_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date",
             "description": ""
@@ -7100,10 +6868,7 @@
             "example": "daily_conversation"
           },
           "files": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": "array",
             "nullable": true,
             "items": {
               "type": "object",
@@ -7139,10 +6904,7 @@
             "example": "太郎"
           },
           "first_name_kana": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "タロウ"
           },
@@ -7175,10 +6937,7 @@
             "example": "山田"
           },
           "last_name_kana": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "ヤマダ"
           },
@@ -7197,10 +6956,7 @@
             ]
           },
           "marital_status": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "enum": [
               "single",
@@ -7208,42 +6964,27 @@
             ]
           },
           "nationality": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "JP"
           },
           "number_of_job_changes": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "転職回数"
           },
           "phone": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "090-XXXX-XXXX"
           },
           "postal_code": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "107-0051"
           },
           "recent_income_amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "直近の年収（税の概念なし）"
           },
@@ -7367,7 +7108,7 @@
                           ]
                         },
                         {
-                          "nullable": true
+                          "type": "null"
                         }
                       ]
                     },
@@ -7453,10 +7194,7 @@
             ]
           },
           "attachment": {
-            "type": [
-              "object",
-              "null"
-            ],
+            "type": "object",
             "nullable": true,
             "required": [
               "filename",
@@ -7589,10 +7327,7 @@
             "format": "date-time"
           },
           "description": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "id": {
@@ -7628,10 +7363,7 @@
             "format": "date-time"
           },
           "department": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "所属部署"
           },
@@ -7650,18 +7382,12 @@
             "description": "有効かどうか（招待しただけの状態はfalse）"
           },
           "last_notification_read_at": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date-time"
           },
           "position": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "役職"
           },
@@ -7700,7 +7426,7 @@
                           "$ref": "#/components/schemas/Message"
                         },
                         {
-                          "nullable": true,
+                          "type": "null",
                           "properties": {}
                         }
                       ]
@@ -7711,7 +7437,7 @@
                           "$ref": "#/components/schemas/Scout"
                         },
                         {
-                          "nullable": true
+                          "type": "null"
                         }
                       ]
                     },
@@ -7721,7 +7447,7 @@
                           "$ref": "#/components/schemas/Applicant"
                         },
                         {
-                          "nullable": true,
+                          "type": "null",
                           "properties": {}
                         }
                       ]
@@ -7796,10 +7522,7 @@
             "format": "date-time"
           },
           "description": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "Roleの説明"
           },
@@ -7894,10 +7617,7 @@
             "description": "権限「read:recruitment」「create:recruitment」など"
           },
           "conditions": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "created_at": {
@@ -7963,7 +7683,7 @@
                                   ]
                                 },
                                 {
-                                  "nullable": true
+                                  "type": "null"
                                 }
                               ]
                             }
@@ -8036,16 +7756,380 @@
           "employments"
         ]
       },
+      "Subscription": {
+        "title": "Subscription",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "since_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "past_due",
+              "unpaid",
+              "canceled",
+              "incomplete",
+              "incomplete_expired",
+              "trialing",
+              "all",
+              "ended",
+              "pending"
+            ],
+            "example": "active"
+          },
+          "until_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "created_at",
+          "id",
+          "since_date",
+          "status",
+          "until_date",
+          "updated_at"
+        ]
+      },
+      "Price": {
+        "title": "Price",
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tax_for_unit_amount": {
+            "type": "integer",
+            "nullable": true,
+            "description": "価格（税）"
+          },
+          "unit_amount": {
+            "type": "integer",
+            "description": "価格（税込）"
+          },
+          "unit_amount_without_tax": {
+            "type": "integer",
+            "nullable": true,
+            "description": "価格（税抜）"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "active",
+          "created_at",
+          "currency",
+          "id",
+          "tax_for_unit_amount",
+          "unit_amount",
+          "unit_amount_without_tax",
+          "updated_at"
+        ]
+      },
+      "Product": {
+        "title": "Product",
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "plan_type": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "company",
+              "agent"
+            ]
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "active",
+          "created_at",
+          "description",
+          "id",
+          "name",
+          "plan_type",
+          "updated_at"
+        ]
+      },
+      "PaymentMethod": {
+        "title": "PaymentMethod",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "brand": {
+            "type": "string",
+            "enum": [
+              "visa",
+              "mastercard",
+              "jcb",
+              "american_express",
+              "diners"
+            ],
+            "example": "visa"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "exp_month": {
+            "type": "integer",
+            "example": "8"
+          },
+          "exp_year": {
+            "type": "integer",
+            "example": "2023"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_default": {
+            "type": "boolean",
+            "default": false
+          },
+          "last4": {
+            "type": "integer",
+            "example": "1234"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "brand",
+          "created_at",
+          "exp_month",
+          "exp_year",
+          "id",
+          "is_default",
+          "last4",
+          "updated_at"
+        ]
+      },
+      "ExternalService": {
+        "title": "ExternalService",
+        "type": "object",
+        "description": "クローリングサービス",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "is_contracted": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name",
+          "is_contracted"
+        ]
+      },
+      "CompanyRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Company"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "owner": {
+                "anyOf": [
+                  {
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Account"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "profile": {
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/Profile"
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "place_of_residence": {
+                                    "$ref": "#/components/schemas/State"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "profile"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "subscription": {
+                "anyOf": [
+                  {
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Subscription"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "price": {
+                            "allOf": [
+                              {
+                                "$ref": "#/components/schemas/Price"
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "product": {
+                                    "$ref": "#/components/schemas/Product"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "price"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null",
+                    "properties": {}
+                  }
+                ]
+              },
+              "recruitments": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Recruitment"
+                }
+              },
+              "industries": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Industry"
+                }
+              },
+              "features": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Feature"
+                }
+              },
+              "payment_methods": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PaymentMethod"
+                }
+              },
+              "org_units": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrgUnit"
+                }
+              },
+              "external_services": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExternalService"
+                }
+              }
+            },
+            "required": [
+              "owner",
+              "subscription",
+              "recruitments",
+              "industries",
+              "features",
+              "payment_methods",
+              "org_units",
+              "external_services"
+            ]
+          }
+        ]
+      },
       "Hope": {
         "title": "Hope",
         "type": "object",
         "description": "",
         "properties": {
           "amount": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "nullable": true
           },
           "billing_method": {
@@ -8067,10 +8151,7 @@
             "format": "uuid"
           },
           "ratio_of_operation": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "enum": [
               "once_a_week",
@@ -8079,18 +8160,12 @@
             ]
           },
           "special_note": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "特筆事項"
           },
           "time_to_change_job": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "nullable": true,
             "description": "転職希望時期・案件開始時期"
           },
@@ -8274,7 +8349,24 @@
                   "type": "object",
                   "properties": {
                     "account": {
-                      "$ref": "#/components/schemas/Account"
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/Account"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "company": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/Company"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
                     }
                   },
                   "required": [
@@ -8495,18 +8587,12 @@
             "format": "date-time"
           },
           "customer_name": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "取引先名"
           },
           "fee_calculation_span": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "enum": [
               "monthly",
@@ -8556,33 +8642,24 @@
                   ]
                 },
                 {
-                  "nullable": true,
+                  "type": "null",
                   "properties": {}
                 }
               ]
             }
           },
           "fixed_amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "固定報酬制の金額(税込)"
           },
           "fixed_sub_total": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "固定報酬制の小計(税抜)"
           },
           "fixed_total_amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "固定報酬制の金額(税込)と論理手数料を合わせた総額"
           },
@@ -8599,67 +8676,43 @@
             "default": false
           },
           "job_description": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "仕事内容"
           },
           "job_name": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "業務名"
           },
           "logical_fee_amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "論理手数料（報酬額ときっかけを元に算出する手数料の予定額）"
           },
           "number": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "発注番号"
           },
           "order_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "発注日",
             "format": "date"
           },
           "other_conditions": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "諸条件"
           },
           "review_comment": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "受注者からのコメント"
           },
           "since_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date",
             "description": "開始日"
@@ -8676,26 +8729,17 @@
             "description": "「下書き」「先方確認中」「締結済み」「却下」"
           },
           "tax_ratio": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "nullable": true,
             "description": "稼働報酬制の税率"
           },
           "unit_time_fee": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "稼働報酬制の金額"
           },
           "until_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date",
             "description": "終了日"
@@ -8957,7 +9001,7 @@
                           ]
                         },
                         {
-                          "nullable": true
+                          "type": "null"
                         }
                       ]
                     },
@@ -9009,7 +9053,7 @@
                           "$ref": "#/components/schemas/JobOrderWithholdingTaxPrice"
                         },
                         {
-                          "nullable": true
+                          "type": "null"
                         }
                       ]
                     }
@@ -9131,7 +9175,7 @@
                                   "$ref": "#/components/schemas/Profile"
                                 },
                                 {
-                                  "nullable": true,
+                                  "type": "null",
                                   "properties": {}
                                 }
                               ]
@@ -9142,7 +9186,7 @@
                                   "$ref": "#/components/schemas/AgentProfile"
                                 },
                                 {
-                                  "nullable": true,
+                                  "type": "null",
                                   "properties": {}
                                 }
                               ]
@@ -9228,10 +9272,7 @@
             "format": "date-time"
           },
           "icon_url": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "Accountであればavatar_url、Companyであればlogo_url"
           },
@@ -9255,10 +9296,7 @@
             "description": "「通常通知」or「メッセージ通知」"
           },
           "subject": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "example": "スカウトメッセージが届きました。"
           },
@@ -9301,7 +9339,7 @@
                           "$ref": "#/components/schemas/Account"
                         },
                         {
-                          "nullable": true,
+                          "type": "null",
                           "properties": {}
                         }
                       ]
@@ -9312,7 +9350,7 @@
                           "$ref": "#/components/schemas/Company"
                         },
                         {
-                          "nullable": true,
+                          "type": "null",
                           "properties": {}
                         }
                       ]
@@ -9323,7 +9361,7 @@
                           "$ref": "#/components/schemas/Employment"
                         },
                         {
-                          "nullable": true
+                          "type": "null"
                         }
                       ]
                     },
@@ -9333,7 +9371,7 @@
                           "$ref": "#/components/schemas/Channel"
                         },
                         {
-                          "nullable": true
+                          "type": "null"
                         }
                       ]
                     }
@@ -9488,10 +9526,7 @@
             "format": "uuid"
           },
           "improvement_point": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "もっとこうして欲しかった点"
           },
@@ -9501,10 +9536,7 @@
             "description": "サンプルか"
           },
           "skill_description": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "スキルの詳細"
           },
@@ -9699,38 +9731,6 @@
           "total_data_nums"
         ]
       },
-      "ExternalService": {
-        "title": "ExternalService",
-        "type": "object",
-        "description": "クローリングサービス",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "is_contracted": {
-            "type": "boolean"
-          },
-          "name": {
-            "type": "string"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "id",
-          "created_at",
-          "updated_at",
-          "name",
-          "is_contracted"
-        ]
-      },
       "EmploymentContractTerm": {
         "title": "EmploymentContractTerm",
         "type": "object",
@@ -9832,7 +9832,7 @@
                     "$ref": "#/components/schemas/Company"
                   },
                   {
-                    "nullable": true,
+                    "type": "null",
                     "properties": {}
                   }
                 ]
@@ -9843,7 +9843,7 @@
                     "$ref": "#/components/schemas/State"
                   },
                   {
-                    "nullable": true,
+                    "type": "null",
                     "properties": {}
                   }
                 ]
@@ -9909,7 +9909,7 @@
                     ]
                   },
                   {
-                    "nullable": true,
+                    "type": "null",
                     "properties": {}
                   }
                 ]
@@ -9920,7 +9920,7 @@
                     "$ref": "#/components/schemas/ExternalService"
                   },
                   {
-                    "nullable": true,
+                    "type": "null",
                     "properties": {}
                   }
                 ]
@@ -9967,7 +9967,7 @@
                     "$ref": "#/components/schemas/Company"
                   },
                   {
-                    "nullable": true,
+                    "type": "null",
                     "properties": {}
                   }
                 ]
@@ -10165,7 +10165,7 @@
                           "$ref": "#/components/schemas/Account"
                         },
                         {
-                          "nullable": true,
+                          "type": "null",
                           "properties": {}
                         }
                       ]
@@ -10176,7 +10176,7 @@
                           "$ref": "#/components/schemas/Company"
                         },
                         {
-                          "nullable": true,
+                          "type": "null",
                           "properties": {}
                         }
                       ]
@@ -10209,7 +10209,7 @@
                     "$ref": "#/components/schemas/Account"
                   },
                   {
-                    "nullable": true,
+                    "type": "null",
                     "properties": {}
                   }
                 ]
@@ -10220,7 +10220,7 @@
                     "$ref": "#/components/schemas/Company"
                   },
                   {
-                    "nullable": true,
+                    "type": "null",
                     "properties": {}
                   }
                 ]
@@ -10268,10 +10268,7 @@
           "until_date": {
             "format": "date",
             "example": "2020-05-01",
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "updated_at": {
@@ -10297,10 +10294,7 @@
         "description": "職歴に紐付くプロジェクト経歴（name・positionどちらかは必須）",
         "properties": {
           "business_content": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "created_at": {
@@ -10319,10 +10313,7 @@
             "example": "プロジェクト名"
           },
           "position": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "since_date": {
@@ -10330,10 +10321,7 @@
             "format": "date"
           },
           "until_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date"
           },
@@ -10439,7 +10427,7 @@
                           "$ref": "#/components/schemas/WorkHistory"
                         },
                         {
-                          "nullable": true
+                          "type": "null"
                         }
                       ]
                     },
@@ -10464,7 +10452,7 @@
                           ]
                         },
                         {
-                          "nullable": true
+                          "type": "null"
                         }
                       ]
                     },
@@ -10513,7 +10501,7 @@
                           ]
                         },
                         {
-                          "nullable": true
+                          "type": "null"
                         }
                       ]
                     },
@@ -10529,20 +10517,6 @@
                         "allOf": [
                           {
                             "$ref": "#/components/schemas/WorkHistory"
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "project_histories": {
-                                "type": "array",
-                                "items": {
-                                  "$ref": "#/components/schemas/ProjectHistory"
-                                }
-                              }
-                            },
-                            "required": [
-                              "project_histories"
-                            ]
                           }
                         ]
                       }
@@ -10663,7 +10637,7 @@
                                     ]
                                   },
                                   {
-                                    "nullable": true
+                                    "type": "null"
                                   }
                                 ]
                               }
@@ -10694,7 +10668,7 @@
                                     "$ref": "#/components/schemas/Account"
                                   },
                                   {
-                                    "nullable": true
+                                    "type": "null"
                                   }
                                 ]
                               },
@@ -10704,7 +10678,7 @@
                                     "$ref": "#/components/schemas/Message"
                                   },
                                   {
-                                    "nullable": true
+                                    "type": "null"
                                   }
                                 ]
                               },
@@ -10738,7 +10712,7 @@
                                     "$ref": "#/components/schemas/Account"
                                   },
                                   {
-                                    "nullable": true
+                                    "type": "null"
                                   }
                                 ]
                               },
@@ -10748,7 +10722,7 @@
                                     "$ref": "#/components/schemas/Message"
                                   },
                                   {
-                                    "nullable": true
+                                    "type": "null"
                                   }
                                 ]
                               },
@@ -10811,7 +10785,7 @@
                     "$ref": "#/components/schemas/WorkHistory"
                   },
                   {
-                    "nullable": true
+                    "type": "null"
                   }
                 ]
               },
@@ -10836,7 +10810,7 @@
                     ]
                   },
                   {
-                    "nullable": true
+                    "type": "null"
                   }
                 ]
               },
@@ -10885,7 +10859,7 @@
                     ]
                   },
                   {
-                    "nullable": true
+                    "type": "null"
                   }
                 ]
               },
@@ -11065,7 +11039,7 @@
                               ]
                             },
                             {
-                              "nullable": true
+                              "type": "null"
                             }
                           ]
                         }
@@ -11096,7 +11070,7 @@
                               "$ref": "#/components/schemas/Account"
                             },
                             {
-                              "nullable": true
+                              "type": "null"
                             }
                           ]
                         },
@@ -11106,7 +11080,7 @@
                               "$ref": "#/components/schemas/Message"
                             },
                             {
-                              "nullable": true
+                              "type": "null"
                             }
                           ]
                         },
@@ -11142,7 +11116,7 @@
                               "$ref": "#/components/schemas/Account"
                             },
                             {
-                              "nullable": true
+                              "type": "null"
                             }
                           ]
                         },
@@ -11152,7 +11126,7 @@
                               "$ref": "#/components/schemas/Message"
                             },
                             {
-                              "nullable": true
+                              "type": "null"
                             }
                           ]
                         },
@@ -11229,7 +11203,7 @@
                             ]
                           },
                           {
-                            "nullable": true
+                            "type": "null"
                           }
                         ]
                       },
@@ -11272,7 +11246,7 @@
                             ]
                           },
                           {
-                            "nullable": true
+                            "type": "null"
                           }
                         ]
                       }
@@ -11365,7 +11339,7 @@
                     "$ref": "#/components/schemas/Message"
                   },
                   {
-                    "nullable": true,
+                    "type": "null",
                     "properties": {}
                   }
                 ]
@@ -11376,7 +11350,7 @@
                     "$ref": "#/components/schemas/Scout"
                   },
                   {
-                    "nullable": true
+                    "type": "null"
                   }
                 ]
               },
@@ -11386,7 +11360,7 @@
                     "$ref": "#/components/schemas/Applicant"
                   },
                   {
-                    "nullable": true,
+                    "type": "null",
                     "properties": {}
                   }
                 ]
@@ -11434,359 +11408,6 @@
         ],
         "description": ""
       },
-      "Subscription": {
-        "title": "Subscription",
-        "type": "object",
-        "description": "",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "since_date": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "nullable": true,
-            "format": "date"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "active",
-              "past_due",
-              "unpaid",
-              "canceled",
-              "incomplete",
-              "incomplete_expired",
-              "trialing",
-              "all",
-              "ended",
-              "pending"
-            ],
-            "example": "active"
-          },
-          "until_date": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "nullable": true,
-            "format": "date"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "created_at",
-          "id",
-          "since_date",
-          "status",
-          "until_date",
-          "updated_at"
-        ]
-      },
-      "Price": {
-        "title": "Price",
-        "type": "object",
-        "properties": {
-          "active": {
-            "type": "boolean"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "currency": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "tax_for_unit_amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "nullable": true,
-            "description": "価格（税）"
-          },
-          "unit_amount": {
-            "type": "integer",
-            "description": "価格（税込）"
-          },
-          "unit_amount_without_tax": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "nullable": true,
-            "description": "価格（税抜）"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "active",
-          "created_at",
-          "currency",
-          "id",
-          "tax_for_unit_amount",
-          "unit_amount",
-          "unit_amount_without_tax",
-          "updated_at"
-        ]
-      },
-      "Product": {
-        "title": "Product",
-        "type": "object",
-        "properties": {
-          "active": {
-            "type": "boolean"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "description": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "nullable": true
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string"
-          },
-          "plan_type": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "nullable": true,
-            "enum": [
-              "company",
-              "agent"
-            ]
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "active",
-          "created_at",
-          "description",
-          "id",
-          "name",
-          "plan_type",
-          "updated_at"
-        ]
-      },
-      "PaymentMethod": {
-        "title": "PaymentMethod",
-        "type": "object",
-        "description": "",
-        "properties": {
-          "brand": {
-            "type": "string",
-            "enum": [
-              "visa",
-              "mastercard",
-              "jcb",
-              "american_express",
-              "diners"
-            ],
-            "example": "visa"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "exp_month": {
-            "type": "integer",
-            "example": "8"
-          },
-          "exp_year": {
-            "type": "integer",
-            "example": "2023"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "is_default": {
-            "type": "boolean",
-            "default": false
-          },
-          "last4": {
-            "type": "integer",
-            "example": "1234"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "brand",
-          "created_at",
-          "exp_month",
-          "exp_year",
-          "id",
-          "is_default",
-          "last4",
-          "updated_at"
-        ]
-      },
-      "CompanyRes": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Company"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "owner": {
-                "anyOf": [
-                  {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/Account"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "profile": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/Profile"
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "place_of_residence": {
-                                    "$ref": "#/components/schemas/State"
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        },
-                        "required": [
-                          "profile"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "nullable": true
-                  }
-                ]
-              },
-              "subscription": {
-                "anyOf": [
-                  {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/Subscription"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "price": {
-                            "allOf": [
-                              {
-                                "$ref": "#/components/schemas/Price"
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "product": {
-                                    "$ref": "#/components/schemas/Product"
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        },
-                        "required": [
-                          "price"
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "nullable": true,
-                    "properties": {}
-                  }
-                ]
-              },
-              "recruitments": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Recruitment"
-                }
-              },
-              "industries": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Industry"
-                }
-              },
-              "features": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Feature"
-                }
-              },
-              "payment_methods": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/PaymentMethod"
-                }
-              },
-              "org_units": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/OrgUnit"
-                }
-              },
-              "external_services": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/ExternalService"
-                }
-              }
-            },
-            "required": [
-              "owner",
-              "subscription",
-              "recruitments",
-              "industries",
-              "features",
-              "payment_methods",
-              "org_units",
-              "external_services"
-            ]
-          }
-        ]
-      },
       "RecruitmentsRes": {
         "type": "object",
         "properties": {
@@ -11806,7 +11427,7 @@
                           "$ref": "#/components/schemas/Company"
                         },
                         {
-                          "nullable": true,
+                          "type": "null",
                           "properties": {}
                         }
                       ]
@@ -11817,7 +11438,7 @@
                           "$ref": "#/components/schemas/State"
                         },
                         {
-                          "nullable": true,
+                          "type": "null",
                           "properties": {}
                         }
                       ]
@@ -11883,7 +11504,7 @@
                           ]
                         },
                         {
-                          "nullable": true,
+                          "type": "null",
                           "properties": {}
                         }
                       ]
@@ -11894,7 +11515,7 @@
                           "$ref": "#/components/schemas/ExternalService"
                         },
                         {
-                          "nullable": true,
+                          "type": "null",
                           "properties": {}
                         }
                       ]
@@ -11935,7 +11556,7 @@
                           "$ref": "#/components/schemas/Company"
                         },
                         {
-                          "nullable": true,
+                          "type": "null",
                           "properties": {}
                         }
                       ]
@@ -12000,18 +11621,12 @@
         "description": "",
         "properties": {
           "amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "請求額（税込）"
           },
           "approved_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date",
             "description": "承認日"
@@ -12031,28 +11646,19 @@
             "format": "date-time"
           },
           "deadline": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "支払期日",
             "format": "date"
           },
           "fee_amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "example": 2000,
             "description": "請求額に応じたシステム手数料"
           },
           "files": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": "array",
             "nullable": true,
             "items": {
               "type": "object",
@@ -12098,10 +11704,7 @@
             "description": "サンプルか"
           },
           "issued_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date",
             "description": "請求日"
@@ -12117,26 +11720,17 @@
             "description": "「下書き」「公開」「取り下げ済み」"
           },
           "note": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "備考"
           },
           "number": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "請求番号(発注番号と同じで任意の値)"
           },
           "payment_method": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "enum": [
               "bank",
@@ -12144,10 +11738,7 @@
             ]
           },
           "status": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "「支払い待ち」「決済待ち」「支払いおよび決済待ち」「決済失敗」「完了」",
             "enum": [
@@ -12159,43 +11750,28 @@
             ]
           },
           "settlement_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date",
             "description": "決済日"
           },
           "stripe_fee_amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "Stripe決済手数料"
           },
           "sub_total": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "example": 10000,
             "description": "請求額の小計(税抜)"
           },
           "title": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "total_amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "example": 12000,
             "description": "請求額（税込）とシステム手数料を合わせた総額"
@@ -12245,10 +11821,7 @@
             "description": "金額(税込)"
           },
           "amount_without_tax": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "金額(税抜)"
           },
@@ -12265,10 +11838,7 @@
             "format": "uuid"
           },
           "is_target_withholding_tax": {
-            "type": [
-              "boolean",
-              "null"
-            ],
+            "type": "boolean",
             "nullable": true,
             "description": "源泉徴収の対象か",
             "default": false
@@ -12309,10 +11879,7 @@
         "description": "請求で、消費税率ごとに金額を保持するテーブル",
         "properties": {
           "amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true
           },
           "id": {
@@ -12330,10 +11897,7 @@
         "description": "請求で、源泉徴収税率ごとに金額を保持するテーブル",
         "properties": {
           "amount": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true
           },
           "id": {
@@ -12382,12 +11946,17 @@
                       "type": "object",
                       "properties": {
                         "consumption_tax": {
-                          "$ref": "#/components/schemas/ConsumptionTax"
+                          "anyOf": [
+                            {
+                              "$ref": "#/components/schemas/ConsumptionTax"
+                            },
+                            {
+                              "type": "null",
+                              "properties": {}
+                            }
+                          ]
                         }
-                      },
-                      "required": [
-                        "consumption_tax"
-                      ]
+                      }
                     }
                   ]
                 }
@@ -12403,12 +11972,17 @@
                       "type": "object",
                       "properties": {
                         "consumption_tax": {
-                          "$ref": "#/components/schemas/ConsumptionTax"
+                          "anyOf": [
+                            {
+                              "$ref": "#/components/schemas/ConsumptionTax"
+                            },
+                            {
+                              "type": "null",
+                              "properties": {}
+                            }
+                          ]
                         }
-                      },
-                      "required": [
-                        "consumption_tax"
-                      ]
+                      }
                     }
                   ]
                 }
@@ -12419,7 +11993,7 @@
                     "$ref": "#/components/schemas/InvoiceWithholdingTaxPrice"
                   },
                   {
-                    "nullable": true
+                    "type": "null"
                   }
                 ]
               }
@@ -12447,7 +12021,7 @@
                     "$ref": "#/components/schemas/Account"
                   },
                   {
-                    "nullable": true
+                    "type": "null"
                   }
                 ]
               },
@@ -12481,7 +12055,7 @@
                                         "$ref": "#/components/schemas/Profile"
                                       },
                                       {
-                                        "nullable": true
+                                        "type": "null"
                                       }
                                     ]
                                   }
@@ -12493,7 +12067,7 @@
                             ]
                           },
                           {
-                            "nullable": true
+                            "type": "null"
                           }
                         ]
                       }
@@ -12514,13 +12088,34 @@
                     "type": "object",
                     "properties": {
                       "workplace": {
-                        "$ref": "#/components/schemas/State"
+                        "anyOf": [
+                          {
+                            "$ref": "#/components/schemas/Account"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
                       },
                       "author": {
-                        "$ref": "#/components/schemas/Account"
+                        "anyOf": [
+                          {
+                            "$ref": "#/components/schemas/Account"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
                       },
                       "external_service": {
-                        "$ref": "#/components/schemas/ExternalService"
+                        "anyOf": [
+                          {
+                            "$ref": "#/components/schemas/ExternalService"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
                       },
                       "employment_statuses": {
                         "type": "array",
@@ -12545,9 +12140,6 @@
                       }
                     },
                     "required": [
-                      "workplace",
-                      "author",
-                      "external_service",
                       "employment_statuses",
                       "occupations",
                       "industries",
@@ -12577,7 +12169,7 @@
                     ]
                   },
                   {
-                    "nullable": true
+                    "type": "null"
                   }
                 ]
               },
@@ -12629,7 +12221,7 @@
                     "$ref": "#/components/schemas/JobOrderWithholdingTaxPrice"
                   },
                   {
-                    "nullable": true
+                    "type": "null"
                   }
                 ]
               }
@@ -12718,7 +12310,7 @@
                                         "$ref": "#/components/schemas/Profile"
                                       },
                                       {
-                                        "nullable": true
+                                        "type": "null"
                                       }
                                     ]
                                   }
@@ -12730,7 +12322,7 @@
                             ]
                           },
                           {
-                            "nullable": true
+                            "type": "null"
                           }
                         ]
                       }
@@ -12759,10 +12351,34 @@
                             "type": "object",
                             "properties": {
                               "workplace": {
-                                "$ref": "#/components/schemas/State"
+                                "anyOf": [
+                                  {
+                                    "$ref": "#/components/schemas/Account"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
                               },
                               "author": {
-                                "$ref": "#/components/schemas/Account"
+                                "anyOf": [
+                                  {
+                                    "$ref": "#/components/schemas/Account"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "external_service": {
+                                "anyOf": [
+                                  {
+                                    "$ref": "#/components/schemas/ExternalService"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
                               },
                               "employment_statuses": {
                                 "type": "array",
@@ -12809,10 +12425,16 @@
                 ]
               },
               "job_reviews": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/JobReview"
+                }
               },
               "invoices": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Invoice"
+                }
               }
             },
             "required": [
@@ -12859,14 +12481,6 @@
                         "allOf": [
                           {
                             "$ref": "#/components/schemas/InvoiceDetailedItem"
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "consumption_tax": {
-                                "$ref": "#/components/schemas/ConsumptionTax"
-                              }
-                            }
                           }
                         ]
                       }
@@ -12877,14 +12491,6 @@
                         "allOf": [
                           {
                             "$ref": "#/components/schemas/InvoiceConsumptionTaxPrice"
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "consumption_tax": {
-                                "$ref": "#/components/schemas/ConsumptionTax"
-                              }
-                            }
                           }
                         ]
                       }
@@ -12895,7 +12501,7 @@
                           "$ref": "#/components/schemas/InvoiceWithholdingTaxPrice"
                         },
                         {
-                          "nullable": true
+                          "type": "null"
                         }
                       ]
                     }
@@ -13016,10 +12622,7 @@
             "example": "山田太郎"
           },
           "nda_id": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "updated_at": {
@@ -13270,7 +12873,7 @@
                     "$ref": "#/components/schemas/ScoutTemplate"
                   },
                   {
-                    "nullable": true,
+                    "type": "null",
                     "properties": {}
                   }
                 ]
@@ -13334,10 +12937,7 @@
         "type": "object",
         "properties": {
           "country_type": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "enum": [
               "japan",
@@ -13506,10 +13106,7 @@
         "description": "",
         "properties": {
           "acceptance_of_offer_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date",
             "description": "内定承諾日"
@@ -13522,26 +13119,17 @@
           "billing_emails": {
             "type": "array",
             "items": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": "string"
             },
             "nullable": true
           },
           "created_at": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date-time"
           },
           "id": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "uuid"
           },
@@ -13550,19 +13138,13 @@
             "default": true
           },
           "joined_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date",
             "description": "入社日"
           },
           "memo": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "payment_status": {
@@ -13575,10 +13157,7 @@
             ]
           },
           "reason_for_cancellation": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "取り消し理由"
           },
@@ -13587,33 +13166,21 @@
             "description": "手数料（税込）"
           },
           "system_fee_ratio": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "nullable": true
           },
           "system_fee_without_tax": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "手数料（税抜）"
           },
           "tax_for_system_fee": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "手数料（税）"
           },
           "updated_at": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date-time"
           }
@@ -13640,10 +13207,7 @@
         "type": "object",
         "properties": {
           "acceptance_of_offer_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date",
             "description": "内定承諾日"
@@ -13653,10 +13217,7 @@
             "description": "年収"
           },
           "billing_emails": {
-            "type": [
-              "array",
-              "null"
-            ],
+            "type": "array",
             "nullable": true,
             "description": "請求先メールアドレス",
             "items": {
@@ -13664,42 +13225,27 @@
             }
           },
           "commission_fee": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "紹介料（年収 x 紹介料比率）"
           },
           "commission_fee_ratio": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "nullable": true,
             "description": "紹介料比率"
           },
           "commission_fee_without_tax": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "紹介料（税抜）"
           },
           "created_at": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date-time"
           },
           "id": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "uuid"
           },
@@ -13708,18 +13254,12 @@
             "default": true
           },
           "joined_date": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date"
           },
           "memo": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true
           },
           "payment_status": {
@@ -13732,58 +13272,37 @@
             ]
           },
           "reason_for_cancellation": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "description": "取り消し理由"
           },
           "system_fee": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "手数料（税込）"
           },
           "system_fee_ratio": {
-            "type": [
-              "number",
-              "null"
-            ],
+            "type": "number",
             "nullable": true,
             "description": "システム手数料比率"
           },
           "system_fee_without_tax": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "手数料（税抜）"
           },
           "tax_for_commission_fee": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "紹介料（税）"
           },
           "tax_for_system_fee": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
             "nullable": true,
             "description": "手数料（税）"
           },
           "updated_at": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "nullable": true,
             "format": "date-time"
           }
@@ -13847,7 +13366,7 @@
                             ]
                           },
                           {
-                            "nullable": true
+                            "type": "null"
                           }
                         ]
                       }
@@ -13892,7 +13411,7 @@
                     "$ref": "#/components/schemas/JobChangeCompletionReport"
                   },
                   {
-                    "nullable": true
+                    "type": "null"
                   }
                 ]
               },
@@ -13902,7 +13421,7 @@
                     "$ref": "#/components/schemas/RecruitmentCompletionReport"
                   },
                   {
-                    "nullable": true
+                    "type": "null"
                   }
                 ]
               },
@@ -13912,7 +13431,7 @@
                     "$ref": "#/components/schemas/IntroductionCompletionReport"
                   },
                   {
-                    "nullable": true
+                    "type": "null"
                   }
                 ]
               },
@@ -14019,7 +13538,7 @@
                                   ]
                                 },
                                 {
-                                  "nullable": true
+                                  "type": "null"
                                 }
                               ]
                             }
@@ -14060,7 +13579,7 @@
                           "$ref": "#/components/schemas/JobChangeCompletionReport"
                         },
                         {
-                          "nullable": true
+                          "type": "null"
                         }
                       ]
                     },
@@ -14070,7 +13589,7 @@
                           "$ref": "#/components/schemas/RecruitmentCompletionReport"
                         },
                         {
-                          "nullable": true
+                          "type": "null"
                         }
                       ]
                     },
@@ -14080,7 +13599,7 @@
                           "$ref": "#/components/schemas/IntroductionCompletionReport"
                         },
                         {
-                          "nullable": true
+                          "type": "null"
                         }
                       ]
                     },

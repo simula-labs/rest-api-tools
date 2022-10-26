@@ -7,7 +7,7 @@ export type GetCompaniesIdFollowedAccountsUrlParams = {
   companyId: string
 } | undefined
 
-export type GetCompaniesIdFollowedAccountsResponse = Types.AccountsRes
+export type GetCompaniesIdFollowedAccountsResponse = Types.FollowedAccountsRes
 
 export type GetCompaniesIdFollowedAccountsQueryParams = {
   /** 検索キーワード */
