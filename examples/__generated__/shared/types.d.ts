@@ -52,17 +52,16 @@ export type Account = {
   isFollowingCurrentCompany: boolean | null
 }
 
-export type Employment = {
+export type WorkHistory = {
   createdAt: string
-  /** 所属部署 */
-  department: string | null
-  email: string
+  department: string
   id: string
-  /** 有効かどうか（招待しただけの状態はfalse） */
-  isValid: boolean
-  lastNotificationReadAt: string | null
-  /** 役職 */
-  position: string | null
+  /** 「在職中」「離職中」 */
+  isEmployed: boolean
+  name: string
+  position: string
+  sinceDate: string
+  untilDate: string | null
   updatedAt: string
 }
 
@@ -98,28 +97,6 @@ export type Profile = {
   postalCode: string | null
   /** 直近の年収（税の概念なし） */
   recentIncomeAmount: number | null
-  updatedAt: string
-}
-
-export type AccountWithTokenRes = {
-  account: Account & {
-    employments: Employment[]
-  }
-
-  profile: Profile
-  token: string
-}
-
-export type WorkHistory = {
-  createdAt: string
-  department: string
-  id: string
-  /** 「在職中」「離職中」 */
-  isEmployed: boolean
-  name: string
-  position: string
-  sinceDate: string
-  untilDate: string | null
   updatedAt: string
 }
 
@@ -193,56 +170,6 @@ export type IndustryCategory = {
   updatedAt: string
 }
 
-export type Company = {
-  /** admin審査状態 */
-  adminVerificationStatus: 'unspecified' | 'requested' | 'verified' | 'rejected' | 'canceled'
-  averageAge: number | null
-  businessSummary: string | null
-  /** 資本金（税の概念なし） */
-  capital: number | null
-  corporatePr: string | null
-  coverImageUrl: string | null
-  createdAt: string
-  deletedAt: string | null
-  /** 有料職業紹介事業許可番号 */
-  employmentPlacementPermitNumber: string | null
-  followerNums: number | null
-  headOfficeLocation: string | null
-  hpUrl: string | null
-  id: string
-  /** admin指定の紹介報告手数料率 */
-  introductionFeeRatio: number | null
-  isFollowingByCurrentAccount: boolean | null
-  isListed: boolean
-  isSample: boolean
-  logoUrl: string | null
-  name: string
-  nameKana: string | null
-  /** 前年度の売上高（税込） */
-  netSales: number | null
-  numbersOfEmployees: string | null
-  phone: string | null
-  publicVerificationStatus: 'unspecified' | 'requested' | 'verified' | 'rejected'
-  /** admin指定の採用報告手数料率 */
-  recruitmentFeeRatio: number | null
-  representative: string | null
-  representativeKana: string | null
-  type: 'account' | 'stub'
-  updatedAt: string
-  yearOfEstablishment: string | null
-}
-
-export type Role = {
-  category: 'owner' | 'manager' | 'member' | 'guest'
-  createdAt: string
-  description: string | null
-  id: string
-  /** 役割「general」「admin」など */
-  name: string
-  type: 'official' | 'custom'
-  updatedAt: string
-}
-
 export type AcademicHistory = {
   createdAt: string
   /** 学部・学科 */
@@ -253,19 +180,6 @@ export type AcademicHistory = {
   /** 「大学院（博士）」「大学院（修士）」「大学」「高専」「専門学校」「短期大学」「高校」 */
   type: 'graduate_school_doctor' | 'graduate_school_master' | 'university' | 'technical_college' | 'vocational_school' | 'junior_college' | 'high_school'
   untilDate: string
-  updatedAt: string
-}
-
-/** 職歴に紐付くプロジェクト経歴（name・positionどちらかは必須） */
-export type ProjectHistory = {
-  businessContent: string | null
-  createdAt: string
-  id: string
-  isEmployed: boolean
-  name: string
-  position: string | null
-  sinceDate: string
-  untilDate: string | null
   updatedAt: string
 }
 
@@ -470,6 +384,275 @@ export type Message = {
   updatedAt: string
 }
 
+export type AccountsRes = {
+  accounts: (Account & {
+    latestWorkHistory?: WorkHistory | null | undefined
+
+    profile: Profile & {
+      placeOfResidence: State
+    } | null
+
+    agentProfile: AgentProfile & {
+      specialtyCompanyTypes: SpecialtyCompanyType[]
+      specialtyPositions: SpecialtyPosition[]
+      occupationMainCategories: OccupationMainCategory[]
+      industryCategories: IndustryCategory[]
+    } | null
+
+    academicHistories: AcademicHistory[]
+    workHistories: (WorkHistory)[]
+    hopes: Hope[]
+    skills: Skill[]
+    achievements: Achievement[]
+    occupationHistories: (OccupationHistory & {
+      occupation: Occupation
+    })[]
+    industryHistories: (IndustryHistory & {
+      industry: Industry
+    })[]
+    jobs: Job[]
+    applicantContactHistoriesFromCurrentCompany: ({
+      typename: 'RecruitmentInterest' | 'Applicant'
+      timestamp: string
+
+      resource: Applicant & {
+        recruitment?: Recruitment | undefined
+      } | RecruitmentInterest & {
+        recruitment?: Recruitment | undefined
+      } | null
+    })[]
+    scoutsFromCurrentCompany: (Scout & {
+      sender?: Account | null | undefined
+
+      message?: Message | null | undefined
+
+      recruitments: Recruitment[]
+    })[]
+    scoutsFromCurrentAccount: (Scout & {
+      sender: Account | null
+
+      message: Message | null
+
+      recruitments: Recruitment[]
+    })[]
+  })[]
+  totalDataNums: number
+}
+
+export type AcademicHistoriesRes = {
+  academicHistories: AcademicHistory[]
+}
+
+export type AchievementsRes = {
+  achievements: (Achievement)[]
+}
+
+export type HopesRes = {
+  hopes: (Hope & {
+    industries: Industry[]
+  } & {
+    occupations: Occupation[]
+  } & {
+    workplaces: State[]
+  })[]
+}
+
+export type IndustryHistoriesRes = {
+  industryHistories: (IndustryHistory & {
+    account: Account
+    industry: Industry
+  })[]
+}
+
+export type OccupationHistoriesRes = {
+  occupationHistories: (OccupationHistory & {
+    account: Account
+    occupation: Occupation
+  })[]
+}
+
+export type ProjectResult = {
+  totalJobsNum: number
+  totalRate: number
+  skills: string[]
+}
+
+/** appliedの場合はcustomer_name以外必須 */
+export type JobOrder = {
+  /** 消費税計算方法 */
+  consumptionTaxCalculationMethod: 'floor' | 'ceil' | 'round'
+  createdAt: string
+  /** 取引先名 */
+  customerName: string | null
+  /** 稼働報酬制の単位（「一月あたり」「一日あたり」「一時間あたり」） */
+  feeCalculationSpan: 'monthly' | 'daily' | 'hourly' | null
+  /** 「稼働報酬制」「固定報酬制」 */
+  feeType: 'time_based' | 'fixed'
+  files: ({
+    id: string
+    name: string
+    contentType: string
+    url: string
+    createdAt: string
+  } | {
+  })[]
+  /** 固定報酬制の金額(税込) */
+  fixedAmount: number | null
+  /** 固定報酬制の小計(税抜) */
+  fixedSubTotal: number | null
+  /** 固定報酬制の金額(税込)と論理手数料を合わせた総額 */
+  fixedTotalAmount: number | null
+  id: string
+  isSample: boolean
+  /** 稼動報酬制の源泉徴収の対象か */
+  isTargetWithholdingTax: boolean
+  /** 仕事内容 */
+  jobDescription: string | null
+  /** 業務名 */
+  jobName: string | null
+  /** 論理手数料（報酬額ときっかけを元に算出する手数料の予定額） */
+  logicalFeeAmount: number | null
+  /** 発注番号 */
+  number: string | null
+  /** 発注日 */
+  orderDate: string | null
+  /** 諸条件 */
+  otherConditions: string | null
+  /** 受注者からのコメント */
+  reviewComment: string | null
+  /** 開始日 */
+  sinceDate: string | null
+  /** 「下書き」「先方確認中」「締結済み」「却下」 */
+  status: 'draft' | 'applied' | 'certificated' | 'rejected'
+  /** 稼働報酬制の税率 */
+  taxRatio: number | null
+  /** 稼働報酬制の金額 */
+  unitTimeFee: number | null
+  /** 終了日 */
+  untilDate: string | null
+  updatedAt: string
+  /** 源泉徴収税計算に消費税を含めるか */
+  withholdingIncludedConsumptionTax: boolean
+}
+
+export type JobReview = {
+  createdAt: string
+  id: string
+  /** もっとこうして欲しかった点 */
+  improvementPoint: string | null
+  /** サンプルか */
+  isSample: boolean
+  /** スキルの詳細 */
+  skillDescription: string | null
+  starRating: number
+  updatedAt: string
+}
+
+export type ProjectResultRes = ProjectResult & {
+  jobs: (Job & {
+    jobOrder: JobOrder & {
+      recruitment?: Recruitment & {
+        workplace?: State | undefined
+        occpations?: Occupation[] | undefined
+        industries?: Industry[] | undefined
+      } | undefined
+    }
+
+    jobReviews: (JobReview & {
+      skills?: Skill[] | undefined
+    })[]
+  })[]
+}
+
+export type SkillsRes = {
+  skills: Skill[]
+}
+
+/** 職歴に紐付くプロジェクト経歴（name・positionどちらかは必須） */
+export type ProjectHistory = {
+  businessContent: string | null
+  createdAt: string
+  id: string
+  isEmployed: boolean
+  name: string
+  position: string | null
+  sinceDate: string
+  untilDate: string | null
+  updatedAt: string
+}
+
+export type WorkHistoriesRes = {
+  workHistories: (WorkHistory & {
+    account: Account
+  } & {
+    projectHistories: ProjectHistory[]
+  })[]
+}
+
+export type Employment = {
+  createdAt: string
+  /** 所属部署 */
+  department: string | null
+  email: string
+  id: string
+  /** 有効かどうか（招待しただけの状態はfalse） */
+  isValid: boolean
+  lastNotificationReadAt: string | null
+  /** 役職 */
+  position: string | null
+  updatedAt: string
+}
+
+export type Company = {
+  /** admin審査状態 */
+  adminVerificationStatus: 'unspecified' | 'requested' | 'verified' | 'rejected' | 'canceled'
+  averageAge: number | null
+  businessSummary: string | null
+  /** 資本金（税の概念なし） */
+  capital: number | null
+  corporatePr: string | null
+  coverImageUrl: string | null
+  createdAt: string
+  deletedAt: string | null
+  /** 有料職業紹介事業許可番号 */
+  employmentPlacementPermitNumber: string | null
+  followerNums: number | null
+  headOfficeLocation: string | null
+  hpUrl: string | null
+  id: string
+  /** admin指定の紹介報告手数料率 */
+  introductionFeeRatio: number | null
+  isFollowingByCurrentAccount: boolean | null
+  isListed: boolean
+  isSample: boolean
+  logoUrl: string | null
+  name: string
+  nameKana: string | null
+  /** 前年度の売上高（税込） */
+  netSales: number | null
+  numbersOfEmployees: string | null
+  phone: string | null
+  publicVerificationStatus: 'unspecified' | 'requested' | 'verified' | 'rejected'
+  /** admin指定の採用報告手数料率 */
+  recruitmentFeeRatio: number | null
+  representative: string | null
+  representativeKana: string | null
+  type: 'account' | 'stub'
+  updatedAt: string
+  yearOfEstablishment: string | null
+}
+
+export type Role = {
+  category: 'owner' | 'manager' | 'member' | 'guest'
+  createdAt: string
+  description: string | null
+  id: string
+  /** 役割「general」「admin」など */
+  name: string
+  type: 'official' | 'custom'
+  updatedAt: string
+}
+
 export type AccountRes = Account & {
   latestWorkHistory?: WorkHistory | null | undefined
 
@@ -553,72 +736,6 @@ export type CompaniesRes = {
   totalDataNums: number
 }
 
-/** クローリングサービス */
-export type ExternalService = {
-  createdAt: string
-  id: string
-  isContracted: boolean
-  name: string
-  updatedAt: string
-}
-
-export type EmploymentStatus = {
-  createdAt: string
-  id: string
-  /** 募集作成の時に選択可能か */
-  isSelectable: boolean
-  name: string
-  /** 「請負」「準委任」「業務委託」 */
-  projectClassification: 'contract' | 'quasi_mandate' | 'outsourcing' | null
-  type: 'career' | 'project'
-  updatedAt: string
-}
-
-export type EmploymentContractTerm = {
-  createdAt: string
-  id: string
-  name: string
-  /** 「1ヵ月未満」「1ヵ月以上3ヵ月未満」「3ヵ月以上6ヵ月未満」「6ヵ月以上」 */
-  term: 'less_than_one_month' | 'one_to_three_months' | 'three_to_six_months' | 'more_than_six_months'
-  updatedAt: string
-}
-
-export type RecruitmentsRes = {
-  recruitments: (Recruitment & {
-    company?: Company | {
-    } | undefined
-
-    workplace?: State | {
-    } | undefined
-
-    author: Account & {
-      profile: Profile & {
-        placeOfResidence?: State | undefined
-        specialtyCompanyTypes?: SpecialtyCompanyType[] | undefined
-        specialtyPositions?: SpecialtyPosition[] | undefined
-        occupationMainCategories?: OccupationMainCategory[] | undefined
-        industryCategories?: IndustryCategory[] | undefined
-      }
-
-      agentProfile: AgentProfile
-    } | {
-    }
-
-    externalService?: ExternalService | {
-    } | undefined
-
-    employmentStatuses: EmploymentStatus[]
-    occupations: Occupation[]
-    industries: Industry[]
-    features: Feature[]
-    employmentContractTerms: EmploymentContractTerm[]
-
-    targetCompany?: Company | {
-    } | undefined
-  })[]
-  totalDataNums: number
-}
-
 export type Subscription = {
   createdAt: string
   id: string
@@ -672,6 +789,15 @@ export type OrgUnit = {
   updatedAt: string
 }
 
+/** クローリングサービス */
+export type ExternalService = {
+  createdAt: string
+  id: string
+  isContracted: boolean
+  name: string
+  updatedAt: string
+}
+
 export type CompanyRes = Company & {
   owner: Account & {
     profile: Profile & {
@@ -694,18 +820,42 @@ export type CompanyRes = Company & {
   externalServices: ExternalService[]
 }
 
-/** 消費税 */
-export type ConsumptionTax = {
-  country: 'jpn'
+export type ConsentMatter = {
+  content: string
+  createdAt: string
   id: string
-  /** 表示名 */
+  updatedAt: string
+}
+
+export type ConsentMattersRes = {
+  consentMatters: (ConsentMatter)[]
+}
+
+export type ConsentMatterRes = ConsentMatter
+
+export type EmploymentContractTerm = {
+  createdAt: string
+  id: string
   name: string
-  /** 税率 */
-  ratio: number
+  /** 「1ヵ月未満」「1ヵ月以上3ヵ月未満」「3ヵ月以上6ヵ月未満」「6ヵ月以上」 */
+  term: 'less_than_one_month' | 'one_to_three_months' | 'three_to_six_months' | 'more_than_six_months'
+  updatedAt: string
 }
 
 export type EmploymentContractTermsRes = {
   employmentContractTerms: (EmploymentContractTerm)[]
+}
+
+export type EmploymentStatus = {
+  createdAt: string
+  id: string
+  /** 募集作成の時に選択可能か */
+  isSelectable: boolean
+  name: string
+  /** 「請負」「準委任」「業務委託」 */
+  projectClassification: 'contract' | 'quasi_mandate' | 'outsourcing' | null
+  type: 'career' | 'project'
+  updatedAt: string
 }
 
 export type EmploymentStatusesRes = {
@@ -718,21 +868,102 @@ export type FeaturesRes = {
   features: (Feature)[]
 }
 
-/** 職種「中項目」 */
-export type OccupationSubCategory = {
+export type FeatureRes = Feature
+
+export type IntroductionCompletionReport = {
+  /** 内定承諾日 */
+  acceptanceOfOfferDate: string | null
+  /** 年収 */
+  amount: number
+  /** 請求先メールアドレス */
+  billingEmails: string[] | null
+  /** 紹介料（年収 x 紹介料比率） */
+  commissionFee: number | null
+  /** 紹介料比率 */
+  commissionFeeRatio: number | null
+  /** 紹介料（税抜） */
+  commissionFeeWithoutTax: number | null
+  createdAt: string | null
+  id: string | null
+  isEnable: boolean
+  joinedDate: string | null
+  memo: string | null
+  paymentStatus: 'unpaid' | 'paid' | 'failed' | 'pending'
+  /** 取り消し理由 */
+  reasonForCancellation: string | null
+  /** 手数料（税込） */
+  systemFee: number | null
+  /** システム手数料比率 */
+  systemFeeRatio: number | null
+  /** 手数料（税抜） */
+  systemFeeWithoutTax: number | null
+  /** 紹介料（税） */
+  taxForCommissionFee: number | null
+  /** 手数料（税） */
+  taxForSystemFee: number | null
+  updatedAt: string | null
+}
+
+export type IntroductionCompletionReportsRes = {
+  introductionCompletionReports: (IntroductionCompletionReport & {
+    account: Account
+    company: Company
+    agent: Account
+    occupation: Occupation
+    industry: Industry
+  })[]
+}
+
+export type JobChangeCompletionReport = {
+  /** 年収（税の概念なし） */
+  amount: number
   createdAt: string
   id: string
-  name: string
   updatedAt: string
 }
 
-export type OccupationMainCategoriesRes = {
-  occupationMainCategories: (OccupationMainCategory & {
-    occupationSubCategories: (OccupationSubCategory & {
-      occupations?: Occupation[] | undefined
-    })[]
+export type JobChangeCompletionReportsRes = {
+  jobChangeCompletionReports: (JobChangeCompletionReport & {
+    account: Account
+  } & {
+    company: Company
   })[]
 }
+
+export type OfficialInformation = {
+  content: string
+  createdAt: string
+  htmlContent: string
+  id: string
+  isReleased: boolean
+  title: string
+  updatedAt: string
+}
+
+export type OfficialInformationsRes = {
+  officialInformations: (OfficialInformation)[]
+}
+
+export type OfficialInformationRes = OfficialInformation
+
+export type Payout = {
+  amount: number
+  /** 支払完了予想日付 */
+  arrivalDate: string
+  createdAt: string
+  currency: string
+  id: string
+  status: 'pending' | 'in_transit' | 'paid' | 'failed' | 'canceled'
+  stripePoId: string
+  updatedAt: string
+}
+
+export type PayoutsRes = {
+  payouts: (Payout)[]
+  totalDataNums: number
+}
+
+export type PriceRes = Price
 
 export type PrivacyPolicyHistory = {
   content: string
@@ -742,11 +973,92 @@ export type PrivacyPolicyHistory = {
   version: string
 }
 
+export type PrivacyPolicyHistoriesRes = {
+  privacyPolicyHistories: (PrivacyPolicyHistory)[]
+}
+
+export type PrivacyPolicyHistoryRes = PrivacyPolicyHistory
+
 export type ProductsRes = {
   products: (Product)[]
 }
 
 export type ProductRes = Product
+
+export type PricesRes = {
+  prices: (Price)[]
+}
+
+export type RecruitmentCompletionReport = {
+  /** 内定承諾日 */
+  acceptanceOfOfferDate: string | null
+  /** 年収（税の概念なし） */
+  amount: number
+  billingEmails: string[] | null
+  createdAt?: string | null | undefined
+  id: string | null
+  isEnable: boolean
+  /** 入社日 */
+  joinedDate: string | null
+  memo: string | null
+  paymentStatus: 'unpaid' | 'paid' | 'failed' | 'pending'
+  /** 取り消し理由 */
+  reasonForCancellation: string | null
+  /** 手数料（税込） */
+  systemFee: number
+  systemFeeRatio: number | null
+  /** 手数料（税抜） */
+  systemFeeWithoutTax: number | null
+  /** 手数料（税） */
+  taxForSystemFee: number | null
+  updatedAt: string | null
+}
+
+export type RecruitmentCompletionReportsRes = {
+  recruitmentCompletionReports: (RecruitmentCompletionReport & {
+    company: Company
+    account: Account
+    occupation: Occupation
+    industry: Industry
+  })[]
+  totalDataNums: number
+}
+
+export type RecruitmentsRes = {
+  recruitments: (Recruitment & {
+    company?: Company | {
+    } | undefined
+
+    workplace?: State | {
+    } | undefined
+
+    author: Account & {
+      profile: Profile & {
+        placeOfResidence?: State | undefined
+        specialtyCompanyTypes?: SpecialtyCompanyType[] | undefined
+        specialtyPositions?: SpecialtyPosition[] | undefined
+        occupationMainCategories?: OccupationMainCategory[] | undefined
+        industryCategories?: IndustryCategory[] | undefined
+      }
+
+      agentProfile: AgentProfile
+    } | {
+    }
+
+    externalService?: ExternalService | {
+    } | undefined
+
+    employmentStatuses: EmploymentStatus[]
+    occupations: Occupation[]
+    industries: Industry[]
+    features: Feature[]
+    employmentContractTerms: EmploymentContractTerm[]
+
+    targetCompany?: Company | {
+    } | undefined
+  })[]
+  totalDataNums: number
+}
 
 export type TechStack = {
   accessibility: 'public' | 'private'
@@ -791,18 +1103,17 @@ export type RecruitmentRes = Recruitment & {
   } | undefined
 }
 
-export type StateCategory = {
-  /** 「日本」「海外」「その他」 */
-  countryType: 'japan' | 'international' | 'other' | null
-  createdAt: string
-  id: string
-  name: string
-  updatedAt: string
+export type StatesRes = {
+  states: (State)[]
 }
+
+export type StateRes = State
 
 export type TechStacksRes = {
   techStacks: (TechStack)[]
 }
+
+export type TechStackRes = TechStack
 
 export type TermHistory = {
   content: string
@@ -813,15 +1124,81 @@ export type TermHistory = {
   version: string
 }
 
+export type TermHistoriesRes = {
+  termHistories: (TermHistory)[]
+  totalDataNums: number
+}
+
+export type TermHistoryRes = TermHistory
+
+/** STIを使って実装する */
+export type Withdrawal = {
+  amount: number
+  createdAt: string
+  feeAmount: number
+  id: string
+  totalAmount: number
+  updatedAt: string
+}
+
+export type WithdrawalsRes = {
+  withdrawals: (Withdrawal & {
+    account?: Account | {
+    } | undefined
+
+    company?: Company | {
+    } | undefined
+  })[]
+  totalDataNums: number
+}
+
+export type EmploymentContractTermRes = EmploymentContractTerm
+
+export type AccountWithTokenRes = {
+  account: Account & {
+    employments: Employment[]
+  }
+
+  profile: Profile
+  token: string
+}
+
+/** 消費税 */
+export type ConsumptionTax = {
+  country: 'jpn'
+  id: string
+  /** 表示名 */
+  name: string
+  /** 税率 */
+  ratio: number
+}
+
+/** 職種「中項目」 */
+export type OccupationSubCategory = {
+  createdAt: string
+  id: string
+  name: string
+  updatedAt: string
+}
+
+export type OccupationMainCategoriesRes = {
+  occupationMainCategories: (OccupationMainCategory & {
+    occupationSubCategories: (OccupationSubCategory & {
+      occupations?: Occupation[] | undefined
+    })[]
+  })[]
+}
+
+export type StateCategory = {
+  /** 「日本」「海外」「その他」 */
+  countryType: 'japan' | 'international' | 'other' | null
+  createdAt: string
+  id: string
+  name: string
+  updatedAt: string
+}
+
 export type AcademicHistoryRes = AcademicHistory
-
-export type AcademicHistoriesRes = {
-  academicHistories: AcademicHistory[]
-}
-
-export type AchievementsRes = {
-  achievements: (Achievement)[]
-}
 
 export type AchievementRes = Achievement
 
@@ -950,16 +1327,6 @@ export type EmploymentsRes = {
   })[]
 }
 
-export type HopesRes = {
-  hopes: (Hope & {
-    industries: Industry[]
-  } & {
-    occupations: Occupation[]
-  } & {
-    workplaces: State[]
-  })[]
-}
-
 export type HopeRes = Hope & {
   industries: Industry[]
 } & {
@@ -985,96 +1352,15 @@ export type IncomeHistoriesRes = {
   totalDataNums: number
 }
 
-export type IndustryHistoriesRes = {
-  industryHistories: (IndustryHistory & {
-    account: Account
-    industry: Industry
-  })[]
-}
-
 export type IndustryHistoryRes = IndustryHistory & {
   account: Account
   industry: Industry
-}
-
-export type JobChangeCompletionReport = {
-  /** 年収（税の概念なし） */
-  amount: number
-  createdAt: string
-  id: string
-  updatedAt: string
-}
-
-export type JobChangeCompletionReportsRes = {
-  jobChangeCompletionReports: (JobChangeCompletionReport & {
-    account: Account
-  } & {
-    company: Company
-  })[]
 }
 
 export type JobChangeCompletionReportRes = JobChangeCompletionReport & {
   account: Account
 } & {
   company: Company
-}
-
-/** appliedの場合はcustomer_name以外必須 */
-export type JobOrder = {
-  /** 消費税計算方法 */
-  consumptionTaxCalculationMethod: 'floor' | 'ceil' | 'round'
-  createdAt: string
-  /** 取引先名 */
-  customerName: string | null
-  /** 稼働報酬制の単位（「一月あたり」「一日あたり」「一時間あたり」） */
-  feeCalculationSpan: 'monthly' | 'daily' | 'hourly' | null
-  /** 「稼働報酬制」「固定報酬制」 */
-  feeType: 'time_based' | 'fixed'
-  files: ({
-    id: string
-    name: string
-    contentType: string
-    url: string
-    createdAt: string
-  } | {
-  })[]
-  /** 固定報酬制の金額(税込) */
-  fixedAmount: number | null
-  /** 固定報酬制の小計(税抜) */
-  fixedSubTotal: number | null
-  /** 固定報酬制の金額(税込)と論理手数料を合わせた総額 */
-  fixedTotalAmount: number | null
-  id: string
-  isSample: boolean
-  /** 稼動報酬制の源泉徴収の対象か */
-  isTargetWithholdingTax: boolean
-  /** 仕事内容 */
-  jobDescription: string | null
-  /** 業務名 */
-  jobName: string | null
-  /** 論理手数料（報酬額ときっかけを元に算出する手数料の予定額） */
-  logicalFeeAmount: number | null
-  /** 発注番号 */
-  number: string | null
-  /** 発注日 */
-  orderDate: string | null
-  /** 諸条件 */
-  otherConditions: string | null
-  /** 受注者からのコメント */
-  reviewComment: string | null
-  /** 開始日 */
-  sinceDate: string | null
-  /** 「下書き」「先方確認中」「締結済み」「却下」 */
-  status: 'draft' | 'applied' | 'certificated' | 'rejected'
-  /** 稼働報酬制の税率 */
-  taxRatio: number | null
-  /** 稼働報酬制の金額 */
-  unitTimeFee: number | null
-  /** 終了日 */
-  untilDate: string | null
-  updatedAt: string
-  /** 源泉徴収税計算に消費税を含めるか */
-  withholdingIncludedConsumptionTax: boolean
 }
 
 /** 固定報酬制の場合の各品目 */
@@ -1163,13 +1449,6 @@ export type MessagesRes = {
   totalDataNums: number
 }
 
-export type ConsentMatter = {
-  content: string
-  createdAt: string
-  id: string
-  updatedAt: string
-}
-
 export type Notification = {
   content: string
   createdAt: string
@@ -1200,13 +1479,6 @@ export type NotificationsRes = {
   totalDataNums?: number | undefined
 }
 
-export type OccupationHistoriesRes = {
-  occupationHistories: (OccupationHistory & {
-    account: Account
-    occupation: Occupation
-  })[]
-}
-
 export type OccupationHistoryRes = OccupationHistory & {
   account: Account
   occupation: Occupation
@@ -1214,41 +1486,6 @@ export type OccupationHistoryRes = OccupationHistory & {
 
 export type ProfileRes = Profile & {
   placeOfResidence: State
-}
-
-export type ProjectResult = {
-  totalJobsNum: number
-  totalRate: number
-  skills: string[]
-}
-
-export type JobReview = {
-  createdAt: string
-  id: string
-  /** もっとこうして欲しかった点 */
-  improvementPoint: string | null
-  /** サンプルか */
-  isSample: boolean
-  /** スキルの詳細 */
-  skillDescription: string | null
-  starRating: number
-  updatedAt: string
-}
-
-export type ProjectResultRes = ProjectResult & {
-  jobs: (Job & {
-    jobOrder: JobOrder & {
-      recruitment?: Recruitment & {
-        workplace?: State | undefined
-        occpations?: Occupation[] | undefined
-        industries?: Industry[] | undefined
-      } | undefined
-    }
-
-    jobReviews: (JobReview & {
-      skills?: Skill[] | undefined
-    })[]
-  })[]
 }
 
 export type RecruitmentInterestsRes = {
@@ -1273,10 +1510,6 @@ export type ScoutsRes = {
   totalDataNums: number
 }
 
-export type SkillsRes = {
-  skills: Skill[]
-}
-
 export type Support = {
   career: boolean
   createdAt: string
@@ -1289,96 +1522,12 @@ export type SupportRes = Support & {
   account: Account
 }
 
-/** STIを使って実装する */
-export type Withdrawal = {
-  amount: number
-  createdAt: string
-  feeAmount: number
-  id: string
-  totalAmount: number
-  updatedAt: string
-}
-
-export type WithdrawalsRes = {
-  withdrawals: (Withdrawal & {
-    account?: Account | {
-    } | undefined
-
-    company?: Company | {
-    } | undefined
-  })[]
-  totalDataNums: number
-}
-
 export type WithdrawalRes = Withdrawal & {
   account?: Account | {
   } | undefined
 
   company?: Company | {
   } | undefined
-}
-
-export type WorkHistoriesRes = {
-  workHistories: (WorkHistory & {
-    account: Account
-  } & {
-    projectHistories: ProjectHistory[]
-  })[]
-}
-
-export type AccountsRes = {
-  accounts: (Account & {
-    latestWorkHistory?: WorkHistory | null | undefined
-
-    profile: Profile & {
-      placeOfResidence: State
-    } | null
-
-    agentProfile: AgentProfile & {
-      specialtyCompanyTypes: SpecialtyCompanyType[]
-      specialtyPositions: SpecialtyPosition[]
-      occupationMainCategories: OccupationMainCategory[]
-      industryCategories: IndustryCategory[]
-    } | null
-
-    academicHistories: AcademicHistory[]
-    workHistories: (WorkHistory)[]
-    hopes: Hope[]
-    skills: Skill[]
-    achievements: Achievement[]
-    occupationHistories: (OccupationHistory & {
-      occupation: Occupation
-    })[]
-    industryHistories: (IndustryHistory & {
-      industry: Industry
-    })[]
-    jobs: Job[]
-    applicantContactHistoriesFromCurrentCompany: ({
-      typename: 'RecruitmentInterest' | 'Applicant'
-      timestamp: string
-
-      resource: Applicant & {
-        recruitment?: Recruitment | undefined
-      } | RecruitmentInterest & {
-        recruitment?: Recruitment | undefined
-      } | null
-    })[]
-    scoutsFromCurrentCompany: (Scout & {
-      sender?: Account | null | undefined
-
-      message?: Message | null | undefined
-
-      recruitments: Recruitment[]
-    })[]
-    scoutsFromCurrentAccount: (Scout & {
-      sender: Account | null
-
-      message: Message | null
-
-      recruitments: Recruitment[]
-    })[]
-  })[]
-  totalDataNums: number
 }
 
 export type MessageRes = Message & {
@@ -1698,8 +1847,6 @@ export type StateCategoryRes = StateCategory & {
   states: State[]
 }
 
-export type TechStackRes = TechStack
-
 export type ProjectHistoriesRes = {
   projectHistories: (ProjectHistory & {
     workHistory: WorkHistory
@@ -1714,65 +1861,6 @@ export type Room = {
   createdAt: string
   id: string
   updatedAt: string
-}
-
-export type RecruitmentCompletionReport = {
-  /** 内定承諾日 */
-  acceptanceOfOfferDate: string | null
-  /** 年収（税の概念なし） */
-  amount: number
-  billingEmails: string[] | null
-  createdAt?: string | null | undefined
-  id: string | null
-  isEnable: boolean
-  /** 入社日 */
-  joinedDate: string | null
-  memo: string | null
-  paymentStatus: 'unpaid' | 'paid' | 'failed' | 'pending'
-  /** 取り消し理由 */
-  reasonForCancellation: string | null
-  /** 手数料（税込） */
-  systemFee: number
-  systemFeeRatio: number | null
-  /** 手数料（税抜） */
-  systemFeeWithoutTax: number | null
-  /** 手数料（税） */
-  taxForSystemFee: number | null
-  updatedAt: string | null
-}
-
-export type IntroductionCompletionReport = {
-  /** 内定承諾日 */
-  acceptanceOfOfferDate: string | null
-  /** 年収 */
-  amount: number
-  /** 請求先メールアドレス */
-  billingEmails: string[] | null
-  /** 紹介料（年収 x 紹介料比率） */
-  commissionFee: number | null
-  /** 紹介料比率 */
-  commissionFeeRatio: number | null
-  /** 紹介料（税抜） */
-  commissionFeeWithoutTax: number | null
-  createdAt: string | null
-  id: string | null
-  isEnable: boolean
-  joinedDate: string | null
-  memo: string | null
-  paymentStatus: 'unpaid' | 'paid' | 'failed' | 'pending'
-  /** 取り消し理由 */
-  reasonForCancellation: string | null
-  /** 手数料（税込） */
-  systemFee: number | null
-  /** システム手数料比率 */
-  systemFeeRatio: number | null
-  /** 手数料（税抜） */
-  systemFeeWithoutTax: number | null
-  /** 紹介料（税） */
-  taxForCommissionFee: number | null
-  /** 手数料（税） */
-  taxForSystemFee: number | null
-  updatedAt: string | null
 }
 
 export type RoomRes = Room & {
@@ -1831,94 +1919,6 @@ export type RoomsRes = {
   })[]
   totalDataNums: number
 }
-
-export type ConsentMattersRes = {
-  consentMatters: (ConsentMatter)[]
-}
-
-export type ConsentMatterRes = ConsentMatter
-
-export type FeatureRes = Feature
-
-export type IntroductionCompletionReportsRes = {
-  introductionCompletionReports: (IntroductionCompletionReport & {
-    account: Account
-    company: Company
-    agent: Account
-    occupation: Occupation
-    industry: Industry
-  })[]
-}
-
-export type OfficialInformation = {
-  content: string
-  createdAt: string
-  htmlContent: string
-  id: string
-  isReleased: boolean
-  title: string
-  updatedAt: string
-}
-
-export type OfficialInformationsRes = {
-  officialInformations: (OfficialInformation)[]
-}
-
-export type OfficialInformationRes = OfficialInformation
-
-export type Payout = {
-  amount: number
-  /** 支払完了予想日付 */
-  arrivalDate: string
-  createdAt: string
-  currency: string
-  id: string
-  status: 'pending' | 'in_transit' | 'paid' | 'failed' | 'canceled'
-  stripePoId: string
-  updatedAt: string
-}
-
-export type PayoutsRes = {
-  payouts: (Payout)[]
-  totalDataNums: number
-}
-
-export type PriceRes = Price
-
-export type PrivacyPolicyHistoriesRes = {
-  privacyPolicyHistories: (PrivacyPolicyHistory)[]
-}
-
-export type PrivacyPolicyHistoryRes = PrivacyPolicyHistory
-
-export type PricesRes = {
-  prices: (Price)[]
-}
-
-export type RecruitmentCompletionReportsRes = {
-  recruitmentCompletionReports: (RecruitmentCompletionReport & {
-    company: Company
-    account: Account
-    occupation: Occupation
-    industry: Industry
-  })[]
-  totalDataNums: number
-}
-
-export type StatesRes = {
-  states: (State)[]
-}
-
-export type StateRes = State
-
-export type TermHistoriesRes = {
-  termHistories: (TermHistory)[]
-  totalDataNums: number
-}
-
-export type TermHistoryRes = TermHistory
-
-export type EmploymentContractTermRes = EmploymentContractTerm
 
 export type AccountSearchCondition = {
   academicBackground?: 'graduate_school_doctor' | 'graduate_school_master' | 'university' | 'technical_college' | 'vocational_school' | 'junior_college' | 'high_school' | undefined
