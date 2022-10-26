@@ -77,43 +77,6 @@ export const AGENT_PROFILE_STATUS = {
 } as const
 export type AgentProfileStatus = typeof AGENT_PROFILE_STATUS[keyof typeof AGENT_PROFILE_STATUS]
 
-export const COMPANY_ADMIN_VERIFICATION_STATUS = {
-  'unspecified': 'unspecified',
-  'requested': 'requested',
-  'verified': 'verified',
-  'rejected': 'rejected',
-  'canceled': 'canceled'
-} as const
-export type CompanyAdminVerificationStatus = typeof COMPANY_ADMIN_VERIFICATION_STATUS[keyof typeof COMPANY_ADMIN_VERIFICATION_STATUS]
-
-export const COMPANY_PUBLIC_VERIFICATION_STATUS = {
-  'unspecified': 'unspecified',
-  'requested': 'requested',
-  'verified': 'verified',
-  'rejected': 'rejected'
-} as const
-export type CompanyPublicVerificationStatus = typeof COMPANY_PUBLIC_VERIFICATION_STATUS[keyof typeof COMPANY_PUBLIC_VERIFICATION_STATUS]
-
-export const COMPANY_TYPE = {
-  'account': 'account',
-  'stub': 'stub'
-} as const
-export type CompanyType = typeof COMPANY_TYPE[keyof typeof COMPANY_TYPE]
-
-export const ROLE_CATEGORY = {
-  'owner': 'owner',
-  'manager': 'manager',
-  'member': 'member',
-  'guest': 'guest'
-} as const
-export type RoleCategory = typeof ROLE_CATEGORY[keyof typeof ROLE_CATEGORY]
-
-export const ROLE_TYPE = {
-  'official': 'official',
-  'custom': 'custom'
-} as const
-export type RoleType = typeof ROLE_TYPE[keyof typeof ROLE_TYPE]
-
 export const ACADEMIC_HISTORY_TYPE = {
   'graduate_school_doctor': 'graduate_school_doctor',
   'graduate_school_master': 'graduate_school_master',
@@ -237,6 +200,71 @@ export const MESSAGE_ACT_AS = {
 } as const
 export type MessageActAs = typeof MESSAGE_ACT_AS[keyof typeof MESSAGE_ACT_AS]
 
+export const JOB_ORDER_CONSUMPTION_TAX_CALCULATION_METHOD = {
+  'floor': 'floor',
+  'ceil': 'ceil',
+  'round': 'round'
+} as const
+export type JobOrderConsumptionTaxCalculationMethod = typeof JOB_ORDER_CONSUMPTION_TAX_CALCULATION_METHOD[keyof typeof JOB_ORDER_CONSUMPTION_TAX_CALCULATION_METHOD]
+
+export const JOB_ORDER_FEE_CALCULATION_SPAN = {
+  'monthly': 'monthly',
+  'daily': 'daily',
+  'hourly': 'hourly'
+} as const
+export type JobOrderFeeCalculationSpan = typeof JOB_ORDER_FEE_CALCULATION_SPAN[keyof typeof JOB_ORDER_FEE_CALCULATION_SPAN]
+
+export const JOB_ORDER_FEE_TYPE = {
+  'time_based': 'time_based',
+  'fixed': 'fixed'
+} as const
+export type JobOrderFeeType = typeof JOB_ORDER_FEE_TYPE[keyof typeof JOB_ORDER_FEE_TYPE]
+
+export const JOB_ORDER_STATUS = {
+  'draft': 'draft',
+  'applied': 'applied',
+  'certificated': 'certificated',
+  'rejected': 'rejected'
+} as const
+export type JobOrderStatus = typeof JOB_ORDER_STATUS[keyof typeof JOB_ORDER_STATUS]
+
+export const COMPANY_ADMIN_VERIFICATION_STATUS = {
+  'unspecified': 'unspecified',
+  'requested': 'requested',
+  'verified': 'verified',
+  'rejected': 'rejected',
+  'canceled': 'canceled'
+} as const
+export type CompanyAdminVerificationStatus = typeof COMPANY_ADMIN_VERIFICATION_STATUS[keyof typeof COMPANY_ADMIN_VERIFICATION_STATUS]
+
+export const COMPANY_PUBLIC_VERIFICATION_STATUS = {
+  'unspecified': 'unspecified',
+  'requested': 'requested',
+  'verified': 'verified',
+  'rejected': 'rejected'
+} as const
+export type CompanyPublicVerificationStatus = typeof COMPANY_PUBLIC_VERIFICATION_STATUS[keyof typeof COMPANY_PUBLIC_VERIFICATION_STATUS]
+
+export const COMPANY_TYPE = {
+  'account': 'account',
+  'stub': 'stub'
+} as const
+export type CompanyType = typeof COMPANY_TYPE[keyof typeof COMPANY_TYPE]
+
+export const ROLE_CATEGORY = {
+  'owner': 'owner',
+  'manager': 'manager',
+  'member': 'member',
+  'guest': 'guest'
+} as const
+export type RoleCategory = typeof ROLE_CATEGORY[keyof typeof ROLE_CATEGORY]
+
+export const ROLE_TYPE = {
+  'official': 'official',
+  'custom': 'custom'
+} as const
+export type RoleType = typeof ROLE_TYPE[keyof typeof ROLE_TYPE]
+
 export const FEATURE_SOURCE_TYPE = {
   'company': 'company',
   'recruitment': 'recruitment'
@@ -248,27 +276,6 @@ export const FEATURE_TYPE = {
   'organizational': 'organizational'
 } as const
 export type FeatureType = typeof FEATURE_TYPE[keyof typeof FEATURE_TYPE]
-
-export const EMPLOYMENT_STATUS_PROJECT_CLASSIFICATION = {
-  'contract': 'contract',
-  'quasi_mandate': 'quasi_mandate',
-  'outsourcing': 'outsourcing'
-} as const
-export type EmploymentStatusProjectClassification = typeof EMPLOYMENT_STATUS_PROJECT_CLASSIFICATION[keyof typeof EMPLOYMENT_STATUS_PROJECT_CLASSIFICATION]
-
-export const EMPLOYMENT_STATUS_TYPE = {
-  'career': 'career',
-  'project': 'project'
-} as const
-export type EmploymentStatusType = typeof EMPLOYMENT_STATUS_TYPE[keyof typeof EMPLOYMENT_STATUS_TYPE]
-
-export const EMPLOYMENT_CONTRACT_TERM_TERM = {
-  'less_than_one_month': 'less_than_one_month',
-  'one_to_three_months': 'one_to_three_months',
-  'three_to_six_months': 'three_to_six_months',
-  'more_than_six_months': 'more_than_six_months'
-} as const
-export type EmploymentContractTermTerm = typeof EMPLOYMENT_CONTRACT_TERM_TERM[keyof typeof EMPLOYMENT_CONTRACT_TERM_TERM]
 
 export const SUBSCRIPTION_STATUS = {
   'active': 'active',
@@ -299,10 +306,51 @@ export const PAYMENT_METHOD_BRAND = {
 } as const
 export type PaymentMethodBrand = typeof PAYMENT_METHOD_BRAND[keyof typeof PAYMENT_METHOD_BRAND]
 
-export const CONSUMPTION_TAX_COUNTRY = {
-  'jpn': 'jpn'
+export const EMPLOYMENT_CONTRACT_TERM_TERM = {
+  'less_than_one_month': 'less_than_one_month',
+  'one_to_three_months': 'one_to_three_months',
+  'three_to_six_months': 'three_to_six_months',
+  'more_than_six_months': 'more_than_six_months'
 } as const
-export type ConsumptionTaxCountry = typeof CONSUMPTION_TAX_COUNTRY[keyof typeof CONSUMPTION_TAX_COUNTRY]
+export type EmploymentContractTermTerm = typeof EMPLOYMENT_CONTRACT_TERM_TERM[keyof typeof EMPLOYMENT_CONTRACT_TERM_TERM]
+
+export const EMPLOYMENT_STATUS_PROJECT_CLASSIFICATION = {
+  'contract': 'contract',
+  'quasi_mandate': 'quasi_mandate',
+  'outsourcing': 'outsourcing'
+} as const
+export type EmploymentStatusProjectClassification = typeof EMPLOYMENT_STATUS_PROJECT_CLASSIFICATION[keyof typeof EMPLOYMENT_STATUS_PROJECT_CLASSIFICATION]
+
+export const EMPLOYMENT_STATUS_TYPE = {
+  'career': 'career',
+  'project': 'project'
+} as const
+export type EmploymentStatusType = typeof EMPLOYMENT_STATUS_TYPE[keyof typeof EMPLOYMENT_STATUS_TYPE]
+
+export const INTRODUCTION_COMPLETION_REPORT_PAYMENT_STATUS = {
+  'unpaid': 'unpaid',
+  'paid': 'paid',
+  'failed': 'failed',
+  'pending': 'pending'
+} as const
+export type IntroductionCompletionReportPaymentStatus = typeof INTRODUCTION_COMPLETION_REPORT_PAYMENT_STATUS[keyof typeof INTRODUCTION_COMPLETION_REPORT_PAYMENT_STATUS]
+
+export const PAYOUT_STATUS = {
+  'pending': 'pending',
+  'in_transit': 'in_transit',
+  'paid': 'paid',
+  'failed': 'failed',
+  'canceled': 'canceled'
+} as const
+export type PayoutStatus = typeof PAYOUT_STATUS[keyof typeof PAYOUT_STATUS]
+
+export const RECRUITMENT_COMPLETION_REPORT_PAYMENT_STATUS = {
+  'unpaid': 'unpaid',
+  'paid': 'paid',
+  'failed': 'failed',
+  'pending': 'pending'
+} as const
+export type RecruitmentCompletionReportPaymentStatus = typeof RECRUITMENT_COMPLETION_REPORT_PAYMENT_STATUS[keyof typeof RECRUITMENT_COMPLETION_REPORT_PAYMENT_STATUS]
 
 export const TECH_STACK_ACCESSIBILITY = {
   'public': 'public',
@@ -319,18 +367,23 @@ export const TECH_STACK_CATEGORY = {
 } as const
 export type TechStackCategory = typeof TECH_STACK_CATEGORY[keyof typeof TECH_STACK_CATEGORY]
 
+export const TERM_HISTORY_TYPE = {
+  'common': 'common',
+  'plan': 'plan'
+} as const
+export type TermHistoryType = typeof TERM_HISTORY_TYPE[keyof typeof TERM_HISTORY_TYPE]
+
+export const CONSUMPTION_TAX_COUNTRY = {
+  'jpn': 'jpn'
+} as const
+export type ConsumptionTaxCountry = typeof CONSUMPTION_TAX_COUNTRY[keyof typeof CONSUMPTION_TAX_COUNTRY]
+
 export const STATE_CATEGORY_COUNTRY_TYPE = {
   'japan': 'japan',
   'international': 'international',
   'other': 'other'
 } as const
 export type StateCategoryCountryType = typeof STATE_CATEGORY_COUNTRY_TYPE[keyof typeof STATE_CATEGORY_COUNTRY_TYPE]
-
-export const TERM_HISTORY_TYPE = {
-  'common': 'common',
-  'plan': 'plan'
-} as const
-export type TermHistoryType = typeof TERM_HISTORY_TYPE[keyof typeof TERM_HISTORY_TYPE]
 
 export const POLICY_CATEGORY = {
   'unspecified': 'unspecified',
@@ -351,34 +404,6 @@ export const POLICY_CATEGORY = {
   'scout': 'scout'
 } as const
 export type PolicyCategory = typeof POLICY_CATEGORY[keyof typeof POLICY_CATEGORY]
-
-export const JOB_ORDER_CONSUMPTION_TAX_CALCULATION_METHOD = {
-  'floor': 'floor',
-  'ceil': 'ceil',
-  'round': 'round'
-} as const
-export type JobOrderConsumptionTaxCalculationMethod = typeof JOB_ORDER_CONSUMPTION_TAX_CALCULATION_METHOD[keyof typeof JOB_ORDER_CONSUMPTION_TAX_CALCULATION_METHOD]
-
-export const JOB_ORDER_FEE_CALCULATION_SPAN = {
-  'monthly': 'monthly',
-  'daily': 'daily',
-  'hourly': 'hourly'
-} as const
-export type JobOrderFeeCalculationSpan = typeof JOB_ORDER_FEE_CALCULATION_SPAN[keyof typeof JOB_ORDER_FEE_CALCULATION_SPAN]
-
-export const JOB_ORDER_FEE_TYPE = {
-  'time_based': 'time_based',
-  'fixed': 'fixed'
-} as const
-export type JobOrderFeeType = typeof JOB_ORDER_FEE_TYPE[keyof typeof JOB_ORDER_FEE_TYPE]
-
-export const JOB_ORDER_STATUS = {
-  'draft': 'draft',
-  'applied': 'applied',
-  'certificated': 'certificated',
-  'rejected': 'rejected'
-} as const
-export type JobOrderStatus = typeof JOB_ORDER_STATUS[keyof typeof JOB_ORDER_STATUS]
 
 export const NOTIFICATION_NOTIFICATION_TYPE = {
   'general': 'general',
@@ -428,31 +453,6 @@ export const SCOUT_TEMPLATE_SCOPE = {
   'organizational': 'organizational'
 } as const
 export type ScoutTemplateScope = typeof SCOUT_TEMPLATE_SCOPE[keyof typeof SCOUT_TEMPLATE_SCOPE]
-
-export const RECRUITMENT_COMPLETION_REPORT_PAYMENT_STATUS = {
-  'unpaid': 'unpaid',
-  'paid': 'paid',
-  'failed': 'failed',
-  'pending': 'pending'
-} as const
-export type RecruitmentCompletionReportPaymentStatus = typeof RECRUITMENT_COMPLETION_REPORT_PAYMENT_STATUS[keyof typeof RECRUITMENT_COMPLETION_REPORT_PAYMENT_STATUS]
-
-export const INTRODUCTION_COMPLETION_REPORT_PAYMENT_STATUS = {
-  'unpaid': 'unpaid',
-  'paid': 'paid',
-  'failed': 'failed',
-  'pending': 'pending'
-} as const
-export type IntroductionCompletionReportPaymentStatus = typeof INTRODUCTION_COMPLETION_REPORT_PAYMENT_STATUS[keyof typeof INTRODUCTION_COMPLETION_REPORT_PAYMENT_STATUS]
-
-export const PAYOUT_STATUS = {
-  'pending': 'pending',
-  'in_transit': 'in_transit',
-  'paid': 'paid',
-  'failed': 'failed',
-  'canceled': 'canceled'
-} as const
-export type PayoutStatus = typeof PAYOUT_STATUS[keyof typeof PAYOUT_STATUS]
 
 export const ACCOUNT_SEARCH_CONDITION_ACADEMIC_BACKGROUND = {
   'graduate_school_doctor': 'graduate_school_doctor',

@@ -108,11 +108,11 @@ export const build = async (config: Config) => {
       `/* eslint-disable */${typesText}`,
       "utf8"
     );
-    fs.writeFileSync(
-      `${config.connectBasePath}/shared/mock.ts`,
-      `/* eslint-disable */\n import type * as Types from ".";\n ${mockText}`,
-      "utf8"
-    );
+    // fs.writeFileSync(
+    //   `${config.connectBasePath}/shared/mock.ts`,
+    //   `/* eslint-disable */\n import type * as Types from ".";\n ${mockText}`,
+    //   "utf8"
+    // )
     fs.writeFileSync(
       `${config.connectBasePath}/shared/index.ts`,
       `export * from "./types"`,
