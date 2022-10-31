@@ -1,5 +1,4 @@
 import fs from "fs";
-import { Server } from "./types";
 
 type WriteRouteFileProps = {
   files: {
@@ -14,7 +13,6 @@ type WriteRouteFileProps = {
   apiUrlContent: string;
 };
 
-// $api.tsファイルの作成
 export const writeRouteFile = ({
   files,
   outputDir,
@@ -30,8 +28,8 @@ export const writeRouteFile = ({
       }
     });
     fs.writeFileSync(
-      `${outputDir}/${p.file.join("/")}/${fileName}.ts`,
-      p.methods.join("\n"),
+      `${outputDir}/${p.file.join("/")}/${fileName}.ts`, // file一つ一つを作成
+      p.methods.join("\n"), // それぞれのmethodを改行で隔てて書き込み
       "utf-8"
     );
   });

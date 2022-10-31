@@ -29,6 +29,7 @@ export const build = async (config: Config) => {
           schemas.push(contentSchema);
         }
       });
+      // RouteFileだけじゃなくて配下のFileも作成してる
       writeRouteFile({
         outputDir: `${config.connectBasePath}/${codeGenConfig.connect}`,
         files: contents.files,
@@ -51,6 +52,7 @@ export const build = async (config: Config) => {
         .replace(/(\W)Types\./g, "$1")
         .replace(/\]\?:/g, "]:")
     : null;
+
   schemas.forEach((s) => {
     if (Array.isArray(s.value.value)) {
       const schemaValues = s.value.value;
@@ -71,25 +73,25 @@ export const build = async (config: Config) => {
       });
     }
   });
-  const mockText = schemas.length
-    ? [
-        ...schemas.map((s) => ({
-          name: s.name,
-          description: s.value.description,
-          text: value2StringForMock(s.value, "", true, s.name).replace(/\n {2}/g, "\n"),
-        })),
-      ]
-        .map(
-          (p) =>
-            `\n${description2Doc(p.description, "")}export const mock${
-              p.name
-            } = (modification?: Partial< Types.${p.name}>): Types.${p.name} => {\n  return ${
-              p.text
-            }\n}\n`
-        )
-        .join("")
-        .replace(/\]\?:/g, "]:")
-    : null;
+  // const mockText = schemas.length
+  //   ? [
+  //       ...schemas.map((s) => ({
+  //         name: s.name,
+  //         description: s.value.description,
+  //         text: value2StringForMock(s.value, "", true, s.name).replace(/\n {2}/g, "\n"),
+  //       })),
+  //     ]
+  //       .map(
+  //         (p) =>
+  //           `\n${description2Doc(p.description, "")}export const mock${
+  //             p.name
+  //           } = (modification?: Partial< Types.${p.name}>): Types.${p.name} => {\n  return ${
+  //             p.text
+  //           }\n}\n`
+  //       )
+  //       .join("")
+  //       .replace(/\]\?:/g, "]:")
+  //   : null;
   const enumText = enumArray
     .map(
       (enumObject) =>
@@ -101,7 +103,7 @@ export const build = async (config: Config) => {
           .toUpperCase()}[keyof typeof ${humps.depascalize(enumObject.name).toUpperCase()}]`
     )
     .join("\n\n");
-  if (typesText && mockText) {
+  if (typesText ) {
     fs.mkdirSync(`${config.connectBasePath}/shared`);
     fs.writeFileSync(
       `${config.connectBasePath}/shared/types.d.ts`,
