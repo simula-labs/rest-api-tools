@@ -37,3 +37,6 @@ module.exports = {
 };
 
 ````
+
+## 参考ライブラリ
+[openapi2aspida](https://github.com/aspida/openapi2aspida)

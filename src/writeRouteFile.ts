@@ -14,6 +14,7 @@ type WriteRouteFileProps = {
   apiUrlContent: string;
 };
 
+// $api.tsファイルの作成
 export const writeRouteFile = ({
   files,
   outputDir,

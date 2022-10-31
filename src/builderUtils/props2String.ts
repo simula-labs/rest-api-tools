@@ -77,7 +77,6 @@ export const props2String = (props: Prop[], indent: string) =>
     .join("\n")}${indent}}`;
 
 // indentを調整するためにvalue2Stringのindentを若干調整した関数
-
 export const value2StringForParams = (v: PropValue, indent: string): string =>
   `${
     v.hasOf

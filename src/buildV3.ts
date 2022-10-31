@@ -40,6 +40,7 @@ export const buildV3 = (
     "  }\n" +
     "})();\n";
 
+  // URLParamsはエンドポイントで共通なのでメソッドよりも先に処理をしている
   Object.entries(openapi.paths).forEach(([path, targetUrl]) => {
     const urlParams: Prop[] = [];
 
@@ -67,6 +68,7 @@ export const buildV3 = (
     // eslint-disable-next-line no-param-reassign
     delete targetUrl.parameters;
     Object.entries(targetUrl).forEach(([method, target]) => {
+      // フィアルパスを配列で作成
       const file = [
         ...path
           .replace(/\/$/, "")
