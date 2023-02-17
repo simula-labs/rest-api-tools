@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/simula-labs/rest-api-tools/compare/v1.5.2...v1.6.0) (2023-02-17)
+
+
+### Features
+
+* index ([ac5c100](https://github.com/simula-labs/rest-api-tools/commit/ac5c10001e4cde4f44f75991e02a82cecf1b99ae))
+
 ## [1.5.2](https://github.com/simula-labs/rest-api-tools/compare/v1.5.1...v1.5.2) (2022-10-31)
 
 
