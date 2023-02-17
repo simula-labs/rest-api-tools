@@ -103,7 +103,7 @@ export const build = async (config: Config) => {
           .toUpperCase()}[keyof typeof ${humps.depascalize(enumObject.name).toUpperCase()}]`
     )
     .join("\n\n");
-  if (typesText ) {
+  if (typesText) {
     fs.mkdirSync(`${config.connectBasePath}/shared`);
     fs.writeFileSync(
       `${config.connectBasePath}/shared/types.d.ts`,
@@ -117,7 +117,7 @@ export const build = async (config: Config) => {
     // )
     fs.writeFileSync(
       `${config.connectBasePath}/shared/index.ts`,
-      `export * from "./types"`,
+      `export * from "./types"\nexport * from "./enum"`,
       "utf8"
     );
   }

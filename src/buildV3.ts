@@ -104,9 +104,7 @@ export const buildV3 = (
       }
       const pascalizedTargetOperationId = humps.pascalize(target.operationId);
       apiMethods.push({
-        operationIdImport: `import { ${humps.camelize(target.operationId)} } from "./${file.join(
-          "/"
-        )}"`,
+        operationIdImport: `export * from "./${file.join("/")}"`,
         operationId: humps.camelize(target.operationId),
       });
       if (target.responses) {
