@@ -21,6 +21,7 @@ export const buildV3 = (
   const schemas = schemas2Props(openapi.components?.schemas, openapi) || [];
   const apiMethods: {
     operationIdImport: string;
+    operationIdExport: string;
     operationId: string;
   }[] = [];
   const apiUrlContent =
@@ -104,9 +105,13 @@ export const buildV3 = (
       }
       const pascalizedTargetOperationId = humps.pascalize(target.operationId);
       apiMethods.push({
-        operationIdImport: `export * from "./${file.join("/")}"`,
         operationId: humps.camelize(target.operationId),
+        operationIdExport: `export * from "./${file.join("/")}"`,
+        operationIdImport: `import { ${humps.camelize(target.operationId)} } from "./${file.join(
+          "/"
+        )}"`,
       });
+
       if (target.responses) {
         const code = Object.keys(target.responses).find((res) => res.match(/^(20\d|30\d)$/));
         if (code) {

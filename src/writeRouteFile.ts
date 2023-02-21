@@ -8,6 +8,7 @@ type WriteRouteFileProps = {
   outputDir: string;
   apiMethods: {
     operationIdImport: string;
+    operationIdExport: string;
     operationId: string;
   }[];
   apiUrlContent: string;
@@ -34,7 +35,14 @@ export const writeRouteFile = ({
     );
   });
   const apiFunctionName = outputDir.split("/").pop();
-  const api = `${apiMethods.map((apiMethod) => apiMethod.operationIdImport).join(";\n")}\n\n`;
-  fs.writeFileSync(`${outputDir}/index.ts`, api, "utf-8");
+  const api =
+    `/* eslint-disable */\n` +
+    `${apiMethods.map((apiMethod) => apiMethod.operationIdImport).join(";\n")}\n\n` +
+    `export const ${apiFunctionName}Api = {\n` +
+    `${apiMethods.map((apiMethod) => `  ${apiMethod.operationId}`).join(",\n")}\n};`;
+  fs.writeFileSync(`${outputDir}/$api.ts`, api, "utf-8");
+  const index = `${apiMethods.map((apiMethod) => apiMethod.operationIdExport).join(";\n")}\n\n`;
+  fs.writeFileSync(`${outputDir}/index.ts`, index, "utf-8");
+  fs.writeFileSync(`${outputDir}/$api.ts`, api, "utf-8");
   fs.writeFileSync(`${outputDir}/urls.ts`, apiUrlContent, "utf-8");
 };
