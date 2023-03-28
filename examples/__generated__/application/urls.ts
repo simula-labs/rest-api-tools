@@ -1,5 +1,5 @@
 export const API_HOST = ((): string => {
-  const environment = process.env.REACT_APP_ENV
+  const environment = process.env.REACT_APP_ENV;
   switch (environment) {
     case environment?.includes("local") && environment:
       return "http://localhost:3000/v1";
@@ -10,6 +10,6 @@ export const API_HOST = ((): string => {
     case environment?.includes("dev") && environment:
       return "https://api-dev.prob-works.com/v1";
     default:
-      throw new Error("環境変数が設定されていません")
+      throw new Error("環境変数が設定されていません");
   }
 })();

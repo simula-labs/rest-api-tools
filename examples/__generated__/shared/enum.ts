@@ -373,18 +373,6 @@ export const TERM_HISTORY_TYPE = {
 } as const
 export type TermHistoryType = typeof TERM_HISTORY_TYPE[keyof typeof TERM_HISTORY_TYPE]
 
-export const CONSUMPTION_TAX_COUNTRY = {
-  'jpn': 'jpn'
-} as const
-export type ConsumptionTaxCountry = typeof CONSUMPTION_TAX_COUNTRY[keyof typeof CONSUMPTION_TAX_COUNTRY]
-
-export const STATE_CATEGORY_COUNTRY_TYPE = {
-  'japan': 'japan',
-  'international': 'international',
-  'other': 'other'
-} as const
-export type StateCategoryCountryType = typeof STATE_CATEGORY_COUNTRY_TYPE[keyof typeof STATE_CATEGORY_COUNTRY_TYPE]
-
 export const POLICY_CATEGORY = {
   'unspecified': 'unspecified',
   'company': 'company',
@@ -404,6 +392,11 @@ export const POLICY_CATEGORY = {
   'scout': 'scout'
 } as const
 export type PolicyCategory = typeof POLICY_CATEGORY[keyof typeof POLICY_CATEGORY]
+
+export const CONSUMPTION_TAX_COUNTRY = {
+  'jpn': 'jpn'
+} as const
+export type ConsumptionTaxCountry = typeof CONSUMPTION_TAX_COUNTRY[keyof typeof CONSUMPTION_TAX_COUNTRY]
 
 export const NOTIFICATION_NOTIFICATION_TYPE = {
   'general': 'general',
@@ -453,6 +446,13 @@ export const SCOUT_TEMPLATE_SCOPE = {
   'organizational': 'organizational'
 } as const
 export type ScoutTemplateScope = typeof SCOUT_TEMPLATE_SCOPE[keyof typeof SCOUT_TEMPLATE_SCOPE]
+
+export const STATE_CATEGORY_COUNTRY_TYPE = {
+  'japan': 'japan',
+  'international': 'international',
+  'other': 'other'
+} as const
+export type StateCategoryCountryType = typeof STATE_CATEGORY_COUNTRY_TYPE[keyof typeof STATE_CATEGORY_COUNTRY_TYPE]
 
 export const ACCOUNT_SEARCH_CONDITION_ACADEMIC_BACKGROUND = {
   'graduate_school_doctor': 'graduate_school_doctor',

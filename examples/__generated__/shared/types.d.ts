@@ -1,11 +1,4 @@
 /* eslint-disable */
-export type AdminAccount = {
-  createdAt: string
-  email: string
-  id: string
-  updatedAt: string
-}
-
 export type Account = {
   alreadyKeepFromCurrentCompany: boolean | null
   avatarUrl: string | null
@@ -1154,6 +1147,13 @@ export type WithdrawalsRes = {
 
 export type EmploymentContractTermRes = EmploymentContractTerm
 
+export type AdminAccount = {
+  createdAt: string
+  email: string
+  id: string
+  updatedAt: string
+}
+
 export type AccountWithTokenRes = {
   account: Account & {
     employments: Employment[]
@@ -1161,41 +1161,6 @@ export type AccountWithTokenRes = {
 
   profile: Profile
   token: string
-}
-
-/** 消費税 */
-export type ConsumptionTax = {
-  country: 'jpn'
-  id: string
-  /** 表示名 */
-  name: string
-  /** 税率 */
-  ratio: number
-}
-
-/** 職種「中項目」 */
-export type OccupationSubCategory = {
-  createdAt: string
-  id: string
-  name: string
-  updatedAt: string
-}
-
-export type OccupationMainCategoriesRes = {
-  occupationMainCategories: (OccupationMainCategory & {
-    occupationSubCategories: (OccupationSubCategory & {
-      occupations?: Occupation[] | undefined
-    })[]
-  })[]
-}
-
-export type StateCategory = {
-  /** 「日本」「海外」「その他」 */
-  countryType: 'japan' | 'international' | 'other' | null
-  createdAt: string
-  id: string
-  name: string
-  updatedAt: string
 }
 
 export type AcademicHistoryRes = AcademicHistory
@@ -1380,6 +1345,16 @@ export type JobServiceItem = {
   /** 単価 */
   unitPrice: number
   updatedAt: string
+}
+
+/** 消費税 */
+export type ConsumptionTax = {
+  country: 'jpn'
+  id: string
+  /** 表示名 */
+  name: string
+  /** 税率 */
+  ratio: number
 }
 
 /** 発注で、消費税率ごとに金額を保持するテーブル */
@@ -1791,6 +1766,22 @@ export type ConsentNda = {
   updatedAt: string
 }
 
+/** 職種「中項目」 */
+export type OccupationSubCategory = {
+  createdAt: string
+  id: string
+  name: string
+  updatedAt: string
+}
+
+export type OccupationMainCategoriesRes = {
+  occupationMainCategories: (OccupationMainCategory & {
+    occupationSubCategories: (OccupationSubCategory & {
+      occupations?: Occupation[] | undefined
+    })[]
+  })[]
+}
+
 export type PoliciesRes = {
   policies: (Policy & {
     permissions: Permission[]
@@ -1836,6 +1827,15 @@ export type ScoutRes = Scout & {
 }
 
 export type SkillRes = Skill
+
+export type StateCategory = {
+  /** 「日本」「海外」「その他」 */
+  countryType: 'japan' | 'international' | 'other' | null
+  createdAt: string
+  id: string
+  name: string
+  updatedAt: string
+}
 
 export type StateCategoriesRes = {
   stateCategories: (StateCategory & {
