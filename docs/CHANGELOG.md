@@ -1,3 +1,10 @@
+## [1.7.4](https://github.com/simula-labs/rest-api-tools/compare/v1.7.3...v1.7.4) (2023-03-28)
+
+
+### Bug Fixes
+
+* refactor ([e9a3ba4](https://github.com/simula-labs/rest-api-tools/commit/e9a3ba45de56800f783fbd62026f9e54fb8abfeb))
+
 ## [1.7.3](https://github.com/simula-labs/rest-api-tools/compare/v1.7.2...v1.7.3) (2023-03-28)
 
 
