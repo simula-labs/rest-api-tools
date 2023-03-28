@@ -26,7 +26,7 @@ export const buildV3 = (
   }[] = [];
   const apiUrlContent =
     "export const API_HOST = ((): string => {\n" +
-    `  const environment = process.env.${config.apiEnvironmentVariables}\n` +
+    `  const environment = process.env.${config.apiEnvironmentVariables};\n` +
     `  switch (environment) {\n` +
     `${openapi.servers
       ?.map((server) => {
@@ -37,7 +37,7 @@ export const buildV3 = (
         }";\n`;
       })
       .join("")}` +
-    `    default:\n      throw new Error("環境変数が設定されていません")\n` +
+    `    default:\n      throw new Error("環境変数が設定されていません");\n` +
     "  }\n" +
     "})();\n";
 
