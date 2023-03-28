@@ -42,14 +42,7 @@ export const writeRouteFile = ({
     `${apiMethods.map((apiMethod) => `  ${apiMethod.operationId}`).join(",\n")}\n};`;
   fs.writeFileSync(`${outputDir}/$api.ts`, api, "utf-8");
 
-  const index = `${apiMethods
-    .map((apiMethod, idx) => {
-      if (idx === apiMethods.length - 1) {
-        return `${apiMethod.operationIdExport};"`;
-      }
-      return apiMethod.operationIdExport;
-    })
-    .join("\n\n")}\n\n`;
+  const index = `${apiMethods.map((apiMethod) => apiMethod.operationIdExport).join(";\n")};\n`;
 
   fs.writeFileSync(`${outputDir}/index.ts`, index, "utf-8");
   fs.writeFileSync(`${outputDir}/$api.ts`, api, "utf-8");
