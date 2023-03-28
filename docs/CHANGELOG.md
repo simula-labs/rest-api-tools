@@ -1,3 +1,10 @@
+## [1.7.8](https://github.com/simula-labs/rest-api-tools/compare/v1.7.7...v1.7.8) (2023-03-28)
+
+
+### Bug Fixes
+
+* eslint-disable max-len ([160aafd](https://github.com/simula-labs/rest-api-tools/commit/160aafd0ed1f954edefe283ec062712b468543e4))
+
 ## [1.7.7](https://github.com/simula-labs/rest-api-tools/compare/v1.7.6...v1.7.7) (2023-03-28)
 
 
