@@ -1,3 +1,10 @@
+## [1.7.10](https://github.com/simula-labs/rest-api-tools/compare/v1.7.9...v1.7.10) (2023-04-07)
+
+
+### Bug Fixes
+
+* shared index ([e211f9d](https://github.com/simula-labs/rest-api-tools/commit/e211f9d39406177846c7947209e317160efbbfcf))
+
 ## [1.7.9](https://github.com/simula-labs/rest-api-tools/compare/v1.7.8...v1.7.9) (2023-04-07)
 
 
