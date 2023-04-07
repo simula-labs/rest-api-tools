@@ -117,7 +117,7 @@ export const build = async (config: Config) => {
     // )
     fs.writeFileSync(
       `${config.connectBasePath}/shared/index.ts`,
-      `export * from "./types";`,
+      `export * from "./types";\n`,
       "utf8"
     );
   }
