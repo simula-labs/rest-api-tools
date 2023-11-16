@@ -26,7 +26,7 @@ export const buildV3 = (
   }[] = [];
   const apiUrlContent =
     "export const API_HOST = ((): string => {\n" +
-    `  const environment = process.env.${config.apiEnvironmentVariables};\n` +
+    `  const environment = import.meta.env.${config.apiEnvironmentVariables};\n` +
     `  switch (environment) {\n` +
     `${openapi.servers
       ?.map((server) => {
