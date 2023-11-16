@@ -1,3 +1,10 @@
+## [1.7.11](https://github.com/simula-labs/rest-api-tools/compare/v1.7.10...v1.7.11) (2023-11-16)
+
+
+### Bug Fixes
+
+* process => import.meta ([6c2a1dc](https://github.com/simula-labs/rest-api-tools/commit/6c2a1dc6aa397f817dc8f574c8f5e128248b31d7))
+
 ## [1.7.10](https://github.com/simula-labs/rest-api-tools/compare/v1.7.9...v1.7.10) (2023-04-07)
 
 
