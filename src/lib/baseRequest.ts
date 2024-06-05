@@ -283,11 +283,15 @@ export class BaseRequest<
           handleObject(value as Record<string, unknown>);
         } else {
           if (value === undefined || value === "") return;
+
+          // 特定のキー（keyword）を常にエンコードする(+などの特殊文字をencodeするため)
+          const encodedValue = key === "keyword" ? encodeURIComponent(value as string) : value;
+
           // query paramsのvalueはスネークケースで対応する
           queries = `${
             queries === ""
-              ? `?${humps.decamelize(key)}=${value}`
-              : `${queries}&${humps.decamelize(key)}=${value}`
+              ? `?${humps.decamelize(key)}=${encodedValue}`
+              : `${queries}&${humps.decamelize(key)}=${encodedValue}`
           }`;
         }
       };
