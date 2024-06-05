@@ -1,3 +1,10 @@
+## [1.7.12](https://github.com/simula-labs/rest-api-tools/compare/v1.7.11...v1.7.12) (2024-06-05)
+
+
+### Bug Fixes
+
+* keywordは常にencodeするように ([0968b5a](https://github.com/simula-labs/rest-api-tools/commit/0968b5a891476a3caa5fbd51e97cd998f10af230))
+
 ## [1.7.11](https://github.com/simula-labs/rest-api-tools/compare/v1.7.10...v1.7.11) (2023-11-16)
 
 
