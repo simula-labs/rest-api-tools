@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/simula-labs/rest-api-tools/compare/v1.7.12...v1.8.0) (2025-06-02)
+
+
+### Features
+
+* VITE_API_HOSTに対応 ([6d2902b](https://github.com/simula-labs/rest-api-tools/commit/6d2902b048320d89486716426bcb9edd0a6d4ae4))
+
 ## [1.7.12](https://github.com/simula-labs/rest-api-tools/compare/v1.7.11...v1.7.12) (2024-06-05)
 
 
