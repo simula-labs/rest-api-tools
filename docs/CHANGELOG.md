@@ -1,3 +1,11 @@
+# [1.9.0](https://github.com/simula-labs/rest-api-tools/compare/v1.8.0...v1.9.0) (2025-06-02)
+
+
+### Features
+
+* configでbaseUrl渡せるように ([46ce31d](https://github.com/simula-labs/rest-api-tools/commit/46ce31d3bdb2a8308fead7894bb8f5d08ecc0941))
+* VITE_API_HOST => VITE_REST_API_BASE_URL ([99a460b](https://github.com/simula-labs/rest-api-tools/commit/99a460bf315ec9d11a5826f7a7bbd0537c89b79e))
+
 # [1.8.0](https://github.com/simula-labs/rest-api-tools/compare/v1.7.12...v1.8.0) (2025-06-02)
 
 
