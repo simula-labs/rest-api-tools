@@ -27,7 +27,6 @@ export const buildV3 = (
   const apiUrlContent =
     "export const API_HOST = ((): string => {\n" +
     `  const environment = import.meta.env.${config.apiEnvironmentVariables};\n` +
-    `  if (import.meta.env.VITE_REST_API_BASE_URL) return import.meta.env.VITE_REST_API_BASE_URL;\n` +
     `  switch (environment) {\n` +
     `${openapi.servers
       ?.map((server) => {
@@ -296,7 +295,7 @@ export const buildV3 = (
         ">({\n" +
         `  requiredAuth: ${config.requiredAuth},\n` +
         `  method: "${method}",\n` +
-        `  baseURL: API_HOST,\n` +
+        `  baseURL: ${config.baseUrl} ?? API_HOST,\n` +
         `  path: "${requestPath}",\n` +
         `  tokenKey: "${baseConfig.tokenKey}",\n` +
         `  contentType: "${hasFileType ? "formData" : "json"}",\n` +
