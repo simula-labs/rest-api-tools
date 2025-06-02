@@ -27,7 +27,7 @@ export const buildV3 = (
   const apiUrlContent =
     "export const API_HOST = ((): string => {\n" +
     `  const environment = import.meta.env.${config.apiEnvironmentVariables};\n` +
-    `  if (import.meta.env.VITE_API_HOST) return import.meta.env.VITE_API_HOST;\n` +
+    `  if (import.meta.env.VITE_REST_API_BASE_URL) return import.meta.env.VITE_REST_API_BASE_URL;\n` +
     `  switch (environment) {\n` +
     `${openapi.servers
       ?.map((server) => {
