@@ -295,7 +295,7 @@ export const buildV3 = (
         ">({\n" +
         `  requiredAuth: ${config.requiredAuth},\n` +
         `  method: "${method}",\n` +
-        `  baseURL: ${config.baseUrl} ?? API_HOST,\n` +
+        `  baseURL: ${config.baseUrlEnvVarName ? `import.meta.env.${config.baseUrlEnvVarName} ?? API_HOST` : "API_HOST"},\n` +
         `  path: "${requestPath}",\n` +
         `  tokenKey: "${baseConfig.tokenKey}",\n` +
         `  contentType: "${hasFileType ? "formData" : "json"}",\n` +

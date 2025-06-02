@@ -3,7 +3,7 @@ export type CodeGenConfig = {
   openapi: string;
   requiredAuth: boolean;
   apiEnvironmentVariables: string;
-  baseUrl?: string;
+  baseUrlEnvVarName?: string;
 };
 
 export type BaseConfig = {
