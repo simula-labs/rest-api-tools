@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/simula-labs/rest-api-tools/compare/v1.9.0...v1.9.1) (2025-06-02)
+
+
+### Bug Fixes
+
+* baseUrlの指定方法 ([f105255](https://github.com/simula-labs/rest-api-tools/commit/f1052553666d167646440256f61dd4e5b354acf8))
+
 # [1.9.0](https://github.com/simula-labs/rest-api-tools/compare/v1.8.0...v1.9.0) (2025-06-02)
 
 
